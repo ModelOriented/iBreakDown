@@ -1,0 +1,27 @@
+Package: breakDown2
+Title: Model Agnostic Explainers for Individual Predictions
+Version: 0.9.0
+Authors@R: person("Przemyslaw", "Biecek", email = "przemyslaw.biecek@gmail.com", role = c("aut", "cre"))
+Description: Model agnostic tool for decomposition of predictions from black boxes.
+    Break Down Table shows contributions of every variable to a final prediction. 
+    Break Down Plot presents variable contributions in a concise graphical way. 
+    This package work for binary classifiers and general regression models. 
+Depends: R (>= 3.0)
+Date: 2018-10-20
+License: GPL-2
+Encoding: UTF-8
+LazyData: true
+Imports: ggplot2
+RoxygenNote: 6.0.1
+Suggests: knitr,
+    rmarkdown,
+    e1071,
+    xgboost,
+    caret,
+    randomForest,
+    DALEX,
+    ranger,
+    testthat
+VignetteBuilder: knitr
+URL: https://pbiecek.github.io/breakDown2/
+BugReports: https://github.com/pbiecek/breakDown2/issues
