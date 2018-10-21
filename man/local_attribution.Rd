@@ -4,10 +4,12 @@
 \alias{local_attribution}
 \title{Model Agnostic Sequential Variable Attributions}
 \usage{
-local_attribution(x)
+local_attribution(x, ...)
 }
 \arguments{
 \item{x}{a model to be explained, or an explaienr created with function `DALEX::explain()`.}
+
+\item{...}{other parameters}
 
 \item{data}{validation dataset, will be extracted from `x` if it's an explainer}
 
@@ -18,7 +20,7 @@ local_attribution(x)
 \item{keep_distributions}{if `TRUE`, then distributions of partial predictions is stored and can be plotted with the generic `plot()`}
 }
 \value{
-an object of the break_down class
+an object of the `break_down` class
 }
 \description{
 This function finds Variable Attributions via Sequential Variable Conditioning
@@ -40,37 +42,32 @@ explainer_rf <- explain(model,
                  data = HR[1:1000,1:5],
                  y = HR$status[1:1000])
 
-bd_rf <- local_attribution(explainer_rf_fired,
-                 new_observation,
-                 keep_distributions = TRUE)
-
+bd_rf <- local_attribution(explainer_rf,
+                 new_observation)
 bd_rf
 plot(bd_rf)
+
+bd_rf <- local_attribution(explainer_rf,
+                 new_observation,
+                 keep_distributions = TRUE)
+bd_rf
 plot(bd_rf, plot_distributions = TRUE)
-
-bd_rf <- local_attribution(explainer_rf_fired,
-                 new_observation,
-                 check_interactions = FALSE,
-                 keep_distributions = TRUE)
-
-bd_rf
-plot(bd_rf)
 
 # example for regression - apartment prices
 # here we do not have intreactions
 model <- randomForest(m2.price ~ . , data = apartments)
 explainer_rf <- explain(model,
          data = apartmentsTest[1:1000,2:6],
-         y = apartmentsTest$m2.price[1:1000],
-         label = "rf")
+         y = apartmentsTest$m2.price[1:1000])
+
+bd_rf <- local_attribution(explainer_rf,
+         apartmentsTest[1,])
+bd_rf
+plot(bd_rf)
 
 bd_rf <- local_attribution(explainer_rf,
          apartmentsTest[1,],
-         check_interactions = FALSE,
          keep_distributions = TRUE)
-
-bd_rf
-plot(bd_rf)
 plot(bd_rf, plot_distributions = TRUE)
 }
 }

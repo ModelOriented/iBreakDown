@@ -9,8 +9,9 @@
 #' @param predict_function predict function, will be extracted from `x` if it's an explainer
 #' @param new_observation a new observation with columns that corresponds to variables used in the model
 #' @param keep_distributions if `TRUE`, then distributions of partial predictions is stored and can be plotted with the generic `plot()`
+#' @param ... other parameters
 #'
-#' @return an object of the break_down class
+#' @return an object of the `break_down` class
 #'
 #' @examples
 #' \dontrun{
@@ -27,46 +28,41 @@
 #'                  data = HR[1:1000,1:5],
 #'                  y = HR$status[1:1000])
 #'
-#' bd_rf <- local_attribution(explainer_rf_fired,
-#'                  new_observation,
-#'                  keep_distributions = TRUE)
-#'
+#' bd_rf <- local_attribution(explainer_rf,
+#'                  new_observation)
 #' bd_rf
 #' plot(bd_rf)
+#'
+#' bd_rf <- local_attribution(explainer_rf,
+#'                  new_observation,
+#'                  keep_distributions = TRUE)
+#' bd_rf
 #' plot(bd_rf, plot_distributions = TRUE)
-#'
-#' bd_rf <- local_attribution(explainer_rf_fired,
-#'                  new_observation,
-#'                  check_interactions = FALSE,
-#'                  keep_distributions = TRUE)
-#'
-#' bd_rf
-#' plot(bd_rf)
 #'
 #' # example for regression - apartment prices
 #' # here we do not have intreactions
 #' model <- randomForest(m2.price ~ . , data = apartments)
 #' explainer_rf <- explain(model,
 #'          data = apartmentsTest[1:1000,2:6],
-#'          y = apartmentsTest$m2.price[1:1000],
-#'          label = "rf")
+#'          y = apartmentsTest$m2.price[1:1000])
+#'
+#' bd_rf <- local_attribution(explainer_rf,
+#'          apartmentsTest[1,])
+#' bd_rf
+#' plot(bd_rf)
 #'
 #' bd_rf <- local_attribution(explainer_rf,
 #'          apartmentsTest[1,],
-#'          check_interactions = FALSE,
 #'          keep_distributions = TRUE)
-#'
-#' bd_rf
-#' plot(bd_rf)
 #' plot(bd_rf, plot_distributions = TRUE)
 #' }
 #' @export
 #'
-local_attribution <- function(x)
+local_attribution <- function(x, ...)
   UseMethod("local_attribution")
 
 local_attribution.explainer <- function(x, new_observation,
-                       keep_distributions = FALSE) {
+                       keep_distributions = FALSE, ...) {
   # extracts model, data and predict function from the explainer
   model <- x$model
   data <- x$data
