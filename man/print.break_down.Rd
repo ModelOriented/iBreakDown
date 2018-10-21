@@ -2,12 +2,12 @@
 % Please edit documentation in R/print.R
 \name{print.break_down}
 \alias{print.break_down}
-\title{Break Down Print}
+\title{Print Generic for Break Down Objects}
 \usage{
 \method{print}{break_down}(x, ..., digits = 3, rounding_function = round)
 }
 \arguments{
-\item{x}{the model model of 'broken' class}
+\item{x}{the model model of `break_down` class}
 
 \item{...}{other parameters}
 
@@ -22,5 +22,5 @@ Or the default \code{round()} to have the same precision for all components}
 a data frame
 }
 \description{
-Break Down Print
+Print Generic for Break Down Objects
 }

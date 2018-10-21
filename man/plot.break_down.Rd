@@ -4,21 +4,14 @@
 \alias{plot.break_down}
 \title{Break Down Plot}
 \usage{
-\method{plot}{break_down}(x, trans = I, ..., top_features = 0,
-  min_delta = 0, add_contributions = TRUE, vcolors = c(`-1` = "#d8b365",
-  `0` = "#f5f5f5", `1` = "#5ab4ac", X = "darkgrey"), digits = 3,
+\method{plot}{break_down}(x, ..., add_contributions = TRUE, vcolors = c(`-1`
+  = "#d8b365", `0` = "#f5f5f5", `1` = "#5ab4ac", X = "darkgrey"), digits = 3,
   rounding_function = round, plot_distributions = FALSE)
 }
 \arguments{
 \item{x}{the model model of 'break_down' class}
 
-\item{trans}{transformation that shal be applied to scores}
-
 \item{...}{other parameters}
-
-\item{top_features}{maximal number of variables from model we want to plot}
-
-\item{min_delta}{minimal stroke value of variables from model we want to plot}
 
 \item{add_contributions}{shall variable contributions to be added on plot?}
 
