@@ -2,7 +2,7 @@
 % Please edit documentation in R/break_interactions.R
 \name{break_down}
 \alias{break_down}
-\title{Model Agnostic Variable Attribution with Interactions}
+\title{Model Agnostic Sequential Variable Attributions with Interactions}
 \usage{
 break_down(explainer, new_observation, check_interactions = TRUE,
   keep_distributions = FALSE)

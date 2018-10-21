@@ -162,6 +162,11 @@ local_attribution.default <- function(x, data, predict_function = predict,
   contribution[1,] <- cummulative[1,]
   contribution[nrow(contribution),] <- cummulative[nrow(contribution),]
 
+  # setup labels
+  if (ncol(as.data.frame(target_yhat)) > 1) {
+    label <- paste0(label, ".",rep(colnames(as.data.frame(target_yhat)), each = length(variable)))
+  }
+
   result <- data.frame(variable = variable,
                        contribution = c(contribution),
                        variable_name = variable_name,
