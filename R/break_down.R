@@ -15,6 +15,7 @@
 #'
 #' @examples
 #' \dontrun{
+#' ## Not run:
 #' library("DALEX2")
 #' library("breakDown2")
 #' library("randomForest")
@@ -25,17 +26,17 @@
 #' new_observation <- HRTest[1,]
 #'
 #' explainer_rf <- explain(model,
-#'                  data = HR[1:1000,1:5],
-#'                  y = HR$status[1:1000])
+#'                         data = HR[1:1000,1:5],
+#'                         y = HR$status[1:1000])
 #'
 #' bd_rf <- local_attribution(explainer_rf,
-#'                  new_observation)
+#'                            new_observation)
 #' bd_rf
 #' plot(bd_rf)
 #'
 #' bd_rf <- local_attribution(explainer_rf,
-#'                  new_observation,
-#'                  keep_distributions = TRUE)
+#'                            new_observation,
+#'                            keep_distributions = TRUE)
 #' bd_rf
 #' plot(bd_rf, plot_distributions = TRUE)
 #'
@@ -43,24 +44,26 @@
 #' # here we do not have intreactions
 #' model <- randomForest(m2.price ~ . , data = apartments)
 #' explainer_rf <- explain(model,
-#'          data = apartmentsTest[1:1000,2:6],
-#'          y = apartmentsTest$m2.price[1:1000])
+#'                         data = apartmentsTest[1:1000,2:6],
+#'                         y = apartmentsTest$m2.price[1:1000])
 #'
 #' bd_rf <- local_attribution(explainer_rf,
-#'          apartmentsTest[1,])
+#'                            apartmentsTest[1,])
 #' bd_rf
-#' plot(bd_rf)
+#' plot(bd_rf, digits = 1)
 #'
 #' bd_rf <- local_attribution(explainer_rf,
-#'          apartmentsTest[1,],
-#'          keep_distributions = TRUE)
+#'                            apartmentsTest[1,],
+#'                            keep_distributions = TRUE)
 #' plot(bd_rf, plot_distributions = TRUE)
 #' }
 #' @export
-#'
+#' @rdname local_attribution
 local_attribution <- function(x, ...)
   UseMethod("local_attribution")
 
+#' @export
+#' @rdname local_attribution
 local_attribution.explainer <- function(x, new_observation,
                        keep_distributions = FALSE, ...) {
   # extracts model, data and predict function from the explainer
@@ -76,7 +79,8 @@ local_attribution.explainer <- function(x, new_observation,
                      ...)
 }
 
-
+#' @export
+#' @rdname local_attribution
 local_attribution.default <- function(x, data, predict_function = predict,
                                new_observation,
                                keep_distributions = FALSE,
@@ -121,18 +125,24 @@ local_attribution.default <- function(x, data, predict_function = predict,
   for (i in 1:nrow(tmp)) {
     candidates <- tmp$ind1[i]
     if (all(candidates %in% open_variables)) {
-      # we can add this effect to out path
+      # we can add this effect to our path
       current_data[,candidates] <- new_observation[,candidates]
       step <- step + 1
       yhats_pred <- predict_function(x, current_data)
       if (keep_distributions) {
-        yhats[[step]] <- data.frame(variable = paste(colnames(data)[candidates], collapse = ":"),
-                                    label = paste("+",
-                                                  paste(colnames(data)[candidates], collapse = ":"),
-                                                  "=",
-                                                  nice_pair(new_observation, candidates[1], NA )),
-                                    id = 1:nrow(data),
-                                    prediction = yhats_pred)
+        tmpj <- lapply(1:ncol(yhats_pred), function(j){
+          data.frame(variable_name = paste(colnames(data)[candidates], collapse = ":"),
+                     variable = paste("*",
+                                   paste(colnames(data)[candidates], collapse = ":"),
+                                   "=",
+                                   nice_pair(new_observation, candidates[1], NA )),
+                     id = 1:nrow(data),
+                     prediction = yhats_pred[,j],
+                     label = ifelse(ncol(yhats_pred) > 1, paste0(label, ".", colnames(yhats_pred)[j]), label) )
+        })
+        # setup labels
+
+        yhats[[step]] <- do.call(rbind, tmpj)
       }
       yhats_mean[[step]] <- colMeans(as.data.frame(yhats_pred))
       selected_rows[step] <- i
@@ -159,8 +169,9 @@ local_attribution.default <- function(x, data, predict_function = predict,
   contribution[nrow(contribution),] <- cummulative[nrow(contribution),]
 
   # setup labels
+  label_class <- label
   if (ncol(as.data.frame(target_yhat)) > 1) {
-    label <- paste0(label, ".",rep(colnames(as.data.frame(target_yhat)), each = length(variable)))
+    label_class <- paste0(label, ".",rep(colnames(as.data.frame(target_yhat)), each = length(variable)))
   }
 
   result <- data.frame(variable = variable,
@@ -170,16 +181,20 @@ local_attribution.default <- function(x, data, predict_function = predict,
                        cummulative = c(cummulative),
                        sign = factor(c(as.character(sign(contribution)[-length(contribution)]), "X"), levels = c("-1", "0", "1", "X")),
                        position = 1:(step + 2),
-                       label = label)
+                       label = label_class)
 
   class(result) <- "break_down"
   attr(result, "baseline") <- 0
   if (keep_distributions) {
-    yhats0 <- data.frame(variable = "all data",
-                         label = "all data",
-                         id = 1:nrow(data),
-                         prediction = predict_function(model, data)
-    )
+    allpredictions <- predict_function(x, data)
+    tmp <- lapply(1:ncol(allpredictions), function(j) {
+      data.frame(variable_name = "all data",
+                 variable = "all data",
+                 id = 1:nrow(data),
+                 prediction = allpredictions[,j],
+                 label = ifelse(ncol(allpredictions) > 1, paste0(label, ".", colnames(allpredictions)[j]), label) )
+    })
+    yhats0 <- do.call(rbind, tmp)
 
     yhats_distribution <- rbind(yhats0, do.call(rbind, yhats))
     attr(result, "yhats_distribution") = yhats_distribution

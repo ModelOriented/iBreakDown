@@ -2,22 +2,30 @@
 % Please edit documentation in R/break_down.R
 \name{local_attribution}
 \alias{local_attribution}
+\alias{local_attribution.explainer}
+\alias{local_attribution.default}
 \title{Model Agnostic Sequential Variable Attributions}
 \usage{
 local_attribution(x, ...)
+
+\method{local_attribution}{explainer}(x, new_observation,
+  keep_distributions = FALSE, ...)
+
+\method{local_attribution}{default}(x, data, predict_function = predict,
+  new_observation, keep_distributions = FALSE, label = class(x)[1], ...)
 }
 \arguments{
 \item{x}{a model to be explained, or an explaienr created with function `DALEX::explain()`.}
 
 \item{...}{other parameters}
 
-\item{data}{validation dataset, will be extracted from `x` if it's an explainer}
-
-\item{predict_function}{predict function, will be extracted from `x` if it's an explainer}
-
 \item{new_observation}{a new observation with columns that corresponds to variables used in the model}
 
 \item{keep_distributions}{if `TRUE`, then distributions of partial predictions is stored and can be plotted with the generic `plot()`}
+
+\item{data}{validation dataset, will be extracted from `x` if it's an explainer}
+
+\item{predict_function}{predict function, will be extracted from `x` if it's an explainer}
 }
 \value{
 an object of the `break_down` class
@@ -29,6 +37,7 @@ This function first determines the order for conditionings and then calculate va
 }
 \examples{
 \dontrun{
+## Not run:
 library("DALEX2")
 library("breakDown2")
 library("randomForest")
@@ -39,17 +48,17 @@ model <- randomForest(status ~ . , data = HR)
 new_observation <- HRTest[1,]
 
 explainer_rf <- explain(model,
-                 data = HR[1:1000,1:5],
-                 y = HR$status[1:1000])
+                        data = HR[1:1000,1:5],
+                        y = HR$status[1:1000])
 
 bd_rf <- local_attribution(explainer_rf,
-                 new_observation)
+                           new_observation)
 bd_rf
 plot(bd_rf)
 
 bd_rf <- local_attribution(explainer_rf,
-                 new_observation,
-                 keep_distributions = TRUE)
+                           new_observation,
+                           keep_distributions = TRUE)
 bd_rf
 plot(bd_rf, plot_distributions = TRUE)
 
@@ -57,17 +66,17 @@ plot(bd_rf, plot_distributions = TRUE)
 # here we do not have intreactions
 model <- randomForest(m2.price ~ . , data = apartments)
 explainer_rf <- explain(model,
-         data = apartmentsTest[1:1000,2:6],
-         y = apartmentsTest$m2.price[1:1000])
+                        data = apartmentsTest[1:1000,2:6],
+                        y = apartmentsTest$m2.price[1:1000])
 
 bd_rf <- local_attribution(explainer_rf,
-         apartmentsTest[1,])
+                           apartmentsTest[1,])
 bd_rf
-plot(bd_rf)
+plot(bd_rf, digits = 1)
 
 bd_rf <- local_attribution(explainer_rf,
-         apartmentsTest[1,],
-         keep_distributions = TRUE)
+                           apartmentsTest[1,],
+                           keep_distributions = TRUE)
 plot(bd_rf, plot_distributions = TRUE)
 }
 }

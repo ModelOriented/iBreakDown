@@ -34,34 +34,46 @@ Break Down Plot
 }
 \examples{
 \dontrun{
-library("breakDown")
+## Not run:
+library("DALEX2")
+library("breakDown2")
 library("randomForest")
-library("ggplot2")
 set.seed(1313)
-model <- randomForest(factor(left)~., data = HR_data, family = "binomial", maxnodes = 5)
-predict.function <- function(model, new_observation)
-      predict(model, new_observation, type="prob")[,2]
-predict.function(model, HR_data[11,-7])
-explain_1 <- broken(model, HR_data[11,-7], data = HR_data[,-7],
-predict.function = predict.function, direction = "down")
-explain_1
-plot(explain_1) + ggtitle("breakDown plot (direction=down) for randomForest model")
+# example with interaction
+# classification for HR data
+model <- randomForest(status ~ . , data = HR)
+new_observation <- HRTest[1,]
 
-explain_2 <- broken(model, HR_data[11,-7], data = HR_data[,-7],
-predict.function = predict.function, direction = "down", keep_distributions = TRUE)
-plot(explain_2, plot_distributions = TRUE) +
-         ggtitle("breakDown distributions (direction=down) for randomForest model")
+explainer_rf <- explain(model,
+                        data = HR[1:1000,1:5],
+                        y = HR$status[1:1000])
 
-explain_3 <- broken(model, HR_data[11,-7], data = HR_data[,-7],
-predict.function = predict.function, direction = "up", keep_distributions = TRUE)
-plot(explain_3, plot_distributions = TRUE) +
-         ggtitle("breakDown distributions (direction=up) for randomForest model")
+bd_rf <- local_attribution(explainer_rf,
+                           new_observation)
+bd_rf
+plot(bd_rf)
 
-model <- lm(quality~., data=wine)
-new_observation <- wine[1,]
-br <- broken(model, new_observation)
-plot(br)
-plot(br, top_features = 2)
-plot(br, top_features = 2, min_delta = 0.01)
+bd_rf <- local_attribution(explainer_rf,
+                           new_observation,
+                           keep_distributions = TRUE)
+bd_rf
+plot(bd_rf, plot_distributions = TRUE)
+
+# example for regression - apartment prices
+# here we do not have intreactions
+model <- randomForest(m2.price ~ . , data = apartments)
+explainer_rf <- explain(model,
+                        data = apartmentsTest[1:1000,2:6],
+                        y = apartmentsTest$m2.price[1:1000])
+
+bd_rf <- local_attribution(explainer_rf,
+                           apartmentsTest[1,])
+bd_rf
+plot(bd_rf, digits = 1)
+
+bd_rf <- local_attribution(explainer_rf,
+                           apartmentsTest[1,],
+                           keep_distributions = TRUE)
+plot(bd_rf, plot_distributions = TRUE)
 }
 }
