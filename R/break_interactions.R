@@ -67,8 +67,30 @@
 #' plot(bd_rf, plot_distributions = TRUE)
 #' }
 #' @export
+#' @rdname local_interactions
+local_interactions <- function(x, ...)
+  UseMethod("local_interactions")
 
-break_down <- function(explainer, new_observation,
+#' @export
+#' @rdname local_interactions
+local_interactions.explainers <- function(x, new_observation,
+                                        keep_distributions = FALSE, ...) {
+  # extracts model, data and predict function from the explainer
+  model <- x$model
+  data <- x$data
+  predict_function <- x$predict_function
+  label <- x$label
+
+  local_interactions.default(model, data, predict_function,
+                            new_observation = new_observation,
+                            keep_distributions = keep_distributions,
+                            label = label,
+                            ...)
+}
+
+#' @export
+#' @rdname local_interactions
+local_interactions.default <- function(explainer, new_observation,
                        check_interactions = TRUE,
                        keep_distributions = FALSE) {
   # important things are in the explainer

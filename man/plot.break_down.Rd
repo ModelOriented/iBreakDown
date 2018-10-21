@@ -4,9 +4,10 @@
 \alias{plot.break_down}
 \title{Break Down Plot}
 \usage{
-\method{plot}{break_down}(x, ..., add_contributions = TRUE, vcolors = c(`-1`
-  = "#d8b365", `0` = "#f5f5f5", `1` = "#5ab4ac", X = "darkgrey"), digits = 3,
-  rounding_function = round, plot_distributions = FALSE)
+\method{plot}{break_down}(x, ..., add_contributions = TRUE,
+  start_baseline = FALSE, vcolors = c(`-1` = "#d8b365", `0` = "#f5f5f5", `1`
+  = "#5ab4ac", X = "darkgrey"), digits = 3, rounding_function = round,
+  plot_distributions = FALSE)
 }
 \arguments{
 \item{x}{the model model of 'break_down' class}
@@ -14,6 +15,8 @@
 \item{...}{other parameters}
 
 \item{add_contributions}{shall variable contributions to be added on plot?}
+
+\item{start_baseline}{if TRUE then veritical line will start in baselines}
 
 \item{vcolors}{named vector with colors}
 
@@ -48,12 +51,13 @@ explainer_rf <- explain(model,
                         data = HR[1:1000,1:5],
                         y = HR$status[1:1000])
 
-bd_rf <- local_attribution(explainer_rf,
+bd_rf <- local_attributions(explainer_rf,
                            new_observation)
 bd_rf
 plot(bd_rf)
+plot(bd_rf, start_baseline = TRUE)
 
-bd_rf <- local_attribution(explainer_rf,
+bd_rf <- local_attributions(explainer_rf,
                            new_observation,
                            keep_distributions = TRUE)
 bd_rf
@@ -66,12 +70,13 @@ explainer_rf <- explain(model,
                         data = apartmentsTest[1:1000,2:6],
                         y = apartmentsTest$m2.price[1:1000])
 
-bd_rf <- local_attribution(explainer_rf,
+bd_rf <- local_attributions(explainer_rf,
                            apartmentsTest[1,])
 bd_rf
 plot(bd_rf, digits = 1)
+plot(bd_rf, digits = 1, start_baseline = TRUE)
 
-bd_rf <- local_attribution(explainer_rf,
+bd_rf <- local_attributions(explainer_rf,
                            apartmentsTest[1,],
                            keep_distributions = TRUE)
 plot(bd_rf, plot_distributions = TRUE)

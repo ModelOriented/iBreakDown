@@ -1,6 +1,6 @@
-#' Model Agnostic Sequential Variable Attributions
+#' Model Agnostic Sequential Variable attributionss
 #'
-#' This function finds Variable Attributions via Sequential Variable Conditioning
+#' This function finds Variable attributionss via Sequential Variable Conditioning
 #' The complexity of this function is O(2*p).
 #' This function first determines the order for conditionings and then calculate variable effects via sequence of conditionings.
 #'
@@ -29,12 +29,12 @@
 #'                         data = HR[1:1000,1:5],
 #'                         y = HR$status[1:1000])
 #'
-#' bd_rf <- local_attribution(explainer_rf,
+#' bd_rf <- local_attributions(explainer_rf,
 #'                            new_observation)
 #' bd_rf
 #' plot(bd_rf)
 #'
-#' bd_rf <- local_attribution(explainer_rf,
+#' bd_rf <- local_attributions(explainer_rf,
 #'                            new_observation,
 #'                            keep_distributions = TRUE)
 #' bd_rf
@@ -47,24 +47,24 @@
 #'                         data = apartmentsTest[1:1000,2:6],
 #'                         y = apartmentsTest$m2.price[1:1000])
 #'
-#' bd_rf <- local_attribution(explainer_rf,
+#' bd_rf <- local_attributions(explainer_rf,
 #'                            apartmentsTest[1,])
 #' bd_rf
 #' plot(bd_rf, digits = 1)
 #'
-#' bd_rf <- local_attribution(explainer_rf,
+#' bd_rf <- local_attributions(explainer_rf,
 #'                            apartmentsTest[1,],
 #'                            keep_distributions = TRUE)
 #' plot(bd_rf, plot_distributions = TRUE)
 #' }
 #' @export
-#' @rdname local_attribution
-local_attribution <- function(x, ...)
-  UseMethod("local_attribution")
+#' @rdname local_attributions
+local_attributions <- function(x, ...)
+  UseMethod("local_attributions")
 
 #' @export
-#' @rdname local_attribution
-local_attribution.explainer <- function(x, new_observation,
+#' @rdname local_attributions
+local_attributions.explainer <- function(x, new_observation,
                        keep_distributions = FALSE, ...) {
   # extracts model, data and predict function from the explainer
   model <- x$model
@@ -72,7 +72,7 @@ local_attribution.explainer <- function(x, new_observation,
   predict_function <- x$predict_function
   label <- x$label
 
-  local_attribution.default(model, data, predict_function,
+  local_attributions.default(model, data, predict_function,
                      new_observation = new_observation,
                      keep_distributions = keep_distributions,
                      label = label,
@@ -80,8 +80,8 @@ local_attribution.explainer <- function(x, new_observation,
 }
 
 #' @export
-#' @rdname local_attribution
-local_attribution.default <- function(x, data, predict_function = predict,
+#' @rdname local_attributions
+local_attributions.default <- function(x, data, predict_function = predict,
                                new_observation,
                                keep_distributions = FALSE,
                                label = class(x)[1], ...) {
@@ -128,7 +128,7 @@ local_attribution.default <- function(x, data, predict_function = predict,
       # we can add this effect to our path
       current_data[,candidates] <- new_observation[,candidates]
       step <- step + 1
-      yhats_pred <- predict_function(x, current_data)
+      yhats_pred <- data.frame(predict_function(x, current_data))
       if (keep_distributions) {
         tmpj <- lapply(1:ncol(yhats_pred), function(j){
           data.frame(variable_name = paste(colnames(data)[candidates], collapse = ":"),
@@ -186,7 +186,7 @@ local_attribution.default <- function(x, data, predict_function = predict,
   class(result) <- "break_down"
   attr(result, "baseline") <- 0
   if (keep_distributions) {
-    allpredictions <- predict_function(x, data)
+    allpredictions <- as.data.frame(predict_function(x, data))
     tmp <- lapply(1:ncol(allpredictions), function(j) {
       data.frame(variable_name = "all data",
                  variable = "all data",
