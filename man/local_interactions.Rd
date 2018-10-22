@@ -11,8 +11,8 @@ local_interactions(x, ...)
 \method{local_interactions}{explainers}(x, new_observation,
   keep_distributions = FALSE, ...)
 
-\method{local_interactions}{default}(explainer, new_observation,
-  check_interactions = TRUE, keep_distributions = FALSE)
+\method{local_interactions}{default}(x, data, predict_function = predict,
+  new_observation, keep_distributions = FALSE, label = class(x)[1], ...)
 }
 \arguments{
 \item{new_observation}{a new observation with columns that corresponds to variables used in the model}
