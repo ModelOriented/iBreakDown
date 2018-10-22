@@ -90,14 +90,10 @@ local_interactions.explainers <- function(x, new_observation,
 
 #' @export
 #' @rdname local_interactions
-local_interactions.default <- function(explainer, new_observation,
-                       check_interactions = TRUE,
-                       keep_distributions = FALSE) {
-  # important things are in the explainer
-  model <- explainer$model
-  data <- explainer$data
-  predict_function <- explainer$predict_function
-
+local_interactions.default <- function(x, data, predict_function = predict,
+                                       new_observation,
+                                       keep_distributions = FALSE,
+                                       label = class(x)[1], ...) {
   # just in case only some variables are specified
   # this will work only for data.frames
   if ("data.frame" %in% class(data)) {
@@ -107,43 +103,45 @@ local_interactions.default <- function(explainer, new_observation,
   }
   p <- ncol(data)
 
+  #
+  # just in case the return has more columns
   # set target
-  target_yhat <- predict_function(model, new_observation)
-  baseline_yhat <- mean(predict_function(model, data))
+  target_yhat <- predict_function(x, new_observation)
+  yhatpred <- as.data.frame(predict_function(x, data))
+  baseline_yhat <- colMeans(yhatpred)
 
   # 1d changes
   # how the average would change if single variable is changed
-  average_yhats <- calculate_1d_changes(model, new_observation, data, predict_function)
-  diffs_1d <- average_yhats - baseline_yhat
-
+  average_yhats <- calculate_1d_changes(x, new_observation, data, predict_function)
+  diffs_1d <- sapply(seq_along(average_yhats), function(i) {
+    mean((average_yhats[[i]] - baseline_yhat)^2)
+  })
   # impact summary for 1d variables
   tmp <- data.frame(diff = diffs_1d,
-                    adiff = abs(diffs_1d),
-                    diff_norm = diffs_1d,
-                    adiff_norm = abs(diffs_1d),
-                    ind1 = 1:p,
-                    ind2 = NA)
+                    ind1 = 1:p)
+  # sort impacts and look for most importants elements
+  tmp <- tmp[order(tmp$diff, decreasing = TRUE),]
 
-  if (check_interactions) {
-    inds <- data.frame(ind1 = unlist(lapply(2:p, function(i) i:p)),
-                       ind2 = unlist(lapply(2:p, function(i) rep(i - 1, p - i + 1))))
 
-    # 2d changes
-    # how the average would change if two variables are changed
-    changes <- calculate_2d_changes(model, new_observation, data, predict_function, inds, diffs_1d)
+  inds <- data.frame(ind1 = unlist(lapply(2:p, function(i) i:p)),
+                     ind2 = unlist(lapply(2:p, function(i) rep(i - 1, p - i + 1))))
 
-    diffs_2d <- changes$average_yhats - baseline_yhat
-    diffs_2d_norm <- changes$average_yhats_norm - baseline_yhat
+  # 2d changes
+  # how the average would change if two variables are changed
+  changes <- calculate_2d_changes(x, new_observation, data, predict_function, inds, diffs_1d)
 
-    # impact summary for 2d variables
-    tmp2 <- data.frame(diff = diffs_2d,
-                       adiff = abs(diffs_2d),
-                       diff_norm = diffs_2d_norm,
-                       adiff_norm = abs(diffs_2d_norm),
-                       ind1 = inds$ind1,
-                       ind2 = inds$ind2)
-    tmp <- rbind(tmp, tmp2)
-  }
+  diffs_2d <- changes$average_yhats - baseline_yhat
+  diffs_2d_norm <- changes$average_yhats_norm - baseline_yhat
+
+  # impact summary for 2d variables
+  tmp2 <- data.frame(diff = diffs_2d,
+                     adiff = abs(diffs_2d),
+                     diff_norm = diffs_2d_norm,
+                     adiff_norm = abs(diffs_2d_norm),
+                     ind1 = inds$ind1,
+                     ind2 = inds$ind2)
+  tmp <- rbind(tmp, tmp2)
+
 
   # sort impacts and look for most importants elements
   tmp <- tmp[order(tmp$adiff_norm, decreasing = TRUE),]

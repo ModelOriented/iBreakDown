@@ -86,11 +86,15 @@ plot.break_down <- function(x, ..., add_contributions = TRUE, start_baseline = F
     broken_cumm$cummulative <- broken_cumm$cummulative
     broken_baseline <- broken_cumm[broken_cumm$variable_name == "baseline",]
     broken_cumm$text <- broken_cumm$prev
-    for (lab in broken_baseline$label) {
-      broken_cumm[broken_cumm$label == lab &
-                    broken_cumm$variable == "prediction", "prev"] <- broken_baseline[broken_baseline$label == lab,"contribution"]
-      broken_cumm[broken_cumm$label == lab &
-                    broken_cumm$variable == "baseline", "prev"] <- broken_baseline[broken_baseline$label == lab,"contribution"]
+    if (start_baseline) {
+      for (lab in broken_baseline$label) {
+        broken_cumm[broken_cumm$label == lab &
+                      broken_cumm$variable == "prediction", "prev"] <- broken_baseline[broken_baseline$label == lab,"contribution"]
+        broken_cumm[broken_cumm$label == lab &
+                      broken_cumm$variable == "baseline", "prev"] <- broken_baseline[broken_baseline$label == lab,"contribution"]
+      }
+    } else {
+      broken_baseline$contribution <- 0
     }
 
     broken_cumm$trans_contribution <- broken_cumm$cummulative - broken_cumm$text
@@ -118,7 +122,7 @@ plot.break_down <- function(x, ..., add_contributions = TRUE, start_baseline = F
       facet_wrap(~label, ncol = 1)
 
     pl <- pl +
-      scale_y_continuous(expand = c(0.05,0.05), name = "") +
+      scale_y_continuous(expand = c(0.05,0.1), name = "") +
       scale_x_continuous(labels = broken_cumm$variable, breaks = broken_cumm$position + 0.5, name = "") +
       scale_fill_manual(values = vcolors)
   }
