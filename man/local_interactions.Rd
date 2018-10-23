@@ -2,13 +2,13 @@
 % Please edit documentation in R/break_interactions.R
 \name{local_interactions}
 \alias{local_interactions}
-\alias{local_interactions.explainers}
+\alias{local_interactions.explainer}
 \alias{local_interactions.default}
 \title{Model Agnostic Sequential Variable Attributions with Interactions}
 \usage{
 local_interactions(x, ...)
 
-\method{local_interactions}{explainers}(x, new_observation,
+\method{local_interactions}{explainer}(x, new_observation,
   keep_distributions = FALSE, ...)
 
 \method{local_interactions}{default}(x, data, predict_function = predict,
@@ -36,24 +36,20 @@ And in the second step the impact is calculated.
 }
 \examples{
 \dontrun{
-library("DALEX")
-library("breakDown")
+library("DALEX2")
+library("breakDown2")
 library("randomForest")
 set.seed(1313)
 # example with interaction
 # classification for HR data
 model <- randomForest(status ~ . , data = HR)
 new_observation <- HRTest[1,]
-data <- HR[1:1000,]
-predict.function <- function(m,x) predict(m,x, type = "prob")[,1]
 
-explainer_rf_fired <- explain(model,
+explainer_rf <- explain(model,
                  data = HR[1:1000,1:5],
-                 y = HR$status[1:1000] == "fired",
-                 predict_function = function(m,x) predict(m,x, type = "prob")[,1],
-                 label = "fired")
+                 y = HR$status[1:1000])
 
-bd_rf <- break_down(explainer_rf_fired,
+bd_rf <- local_interactions(explainer_rf,
                  new_observation,
                  keep_distributions = TRUE)
 
@@ -61,26 +57,18 @@ bd_rf
 plot(bd_rf)
 plot(bd_rf, plot_distributions = TRUE)
 
-bd_rf <- break_down(explainer_rf_fired,
-                 new_observation,
-                 check_interactions = FALSE,
-                 keep_distributions = TRUE)
-
-bd_rf
-plot(bd_rf)
-
 # example for regression - apartment prices
 # here we do not have intreactions
 model <- randomForest(m2.price ~ . , data = apartments)
 explainer_rf <- explain(model,
          data = apartmentsTest[1:1000,2:6],
-         y = apartmentsTest$m2.price[1:1000],
-         label = "rf")
+         y = apartmentsTest$m2.price[1:1000])
 
-bd_rf <- break_down(explainer_rf,
-         apartmentsTest[1,],
-         check_interactions = FALSE,
-         keep_distributions = TRUE)
+new_observation <- apartmentsTest[1,]
+
+bd_rf <- local_interactions(explainer_rf,
+                 new_observation,
+                 keep_distributions = TRUE)
 
 bd_rf
 plot(bd_rf)

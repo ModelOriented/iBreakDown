@@ -63,6 +63,14 @@ bd_rf <- local_attributions(explainer_rf,
 bd_rf
 plot(bd_rf, plot_distributions = TRUE)
 
+bd_rf <- local_interactions(explainer_rf,
+                 new_observation,
+                 keep_distributions = TRUE)
+
+bd_rf
+plot(bd_rf)
+plot(bd_rf, plot_distributions = TRUE)
+
 # example for regression - apartment prices
 # here we do not have intreactions
 model <- randomForest(m2.price ~ . , data = apartments)
@@ -79,6 +87,14 @@ plot(bd_rf, digits = 1, start_baseline = TRUE)
 bd_rf <- local_attributions(explainer_rf,
                            apartmentsTest[1,],
                            keep_distributions = TRUE)
+plot(bd_rf, plot_distributions = TRUE)
+
+bd_rf <- local_interactions(explainer_rf,
+                 new_observation,
+                 keep_distributions = TRUE)
+
+bd_rf
+plot(bd_rf)
 plot(bd_rf, plot_distributions = TRUE)
 }
 }

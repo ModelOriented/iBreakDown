@@ -55,6 +55,7 @@ bd_rf <- local_attributions(explainer_rf,
                            new_observation)
 bd_rf
 plot(bd_rf)
+plot(bd_rf, start_baseline = TRUE)
 
 bd_rf <- local_attributions(explainer_rf,
                            new_observation,
@@ -73,6 +74,7 @@ bd_rf <- local_attributions(explainer_rf,
                            apartmentsTest[1,])
 bd_rf
 plot(bd_rf, digits = 1)
+plot(bd_rf, digits = 1, start_baseline = TRUE)
 
 bd_rf <- local_attributions(explainer_rf,
                            apartmentsTest[1,],

@@ -3,7 +3,7 @@
 S3method(local_attributions,default)
 S3method(local_attributions,explainer)
 S3method(local_interactions,default)
-S3method(local_interactions,explainers)
+S3method(local_interactions,explainer)
 S3method(plot,break_down)
 S3method(print,break_down)
 export(local_attributions)
