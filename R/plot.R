@@ -43,6 +43,14 @@
 #' bd_rf
 #' plot(bd_rf, plot_distributions = TRUE)
 #'
+#' bd_rf <- local_interactions(explainer_rf,
+#'                  new_observation,
+#'                  keep_distributions = TRUE)
+#'
+#' bd_rf
+#' plot(bd_rf)
+#' plot(bd_rf, plot_distributions = TRUE)
+#'
 #' # example for regression - apartment prices
 #' # here we do not have intreactions
 #' model <- randomForest(m2.price ~ . , data = apartments)
@@ -60,7 +68,15 @@
 #'                            apartmentsTest[1,],
 #'                            keep_distributions = TRUE)
 #' plot(bd_rf, plot_distributions = TRUE)
-#'}
+#'
+#' bd_rf <- local_interactions(explainer_rf,
+#'                  new_observation,
+#'                  keep_distributions = TRUE)
+#'
+#' bd_rf
+#' plot(bd_rf)
+#' plot(bd_rf, plot_distributions = TRUE)
+#' }
 #' @export
 plot.break_down <- function(x, ..., add_contributions = TRUE, start_baseline = FALSE,
                         vcolors = c("-1" = "#d8b365", "0" = "#f5f5f5", "1" = "#5ab4ac", "X" = "darkgrey"),
@@ -77,7 +93,7 @@ plot.break_down <- function(x, ..., add_contributions = TRUE, start_baseline = F
       geom_violin(scale = "width", adjust = 3) +
       stat_summary(fun.y = "mean", colour = "red", size = 4, geom = "point") +
       xlab("") + ylab("") +
-      facet_wrap(~label, ncol = 1)
+      facet_wrap(~label, scales = "free_y", ncol = 1)
   } else {
     broken_cumm <- x
     class(broken_cumm) = "data.frame"

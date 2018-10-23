@@ -166,8 +166,8 @@ local_interactions.default <- function(x, data, predict_function = predict,
         step <- step + 1
         yhats_pred <- single_predict_function(x, current_data)
         if (keep_distributions) {
-          yhats[[step]] <- data.frame(variable = paste(colnames(data)[candidates], collapse = ":"),
-                                      label = paste("*",
+          yhats[[step]] <- data.frame(variable_name = paste(colnames(data)[candidates], collapse = ":"),
+                                      variable = paste("*",
                                                     paste(colnames(data)[candidates], collapse = ":"),
                                                     "=",
                                                     nice_pair(new_observation, candidates[1], candidates[2] )),
@@ -210,8 +210,8 @@ local_interactions.default <- function(x, data, predict_function = predict,
 
     yhats_distribution <- NULL
     if (keep_distributions) {
-      yhats0 <- data.frame(variable = "all data",
-                           label = "all data",
+      yhats0 <- data.frame(variable_name = "all data",
+                           variable = "all data",
                            id = 1:nrow(data),
                            prediction = single_predict_function(x, data)
       )
