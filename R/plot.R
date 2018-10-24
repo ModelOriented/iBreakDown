@@ -1,4 +1,4 @@
-#' Break Down Plot
+#' Plot Generic for Break Down Objects
 #'
 #' @param x the model model of 'break_down' class
 #' @param ... other parameters
