@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot.R
 \name{plot.break_down}
 \alias{plot.break_down}
-\title{Break Down Plot}
+\title{Plot Generic for Break Down Objects}
 \usage{
 \method{plot}{break_down}(x, ..., add_contributions = TRUE,
   start_baseline = FALSE, vcolors = c(`-1` = "#d8b365", `0` = "#f5f5f5", `1`
@@ -33,7 +33,7 @@ Or the default \code{round()} to have the same precision for all components}
 a ggplot2 object
 }
 \description{
-Break Down Plot
+Plot Generic for Break Down Objects
 }
 \examples{
 \dontrun{

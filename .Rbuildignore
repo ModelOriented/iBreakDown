@@ -1,2 +1,10 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^arepo.*$
+^misc.*$
+^.travis.yml$
+^cheatsheet$
+^cheatsheets$
+^docs$
+^.*README.*$
+^_pkgdown\.yml$

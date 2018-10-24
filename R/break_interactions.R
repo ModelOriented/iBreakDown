@@ -9,9 +9,8 @@
 #'
 #' @param explainer a model to be explained, preprocessed by function `DALEX::explain()`.
 #' @param new_observation a new observation with columns that corresponds to variables used in the model
-#' @param check_interactions the orgin/baseline for the `breakDown`` plots, where the rectangles start. It may be a number or a character "Intercept". In the latter case the orgin will be set to model intercept.
 #' @param keep_distributions if TRUE, then the distribution of partial predictions is stored in addition to the average.
-#'
+#' @importFrom stats predict
 #' @return an object of the broken class
 #'
 #' @examples

@@ -20,8 +20,6 @@ local_interactions(x, ...)
 \item{keep_distributions}{if TRUE, then the distribution of partial predictions is stored in addition to the average.}
 
 \item{explainer}{a model to be explained, preprocessed by function `DALEX::explain()`.}
-
-\item{check_interactions}{the orgin/baseline for the `breakDown`` plots, where the rectangles start. It may be a number or a character "Intercept". In the latter case the orgin will be set to model intercept.}
 }
 \value{
 an object of the broken class

@@ -10,6 +10,7 @@
 #' @param new_observation a new observation with columns that corresponds to variables used in the model
 #' @param keep_distributions if `TRUE`, then distributions of partial predictions is stored and can be plotted with the generic `plot()`
 #' @param ... other parameters
+#' @param label name of the model. By default it's extracted from the 'class' attribute of the model
 #'
 #' @return an object of the `break_down` class
 #'
