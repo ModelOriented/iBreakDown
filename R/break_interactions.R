@@ -7,9 +7,13 @@
 #' the main difference is that in the fisrt step the order of variables is determied.
 #' And in the second step the impact is calculated.
 #'
-#' @param explainer a model to be explained, preprocessed by function `DALEX::explain()`.
+#' @param x a model to be explained, or an explaienr created with function `DALEX::explain()`.
+#' @param data validation dataset, will be extracted from `x` if it's an explainer
+#' @param predict_function predict function, will be extracted from `x` if it's an explainer
+#' @param ... other parameters
 #' @param new_observation a new observation with columns that corresponds to variables used in the model
 #' @param keep_distributions if TRUE, then the distribution of partial predictions is stored in addition to the average.
+#' @param label character - the name of the model. By default it's extracted from the 'class' attribute of the model
 #' @importFrom stats predict
 #' @return an object of the broken class
 #'

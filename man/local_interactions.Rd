@@ -15,11 +15,19 @@ local_interactions(x, ...)
   new_observation, keep_distributions = FALSE, label = class(x)[1], ...)
 }
 \arguments{
+\item{x}{a model to be explained, or an explaienr created with function `DALEX::explain()`.}
+
+\item{...}{other parameters}
+
 \item{new_observation}{a new observation with columns that corresponds to variables used in the model}
 
 \item{keep_distributions}{if TRUE, then the distribution of partial predictions is stored in addition to the average.}
 
-\item{explainer}{a model to be explained, preprocessed by function `DALEX::explain()`.}
+\item{data}{validation dataset, will be extracted from `x` if it's an explainer}
+
+\item{predict_function}{predict function, will be extracted from `x` if it's an explainer}
+
+\item{label}{character - the name of the model. By default it's extracted from the 'class' attribute of the model}
 }
 \value{
 an object of the broken class
