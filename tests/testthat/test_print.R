@@ -1,5 +1,6 @@
 context("Check print() function for break_down object")
 
+library("DALEX")
 library("breakDown2")
 library("randomForest")
 set.seed(1313)
