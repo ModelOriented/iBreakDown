@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Model Agnostic Explainers for Individual Predictions • breakDown2</title>
+<title>Model Agnostic Local Variable Attributions for Individual Predictions Explanations • breakDown2</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
@@ -66,11 +66,23 @@
       
       </header><div class="row">
   <div class="contents col-md-9">
-    <div id="breakdown2" class="section level1">
+    
+
+<div id="break-down-model-agnostic-explainers-for-individual-predictions" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#breakdown2" class="anchor"></a>breakDown2</h1></div>
-<p>Very experimental version of the <a href="https://github.com/pbiecek/breakDown">breakDown</a> package. Expect rapid changes.</p>
+<a href="#break-down-model-agnostic-explainers-for-individual-predictions" class="anchor"></a>Break Down: Model Agnostic Explainers for Individual Predictions</h1></div>
+<p><strong>breakDown2</strong> is a very experimental version of the <a href="https://github.com/pbiecek/breakDown">breakDown</a> package. Expect rapid changes.</p>
+<p>The <code>breakDown2</code> package is a model agnostic tool for decomposition of predictions from black boxes. Break Down Table shows contributions of every variable to a final prediction. Break Down Plot presents variable contributions in a concise graphical way. This package works for binary classifiers and general regression models.</p>
+<p>It’s a part of <a href="https://github.com/pbiecek/DrWhy">DrWhy</a> collection of tools.</p>
+<p>Find lots of R examples at <code>breakDown2</code> website: <a href="https://pbiecek.github.io/breakDown2/" class="uri">https://pbiecek.github.io/breakDown2/</a></p>
+<div id="installation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h2>
+<p>Install from GitHub</p>
+<pre><code><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">devtools::install_github("pbiecek/breakDown2")</a></code></pre>
 </div>
+</div>
+
   </div>
 
   <div class="col-md-3" id="sidebar">
@@ -99,7 +111,14 @@
 </ul>
 </div>
 
-  </div>
+  <div class="dev-status">
+<h2>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://travis-ci.org/pbiecek/breakDown2"><img src="https://api.travis-ci.org/pbiecek/breakDown2.png" alt="Build Status"></a></li>
+<li><a href="https://codecov.io/github/pbiecek/breakDown2?branch=master"><img src="https://img.shields.io/codecov/c/github/pbiecek/breakDown2/master.svg" alt="Coverage Status"></a></li>
+</ul>
+</div>
+</div>
 </div>
 
 

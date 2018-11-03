@@ -98,8 +98,8 @@
     <p>This function implements decomposition of model predictions with identification
 of interactions.
 The complexity of this function is O(2*p) for additive models and O(2*p^2) for interactions.
-This function works in similar way to step-up and step-down greedy approaximations,
-the main difference is that in the fisrt step the order of variables is determied.
+This function works in similar way to step-up and step-down greedy approximations,
+the main difference is that in the first step the order of variables is determined.
 And in the second step the impact is calculated.</p>
     
 
@@ -117,6 +117,14 @@ And in the second step the impact is calculated.</p>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>x</th>
+      <td><p>a model to be explained, or an explainer created with function `DALEX::explain()`.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>other parameters</p></td>
+    </tr>
+    <tr>
       <th>new_observation</th>
       <td><p>a new observation with columns that corresponds to variables used in the model</p></td>
     </tr>
@@ -125,22 +133,27 @@ And in the second step the impact is calculated.</p>
       <td><p>if TRUE, then the distribution of partial predictions is stored in addition to the average.</p></td>
     </tr>
     <tr>
-      <th>explainer</th>
-      <td><p>a model to be explained, preprocessed by function `DALEX::explain()`.</p></td>
+      <th>data</th>
+      <td><p>validation dataset, will be extracted from `x` if it's an explainer</p></td>
     </tr>
     <tr>
-      <th>check_interactions</th>
-      <td><p>the orgin/baseline for the `breakDown`` plots, where the rectangles start. It may be a number or a character "Intercept". In the latter case the orgin will be set to model intercept.</p></td>
+      <th>predict_function</th>
+      <td><p>predict function, will be extracted from `x` if it's an explainer</p></td>
+    </tr>
+    <tr>
+      <th>label</th>
+      <td><p>character - the name of the model. By default it's extracted from the 'class' attribute of the model</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>an object of the broken class</p>
+    <p>an object of the `break_down` class</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='st'>"DALEX2"</span>)
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='fu'>library</span>(<span class='st'>"DALEX2"</span>)
 <span class='fu'>library</span>(<span class='st'>"breakDown2"</span>)
 <span class='fu'>library</span>(<span class='st'>"randomForest"</span>)
 <span class='fu'>set.seed</span>(<span class='fl'>1313</span>)
@@ -157,26 +170,10 @@ And in the second step the impact is calculated.</p>
                  <span class='no'>new_observation</span>,
                  <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
-<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                               contribution
-#&gt; randomForest.fired: baseline                         0.386
-#&gt; randomForest.fired: * hours = 42                     0.231
-#&gt; randomForest.fired: * salary = 2                    -0.216
-#&gt; randomForest.fired: * age:gender = 58:male           0.397
-#&gt; randomForest.fired: * evaluation = 2                -0.019
-#&gt; randomForest.fired: prediction                       0.778
-#&gt; randomForest.ok: baseline                            0.278
-#&gt; randomForest.ok: * evaluation = 2                    0.132
-#&gt; randomForest.ok: * salary = 2                        0.166
-#&gt; randomForest.ok: * age:gender = 58:male             -0.283
-#&gt; randomForest.ok: * hours = 42                       -0.074
-#&gt; randomForest.ok: prediction                          0.218
-#&gt; randomForest.promoted: baseline                      0.336
-#&gt; randomForest.promoted: * hours = 42                 -0.178
-#&gt; randomForest.promoted: * evaluation = 2             -0.152
-#&gt; randomForest.promoted: * age:gender = 58:male       -0.003
-#&gt; randomForest.promoted: * salary = 2                  0.001
-#&gt; randomForest.promoted: prediction                    0.004
-#&gt; baseline:  0 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='local_interactions-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='local_interactions-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>bd_rf</span>
+<span class='fu'>plot</span>(<span class='no'>bd_rf</span>)
+<span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
 <span class='co'># example for regression - apartment prices</span>
 <span class='co'># here we do not have intreactions</span>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
@@ -190,15 +187,10 @@ And in the second step the impact is calculated.</p>
                  <span class='no'>new_observation</span>,
                  <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
-<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                          contribution
-#&gt; randomForest: baseline                       3487.722
-#&gt; randomForest: * district = Srodmiescie       1034.737
-#&gt; randomForest: * surface = 130                -315.991
-#&gt; randomForest: * no.rooms = 5                 -163.113
-#&gt; randomForest: * floor = 3                     150.529
-#&gt; randomForest: * construction.year = 2000      -24.021
-#&gt; randomForest: prediction                     4169.863
-#&gt; baseline:  0 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='local_interactions-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='local_interactions-4.png' alt='' width='700' height='433' /></div></pre>
+<span class='no'>bd_rf</span>
+<span class='fu'>plot</span>(<span class='no'>bd_rf</span>)
+<span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -70,7 +70,7 @@
       <h1>breakDown plots for the linear models</h1>
                         <h4 class="author">Przemyslaw Biecek</h4>
             
-            <h4 class="date">2018-10-23</h4>
+            <h4 class="date">2018-11-03</h4>
       
       
       <div class="hidden name"><code>break_lm.Rmd</code></div>
@@ -102,11 +102,11 @@
 <a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co"># different roundings</span></a>
 <a class="sourceLine" id="cb4-8" data-line-number="8"><span class="kw">print</span>(br, <span class="dt">digits =</span> <span class="dv">2</span>, <span class="dt">rounding_function =</span> signif)</a>
 <a class="sourceLine" id="cb4-9" data-line-number="9"><span class="kw">print</span>(br, <span class="dt">digits =</span> <span class="dv">6</span>, <span class="dt">rounding_function =</span> round)</a>
-<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="kw">plot</span>(br) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"breakDown plot for predicted quality of a wine"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="kw">plot</span>(br) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">"breakDown plot for predicted quality of a wine"</span>)</a></code></pre></div>
 <p>Use the <code>baseline</code> argument to set the origin of plots.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">br &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/breakDown/topics/broken">broken</a></span>(model, new_observation, <span class="dt">baseline =</span> <span class="st">"Intercept"</span>)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2">br</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw">plot</span>(br) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"breakDown plot for predicted quality of a wine"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw">plot</span>(br) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">"breakDown plot for predicted quality of a wine"</span>)</a></code></pre></div>
 <p>Works for interactions as well</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">model &lt;-<span class="st"> </span><span class="kw">lm</span>(quality <span class="op">~</span><span class="st"> </span>(alcohol <span class="op">+</span><span class="st"> </span>density  <span class="op">+</span><span class="st"> </span>residual.sugar)<span class="op">^</span><span class="dv">2</span>,</a>
 <a class="sourceLine" id="cb6-2" data-line-number="2">               <span class="dt">data =</span> wine)</a>
@@ -114,7 +114,7 @@
 <a class="sourceLine" id="cb6-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb6-5" data-line-number="5">br &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/breakDown/topics/broken">broken</a></span>(model, new_observation, <span class="dt">baseline =</span> <span class="st">"Intercept"</span>)</a>
 <a class="sourceLine" id="cb6-6" data-line-number="6">br</a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="kw">plot</span>(br) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"breakDown plot for predicted quality of a wine"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="kw">plot</span>(br) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">"breakDown plot for predicted quality of a wine"</span>)</a></code></pre></div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
