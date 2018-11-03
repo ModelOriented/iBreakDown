@@ -1,10 +1,10 @@
-#' Model Agnostic Sequential Variable attributionss
+#' Model Agnostic Sequential Variable attributions
 #'
-#' This function finds Variable attributionss via Sequential Variable Conditioning
+#' This function finds Variable attributions via Sequential Variable Conditioning
 #' The complexity of this function is O(2*p).
 #' This function first determines the order for conditionings and then calculate variable effects via sequence of conditionings.
 #'
-#' @param x a model to be explained, or an explaienr created with function `DALEX::explain()`.
+#' @param x a model to be explained, or an explainer created with function `DALEX::explain()`.
 #' @param data validation dataset, will be extracted from `x` if it's an explainer
 #' @param predict_function predict function, will be extracted from `x` if it's an explainer
 #' @param new_observation a new observation with columns that corresponds to variables used in the model

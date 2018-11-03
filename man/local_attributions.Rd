@@ -4,7 +4,7 @@
 \alias{local_attributions}
 \alias{local_attributions.explainer}
 \alias{local_attributions.default}
-\title{Model Agnostic Sequential Variable attributionss}
+\title{Model Agnostic Sequential Variable attributions}
 \usage{
 local_attributions(x, ...)
 
@@ -15,7 +15,7 @@ local_attributions(x, ...)
   new_observation, keep_distributions = FALSE, label = class(x)[1], ...)
 }
 \arguments{
-\item{x}{a model to be explained, or an explaienr created with function `DALEX::explain()`.}
+\item{x}{a model to be explained, or an explainer created with function `DALEX::explain()`.}
 
 \item{...}{other parameters}
 
@@ -33,7 +33,7 @@ local_attributions(x, ...)
 an object of the `break_down` class
 }
 \description{
-This function finds Variable attributionss via Sequential Variable Conditioning
+This function finds Variable attributions via Sequential Variable Conditioning
 The complexity of this function is O(2*p).
 This function first determines the order for conditionings and then calculate variable effects via sequence of conditionings.
 }

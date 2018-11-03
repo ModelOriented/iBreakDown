@@ -3,11 +3,11 @@
 #' This function implements decomposition of model predictions with identification
 #' of interactions.
 #' The complexity of this function is O(2*p) for additive models and O(2*p^2) for interactions.
-#' This function works in similar way to step-up and step-down greedy approaximations,
-#' the main difference is that in the fisrt step the order of variables is determied.
+#' This function works in similar way to step-up and step-down greedy approximations,
+#' the main difference is that in the first step the order of variables is determined.
 #' And in the second step the impact is calculated.
 #'
-#' @param x a model to be explained, or an explaienr created with function `DALEX::explain()`.
+#' @param x a model to be explained, or an explainer created with function `DALEX::explain()`.
 #' @param data validation dataset, will be extracted from `x` if it's an explainer
 #' @param predict_function predict function, will be extracted from `x` if it's an explainer
 #' @param ... other parameters
@@ -15,7 +15,7 @@
 #' @param keep_distributions if TRUE, then the distribution of partial predictions is stored in addition to the average.
 #' @param label character - the name of the model. By default it's extracted from the 'class' attribute of the model
 #' @importFrom stats predict
-#' @return an object of the broken class
+#' @return an object of the `break_down` class
 #'
 #' @examples
 #' \dontrun{
