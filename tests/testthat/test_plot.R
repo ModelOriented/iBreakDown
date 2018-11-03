@@ -1,7 +1,7 @@
 context("Check plot() function for broken object")
 
 # preparation
-library(DALEX2)
+library(DALEX)
 set.seed(1313)
 # example with interaction
 # classification for HR data
