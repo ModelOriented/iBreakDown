@@ -36,10 +36,10 @@ bd_rf_reg_distr <- local_interactions(exp_rf_reg,
 # tests
 
 test_that("Output format", {
-  expect_is(bd_rf_class, "broken")
-  expect_is(bd_rf_class_distr, "broken")
-  expect_is(bd_rf_reg, "broken")
-  expect_is(bd_rf_reg_distr, "broken")
+  expect_is(bd_rf_class, "break_down")
+  expect_is(bd_rf_class_distr, "break_down")
+  expect_is(bd_rf_reg, "break_down")
+  expect_is(bd_rf_reg_distr, "break_down")
 })
 
 test_that("Error when no distribution before provided", {
