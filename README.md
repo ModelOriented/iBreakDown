@@ -1,6 +1,6 @@
-[![Build Status](https://api.travis-ci.org/DrWhy2/breakDown2.png)](https://travis-ci.org/DrWhy2/breakDown2)
+[![Build Status](https://api.travis-ci.org/ModelOriented/breakDown2.png)](https://travis-ci.org/ModelOriented/breakDown2)
 [![Coverage
-Status](https://img.shields.io/codecov/c/github/DrWhy2/breakDown2/master.svg)](https://codecov.io/github/DrWhy2/breakDown2?branch=master)
+Status](https://img.shields.io/codecov/c/github/ModelOriented/breakDown2/master.svg)](https://codecov.io/github/ModelOriented/breakDown2?branch=master)
 
 # Break Down: Model Agnostic Explainers for Individual Predictions
 
