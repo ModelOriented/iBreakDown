@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 Here we will use the HR data to present the breakDown2 package for classification models.
 
 ```{r}
-devtools::install_github("ModelOriented/DALEX2")
+# devtools::install_github("ModelOriented/DALEX2")
 library(DALEX2)
 library(ggplot2)
 library(breakDown2)

@@ -12,6 +12,9 @@ r_packages:
   - ggplot2
   - DALEX
   - covr
+install:
+- R -e 'devtools::install_github("ModelOriented/DALEX2")'
+
 
 after_success:
   - Rscript -e 'library(covr); codecov()'
