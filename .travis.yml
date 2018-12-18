@@ -15,6 +15,11 @@ r_packages:
   - ggplot2
   - DALEX
   - covr
+  - nnet
+  - randomForest
+  - e1071
+  - caret
+  - DALEX2
 
 after_success:
   - Rscript -e 'library(covr); codecov()'
