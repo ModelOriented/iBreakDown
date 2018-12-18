@@ -12,6 +12,7 @@ r_packages:
   - ggplot2
   - DALEX
   - covr
+  - devtools
 install:
 - R -e 'devtools::install_github("ModelOriented/DALEX2")'
 
