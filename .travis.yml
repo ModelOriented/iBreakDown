@@ -7,11 +7,19 @@ env:
   - R_CHECK_ARGS="--no-build-vignettes --no-manual --timings"
 notifications:
   email: false
+before_install:
+  - R -e 'install.packages("devtools")'
+  - R -e 'devtools::install_github("ModelOriented/DALEX2")'
 r_packages:
   - archivist
   - ggplot2
   - DALEX
   - covr
+  - nnet
+  - randomForest
+  - e1071
+  - caret
+  - DALEX2
 
 after_success:
   - Rscript -e 'library(covr); codecov()'

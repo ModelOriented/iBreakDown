@@ -1,0 +1,184 @@
+---
+title: "breakDown2 plots for classification models"
+author: "Dariusz Komosinski"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_document
+vignette: >
+  %\VignetteIndexEntry{breakDown2 plots for classification models}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = FALSE,
+  comment = "#>",
+  warning = FALSE,
+  message = FALSE,
+  cache = TRUE
+)
+```
+
+Here we will use the HR data to present the breakDown2 package for classification models.
+
+```{r}
+# devtools::install_github("ModelOriented/DALEX2")
+library(DALEX2)
+library(ggplot2)
+library(breakDown2)
+
+head(HR)
+new_observation <- HR_test[1,]
+new_observation
+```
+
+
+## glm
+
+First, we fit a model.
+
+```{r}
+library(nnet)
+m_glm <- multinom(status ~ . , data = HR, probabilities = TRUE, model = TRUE)
+```
+
+To understand the factors that drive predictions for a single observation we use the `breakDown2` package.
+
+However sometimes we need to create our own predict function which returns probalilities.
+
+
+```{r}
+p_fun <- function(object, newdata){predict(object, newdata=newdata, type="prob")}
+
+# p_fun <- function(object, newdata){
+#   if (nrow(newdata) == 1) {
+#      as.data.frame(t(predict(object, newdata, type = "prob")))
+#   } else {
+#     as.data.frame(predict(object, newdata=newdata, type="prob"))
+#   }
+# }
+```
+
+Now we create an object of the `break_down` class. If we want to plot distributions of partial predictions, use argument `keep_distributions`. 
+
+```{r}
+bd_glm <- local_attributions(m_glm,
+                            data = HR_test,
+                            new_observation =  new_observation,
+                            keep_distributions = TRUE,
+                            predict_function = p_fun)
+```
+
+We can simply print the result.
+
+```{r}
+#bd_glm
+```
+
+Or plot the result which is more clear.
+
+```{r}
+plot(bd_glm)
+```
+
+Use the `start_baseline` argument to set the origin of plots.
+
+```{r}
+plot(bd_glm, start_baseline = TRUE)
+```
+
+Use the `plot_distributions` argument to see distributions of partial predictions.
+
+```{r}
+plot(bd_glm, plot_distributions = TRUE)
+```
+
+For another type of models we proceed analogously.
+
+## randomForest
+
+```{r}
+library(randomForest)
+
+m_rf <- randomForest(status ~ . , data = HR)
+
+p_fun <- function(object, newdata){predict(object, newdata=newdata, type="prob")}
+
+bd_rf <- local_attributions(m_rf,
+                            data = HR_test,
+                            new_observation =  new_observation,
+                            predict_function = p_fun,
+                            keep_distributions = TRUE)
+
+bd_rf
+plot(bd_rf)
+plot(bd_rf, start_baseline = TRUE)
+plot(bd_rf, plot_distributions = TRUE)
+```
+
+## SVM
+
+```{r}
+library(e1071)
+
+m_svm <- svm(status ~ . , data = HR, type = "C-classification", probability = TRUE)
+
+p_fun <- function(object, newdata){
+  p <- predict(object, newdata = newdata, probability = TRUE)
+  attr(p, "probabilities")
+  }
+
+bd_svm <- local_attributions(m_svm,
+                            data = HR_test,
+                            new_observation =  new_observation,
+                            keep_distributions = TRUE,
+                            predict_function = p_fun)
+
+bd_svm
+plot(bd_svm)
+plot(bd_svm, start_baseline = TRUE)
+plot(bd_svm, plot_distributions = TRUE)
+```
+
+## knn
+
+```{r}
+library(caret)
+
+m_knn <- knn3(status ~ . , data = HR, k = 5)
+
+bd_knn <- local_attributions(m_knn,
+                            data = HR_test,
+                            new_observation =  new_observation,
+                            keep_distributions = TRUE)
+
+bd_knn
+plot(bd_knn)
+plot(bd_knn, start_baseline = TRUE)
+plot(bd_knn, plot_distributions = TRUE)
+```
+
+## nnet
+
+```{r}
+library(nnet)
+
+m_nnet <- nnet(status ~ . , data = HR, size = 10)
+
+bd_nnet <- local_attributions(m_nnet,
+                            data = HR_test,
+                            new_observation =  new_observation,
+                            keep_distributions = TRUE)
+
+bd_nnet
+plot(bd_nnet)
+plot(bd_nnet, start_baseline = TRUE)
+plot(bd_nnet, plot_distributions = TRUE)
+```
+
+<!-- ## lightGBM -->
+
+<!-- ```{r} -->
+
+
+<!-- ``` -->

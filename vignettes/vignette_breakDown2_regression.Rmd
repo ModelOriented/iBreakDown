@@ -1,0 +1,168 @@
+---
+title: "breakDown2 plots for regression models"
+author: "Dariusz Komosinski"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_document
+vignette: >
+  %\VignetteIndexEntry{breakDown2 plots for regression models}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  comment = "#>",
+  warning = FALSE,
+  message = FALSE,
+  cache = TRUE
+)
+```
+
+Here we will use the dragons data to present the breakDown2 package for regression models.
+
+```{r}
+# devtools::install_github("ModelOriented/DALEX2")
+library(DALEX2)
+library(ggplot2)
+library(breakDown2)
+
+head(dragons)
+new_observation <- dragons_test[1,]
+new_observation
+```
+
+## Linear regression
+
+First, we fit a model.
+
+```{r}
+m_lm <- lm(life_length ~ . , data = dragons)
+```
+
+To understand the factors that drive predictions for a single observation we use the `breakDown2` package.
+
+Now we create an object of the `break_down` class. If we want to plot distributions of partial predictions, use argument `keep_distributions`.
+
+```{r}
+bd_lm <- local_attributions(m_lm,
+                            data = dragons_test,
+                            new_observation =  new_observation,
+                            keep_distributions = TRUE)
+```
+
+We can simply print the result.
+
+```{r}
+bd_lm
+```
+
+Or plot the result which is more clear.
+
+```{r}
+plot(bd_lm)
+```
+
+Use the `start_baseline` argument to set the origin of plots.
+
+```{r}
+plot(bd_lm, start_baseline = TRUE)
+```
+
+Use the `plot_distributions` argument to see distributions of partial predictions.
+
+```{r}
+plot(bd_lm, plot_distributions = TRUE)
+```
+
+For another type of models we proceed analogously. However sometimes we need to create our own predict function (see `nnet` example).
+
+## randomForest
+
+```{r}
+library(randomForest)
+
+m_rf <- lm(life_length ~ . , data = dragons)
+
+bd_rf <- local_attributions(m_rf,
+                            data = dragons_test,
+                            new_observation =  new_observation,
+                            keep_distributions = TRUE)
+
+bd_rf
+plot(bd_rf)
+plot(bd_rf, start_baseline = TRUE)
+plot(bd_rf, plot_distributions = TRUE)
+```
+
+## SVM
+
+```{r}
+library(e1071)
+
+m_svm <- svm(life_length ~ . , data = dragons)
+
+bd_svm <- local_attributions(m_svm,
+                            data = dragons_test,
+                            new_observation =  new_observation,
+                            keep_distributions = TRUE)
+
+bd_svm
+plot(bd_svm)
+plot(bd_svm, start_baseline = TRUE)
+plot(bd_svm, plot_distributions = TRUE)
+```
+
+## knn
+
+```{r}
+library(caret)
+
+m_knn <- knnreg(life_length ~ . , data = dragons)
+
+bd_knn <- local_attributions(m_knn,
+                            data = dragons_test,
+                            new_observation =  new_observation,
+                            keep_distributions = TRUE)
+
+bd_knn
+plot(bd_knn)
+plot(bd_knn, start_baseline = TRUE)
+plot(bd_knn, plot_distributions = TRUE)
+```
+
+## nnet
+
+When you use `nnet` package for regression, remember to normalize the resposne variable, in such a way that it is from interval $(0,1)$.
+
+In this case creating own predict function is also needed.
+
+```{r}
+library(nnet)
+
+x <- max(abs(dragons$life_length))
+digits <- floor(log10(x))
+normalizing_factor <- round(x, -digits)
+m_nnet <- nnet(life_length/normalizing_factor ~ . , data = dragons, size = 10, linout = TRUE)
+
+p_fun <- function(model, new_observation){
+  predict(model, newdata = new_observation)*normalizing_factor
+}
+
+bd_nnet <- local_attributions(m_nnet,
+                            data = dragons_test,
+                            new_observation =  new_observation,
+                            keep_distributions = TRUE,
+                            predict_function = p_fun)
+
+bd_nnet
+plot(bd_nnet)
+plot(bd_nnet, start_baseline = TRUE)
+plot(bd_nnet, plot_distributions = TRUE)
+```
+
+<!-- ## lightGBM -->
+
+<!-- ```{r} -->
+
+
+<!-- ``` -->

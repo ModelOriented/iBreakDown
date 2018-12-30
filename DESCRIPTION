@@ -21,7 +21,9 @@ Suggests: knitr,
     randomForest,
     DALEX,
     ranger,
-    testthat
+    testthat,
+    DALEX2,
+    nnet
 VignetteBuilder: knitr
 URL: https://pbiecek.github.io/breakDown2/
 BugReports: https://github.com/pbiecek/breakDown2/issues
