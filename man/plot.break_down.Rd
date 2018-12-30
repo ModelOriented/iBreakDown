@@ -5,9 +5,9 @@
 \title{Plot Generic for Break Down Objects}
 \usage{
 \method{plot}{break_down}(x, ..., add_contributions = TRUE,
-  start_baseline = FALSE, vcolors = c(`-1` = "#d8b365", `0` = "#f5f5f5", `1`
-  = "#5ab4ac", X = "darkgrey"), digits = 3, rounding_function = round,
-  plot_distributions = FALSE)
+  start_baseline = FALSE, vcolors = c(`-1` = "#d8b365", `0` =
+  "#f5f5f5", `1` = "#5ab4ac", X = "darkgrey"), digits = 3,
+  rounding_function = round, plot_distributions = FALSE)
 }
 \arguments{
 \item{x}{the model model of 'break_down' class}

@@ -4,7 +4,7 @@ Status](https://img.shields.io/codecov/c/github/ModelOriented/breakDown2/master.
 
 # Break Down: Model Agnostic Explainers for Individual Predictions
 
-**breakDown2** is a very experimental version of the [breakDown](https://github.com/pbiecek/breakDown) package. 
+**breakDown2** is an experimental version of the [breakDown](https://github.com/pbiecek/breakDown) package. 
 Expect rapid changes.
 
 The `breakDown2` package is a model agnostic tool for decomposition of predictions from black boxes.
