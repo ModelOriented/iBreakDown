@@ -1,13 +1,11 @@
-// !preview r2d3 data=list(structure(list("* Sex = female", 0.306481792717087,    0.67272268907563, "#0f6333", "Sex = 'female' <br>increases average response <br>by 0.3065"), .Names = c("variable", "contribution","cummulative", "sign", "label")), structure(list("* Fare = 71",    0.0709915966386554, 0.743714285714286, "#a3142f", "Fare = 71 (low value) <br>increases average response <br>by 0.071"), .Names = c("variable","contribution", "cummulative", "sign", "label")), structure(list(    "* Pclass = 1", 0.210210084033614, 0.953924369747899, "#0f6333",    "Pclass = 1 (low value) <br>increases average response <br>by 0.2102"), .Names = c("variable", "contribution", "cummulative","sign", "label")), structure(list("* Embarked = C", 0.0145014005602241,    0.968425770308123, "#a3142f", "RF"), .Names = c("variable", "contribution","cummulative", "sign", "label")), structure(list("+ other factors",    0.0154089635854342, 0.983834733893557, "#a3142f", "All other features <br>decrease average response <br>by 0.01"), .Names = c("variable","contribution", "cummulative", "sign", "label"))), dependencies = "tooltipD3.js", css = "breakDownD3.css", options=list(xmin = 0.2, xmax = 1, model_avg = 0.3662, model_res = 0.9869)
+// !preview r2d3 data=list(structure(list("+ Sex = female", 0.306481792717087,    0.67272268907563, "#0f6333", "Sex = 'female' <br>increases average response <br>by 0.3065"), .Names = c("variable", "contribution","cummulative", "sign", "label")), structure(list("+ Fare = 71",    0.0709915966386554, 0.743714285714286, "#a3142f", "Fare = 71 (low value) <br>increases average response <br>by 0.071"), .Names = c("variable","contribution", "cummulative", "sign", "label")), structure(list(    "+ Pclass = 1", 0.210210084033614, 0.953924369747899, "#0f6333",    "Pclass = 1 (low value) <br>increases average response <br>by 0.2102"), .Names = c("variable", "contribution", "cummulative","sign", "label")), structure(list("+ Embarked = C", 0.0145014005602241,    0.968425770308123, "#a3142f", "Embarked = 'C' <br>decreases average response <br>by 0.02"), .Names = c("variable", "contribution","cummulative", "sign", "label")), structure(list("+ other factors",    0.0154089635854342, 0.983834733893557, "#a3142f", "All other features <br>decrease average response <br>by 0.01"), .Names = c("variable","contribution", "cummulative", "sign", "label"))), dependencies = "tooltipD3.js", css = "breakDownD3.css", options=list(xmin = 0.3, xmax = 1, model_avg = 0.3662, model_res = 0.9869), d3_version = "4"
 //
 // r2d3: https://rstudio.github.io/r2d3
 //
 
-b2data = [{ "variable":"+ Sex = female",      "contribution":0.3065,      "cummulative":0.6727,      "sign":"#0f6333",      "label":""   },   {        "variable":"+ Fare = 71",      "contribution":0.071,      "cummulative":0.7437,      "sign":"#0f6333",      "label":""   },   {        "variable":"+ Pclass = 1",      "contribution":0.2102,      "cummulative":0.9539,      "sign":"#0f6333",      "label":""   },   {        "variable":"+ Embarked = C",      "contribution":-0.02,      "cummulative":0.9339,      "sign":"#a3142f",      "label":"Embarked = 'C' <br>decreases average response <br>by 0.02"   },   {        "variable":"+ 3 others",      "contribution":-0.01,      "cummulative":0.9239,      "sign":"#a3142f",      "label":"All other features <br>decrease average response <br>by 0.01"}]
-
 var x_min   = options.xmin
 var x_max   = options.xmax
-var lmargin = 130
+var lmargin = 150
 var rmargin = 10
 var bmargin = 50
 var tmargin = 50
@@ -36,7 +34,7 @@ svg
   .selectAll('line')
   .data(xAxis.ticks(7))
   .enter().append('line')
-  .attr('y1', tmargin - 10)
+  .attr('y1', tmargin - 5)
   .attr('y2', h + tmargin)
   .attr("x1", function(d) { return xAxis(d); })
   .attr("x2", function(d) { return xAxis(d); })
@@ -111,7 +109,7 @@ finalg
 var maing = svg
   .append("g")
 
-// tooltips
+// tooltips set class for correct rendering (with CSS)
 var tool_tip = d3.tip()
       .attr("class", "d3-tip")
       .offset([-8, 0])
@@ -120,26 +118,21 @@ var tool_tip = d3.tip()
 maing
   .call(tool_tip);
 
-// bars
+// bars - main point of a plot
 maing
   .selectAll("rect")
   .data(data)
   .enter()
   .append("rect")
-  .attr("x", function(d, i) {
-      return (xAxis(d.cummulative - Math.max(d.contribution, 0)));
-    })
+  .attr("x", function(d) {  return xAxis(d.cummulative - Math.max(d.contribution, 0)); })
   .attr("y", function(d, i) { return yAxis(i) })
-  .attr("width", function(d, i) {
-      return (Math.abs(xAxis(d.contribution) - xAxis(0)));
-    })
+  .attr("width", function(d, i) { return Math.abs(xAxis(d.contribution) - xAxis(0)); })
   .attr("height", yAxis(1) - yAxis(0) - 2)
-  .style("fill", function(d, i) {
-      return d.sign;
-    })
+  .style("fill", function(d) { return d.sign; })
     .on('mouseover', tool_tip.show)
     .on('mouseout', tool_tip.hide);
 
+// add names of variables
 svg
   .append("g")
   .selectAll("text")
@@ -147,26 +140,21 @@ svg
   .enter()
   .append("text")
   .attr("x", 0)
-  .attr("y", function(d, i) { return yAxis(i+0.7) })
+  .attr("y", function(d, i) { return yAxis(i + 0.7) })
   .style("font-family", "'Roboto Condensed', sans-serif")
   .style("fill","#878787")
   .style("font-size", "20")
-  .text(function(d) {
-      return (d.variable);
-    })
+  .text(function(d) { return d.variable; })
 
+// add small links between rectangles
 svg
   .append("g")
   .selectAll("line")
   .data(data)
   .enter()
   .append("line")
-  .attr("x1", function(d, i) {
-      return (xAxis(d.cummulative));
-    })
-  .attr("x2", function(d, i) {
-      return (xAxis(d.cummulative));
-    })
+  .attr("x1", function(d) { return xAxis(d.cummulative); })
+  .attr("x2", function(d) { return xAxis(d.cummulative); })
   .attr("y1", function(d, i) { return yAxis(i) })
   .attr("y2", function(d, i) { return yAxis(i + 2)-2 })
   .style("stroke","black")

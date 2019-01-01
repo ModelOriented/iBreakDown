@@ -246,6 +246,12 @@ d3.tip = function() {
       .style('opacity', 0)
       .style('pointer-events', 'none')
       .style('box-sizing', 'border-box')
+      .style('line-heigh', 1.1)
+      .style('padding', '6px')
+      .style('background', "#000000c0")
+      .style('color', '#fff')
+      .style('font-size', '14px')
+      .style('font-family', "'Roboto Condensed', sans-serif");
 
     return node.node()
   }
