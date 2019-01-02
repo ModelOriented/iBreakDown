@@ -95,7 +95,7 @@ plotD3.break_down <- function(x, ...,
   })
 
   # range
-  if (is.na(min_max)) {
+  if (any(is.na(min_max))) {
     min_max <- range(c(model_baseline, model_prediction,
                        min(x$cummulative), max(x$cummulative))) * c(0.95,1.05)
   }
