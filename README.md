@@ -16,6 +16,10 @@ It's a part of [DrWhy](https://github.com/ModelOriented/DrWhy) collection of too
 
 Find lots of R examples at `breakDown2` website: https://ModelOriented.github.io/breakDown2/
 
+This version works also with D3! 
+[see an example](https://modeloriented.github.io/breakDown2/articles/vignette_breakDown2_titanic.html#plot-attributions-with-d3).
+![plotD3](images/plotD3.png)
+
 ## Installation
 
 Install from GitHub
