@@ -1,0 +1,110 @@
+---
+title: "breakDown2 plots for Titanic data"
+author: "Przemyslaw Biecek"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_document
+vignette: >
+  %\VignetteIndexEntry{breakDown2 plots for Titanic data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = FALSE,
+  comment = "#>",
+  warning = FALSE,
+  message = FALSE,
+  cache = TRUE
+)
+```
+
+# Data for Titanic survival
+
+Let's see an example for `breakDown2` plots for survival probability of Titanic passengers.
+First, let's see the data, we will find quite nice data from in the `titanic` package.
+
+```{r}
+library("titanic")
+titanic <- titanic_train[,c("Survived", "Pclass", "Sex", "Age", "SibSp", "Parch", "Fare", "Embarked")]
+titanic$Survived <- factor(titanic$Survived)
+titanic$Sex <- factor(titanic$Sex)
+titanic$Embarked <- factor(titanic$Embarked)
+titanic <- na.omit(titanic)
+head(titanic)
+```
+
+# Model for Titanic survival
+
+Ok, not it's time to create a model. Let's use the Random Forest model.
+
+```{r}
+# prepare model
+library("randomForest")
+rf_model <- randomForest(Survived ~ .,  data = titanic)
+rf_model
+```
+
+# Explainer for Titanic survival
+
+The third step (it's optional but useful) is to create a DALEX2 explainer for random forest model.
+
+```{r}
+library("DALEX2")
+predict_fuction <- function(m,x) predict(m, x, type = "prob")[,2]
+rf_explain <- explain(rf_model, data = titanic,
+                      y = titanic$Survived == "1", label = "RF",
+                      predict_function = predict_fuction)
+```
+
+# Break Down plot with D3
+
+Ok, not it's time to create a model. Let's use the Random Forest model.
+
+Let's see break down for model predictions for 8 years old male from 1st class that embarked from port C.
+
+```{r}
+new_passanger <- data.frame(
+  Pclass = 1,
+  Sex = factor("male", levels = c("female", "male")),
+  Age = 8,
+  SibSp = 0,
+  Parch = 0,
+  Fare = 72,
+  Embarked = factor("C", levels = c("","C","Q","S"))
+)
+```
+
+## Calculate variable attributions
+
+```{r}
+library("breakDown2")
+rf_la <- local_attributions(rf_explain, new_passanger)
+rf_la
+```
+
+## Plot attributions with `ggplot2`
+
+```{r}
+plot(rf_la)
+```
+
+## Plot attributions with `D3`
+
+```{r}
+plotD3(rf_la)
+```
+
+## Show all features
+
+```{r}
+plotD3(rf_la, max_features = 10)
+```
+
+## Force OX axis to be from 0 to 1
+
+```{r}
+plotD3(rf_la, max_features = 10, min_max = c(0,1))
+```
+
+
