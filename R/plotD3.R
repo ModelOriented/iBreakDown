@@ -2,6 +2,8 @@
 #'
 #' @param x the model model of 'break_down' class
 #' @param ... other parameters
+#' @param max_features default 4. Maximal number of features to be included in the plot
+#' @param min_max range of OX axis. By deafult `NA` therefore will be extracted from the contributions of `x`. But can be set to some constants, usefull if these plots are used for comparisons.
 #' @param vcolors named vector with colors
 #' @param digits number of decimal places (round) or significant digits (signif) to be used.
 #' See the \code{rounding_function} argument
@@ -16,7 +18,8 @@
 #' ## Not run:
 #' # prepare dataset
 #' library("titanic")
-#' titanic <- titanic_train[,c("Survived", "Pclass", "Sex", "Age", "SibSp", "Parch", "Fare", "Embarked")]
+#' titanic <- titanic_train[,c("Survived", "Pclass", "Sex", "Age",
+#'                             "SibSp", "Parch", "Fare", "Embarked")]
 #' titanic$Survived <- factor(titanic$Survived)
 #' titanic$Sex <- factor(titanic$Sex)
 #' titanic$Embarked <- factor(titanic$Embarked)
@@ -26,17 +29,23 @@
 #' library("randomForest")
 #' rf_model <- randomForest(Survived ~ .,  data = titanic)
 #'
+#' # prepare explainer
 #' library("DALEX2")
 #' predict_fuction <- function(m,x) predict(m, x, type = "prob")[,2]
 #' rf_explain <- explain(rf_model, data = titanic,
 #'                       y = titanic$Survived == "1", label = "RF",
 #'                       predict_function = predict_fuction)
 #'
+#' # plor D3 explainers
 #' library("breakDown2")
 #' rf_la <- local_attributions(rf_explain, titanic[2,])
-#'
-#' plot(rf_la)
+#' rf_la
 #' plotD3(rf_la)
+#'
+#' rf_la <- local_attributions(rf_explain, titanic[3,])
+#' rf_la
+#' plotD3(rf_la, max_features = 10)
+#' plotD3(rf_la, max_features = 10, min_max = c(0,1))
 #' }
 #' @export
 #' @rdname plotD3
@@ -47,10 +56,9 @@ plotD3 <- function(x, ...)
 #' @rdname plotD3
 plotD3.break_down <- function(x, ...,
                         max_features = 4,
+                        min_max = NA,
                         vcolors = c("-1" = "#a3142f", "0" = "#a3142f", "1" = "#0f6333", "X" = "#0f6333"),
                         digits = 3, rounding_function = round) {
-  x <- rf_la
-
   class(x) = "data.frame"
 
   # remove first and last row
@@ -82,21 +90,21 @@ plotD3.break_down <- function(x, ...,
          label = paste0(substr(x$variable[i], 3, 100),
                         "<br>", ifelse(x$contribution[i] > 0, "increases", "decreases"),
                         " average response <br>by ",
-                        rounding_function(x$contribution[i], digits))
+                        rounding_function(abs(x$contribution[i]), digits))
          )
   })
 
   # range
-  min_max <- range(c(model_baseline, model_prediction,
-                     min(x$cummulative), max(x$cummulative))) * c(0.95,1.05)
+  if (is.na(min_max)) {
+    min_max <- range(c(model_baseline, model_prediction,
+                       min(x$cummulative), max(x$cummulative))) * c(0.95,1.05)
+  }
 
   # plot D3 object
   r2d3::r2d3(
-#    data = list(structure(list("+ Sex = female", 0.306481792717087,    0.67272268907563, "#0f6333", "Sex = 'female' <br>increases average response <br>by 0.3065"), .Names = c("variable", "contribution","cummulative", "sign", "label")), structure(list("+ Fare = 71",    0.0709915966386554, 0.743714285714286, "#a3142f", "Fare = 71 (low value) <br>increases average response <br>by 0.071"), .Names = c("variable","contribution", "cummulative", "sign", "label")), structure(list(    "+ Pclass = 1", 0.210210084033614, 0.953924369747899, "#0f6333",    "Pclass = 1 (low value) <br>increases average response <br>by 0.2102"), .Names = c("variable", "contribution", "cummulative","sign", "label")), structure(list("+ Embarked = C", 0.0145014005602241,    0.968425770308123, "#a3142f", "Embarked = 'C' <br>decreases average response <br>by 0.02"), .Names = c("variable", "contribution","cummulative", "sign", "label")), structure(list("+ other factors",    0.0154089635854342, 0.983834733893557, "#a3142f", "All other features <br>decrease average response <br>by 0.01"), .Names = c("variable","contribution", "cummulative", "sign", "label"))),
     data = x_as_list,
-    script = "breakDownD3.js",
-    dependencies = "tooltipD3.js",
-    css = "breakDownD3.css",
+    script = system.file("breakDownD3.js", package = "breakDown2"),
+    dependencies = system.file("tooltipD3.js", package = "breakDown2"),
     options = list(xmin =min_max[1], xmax = min_max[2],
                    model_avg = model_baseline, model_res = model_prediction),
     d3_version = "4"

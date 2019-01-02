@@ -24,6 +24,7 @@ Suggests: knitr,
     testthat,
     DALEX2,
     nnet,
+    titanic,
     r2d3
 VignetteBuilder: knitr
 URL: https://pbiecek.github.io/breakDown2/

@@ -7,14 +7,18 @@
 \usage{
 plotD3(x, ...)
 
-\method{plotD3}{break_down}(x, ..., max_features = 4, vcolors = c(`-1`
-  = "#a3142f", `0` = "#a3142f", `1` = "#0f6333", X = "#0f6333"),
-  digits = 3, rounding_function = round)
+\method{plotD3}{break_down}(x, ..., max_features = 4, min_max = NA,
+  vcolors = c(`-1` = "#a3142f", `0` = "#a3142f", `1` = "#0f6333", X =
+  "#0f6333"), digits = 3, rounding_function = round)
 }
 \arguments{
 \item{x}{the model model of 'break_down' class}
 
 \item{...}{other parameters}
+
+\item{max_features}{default 4. Maximal number of features to be included in the plot}
+
+\item{min_max}{range of OX axis. By deafult `NA` therefore will be extracted from the contributions of `x`. But can be set to some constants, usefull if these plots are used for comparisons.}
 
 \item{vcolors}{named vector with colors}
 
@@ -36,7 +40,8 @@ Plot Break Down Objects in D3 with r2d3
 ## Not run:
 # prepare dataset
 library("titanic")
-titanic <- titanic_train[,c("Survived", "Pclass", "Sex", "Age", "SibSp", "Parch", "Fare", "Embarked")]
+titanic <- titanic_train[,c("Survived", "Pclass", "Sex", "Age",
+                            "SibSp", "Parch", "Fare", "Embarked")]
 titanic$Survived <- factor(titanic$Survived)
 titanic$Sex <- factor(titanic$Sex)
 titanic$Embarked <- factor(titanic$Embarked)
@@ -46,16 +51,22 @@ titanic <- na.omit(titanic)
 library("randomForest")
 rf_model <- randomForest(Survived ~ .,  data = titanic)
 
+# prepare explainer
 library("DALEX2")
 predict_fuction <- function(m,x) predict(m, x, type = "prob")[,2]
 rf_explain <- explain(rf_model, data = titanic,
                       y = titanic$Survived == "1", label = "RF",
                       predict_function = predict_fuction)
 
+# plor D3 explainers
 library("breakDown2")
 rf_la <- local_attributions(rf_explain, titanic[2,])
-
-plot(rf_la)
+rf_la
 plotD3(rf_la)
+
+rf_la <- local_attributions(rf_explain, titanic[3,])
+rf_la
+plotD3(rf_la, max_features = 10)
+plotD3(rf_la, max_features = 10, min_max = c(0,1))
 }
 }
