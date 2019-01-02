@@ -77,6 +77,9 @@
     <li>
       <a href="../articles/vignette_breakDown2_regression.html">breakDown2 plots for regression models</a>
     </li>
+    <li>
+      <a href="../articles/vignette_breakDown2_titanic.html">breakDown2 plots for Titanic data</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -157,11 +160,10 @@ This function first determines the order for conditionings and then calculate va
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## Not run:</span>
-<span class='fu'>library</span>(<span class='st'>"DALEX2"</span>)</div><div class='output co'>#&gt; <span class='message'>Welcome to DALEX2 (version: 0.9).</span></div><div class='input'><span class='fu'>library</span>(<span class='st'>"breakDown2"</span>)
-<span class='fu'>library</span>(<span class='st'>"randomForest"</span>)</div><div class='output co'>#&gt; <span class='message'>randomForest 4.6-14</span></div><div class='output co'>#&gt; <span class='message'>Type rfNews() to see new features/changes/bug fixes.</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘randomForest’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:breakDown2’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    margin</span></div><div class='input'><span class='fu'>set.seed</span>(<span class='fl'>1313</span>)
+<span class='fu'>library</span>(<span class='st'>"DALEX2"</span>)
+<span class='fu'>library</span>(<span class='st'>"breakDown2"</span>)
+<span class='fu'>library</span>(<span class='st'>"randomForest"</span>)
+<span class='fu'>set.seed</span>(<span class='fl'>1313</span>)
 <span class='co'># example with interaction</span>
 <span class='co'># classification for HR data</span>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>status</span> ~ <span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>)
