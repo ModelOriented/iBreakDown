@@ -1,6 +1,7 @@
 [![Build Status](https://api.travis-ci.org/ModelOriented/breakDown2.png)](https://travis-ci.org/ModelOriented/breakDown2)
 [![Coverage
 Status](https://img.shields.io/codecov/c/github/ModelOriented/breakDown2/master.svg)](https://codecov.io/github/ModelOriented/breakDown2?branch=master)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/komosinskid/breakDown2/master?filepath=binder%2Fa.ipynb)
 
 # Break Down: Model Agnostic Explainers for Individual Predictions
 
