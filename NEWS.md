@@ -1,3 +1,7 @@
+breakDown2 0.9.1
+----------------------------------------------------------------
+* added `plotD3()` function, that uses `r2d3` package to generate interactive D3 plots
+
 breakDown2 0.9.0
 ----------------------------------------------------------------
 

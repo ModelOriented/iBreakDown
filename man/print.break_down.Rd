@@ -4,7 +4,8 @@
 \alias{print.break_down}
 \title{Print Generic for Break Down Objects}
 \usage{
-\method{print}{break_down}(x, ..., digits = 3, rounding_function = round)
+\method{print}{break_down}(x, ..., digits = 3,
+  rounding_function = round)
 }
 \arguments{
 \item{x}{the model model of `break_down` class}

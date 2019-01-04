@@ -12,7 +12,8 @@ local_attributions(x, ...)
   keep_distributions = FALSE, ...)
 
 \method{local_attributions}{default}(x, data, predict_function = predict,
-  new_observation, keep_distributions = FALSE, label = class(x)[1], ...)
+  new_observation, keep_distributions = FALSE, label = class(x)[1],
+  ...)
 }
 \arguments{
 \item{x}{a model to be explained, or an explainer created with function `DALEX::explain()`.}

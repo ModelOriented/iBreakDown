@@ -71,6 +71,15 @@
     <li>
       <a href="../articles/break_lm.html">breakDown plots for the linear models</a>
     </li>
+    <li>
+      <a href="../articles/vignette_breakDown2_classification.html">breakDown2 plots for classification models</a>
+    </li>
+    <li>
+      <a href="../articles/vignette_breakDown2_regression.html">breakDown2 plots for regression models</a>
+    </li>
+    <li>
+      <a href="../articles/vignette_breakDown2_titanic.html">breakDown2 plots for Titanic data</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -100,9 +109,9 @@
 
     <pre class="usage"><span class='co'># S3 method for break_down</span>
 <span class='fu'>plot</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add_contributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>start_baseline</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>vcolors</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='kw'>`-1`</span> <span class='kw'>=</span> <span class='st'>"#d8b365"</span>, <span class='kw'>`0`</span> <span class='kw'>=</span> <span class='st'>"#f5f5f5"</span>, <span class='kw'>`1`</span>
-  <span class='kw'>=</span> <span class='st'>"#5ab4ac"</span>, <span class='kw'>X</span> <span class='kw'>=</span> <span class='st'>"darkgrey"</span>), <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>rounding_function</span> <span class='kw'>=</span> <span class='no'>round</span>,
-  <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>start_baseline</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>vcolors</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='kw'>`-1`</span> <span class='kw'>=</span> <span class='st'>"#d8b365"</span>, <span class='kw'>`0`</span> <span class='kw'>=</span>
+  <span class='st'>"#f5f5f5"</span>, <span class='kw'>`1`</span> <span class='kw'>=</span> <span class='st'>"#5ab4ac"</span>, <span class='kw'>X</span> <span class='kw'>=</span> <span class='st'>"darkgrey"</span>), <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+  <span class='kw'>rounding_function</span> <span class='kw'>=</span> <span class='no'>round</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -150,8 +159,7 @@ Or the default <code>round()</code> to have the same precision for all component
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'>## Not run:</span>
+    <pre class="examples"><div class='input'><span class='co'>## Not run:</span>
 <span class='fu'>library</span>(<span class='st'>"DALEX2"</span>)
 <span class='fu'>library</span>(<span class='st'>"breakDown2"</span>)
 <span class='fu'>library</span>(<span class='st'>"randomForest"</span>)
@@ -159,58 +167,35 @@ Or the default <code>round()</code> to have the same precision for all component
 <span class='co'># example with interaction</span>
 <span class='co'># classification for HR data</span>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>status</span> ~ <span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>)
-<span class='no'>new_observation</span> <span class='kw'>&lt;-</span> <span class='no'>HRTest</span>[<span class='fl'>1</span>,]
-
+<span class='no'>new_observation</span> <span class='kw'>&lt;-</span> <span class='no'>HRTest</span>[<span class='fl'>1</span>,]</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'HRTest' not found</span></div><div class='input'>
 <span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX2/topics/explain'>explain</a></span>(<span class='no'>model</span>,
                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>,<span class='fl'>1</span>:<span class='fl'>5</span>],
                         <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>])
 
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_attributions.html'>local_attributions</a></span>(<span class='no'>explainer_rf</span>,
-                           <span class='no'>new_observation</span>)
-<span class='no'>bd_rf</span>
-<span class='fu'>plot</span>(<span class='no'>bd_rf</span>)
-<span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>start_baseline</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
+                           <span class='no'>new_observation</span>)</div><div class='output co'>#&gt; <span class='error'>Error in is.data.frame(x): object 'new_observation' not found</span></div><div class='input'><span class='no'>bd_rf</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'bd_rf' not found</span></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot(bd_rf): object 'bd_rf' not found</span></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>start_baseline</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot(bd_rf, start_baseline = TRUE): object 'bd_rf' not found</span></div><div class='input'>
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_attributions.html'>local_attributions</a></span>(<span class='no'>explainer_rf</span>,
                            <span class='no'>new_observation</span>,
-                           <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>bd_rf</span>
-<span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
+                           <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='error'>Error in is.data.frame(x): object 'new_observation' not found</span></div><div class='input'><span class='no'>bd_rf</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'bd_rf' not found</span></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot(bd_rf, plot_distributions = TRUE): object 'bd_rf' not found</span></div><div class='input'>
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_interactions.html'>local_interactions</a></span>(<span class='no'>explainer_rf</span>,
                  <span class='no'>new_observation</span>,
-                 <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
-<span class='no'>bd_rf</span>
-<span class='fu'>plot</span>(<span class='no'>bd_rf</span>)
-<span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
+                 <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='error'>Error in is.data.frame(x): object 'new_observation' not found</span></div><div class='input'>
+<span class='no'>bd_rf</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'bd_rf' not found</span></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot(bd_rf): object 'bd_rf' not found</span></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot(bd_rf, plot_distributions = TRUE): object 'bd_rf' not found</span></div><div class='input'>
 <span class='co'># example for regression - apartment prices</span>
 <span class='co'># here we do not have intreactions</span>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
 <span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX2/topics/explain'>explain</a></span>(<span class='no'>model</span>,
                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartmentsTest</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>,<span class='fl'>2</span>:<span class='fl'>6</span>],
-                        <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartmentsTest</span>$<span class='no'>m2.price</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>])
-
+                        <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartmentsTest</span>$<span class='no'>m2.price</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>])</div><div class='output co'>#&gt; <span class='error'>Error in explain(model, data = apartmentsTest[1:1000, 2:6], y = apartmentsTest$m2.price[1:1000]): object 'apartmentsTest' not found</span></div><div class='input'>
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_attributions.html'>local_attributions</a></span>(<span class='no'>explainer_rf</span>,
-                           <span class='no'>apartmentsTest</span>[<span class='fl'>1</span>,])
-<span class='no'>bd_rf</span>
-<span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-<span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>start_baseline</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
+                           <span class='no'>apartmentsTest</span>[<span class='fl'>1</span>,])</div><div class='output co'>#&gt; <span class='error'>Error in is.data.frame(x): object 'apartmentsTest' not found</span></div><div class='input'><span class='no'>bd_rf</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'bd_rf' not found</span></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot(bd_rf, digits = 1): object 'bd_rf' not found</span></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>start_baseline</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot(bd_rf, digits = 1, start_baseline = TRUE): object 'bd_rf' not found</span></div><div class='input'>
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_attributions.html'>local_attributions</a></span>(<span class='no'>explainer_rf</span>,
                            <span class='no'>apartmentsTest</span>[<span class='fl'>1</span>,],
-                           <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
+                           <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='error'>Error in is.data.frame(x): object 'apartmentsTest' not found</span></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot(bd_rf, plot_distributions = TRUE): object 'bd_rf' not found</span></div><div class='input'>
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_interactions.html'>local_interactions</a></span>(<span class='no'>explainer_rf</span>,
                  <span class='no'>new_observation</span>,
-                 <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
-<span class='no'>bd_rf</span>
-<span class='fu'>plot</span>(<span class='no'>bd_rf</span>)
-<span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='co'># }</span></pre>
+                 <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='error'>Error in is.data.frame(x): object 'new_observation' not found</span></div><div class='input'>
+<span class='no'>bd_rf</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'bd_rf' not found</span></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot(bd_rf): object 'bd_rf' not found</span></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot(bd_rf, plot_distributions = TRUE): object 'bd_rf' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
