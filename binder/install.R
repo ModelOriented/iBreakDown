@@ -1,3 +1,2 @@
-install.packages("breakDown")
-install.packages("DALEX")
+devtools::install_github("ModelOriented/breakDown2")
 install.packages("randomForest")
