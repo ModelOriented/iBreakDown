@@ -49,5 +49,9 @@ test_that("Error when no distribution before provided", {
   expect_error(plot(bd_rf_reg, plot_distributions = TRUE))
 })
 
-
+test_that("Test plot3D", {
+  expect_is(plotD3(bd_rf_class), "r2d3")
+  expect_is(plotD3(bd_rf_class, max_features = 10), "r2d3")
+  expect_is(plotD3(bd_rf_class, max_features = 10, min_max = c(0,1)), "r2d3")
+})
 
