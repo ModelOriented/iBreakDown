@@ -9,6 +9,7 @@
 #' @param predict_function predict function, will be extracted from `x` if it's an explainer
 #' @param new_observation a new observation with columns that corresponds to variables used in the model
 #' @param keep_distributions if `TRUE`, then distributions of partial predictions is stored and can be plotted with the generic `plot()`
+#' @param order if not `NULL`, then it will be a fixed order of variables. It can be a numeric vector or vector with names of variables.
 #' @param ... other parameters
 #' @param label name of the model. By default it's extracted from the 'class' attribute of the model
 #'
@@ -87,6 +88,7 @@ local_attributions.explainer <- function(x, new_observation,
 local_attributions.default <- function(x, data, predict_function = predict,
                                new_observation,
                                keep_distributions = FALSE,
+                               order = NULL,
                                label = class(x)[1], ...) {
   # here one can add model and data and new observation
   # just in case only some variables are specified
@@ -113,8 +115,19 @@ local_attributions.default <- function(x, data, predict_function = predict,
   # impact summary for 1d variables
   tmp <- data.frame(diff = diffs_1d,
                     ind1 = 1:p)
-  # sort impacts and look for most importants elements
-  tmp <- tmp[order(tmp$diff, decreasing = TRUE),]
+  # how variables shall be ordered in the BD plot?
+  if (is.null(order)) {
+    # sort impacts and look for most importants elements
+    tmp <- tmp[order(tmp$diff, decreasing = TRUE),]
+  } else {
+    if (is.numeric(order)) {
+      tmp <- tmp[order,]
+    }
+    if (is.character(order)) {
+      rownames(tmp) <- names(average_yhats)
+      tmp <- tmp[order,]
+    }
+  }
 
   # Now we know the path, so we can calculate contributions
   # set variable indicators
