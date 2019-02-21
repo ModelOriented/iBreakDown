@@ -11,6 +11,7 @@
 #' @param data validation dataset, will be extracted from `x` if it's an explainer
 #' @param predict_function predict function, will be extracted from `x` if it's an explainer
 #' @param ... other parameters
+#' @param interaction_preference a constant that set the preference for interactions. By default `1`. The larger the more frequently intereactions will be presented in explanations
 #' @param new_observation a new observation with columns that corresponds to variables used in the model
 #' @param keep_distributions if TRUE, then the distribution of partial predictions is stored in addition to the average.
 #' @param label character - the name of the model. By default it's extracted from the 'class' attribute of the model
@@ -84,6 +85,7 @@ local_interactions.explainer <- function(x, new_observation,
 local_interactions.default <- function(x, data, predict_function = predict,
                                        new_observation,
                                        keep_distributions = FALSE,
+                                       interaction_preference = 1,
                                        label = class(x)[1], ...) {
   # just in case only some variables are specified
   # this will work only for data.frames
@@ -139,10 +141,11 @@ local_interactions.default <- function(x, data, predict_function = predict,
     diffs_2d_norm <- changes$average_yhats_norm - baseline_yhat
 
     # impact summary for 2d variables
+    # large interaction_preference force to use interactions
     tmp2 <- data.frame(diff = diffs_2d,
-                       adiff = abs(diffs_2d),
+                       adiff = abs(diffs_2d) * interaction_preference,
                        diff_norm = diffs_2d_norm,
-                       adiff_norm = abs(diffs_2d_norm),
+                       adiff_norm = abs(diffs_2d_norm) * interaction_preference,
                        ind1 = inds$ind1,
                        ind2 = inds$ind2)
     tmp <- rbind(tmp, tmp2)
