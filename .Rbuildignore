@@ -4,7 +4,9 @@
 ^misc.*$
 ^.travis.yml$
 ^cheatsheet$
-^cheatsheets$
-^docs$
+^binder.*$
+^images.*$
+^jupyter-notebooks.*$
+^docs.*$
 ^.*README.*$
 ^_pkgdown\.yml$

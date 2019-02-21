@@ -12,8 +12,8 @@ local_attributions(x, ...)
   keep_distributions = FALSE, ...)
 
 \method{local_attributions}{default}(x, data, predict_function = predict,
-  new_observation, keep_distributions = FALSE, label = class(x)[1],
-  ...)
+  new_observation, keep_distributions = FALSE, order = NULL,
+  label = class(x)[1], ...)
 }
 \arguments{
 \item{x}{a model to be explained, or an explainer created with function `DALEX::explain()`.}
@@ -27,6 +27,8 @@ local_attributions(x, ...)
 \item{data}{validation dataset, will be extracted from `x` if it's an explainer}
 
 \item{predict_function}{predict function, will be extracted from `x` if it's an explainer}
+
+\item{order}{if not `NULL`, then it will be a fixed order of variables. It can be a numeric vector or vector with names of variables.}
 
 \item{label}{name of the model. By default it's extracted from the 'class' attribute of the model}
 }

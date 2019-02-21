@@ -79,7 +79,7 @@
       <h1>breakDown2 plots for classification models</h1>
                         <h4 class="author">Dariusz Komosinski</h4>
             
-            <h4 class="date">2019-01-02</h4>
+            <h4 class="date">2019-02-20</h4>
       
       
       <div class="hidden name"><code>vignette_breakDown2_classification.Rmd</code></div>
@@ -168,29 +168,29 @@
 <a class="sourceLine" id="cb13-13" data-line-number="13">bd_rf</a></code></pre></div>
 <pre><code>#&gt;                                                 contribution
 #&gt; randomForest.formula.fired: baseline                   0.377
-#&gt; randomForest.formula.fired: * hours = 42               0.234
-#&gt; randomForest.formula.fired: * evaluation = 2           0.055
-#&gt; randomForest.formula.fired: * salary = 2              -0.251
-#&gt; randomForest.formula.fired: * gender = male            0.031
-#&gt; randomForest.formula.fired: * age = 58                 0.336
+#&gt; randomForest.formula.fired: * hours = 42               0.231
+#&gt; randomForest.formula.fired: * evaluation = 2           0.061
+#&gt; randomForest.formula.fired: * salary = 2              -0.248
+#&gt; randomForest.formula.fired: * gender = male            0.022
+#&gt; randomForest.formula.fired: * age = 58                 0.370
 #&gt; randomForest.formula.fired: * status = fired           0.000
-#&gt; randomForest.formula.fired: prediction                 0.782
+#&gt; randomForest.formula.fired: prediction                 0.812
 #&gt; randomForest.formula.ok: baseline                      0.270
-#&gt; randomForest.formula.ok: * hours = 42                 -0.044
-#&gt; randomForest.formula.ok: * evaluation = 2              0.100
-#&gt; randomForest.formula.ok: * salary = 2                  0.249
-#&gt; randomForest.formula.ok: * gender = male              -0.035
-#&gt; randomForest.formula.ok: * age = 58                   -0.327
+#&gt; randomForest.formula.ok: * hours = 42                 -0.043
+#&gt; randomForest.formula.ok: * evaluation = 2              0.098
+#&gt; randomForest.formula.ok: * salary = 2                  0.247
+#&gt; randomForest.formula.ok: * gender = male              -0.025
+#&gt; randomForest.formula.ok: * age = 58                   -0.366
 #&gt; randomForest.formula.ok: * status = fired              0.000
-#&gt; randomForest.formula.ok: prediction                    0.214
-#&gt; randomForest.formula.promoted: baseline                0.352
-#&gt; randomForest.formula.promoted: * hours = 42           -0.190
-#&gt; randomForest.formula.promoted: * evaluation = 2       -0.156
-#&gt; randomForest.formula.promoted: * salary = 2            0.003
+#&gt; randomForest.formula.ok: prediction                    0.182
+#&gt; randomForest.formula.promoted: baseline                0.353
+#&gt; randomForest.formula.promoted: * hours = 42           -0.188
+#&gt; randomForest.formula.promoted: * evaluation = 2       -0.159
+#&gt; randomForest.formula.promoted: * salary = 2            0.001
 #&gt; randomForest.formula.promoted: * gender = male         0.004
-#&gt; randomForest.formula.promoted: * age = 58             -0.010
+#&gt; randomForest.formula.promoted: * age = 58             -0.004
 #&gt; randomForest.formula.promoted: * status = fired        0.000
-#&gt; randomForest.formula.promoted: prediction              0.004
+#&gt; randomForest.formula.promoted: prediction              0.006
 #&gt; baseline:  0</code></pre>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">plot</span>(bd_rf)</a></code></pre></div>
 <p><img src="vignette_breakDown2_classification_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
@@ -224,23 +224,23 @@
 #&gt; svm.formula.fired: * salary = 2              -0.174
 #&gt; svm.formula.fired: * hours = 42               0.066
 #&gt; svm.formula.fired: * gender = male            0.001
-#&gt; svm.formula.fired: * age = 58                 0.291
+#&gt; svm.formula.fired: * age = 58                 0.290
 #&gt; svm.formula.fired: * status = fired           0.000
-#&gt; svm.formula.fired: prediction                 0.596
+#&gt; svm.formula.fired: prediction                 0.595
 #&gt; svm.formula.promoted: baseline                0.348
 #&gt; svm.formula.promoted: * evaluation = 2       -0.183
-#&gt; svm.formula.promoted: * salary = 2            0.028
+#&gt; svm.formula.promoted: * salary = 2            0.027
 #&gt; svm.formula.promoted: * hours = 42           -0.140
 #&gt; svm.formula.promoted: * gender = male         0.009
-#&gt; svm.formula.promoted: * age = 58             -0.014
+#&gt; svm.formula.promoted: * age = 58             -0.013
 #&gt; svm.formula.promoted: * status = fired        0.000
-#&gt; svm.formula.promoted: prediction              0.049
+#&gt; svm.formula.promoted: prediction              0.048
 #&gt; svm.formula.ok: baseline                      0.287
-#&gt; svm.formula.ok: * evaluation = 2              0.135
+#&gt; svm.formula.ok: * evaluation = 2              0.136
 #&gt; svm.formula.ok: * salary = 2                  0.147
 #&gt; svm.formula.ok: * hours = 42                  0.074
 #&gt; svm.formula.ok: * gender = male              -0.010
-#&gt; svm.formula.ok: * age = 58                   -0.277
+#&gt; svm.formula.ok: * age = 58                   -0.276
 #&gt; svm.formula.ok: * status = fired              0.000
 #&gt; svm.formula.ok: prediction                    0.356
 #&gt; baseline:  0</code></pre>
@@ -304,18 +304,18 @@
 <a class="sourceLine" id="cb28-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb28-3" data-line-number="3">m_nnet &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/nnet/topics/nnet">nnet</a></span>(status <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> HR, <span class="dt">size =</span> <span class="dv">10</span>)</a></code></pre></div>
 <pre><code>#&gt; # weights:  93
-#&gt; initial  value 10383.601743 
-#&gt; iter  10 value 8123.378841
-#&gt; iter  20 value 7611.998757
-#&gt; iter  30 value 6688.565232
-#&gt; iter  40 value 6469.584182
-#&gt; iter  50 value 6446.314284
-#&gt; iter  60 value 6252.570837
-#&gt; iter  70 value 6120.651301
-#&gt; iter  80 value 6088.029339
-#&gt; iter  90 value 6014.922181
-#&gt; iter 100 value 5864.124901
-#&gt; final  value 5864.124901 
+#&gt; initial  value 8575.379980 
+#&gt; iter  10 value 8183.475053
+#&gt; iter  20 value 8047.013140
+#&gt; iter  30 value 7878.452318
+#&gt; iter  40 value 7634.842088
+#&gt; iter  50 value 6662.318013
+#&gt; iter  60 value 6108.692578
+#&gt; iter  70 value 5979.048607
+#&gt; iter  80 value 5908.350296
+#&gt; iter  90 value 5879.069576
+#&gt; iter 100 value 5860.038284
+#&gt; final  value 5860.038284 
 #&gt; stopped after 100 iterations</code></pre>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1">bd_nnet &lt;-<span class="st"> </span><span class="kw"><a href="../reference/local_attributions.html">local_attributions</a></span>(m_nnet,</a>
 <a class="sourceLine" id="cb30-2" data-line-number="2">                            <span class="dt">data =</span> HR_test,</a>
@@ -324,30 +324,30 @@
 <a class="sourceLine" id="cb30-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb30-6" data-line-number="6">bd_nnet</a></code></pre></div>
 <pre><code>#&gt;                                         contribution
-#&gt; nnet.formula.fired: baseline                   0.366
-#&gt; nnet.formula.fired: * evaluation = 2           0.102
-#&gt; nnet.formula.fired: * hours = 42               0.121
-#&gt; nnet.formula.fired: * salary = 2              -0.175
-#&gt; nnet.formula.fired: * age = 58                 0.001
-#&gt; nnet.formula.fired: * gender = male           -0.010
+#&gt; nnet.formula.fired: baseline                   0.364
+#&gt; nnet.formula.fired: * evaluation = 2           0.065
+#&gt; nnet.formula.fired: * hours = 42               0.126
+#&gt; nnet.formula.fired: * salary = 2              -0.045
+#&gt; nnet.formula.fired: * age = 58                -0.020
+#&gt; nnet.formula.fired: * gender = male           -0.006
 #&gt; nnet.formula.fired: * status = fired           0.000
-#&gt; nnet.formula.fired: prediction                 0.405
-#&gt; nnet.formula.ok: baseline                      0.286
-#&gt; nnet.formula.ok: * evaluation = 2              0.102
-#&gt; nnet.formula.ok: * hours = 42                 -0.009
-#&gt; nnet.formula.ok: * salary = 2                  0.158
-#&gt; nnet.formula.ok: * age = 58                    0.005
-#&gt; nnet.formula.ok: * gender = male               0.007
+#&gt; nnet.formula.fired: prediction                 0.484
+#&gt; nnet.formula.ok: baseline                      0.285
+#&gt; nnet.formula.ok: * evaluation = 2              0.116
+#&gt; nnet.formula.ok: * hours = 42                  0.014
+#&gt; nnet.formula.ok: * salary = 2                  0.039
+#&gt; nnet.formula.ok: * age = 58                    0.013
+#&gt; nnet.formula.ok: * gender = male               0.002
 #&gt; nnet.formula.ok: * status = fired              0.000
-#&gt; nnet.formula.ok: prediction                    0.549
-#&gt; nnet.formula.promoted: baseline                0.348
-#&gt; nnet.formula.promoted: * evaluation = 2       -0.203
-#&gt; nnet.formula.promoted: * hours = 42           -0.113
-#&gt; nnet.formula.promoted: * salary = 2            0.017
-#&gt; nnet.formula.promoted: * age = 58             -0.006
-#&gt; nnet.formula.promoted: * gender = male         0.003
+#&gt; nnet.formula.ok: prediction                    0.469
+#&gt; nnet.formula.promoted: baseline                0.351
+#&gt; nnet.formula.promoted: * evaluation = 2       -0.181
+#&gt; nnet.formula.promoted: * hours = 42           -0.140
+#&gt; nnet.formula.promoted: * salary = 2            0.006
+#&gt; nnet.formula.promoted: * age = 58              0.007
+#&gt; nnet.formula.promoted: * gender = male         0.004
 #&gt; nnet.formula.promoted: * status = fired        0.000
-#&gt; nnet.formula.promoted: prediction              0.046
+#&gt; nnet.formula.promoted: prediction              0.047
 #&gt; baseline:  0</code></pre>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="kw">plot</span>(bd_nnet)</a></code></pre></div>
 <p><img src="vignette_breakDown2_classification_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
