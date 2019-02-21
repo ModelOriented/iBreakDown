@@ -112,7 +112,6 @@ bd_rf <- local_attributions(m_rf,
 
 bd_rf
 plot(bd_rf)
-plot(bd_rf, start_baseline = TRUE)
 plot(bd_rf, plot_distributions = TRUE)
 ```
 
@@ -134,10 +133,7 @@ bd_svm <- local_attributions(m_svm,
                             keep_distributions = TRUE,
                             predict_function = p_fun)
 
-bd_svm
 plot(bd_svm)
-plot(bd_svm, start_baseline = TRUE)
-plot(bd_svm, plot_distributions = TRUE)
 ```
 
 ## knn
@@ -152,10 +148,7 @@ bd_knn <- local_attributions(m_knn,
                             new_observation =  new_observation,
                             keep_distributions = TRUE)
 
-bd_knn
 plot(bd_knn)
-plot(bd_knn, start_baseline = TRUE)
-plot(bd_knn, plot_distributions = TRUE)
 ```
 
 ## nnet
@@ -169,11 +162,7 @@ bd_nnet <- local_attributions(m_nnet,
                             data = HR_test,
                             new_observation =  new_observation,
                             keep_distributions = TRUE)
-
-bd_nnet
 plot(bd_nnet)
-plot(bd_nnet, start_baseline = TRUE)
-plot(bd_nnet, plot_distributions = TRUE)
 ```
 
 <!-- ## lightGBM -->

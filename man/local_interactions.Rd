@@ -12,8 +12,8 @@ local_interactions(x, ...)
   keep_distributions = FALSE, ...)
 
 \method{local_interactions}{default}(x, data, predict_function = predict,
-  new_observation, keep_distributions = FALSE, label = class(x)[1],
-  ...)
+  new_observation, keep_distributions = FALSE,
+  interaction_preference = 1, label = class(x)[1], ...)
 }
 \arguments{
 \item{x}{a model to be explained, or an explainer created with function `DALEX::explain()`.}
@@ -27,6 +27,8 @@ local_interactions(x, ...)
 \item{data}{validation dataset, will be extracted from `x` if it's an explainer}
 
 \item{predict_function}{predict function, will be extracted from `x` if it's an explainer}
+
+\item{interaction_preference}{a constant that set the preference for interactions. By default `1`. The larger the more frequently intereactions will be presented in explanations}
 
 \item{label}{character - the name of the model. By default it's extracted from the 'class' attribute of the model}
 }
