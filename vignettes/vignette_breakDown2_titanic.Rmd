@@ -1,10 +1,10 @@
 ---
-title: "breakDown2 plots for Titanic data"
+title: "iBreakDown plots for Titanic data"
 author: "Przemyslaw Biecek"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_document
 vignette: >
-  %\VignetteIndexEntry{breakDown2 plots for Titanic data}
+  %\VignetteIndexEntry{iBreakDown plots for Titanic data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 
 # Data for Titanic survival
 
-Let's see an example for `breakDown2` plots for survival probability of Titanic passengers.
+Let's see an example for `iBreakDown` plots for survival probability of Titanic passengers.
 First, let's see the data, we will find quite nice data from in the `titanic` package.
 
 ```{r}
@@ -50,7 +50,7 @@ rf_model
 The third step (it's optional but useful) is to create a DALEX2 explainer for random forest model.
 
 ```{r}
-library("DALEX2")
+library("DALEX")
 predict_fuction <- function(m,x) predict(m, x, type = "prob")[,2]
 rf_explain <- explain(rf_model, data = titanic,
                       y = titanic$Survived == "1", label = "RF",
@@ -78,7 +78,7 @@ new_passanger <- data.frame(
 ## Calculate variable attributions
 
 ```{r}
-library("breakDown2")
+library("iBreakDown")
 rf_la <- local_attributions(rf_explain, new_passanger)
 rf_la
 ```

@@ -59,7 +59,7 @@ rf_explain <- explain(rf_model, data = titanic,
                       predict_function = predict_fuction)
 
 # plor D3 explainers
-library("breakDown2")
+library("iBreakDown")
 rf_la <- local_attributions(rf_explain, titanic[2,])
 rf_la
 plotD3(rf_la)

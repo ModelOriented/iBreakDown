@@ -1,6 +1,6 @@
-Package: breakDown2
-Title: Model Agnostic Local Variable Attributions for Individual Predictions Explanations
-Version: 0.9.2
+Package: iBreakDown
+Title: Model Agnostic Instance Level Variable Attributions
+Version: 0.9.3
 Authors@R: c(person("Przemyslaw", "Biecek", email = "przemyslaw.biecek@gmail.com", role = c("aut", "cre")),
     person("Dariusz", "Komosinski", role = c("ctb")))
 Description: Model agnostic tool for decomposition of predictions from black boxes.
@@ -8,25 +8,25 @@ Description: Model agnostic tool for decomposition of predictions from black box
     Break Down Plot presents variable contributions in a concise graphical way. 
     This package works for binary classifiers and general regression models. 
 Depends: R (>= 3.0)
-Date: 2018-10-20
+Date: 2019-02-22
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
-Imports: ggplot2
+Imports: 
+    ggplot2,
+    DALEX
 RoxygenNote: 6.1.1
 Suggests: knitr,
+    titanic,
     rmarkdown,
-    e1071,
-    xgboost,
     caret,
     randomForest,
-    DALEX,
+    e1071,
+    xgboost,
     ranger,
-    testthat,
-    DALEX2,
     nnet,
-    titanic,
+    testthat,
     r2d3
 VignetteBuilder: knitr
-URL: https://pbiecek.github.io/breakDown2/
-BugReports: https://github.com/pbiecek/breakDown2/issues
+URL: https://pbiecek.github.io/iBreakDown/
+BugReports: https://github.com/pbiecek/iBreakDown/issues

@@ -1,4 +1,4 @@
 library(testthat)
-library(breakDown2)
+library(iBreakDown)
 
-test_check("breakDown2")
+test_check("iBreakDown")

@@ -37,7 +37,7 @@
 #'                       predict_function = predict_fuction)
 #'
 #' # plor D3 explainers
-#' library("breakDown2")
+#' library("iBreakDown")
 #' rf_la <- local_attributions(rf_explain, titanic[2,])
 #' rf_la
 #' plotD3(rf_la)
@@ -103,8 +103,8 @@ plotD3.break_down <- function(x, ...,
   # plot D3 object
   r2d3::r2d3(
     data = x_as_list,
-    script = system.file("breakDownD3.js", package = "breakDown2"),
-    dependencies = system.file("tooltipD3.js", package = "breakDown2"),
+    script = system.file("breakDownD3.js", package = "iBreakDown"),
+    dependencies = system.file("tooltipD3.js", package = "iBreakDown"),
     options = list(xmin =min_max[1], xmax = min_max[2],
                    model_avg = model_baseline, model_res = model_prediction),
     d3_version = "4"

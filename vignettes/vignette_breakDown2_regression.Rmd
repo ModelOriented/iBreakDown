@@ -1,10 +1,10 @@
 ---
-title: "breakDown2 plots for regression models"
+title: "iBreakDown plots for regression models"
 author: "Dariusz Komosinski"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_document
 vignette: >
-  %\VignetteIndexEntry{breakDown2 plots for regression models}
+  %\VignetteIndexEntry{iBreakDown plots for regression models}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -18,13 +18,13 @@ knitr::opts_chunk$set(
 )
 ```
 
-Here we will use the dragons data to present the breakDown2 package for regression models.
+Here we will use the dragons data to present the iBreakDown package for regression models.
 
 ```{r}
-# devtools::install_github("ModelOriented/DALEX2")
-library(DALEX2)
+# devtools::install_github("pbiecek/DALEX")
+library(DALEX)
 library(ggplot2)
-library(breakDown2)
+library(iBreakDown)
 
 head(dragons)
 new_observation <- dragons_test[1,]
@@ -39,7 +39,7 @@ First, we fit a model.
 m_lm <- lm(life_length ~ . , data = dragons)
 ```
 
-To understand the factors that drive predictions for a single observation we use the `breakDown2` package.
+To understand the factors that drive predictions for a single observation we use the `iBreakDown` package.
 
 Now we create an object of the `break_down` class. If we want to plot distributions of partial predictions, use argument `keep_distributions`.
 
@@ -160,9 +160,3 @@ plot(bd_nnet, start_baseline = TRUE)
 plot(bd_nnet, plot_distributions = TRUE)
 ```
 
-<!-- ## lightGBM -->
-
-<!-- ```{r} -->
-
-
-<!-- ``` -->

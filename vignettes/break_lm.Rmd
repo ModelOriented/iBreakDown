@@ -1,10 +1,10 @@
 ---
-title: "breakDown plots for the linear models"
+title: "iBreakDown plots for the linear models"
 author: "Przemyslaw Biecek"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{breakDown plots for the linear model}
+  %\VignetteIndexEntry{iBreakDown plots for the linear model}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

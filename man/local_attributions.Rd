@@ -44,7 +44,7 @@ This function first determines the order for conditionings and then calculate va
 \dontrun{
 ## Not run:
 library("DALEX2")
-library("breakDown2")
+library("iBreakDown")
 library("randomForest")
 set.seed(1313)
 # example with interaction

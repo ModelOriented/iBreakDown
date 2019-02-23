@@ -39,7 +39,7 @@ Plot Generic for Break Down Objects
 \dontrun{
 ## Not run:
 library("DALEX2")
-library("breakDown2")
+library("iBreakDown")
 library("randomForest")
 set.seed(1313)
 # example with interaction

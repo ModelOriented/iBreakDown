@@ -21,7 +21,7 @@
 #' @examples
 #' \dontrun{
 #' library("DALEX2")
-#' library("breakDown2")
+#' library("iBreakDown")
 #' library("randomForest")
 #' set.seed(1313)
 #' # example with interaction

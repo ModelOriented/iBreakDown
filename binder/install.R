@@ -1,3 +1,3 @@
 install.packages("devtools")
-devtools::install_github("ModelOriented/breakDown2")
+devtools::install_github("ModelOriented/iBreakDown")
 install.packages("randomForest")
