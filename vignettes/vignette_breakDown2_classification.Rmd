@@ -13,6 +13,7 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = FALSE,
   comment = "#>",
+  fig.width = 6, fig.height = 6,
   warning = FALSE,
   message = FALSE,
   cache = TRUE
@@ -28,7 +29,7 @@ library(ggplot2)
 library(iBreakDown)
 
 head(HR)
-new_observation <- HRTest[1,]
+new_observation <- HR_test[1,]
 new_observation
 ```
 
@@ -63,7 +64,7 @@ Now we create an object of the `break_down` class. If we want to plot distributi
 
 ```{r}
 bd_glm <- local_attributions(m_glm,
-                            data = HRTest,
+                            data = HR_test,
                             new_observation =  new_observation,
                             keep_distributions = TRUE,
                             predict_function = p_fun)
@@ -72,7 +73,7 @@ bd_glm <- local_attributions(m_glm,
 We can simply print the result.
 
 ```{r}
-#bd_glm
+head(bd_glm)
 ```
 
 Or plot the result which is more clear.
@@ -102,10 +103,10 @@ library(randomForest)
 
 m_rf <- randomForest(status ~ . , data = HR)
 
-p_fun <- function(object, newdata){predict(object, newdata=newdata, type="prob")}
+p_fun <- function(object, newdata){predict(object, newdata=newdata, type = "prob")}
 
 bd_rf <- local_attributions(m_rf,
-                            data = HRTest,
+                            data = HR_test,
                             new_observation =  new_observation,
                             predict_function = p_fun,
                             keep_distributions = TRUE)
@@ -128,9 +129,8 @@ p_fun <- function(object, newdata){
   }
 
 bd_svm <- local_attributions(m_svm,
-                            data = HRTest,
+                            data = HR_test,
                             new_observation =  new_observation,
-                            keep_distributions = TRUE,
                             predict_function = p_fun)
 
 plot(bd_svm)
@@ -140,28 +140,11 @@ plot(bd_svm)
 
 ```{r}
 library(caret)
-
 m_knn <- knn3(status ~ . , data = HR, k = 5)
-
 bd_knn <- local_attributions(m_knn,
-                            data = HRTest,
-                            new_observation =  new_observation,
-                            keep_distributions = TRUE)
+                            data = HR_test,
+                            new_observation =  new_observation)
 
 plot(bd_knn)
-```
-
-## nnet
-
-```{r}
-library(nnet)
-
-m_nnet <- nnet(status ~ . , data = HR, size = 10)
-
-bd_nnet <- local_attributions(m_nnet,
-                            data = HRTest,
-                            new_observation =  new_observation,
-                            keep_distributions = TRUE)
-plot(bd_nnet)
 ```
 

@@ -13,6 +13,7 @@ vignette: >
 knitr::opts_chunk$set(
   comment = "#>",
   warning = FALSE,
+  fig.width = 6, fig.height = 6,
   message = FALSE,
   cache = TRUE
 )
@@ -85,13 +86,10 @@ m_rf <- lm(life_length ~ . , data = dragons)
 
 bd_rf <- local_attributions(m_rf,
                             data = dragons_test,
-                            new_observation =  new_observation,
-                            keep_distributions = TRUE)
+                            new_observation =  new_observation)
 
-bd_rf
+head(bd_rf)
 plot(bd_rf)
-plot(bd_rf, start_baseline = TRUE)
-plot(bd_rf, plot_distributions = TRUE)
 ```
 
 ## SVM
@@ -106,10 +104,7 @@ bd_svm <- local_attributions(m_svm,
                             new_observation =  new_observation,
                             keep_distributions = TRUE)
 
-bd_svm
 plot(bd_svm)
-plot(bd_svm, start_baseline = TRUE)
-plot(bd_svm, plot_distributions = TRUE)
 ```
 
 ## knn
@@ -124,10 +119,7 @@ bd_knn <- local_attributions(m_knn,
                             new_observation =  new_observation,
                             keep_distributions = TRUE)
 
-bd_knn
 plot(bd_knn)
-plot(bd_knn, start_baseline = TRUE)
-plot(bd_knn, plot_distributions = TRUE)
 ```
 
 ## nnet
@@ -151,12 +143,8 @@ p_fun <- function(model, new_observation){
 bd_nnet <- local_attributions(m_nnet,
                             data = dragons_test,
                             new_observation =  new_observation,
-                            keep_distributions = TRUE,
                             predict_function = p_fun)
 
-bd_nnet
 plot(bd_nnet)
-plot(bd_nnet, start_baseline = TRUE)
-plot(bd_nnet, plot_distributions = TRUE)
 ```
 
