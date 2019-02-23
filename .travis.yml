@@ -7,20 +7,22 @@ env:
   - R_CHECK_ARGS="--no-build-vignettes --no-manual --timings"
 notifications:
   email: false
+addons:
+  apt:
+    packages:
+      - libudunits2-dev
 before_install:
   - R -e 'install.packages("devtools")'
+  - R -e 'devtools::install_github("pbiecek/DALEX")'
   - R -e 'devtools::install_github("ModelOriented/DALEX2")'
-  - R -e 'install.packages("ggforce", configure.args="--with-udunits2-lib=/usr/lib64--with-udunits2-include=/usr/including/udunits2")'
 r_packages:
   - archivist
   - ggplot2
-  - DALEX
   - covr
   - nnet
   - randomForest
   - e1071
   - caret
-  - DALEX2
 
 after_success:
   - Rscript -e 'library(covr); codecov()'
