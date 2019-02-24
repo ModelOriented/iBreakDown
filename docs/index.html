@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Model Agnostic Local Variable Attributions for Individual Predictions Explanations • breakDown2</title>
+<title>Model Agnostic Instance Level Variable Attributions • iBreakDown</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
@@ -47,16 +47,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/break_lm.html">breakDown plots for the linear models</a>
+      <a href="articles/break_lm.html">iBreakDown plots for the linear models</a>
     </li>
     <li>
-      <a href="articles/vignette_breakDown2_classification.html">breakDown2 plots for classification models</a>
+      <a href="articles/vignette_breakDown2_classification.html">iBreakDown plots for classification models</a>
     </li>
     <li>
-      <a href="articles/vignette_breakDown2_regression.html">breakDown2 plots for regression models</a>
+      <a href="articles/vignette_breakDown2_regression.html">iBreakDown plots for regression models</a>
     </li>
     <li>
-      <a href="articles/vignette_breakDown2_titanic.html">breakDown2 plots for Titanic data</a>
+      <a href="articles/vignette_breakDown2_titanic.html">iBreakDown plots for Titanic data</a>
     </li>
   </ul>
 </li>
@@ -80,16 +80,16 @@
 <div id="break-down-model-agnostic-explainers-for-individual-predictions" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#break-down-model-agnostic-explainers-for-individual-predictions" class="anchor"></a>Break Down: Model Agnostic Explainers for Individual Predictions</h1></div>
-<p><strong>breakDown2</strong> is an experimental version of the <a href="https://github.com/pbiecek/breakDown">breakDown</a> package. Expect rapid changes.</p>
-<p>The <code>breakDown2</code> package is a model agnostic tool for decomposition of predictions from black boxes. Break Down Table shows contributions of every variable to a final prediction. Break Down Plot presents variable contributions in a concise graphical way. This package works for binary classifiers and general regression models.</p>
+<p><strong>iBreakDown</strong> is an experimental version of the <a href="https://github.com/pbiecek/breakDown">breakDown</a> package. Expect rapid changes.</p>
+<p>The <code>iBreakDown</code> package is a model agnostic tool for decomposition of predictions from black boxes. Break Down Table shows contributions of every variable to a final prediction. Break Down Plot presents variable contributions in a concise graphical way. This package works for binary classifiers and general regression models.</p>
 <p>It’s a part of <a href="https://github.com/ModelOriented/DrWhy">DrWhy</a> collection of tools.</p>
-<p>Find lots of R examples at <code>breakDown2</code> website: <a href="https://ModelOriented.github.io/breakDown2/" class="uri">https://ModelOriented.github.io/breakDown2/</a></p>
-<p>This version works also with D3! <a href="https://modeloriented.github.io/breakDown2/articles/vignette_breakDown2_titanic.html#plot-attributions-with-d3">see an example</a>. <img src="images/plotD3.png" alt="plotD3"></p>
+<p>Find lots of R examples at <code>iBreakDown</code> website: <a href="https://ModelOriented.github.io/iBreakDown/" class="uri">https://ModelOriented.github.io/iBreakDown/</a></p>
+<p>This version works also with D3! <a href="https://modeloriented.github.io/iBreakDown/articles/vignette_iBreakDown_titanic.html#plot-attributions-with-d3">see an example</a>. <img src="images/plotD3.png" alt="plotD3"></p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>Install from GitHub</p>
-<pre><code><a href="http://www.rdocumentation.org/packages/devtools/topics/reexports">devtools::install_github("ModelOriented/breakDown2")</a></code></pre>
+<pre><code><a href="http://www.rdocumentation.org/packages/devtools/topics/reexports">devtools::install_github("ModelOriented/iBreakDown")</a></code></pre>
 </div>
 </div>
 
@@ -104,7 +104,7 @@
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
-<li>Report a bug at <br><a href="https://github.com/pbiecek/breakDown2/issues">https://​github.com/​pbiecek/​breakDown2/​issues</a>
+<li>Report a bug at <br><a href="https://github.com/pbiecek/iBreakDown/issues">https://​github.com/​pbiecek/​iBreakDown/​issues</a>
 </li>
 </ul>
 </div>
@@ -125,9 +125,9 @@
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://travis-ci.org/ModelOriented/breakDown2"><img src="https://api.travis-ci.org/ModelOriented/breakDown2.png" alt="Build Status"></a></li>
-<li><a href="https://codecov.io/github/ModelOriented/breakDown2?branch=master"><img src="https://img.shields.io/codecov/c/github/ModelOriented/breakDown2/master.svg" alt="Coverage Status"></a></li>
-<li><a href="https://mybinder.org/v2/gh/ModelOriented/breakDown2/master?filepath=jupyter-notebooks/"><img src="https://mybinder.org/badge_logo.svg" alt="Binder"></a></li>
+<li><a href="https://travis-ci.org/ModelOriented/iBreakDown"><img src="https://api.travis-ci.org/ModelOriented/iBreakDown.png" alt="Build Status"></a></li>
+<li><a href="https://codecov.io/github/ModelOriented/iBreakDown?branch=master"><img src="https://img.shields.io/codecov/c/github/ModelOriented/iBreakDown/master.svg" alt="Coverage Status"></a></li>
+<li><a href="https://mybinder.org/v2/gh/ModelOriented/iBreakDown/master?filepath=jupyter-notebooks/"><img src="https://mybinder.org/badge_logo.svg" alt="Binder"></a></li>
 </ul>
 </div>
 </div>

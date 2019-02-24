@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>breakDown2 plots for classification models • breakDown2</title>
+<title>iBreakDown plots for classification models • iBreakDown</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
@@ -47,16 +47,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/break_lm.html">breakDown plots for the linear models</a>
+      <a href="../articles/break_lm.html">iBreakDown plots for the linear models</a>
     </li>
     <li>
-      <a href="../articles/vignette_breakDown2_classification.html">breakDown2 plots for classification models</a>
+      <a href="../articles/vignette_breakDown2_classification.html">iBreakDown plots for classification models</a>
     </li>
     <li>
-      <a href="../articles/vignette_breakDown2_regression.html">breakDown2 plots for regression models</a>
+      <a href="../articles/vignette_breakDown2_regression.html">iBreakDown plots for regression models</a>
     </li>
     <li>
-      <a href="../articles/vignette_breakDown2_titanic.html">breakDown2 plots for Titanic data</a>
+      <a href="../articles/vignette_breakDown2_titanic.html">iBreakDown plots for Titanic data</a>
     </li>
   </ul>
 </li>
@@ -76,10 +76,10 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>breakDown2 plots for classification models</h1>
+      <h1>iBreakDown plots for classification models</h1>
                         <h4 class="author">Dariusz Komosinski</h4>
             
-            <h4 class="date">2019-02-21</h4>
+            <h4 class="date">2019-02-24</h4>
       
       
       <div class="hidden name"><code>vignette_breakDown2_classification.Rmd</code></div>
@@ -88,11 +88,11 @@
 
     
     
-<p>Here we will use the HR data to present the breakDown2 package for classification models.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># devtools::install_github("ModelOriented/DALEX2")</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(DALEX2)</a>
+<p>Here we will use the HR data to present the iBreakDown package for classification models.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># devtools::install_github("ModelOriented/DALEX")</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(DALEX)</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">library</span>(ggplot2)</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw">library</span>(breakDown2)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw">library</span>(iBreakDown)</a>
 <a class="sourceLine" id="cb1-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw">head</span>(HR)</a></code></pre></div>
 <pre><code>#&gt;   gender      age    hours evaluation salary   status
@@ -120,7 +120,7 @@
 #&gt; iter  20 value 6239.478124
 #&gt; final  value 6239.478124 
 #&gt; converged</code></pre>
-<p>To understand the factors that drive predictions for a single observation we use the <code>breakDown2</code> package.</p>
+<p>To understand the factors that drive predictions for a single observation we use the <code>iBreakDown</code> package.</p>
 <p>However sometimes we need to create our own predict function which returns probalilities.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">p_fun &lt;-<span class="st"> </span><span class="cf">function</span>(object, newdata){<span class="kw">predict</span>(object, <span class="dt">newdata=</span>newdata, <span class="dt">type=</span><span class="st">"prob"</span>)}</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2"></a>
@@ -138,130 +138,135 @@
 <a class="sourceLine" id="cb8-4" data-line-number="4">                            <span class="dt">keep_distributions =</span> <span class="ot">TRUE</span>,</a>
 <a class="sourceLine" id="cb8-5" data-line-number="5">                            <span class="dt">predict_function =</span> p_fun)</a></code></pre></div>
 <p>We can simply print the result.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co">#bd_glm</span></a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">head</span>(bd_glm)</a></code></pre></div>
+<pre><code>#&gt; $variable
+#&gt;  [1] baseline         * evaluation = 2 * hours = 42     * gender = male 
+#&gt;  [5] * age = 58       * salary = 2     * status = fired prediction      
+#&gt;  [9] baseline         * evaluation = 2 * hours = 42     * gender = male 
+#&gt; [13] * age = 58       * salary = 2     * status = fired prediction      
+#&gt; [17] baseline         * evaluation = 2 * hours = 42     * gender = male 
+#&gt; [21] * age = 58       * salary = 2     * status = fired prediction      
+#&gt; 8 Levels: * age = 58 * evaluation = 2 * gender = male ... prediction
+#&gt; 
+#&gt; $contribution
+#&gt;  [1]  0.3608970366  0.0836464487  0.1286468461 -0.0068466573 -0.0050727584
+#&gt;  [6]  0.0021435835  0.0000000000  0.5634144993  0.2811159833  0.1342029958
+#&gt; [11] -0.0158876669  0.0055539713  0.0035640252 -0.0020222182  0.0000000000
+#&gt; [16]  0.4065270905  0.3579869801 -0.2178494445 -0.1127591793  0.0012926860
+#&gt; [21]  0.0015087332 -0.0001213653  0.0000000000  0.0300584102
+#&gt; 
+#&gt; $variable_name
+#&gt;  [1] baseline   evaluation hours      gender     age        salary    
+#&gt;  [7] status                baseline   evaluation hours      gender    
+#&gt; [13] age        salary     status                baseline   evaluation
+#&gt; [19] hours      gender     age        salary     status               
+#&gt; Levels:  age baseline evaluation gender hours salary status
+#&gt; 
+#&gt; $variable_value
+#&gt;  [1] 1     2     42    male  58    2     fired       1     2     42   
+#&gt; [12] male  58    2     fired       1     2     42    male  58    2    
+#&gt; [23] fired      
+#&gt; Levels:  1 2 42 58 fired male
+#&gt; 
+#&gt; $cummulative
+#&gt;  [1] 0.36089704 0.44454349 0.57319033 0.56634367 0.56127092 0.56341450
+#&gt;  [7] 0.56341450 0.56341450 0.28111598 0.41531898 0.39943131 0.40498528
+#&gt; [13] 0.40854931 0.40652709 0.40652709 0.40652709 0.35798698 0.14013754
+#&gt; [19] 0.02737836 0.02867104 0.03017978 0.03005841 0.03005841 0.03005841
+#&gt; 
+#&gt; $sign
+#&gt;  [1] 1  1  1  -1 -1 1  0  1  1  1  -1 1  1  -1 0  1  1  -1 -1 1  1  -1 0 
+#&gt; [24] X 
+#&gt; Levels: -1 0 1 X</code></pre>
 <p>Or plot the result which is more clear.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">plot</span>(bd_glm)</a></code></pre></div>
-<p><img src="vignette_breakDown2_classification_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">plot</span>(bd_glm)</a></code></pre></div>
+<p><img src="vignette_breakDown2_classification_files/figure-html/unnamed-chunk-6-1.png" width="576"></p>
 <p>Use the <code>start_baseline</code> argument to set the origin of plots.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">plot</span>(bd_glm, <span class="dt">start_baseline =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<p><img src="vignette_breakDown2_classification_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">plot</span>(bd_glm, <span class="dt">start_baseline =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<p><img src="vignette_breakDown2_classification_files/figure-html/unnamed-chunk-7-1.png" width="576"></p>
 <p>Use the <code>plot_distributions</code> argument to see distributions of partial predictions.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">plot</span>(bd_glm, <span class="dt">plot_distributions =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<p><img src="vignette_breakDown2_classification_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">plot</span>(bd_glm, <span class="dt">plot_distributions =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<p><img src="vignette_breakDown2_classification_files/figure-html/unnamed-chunk-8-1.png" width="576"></p>
 <p>For another type of models we proceed analogously.</p>
 </div>
 <div id="randomforest" class="section level2">
 <h2 class="hasAnchor">
 <a href="#randomforest" class="anchor"></a>randomForest</h2>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">library</span>(randomForest)</a>
-<a class="sourceLine" id="cb13-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb13-3" data-line-number="3">m_rf &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/randomForest/topics/randomForest">randomForest</a></span>(status <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> HR)</a>
-<a class="sourceLine" id="cb13-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb13-5" data-line-number="5">p_fun &lt;-<span class="st"> </span><span class="cf">function</span>(object, newdata){<span class="kw">predict</span>(object, <span class="dt">newdata=</span>newdata, <span class="dt">type=</span><span class="st">"prob"</span>)}</a>
-<a class="sourceLine" id="cb13-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb13-7" data-line-number="7">bd_rf &lt;-<span class="st"> </span><span class="kw"><a href="../reference/local_attributions.html">local_attributions</a></span>(m_rf,</a>
-<a class="sourceLine" id="cb13-8" data-line-number="8">                            <span class="dt">data =</span> HR_test,</a>
-<a class="sourceLine" id="cb13-9" data-line-number="9">                            <span class="dt">new_observation =</span>  new_observation,</a>
-<a class="sourceLine" id="cb13-10" data-line-number="10">                            <span class="dt">predict_function =</span> p_fun,</a>
-<a class="sourceLine" id="cb13-11" data-line-number="11">                            <span class="dt">keep_distributions =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb13-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb13-13" data-line-number="13">bd_rf</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">library</span>(randomForest)</a>
+<a class="sourceLine" id="cb14-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb14-3" data-line-number="3">m_rf &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/randomForest/topics/randomForest">randomForest</a></span>(status <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> HR)</a>
+<a class="sourceLine" id="cb14-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb14-5" data-line-number="5">p_fun &lt;-<span class="st"> </span><span class="cf">function</span>(object, newdata){<span class="kw">predict</span>(object, <span class="dt">newdata=</span>newdata, <span class="dt">type =</span> <span class="st">"prob"</span>)}</a>
+<a class="sourceLine" id="cb14-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb14-7" data-line-number="7">bd_rf &lt;-<span class="st"> </span><span class="kw"><a href="../reference/local_attributions.html">local_attributions</a></span>(m_rf,</a>
+<a class="sourceLine" id="cb14-8" data-line-number="8">                            <span class="dt">data =</span> HR_test,</a>
+<a class="sourceLine" id="cb14-9" data-line-number="9">                            <span class="dt">new_observation =</span>  new_observation,</a>
+<a class="sourceLine" id="cb14-10" data-line-number="10">                            <span class="dt">predict_function =</span> p_fun,</a>
+<a class="sourceLine" id="cb14-11" data-line-number="11">                            <span class="dt">keep_distributions =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb14-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb14-13" data-line-number="13">bd_rf</a></code></pre></div>
 <pre><code>#&gt;                                                 contribution
 #&gt; randomForest.formula.fired: baseline                   0.377
-#&gt; randomForest.formula.fired: * hours = 42               0.236
-#&gt; randomForest.formula.fired: * evaluation = 2           0.061
-#&gt; randomForest.formula.fired: * salary = 2              -0.250
-#&gt; randomForest.formula.fired: * gender = male            0.020
-#&gt; randomForest.formula.fired: * age = 58                 0.321
+#&gt; randomForest.formula.fired: * hours = 42               0.232
+#&gt; randomForest.formula.fired: * evaluation = 2           0.056
+#&gt; randomForest.formula.fired: * salary = 2              -0.262
+#&gt; randomForest.formula.fired: * gender = male            0.018
+#&gt; randomForest.formula.fired: * age = 58                 0.369
 #&gt; randomForest.formula.fired: * status = fired           0.000
-#&gt; randomForest.formula.fired: prediction                 0.766
+#&gt; randomForest.formula.fired: prediction                 0.790
 #&gt; randomForest.formula.ok: baseline                      0.270
-#&gt; randomForest.formula.ok: * hours = 42                 -0.046
-#&gt; randomForest.formula.ok: * evaluation = 2              0.096
-#&gt; randomForest.formula.ok: * salary = 2                  0.248
-#&gt; randomForest.formula.ok: * gender = male              -0.023
-#&gt; randomForest.formula.ok: * age = 58                   -0.312
+#&gt; randomForest.formula.ok: * hours = 42                 -0.042
+#&gt; randomForest.formula.ok: * evaluation = 2              0.101
+#&gt; randomForest.formula.ok: * salary = 2                  0.260
+#&gt; randomForest.formula.ok: * gender = male              -0.020
+#&gt; randomForest.formula.ok: * age = 58                   -0.359
 #&gt; randomForest.formula.ok: * status = fired              0.000
-#&gt; randomForest.formula.ok: prediction                    0.232
-#&gt; randomForest.formula.promoted: baseline                0.353
+#&gt; randomForest.formula.ok: prediction                    0.210
+#&gt; randomForest.formula.promoted: baseline                0.352
 #&gt; randomForest.formula.promoted: * hours = 42           -0.190
 #&gt; randomForest.formula.promoted: * evaluation = 2       -0.157
 #&gt; randomForest.formula.promoted: * salary = 2            0.002
 #&gt; randomForest.formula.promoted: * gender = male         0.002
-#&gt; randomForest.formula.promoted: * age = 58             -0.009
+#&gt; randomForest.formula.promoted: * age = 58             -0.010
 #&gt; randomForest.formula.promoted: * status = fired        0.000
-#&gt; randomForest.formula.promoted: prediction              0.002
+#&gt; randomForest.formula.promoted: prediction              0.000
 #&gt; baseline:  0</code></pre>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">plot</span>(bd_rf)</a></code></pre></div>
-<p><img src="vignette_breakDown2_classification_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">plot</span>(bd_rf, <span class="dt">plot_distributions =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<p><img src="vignette_breakDown2_classification_files/figure-html/unnamed-chunk-9-2.png" width="700"></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">plot</span>(bd_rf, <span class="dt">start_baseline =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<p><img src="vignette_breakDown2_classification_files/figure-html/unnamed-chunk-9-1.png" width="576"></p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">plot</span>(bd_rf, <span class="dt">plot_distributions =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<p><img src="vignette_breakDown2_classification_files/figure-html/unnamed-chunk-9-2.png" width="576"></p>
 </div>
 <div id="svm" class="section level2">
 <h2 class="hasAnchor">
 <a href="#svm" class="anchor"></a>SVM</h2>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">library</span>(e1071)</a>
-<a class="sourceLine" id="cb17-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb17-3" data-line-number="3">m_svm &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/e1071/topics/svm">svm</a></span>(status <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> HR, <span class="dt">type =</span> <span class="st">"C-classification"</span>, <span class="dt">probability =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb17-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb17-5" data-line-number="5">p_fun &lt;-<span class="st"> </span><span class="cf">function</span>(object, newdata){</a>
-<a class="sourceLine" id="cb17-6" data-line-number="6">  p &lt;-<span class="st"> </span><span class="kw">predict</span>(object, <span class="dt">newdata =</span> newdata, <span class="dt">probability =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb17-7" data-line-number="7">  <span class="kw">attr</span>(p, <span class="st">"probabilities"</span>)</a>
-<a class="sourceLine" id="cb17-8" data-line-number="8">  }</a>
-<a class="sourceLine" id="cb17-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb17-10" data-line-number="10">bd_svm &lt;-<span class="st"> </span><span class="kw"><a href="../reference/local_attributions.html">local_attributions</a></span>(m_svm,</a>
-<a class="sourceLine" id="cb17-11" data-line-number="11">                            <span class="dt">data =</span> HR_test,</a>
-<a class="sourceLine" id="cb17-12" data-line-number="12">                            <span class="dt">new_observation =</span>  new_observation,</a>
-<a class="sourceLine" id="cb17-13" data-line-number="13">                            <span class="dt">keep_distributions =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb17-14" data-line-number="14">                            <span class="dt">predict_function =</span> p_fun)</a>
-<a class="sourceLine" id="cb17-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb17-16" data-line-number="16"><span class="kw">plot</span>(bd_svm)</a></code></pre></div>
-<p><img src="vignette_breakDown2_classification_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">library</span>(e1071)</a>
+<a class="sourceLine" id="cb18-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb18-3" data-line-number="3">m_svm &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/e1071/topics/svm">svm</a></span>(status <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> HR, <span class="dt">type =</span> <span class="st">"C-classification"</span>, <span class="dt">probability =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb18-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb18-5" data-line-number="5">p_fun &lt;-<span class="st"> </span><span class="cf">function</span>(object, newdata){</a>
+<a class="sourceLine" id="cb18-6" data-line-number="6">  p &lt;-<span class="st"> </span><span class="kw">predict</span>(object, <span class="dt">newdata =</span> newdata, <span class="dt">probability =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb18-7" data-line-number="7">  <span class="kw">attr</span>(p, <span class="st">"probabilities"</span>)</a>
+<a class="sourceLine" id="cb18-8" data-line-number="8">  }</a>
+<a class="sourceLine" id="cb18-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb18-10" data-line-number="10">bd_svm &lt;-<span class="st"> </span><span class="kw"><a href="../reference/local_attributions.html">local_attributions</a></span>(m_svm,</a>
+<a class="sourceLine" id="cb18-11" data-line-number="11">                            <span class="dt">data =</span> HR_test,</a>
+<a class="sourceLine" id="cb18-12" data-line-number="12">                            <span class="dt">new_observation =</span>  new_observation,</a>
+<a class="sourceLine" id="cb18-13" data-line-number="13">                            <span class="dt">predict_function =</span> p_fun)</a>
+<a class="sourceLine" id="cb18-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb18-15" data-line-number="15"><span class="kw">plot</span>(bd_svm, <span class="dt">start_baseline =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<p><img src="vignette_breakDown2_classification_files/figure-html/unnamed-chunk-10-1.png" width="576"></p>
 </div>
 <div id="knn" class="section level2">
 <h2 class="hasAnchor">
 <a href="#knn" class="anchor"></a>knn</h2>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">library</span>(caret)</a>
-<a class="sourceLine" id="cb18-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb18-3" data-line-number="3">m_knn &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/caret/topics/knn3">knn3</a></span>(status <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> HR, <span class="dt">k =</span> <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb18-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb18-5" data-line-number="5">bd_knn &lt;-<span class="st"> </span><span class="kw"><a href="../reference/local_attributions.html">local_attributions</a></span>(m_knn,</a>
-<a class="sourceLine" id="cb18-6" data-line-number="6">                            <span class="dt">data =</span> HR_test,</a>
-<a class="sourceLine" id="cb18-7" data-line-number="7">                            <span class="dt">new_observation =</span>  new_observation,</a>
-<a class="sourceLine" id="cb18-8" data-line-number="8">                            <span class="dt">keep_distributions =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb18-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb18-10" data-line-number="10"><span class="kw">plot</span>(bd_knn)</a></code></pre></div>
-<p><img src="vignette_breakDown2_classification_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
-</div>
-<div id="nnet" class="section level2">
-<h2 class="hasAnchor">
-<a href="#nnet" class="anchor"></a>nnet</h2>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw">library</span>(nnet)</a>
-<a class="sourceLine" id="cb19-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb19-3" data-line-number="3">m_nnet &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/nnet/topics/nnet">nnet</a></span>(status <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> HR, <span class="dt">size =</span> <span class="dv">10</span>)</a></code></pre></div>
-<pre><code>#&gt; # weights:  93
-#&gt; initial  value 11432.419144 
-#&gt; iter  10 value 8090.543006
-#&gt; iter  20 value 7871.923705
-#&gt; iter  30 value 7310.756642
-#&gt; iter  40 value 6983.161031
-#&gt; iter  50 value 6483.057550
-#&gt; iter  60 value 6052.900487
-#&gt; iter  70 value 5658.200640
-#&gt; iter  80 value 5620.414246
-#&gt; iter  90 value 5608.178932
-#&gt; iter 100 value 5605.343267
-#&gt; final  value 5605.343267 
-#&gt; stopped after 100 iterations</code></pre>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">bd_nnet &lt;-<span class="st"> </span><span class="kw"><a href="../reference/local_attributions.html">local_attributions</a></span>(m_nnet,</a>
-<a class="sourceLine" id="cb21-2" data-line-number="2">                            <span class="dt">data =</span> HR_test,</a>
-<a class="sourceLine" id="cb21-3" data-line-number="3">                            <span class="dt">new_observation =</span>  new_observation,</a>
-<a class="sourceLine" id="cb21-4" data-line-number="4">                            <span class="dt">keep_distributions =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb21-5" data-line-number="5"><span class="kw">plot</span>(bd_nnet)</a></code></pre></div>
-<p><img src="vignette_breakDown2_classification_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
-<!-- ## lightGBM -->
-<!-- ```{r} -->
-<!-- ``` -->
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw">library</span>(caret)</a>
+<a class="sourceLine" id="cb19-2" data-line-number="2">m_knn &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/caret/topics/knn3">knn3</a></span>(status <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> HR, <span class="dt">k =</span> <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb19-3" data-line-number="3">bd_knn &lt;-<span class="st"> </span><span class="kw"><a href="../reference/local_attributions.html">local_attributions</a></span>(m_knn,</a>
+<a class="sourceLine" id="cb19-4" data-line-number="4">                            <span class="dt">data =</span> HR_test,</a>
+<a class="sourceLine" id="cb19-5" data-line-number="5">                            <span class="dt">new_observation =</span>  new_observation)</a>
+<a class="sourceLine" id="cb19-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb19-7" data-line-number="7"><span class="kw">plot</span>(bd_knn, <span class="dt">start_baseline =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<p><img src="vignette_breakDown2_classification_files/figure-html/unnamed-chunk-11-1.png" width="576"></p>
 </div>
   </div>
 
@@ -274,7 +279,6 @@
       <li><a href="#randomforest">randomForest</a></li>
       <li><a href="#svm">SVM</a></li>
       <li><a href="#knn">knn</a></li>
-      <li><a href="#nnet">nnet</a></li>
       </ul>
 </div>
       </div>
