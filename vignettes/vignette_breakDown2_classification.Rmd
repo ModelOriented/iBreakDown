@@ -112,7 +112,7 @@ bd_rf <- local_attributions(m_rf,
                             keep_distributions = TRUE)
 
 bd_rf
-plot(bd_rf)
+plot(bd_rf, start_baseline = TRUE)
 plot(bd_rf, plot_distributions = TRUE)
 ```
 
@@ -133,7 +133,7 @@ bd_svm <- local_attributions(m_svm,
                             new_observation =  new_observation,
                             predict_function = p_fun)
 
-plot(bd_svm)
+plot(bd_svm, start_baseline = TRUE)
 ```
 
 ## knn
@@ -145,6 +145,6 @@ bd_knn <- local_attributions(m_knn,
                             data = HR_test,
                             new_observation =  new_observation)
 
-plot(bd_knn)
+plot(bd_knn, start_baseline = TRUE)
 ```
 

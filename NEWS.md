@@ -1,6 +1,6 @@
 iBreakDown 0.9.3
 ----------------------------------------------------------------
-* `breakDown2` has changed name for `iBreakDown`
+* `breakDown2` has changed name to `iBreakDown`
 
 iBreakDown 0.9.2
 ----------------------------------------------------------------
