@@ -51,10 +51,8 @@ The third step (it's optional but useful) is to create a DALEX2 explainer for ra
 
 ```{r}
 library("DALEX")
-predict_fuction <- function(m,x) predict(m, x, type = "prob")[,2]
 rf_explain <- explain(rf_model, data = titanic,
-                      y = titanic$Survived == "1", label = "RF",
-                      predict_function = predict_fuction)
+                      y = titanic$Survived == "1", label = "RF")
 ```
 
 # Break Down plot with D3

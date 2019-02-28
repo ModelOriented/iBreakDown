@@ -108,12 +108,10 @@ p_fun <- function(object, newdata){predict(object, newdata=newdata, type = "prob
 bd_rf <- local_attributions(m_rf,
                             data = HR_test,
                             new_observation =  new_observation,
-                            predict_function = p_fun,
-                            keep_distributions = TRUE)
+                            predict_function = p_fun)
 
 bd_rf
 plot(bd_rf, start_baseline = TRUE)
-plot(bd_rf, plot_distributions = TRUE)
 ```
 
 ## SVM

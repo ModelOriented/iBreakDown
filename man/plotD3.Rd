@@ -52,11 +52,9 @@ library("randomForest")
 rf_model <- randomForest(Survived ~ .,  data = titanic)
 
 # prepare explainer
-library("DALEX2")
-predict_fuction <- function(m,x) predict(m, x, type = "prob")[,2]
+library("DALEX")
 rf_explain <- explain(rf_model, data = titanic,
-                      y = titanic$Survived == "1", label = "RF",
-                      predict_function = predict_fuction)
+                      y = titanic$Survived == "1", label = "RF")
 
 # plor D3 explainers
 library("iBreakDown")

@@ -45,14 +45,14 @@ And in the second step the impact is calculated.
 }
 \examples{
 \dontrun{
-library("DALEX2")
+library("DALEX")
 library("iBreakDown")
 library("randomForest")
 set.seed(1313)
 # example with interaction
 # classification for HR data
 model <- randomForest(status ~ . , data = HR)
-new_observation <- HRTest[1,]
+new_observation <- HR_test[1,]
 
 explainer_rf <- explain(model,
                  data = HR[1:1000,1:5],
@@ -70,10 +70,10 @@ plot(bd_rf, plot_distributions = TRUE)
 # here we do not have intreactions
 model <- randomForest(m2.price ~ . , data = apartments)
 explainer_rf <- explain(model,
-         data = apartmentsTest[1:1000,2:6],
-         y = apartmentsTest$m2.price[1:1000])
+         data = apartments_test[1:1000,2:6],
+         y = apartments_test$m2.price[1:1000])
 
-new_observation <- apartmentsTest[1,]
+new_observation <- apartments_test[1,]
 
 bd_rf <- local_interactions(explainer_rf,
                  new_observation,
