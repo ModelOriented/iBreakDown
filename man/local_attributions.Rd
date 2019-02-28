@@ -62,12 +62,6 @@ bd_rf
 plot(bd_rf)
 plot(bd_rf, start_baseline = TRUE)
 
-bd_rf <- local_attributions(explainer_rf,
-                           new_observation,
-                           keep_distributions = TRUE)
-bd_rf
-plot(bd_rf, plot_distributions = TRUE)
-
 # example for regression - apartment prices
 # here we do not have intreactions
 model <- randomForest(m2.price ~ . , data = apartments)

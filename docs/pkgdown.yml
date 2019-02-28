@@ -1,8 +1,7 @@
-pandoc: 2.3.1
-pkgdown: 1.0.0
+pandoc: 1.19.2.1
+pkgdown: 1.3.0
 pkgdown_sha: ~
 articles:
-  break_lm: break_lm.html
   vignette_breakDown2_classification: vignette_breakDown2_classification.html
   vignette_breakDown2_regression: vignette_breakDown2_regression.html
   vignette_breakDown2_titanic: vignette_breakDown2_titanic.html

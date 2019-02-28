@@ -59,12 +59,10 @@ explainer_rf <- explain(model,
                  y = HR$status[1:1000])
 
 bd_rf <- local_interactions(explainer_rf,
-                 new_observation,
-                 keep_distributions = TRUE)
+                 new_observation)
 
 bd_rf
-plot(bd_rf)
-plot(bd_rf, plot_distributions = TRUE)
+plot(bd_rf, start_baseline = TRUE)
 
 # example for regression - apartment prices
 # here we do not have intreactions
@@ -80,7 +78,7 @@ bd_rf <- local_interactions(explainer_rf,
                  keep_distributions = TRUE)
 
 bd_rf
-plot(bd_rf)
+plot(bd_rf, start_baseline = TRUE)
 plot(bd_rf, plot_distributions = TRUE)
 }
 }
