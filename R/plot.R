@@ -81,7 +81,7 @@
 plot.break_down <- function(x, ..., add_contributions = TRUE, baseline = NA,
                         vcolors = c("-1" = "#f05a71", "0" = "#371ea3", "1" = "#8bdcbe", "X" = "#371ea3"),
                         digits = 3, rounding_function = round, plot_distributions = FALSE) {
-  position <- cummulative <- prev <- variable <- contribution <- trans_contribution <- prediction <- label <- id <- NULL
+  position <- cummulative <- prev <- variable <- right_side <- contribution <- trans_contribution <- prediction <- label <- id <- NULL
 
   if (plot_distributions) {
     df <- attr(x, "yhats_distribution")

@@ -2,22 +2,31 @@
 % Please edit documentation in R/break_down_i.R
 \name{break_down}
 \alias{break_down}
+\alias{break_down.explainer}
+\alias{break_down.default}
 \title{Model Agnostic Sequential Variable Attributions}
 \usage{
-break_down(..., interactions = FALSE)
+break_down(x, ..., interactions = FALSE)
+
+\method{break_down}{explainer}(x, new_observation, ...,
+  interactions = FALSE)
+
+\method{break_down}{default}(x, data, predict_function = predict,
+  new_observation, keep_distributions = FALSE, order = NULL,
+  label = class(x)[1], ..., interactions = interactions)
 }
 \arguments{
+\item{x}{a model to be explained, or an explainer created with function `DALEX::explain()`.}
+
 \item{...}{parameters passed to `local_*` functions}
 
 \item{interactions}{shall interactions be included}
 
-\item{x}{a model to be explained, or an explainer created with function `DALEX::explain()`.}
+\item{new_observation}{a new observation with columns that corresponds to variables used in the model}
 
 \item{data}{validation dataset, will be extracted from `x` if it's an explainer}
 
 \item{predict_function}{predict function, will be extracted from `x` if it's an explainer}
-
-\item{new_observation}{a new observation with columns that corresponds to variables used in the model}
 
 \item{keep_distributions}{if `TRUE`, then distributions of partial predictions is stored and can be plotted with the generic `plot()`}
 

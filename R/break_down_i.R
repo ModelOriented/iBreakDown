@@ -38,11 +38,47 @@
 #' }
 #' @export
 #' @rdname break_down
-break_down <- function(..., interactions = FALSE) {
+break_down <- function(x, ..., interactions = FALSE)
+  UseMethod("break_down")
+
+#' @export
+#' @rdname break_down
+break_down.explainer <- function(x, new_observation,
+                                 ...,
+                                 interactions = FALSE) {
+  model <- x$model
+  data <- x$data
+  predict_function <- x$predict_function
+  label <- x$label
+
+  break_down.default(model, data, predict_function,
+                             new_observation = new_observation,
+                             label = label,
+                             ...,
+                             interactions = interactions)
+}
+
+
+#' @export
+#' @rdname break_down
+break_down.default <- function(x, data, predict_function = predict,
+                                       new_observation,
+                                       keep_distributions = FALSE,
+                                       order = NULL,
+                                       label = class(x)[1], ...,
+                               interactions = interactions) {
   if (interactions) {
-    res <- local_interactions(...)
+    res <- local_interactions.default(x, data, predict_function = predict_function,
+                                      new_observation = new_observation,
+                                      keep_distributions = keep_distributions,
+                                      order = order,
+                                      label = label, ...)
   } else {
-    res <- local_attributions(...)
+    res <- local_attributions.default(x, data, predict_function = predict_function,
+                                      new_observation = new_observation,
+                                      keep_distributions = keep_distributions,
+                                      order = order,
+                                      label = label, ...)
   }
   res
 }
