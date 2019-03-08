@@ -118,7 +118,7 @@ And in the second step the impact is calculated.</p>
 <span class='co'># S3 method for default</span>
 <span class='fu'>local_interactions</span>(<span class='no'>x</span>, <span class='no'>data</span>, <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict</span>,
   <span class='no'>new_observation</span>, <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>interaction_preference</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'>class</span>(<span class='no'>x</span>)[<span class='fl'>1</span>], <span class='no'>...</span>)</pre>
+  <span class='kw'>interaction_preference</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>order</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'>class</span>(<span class='no'>x</span>)[<span class='fl'>1</span>], <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -150,6 +150,10 @@ And in the second step the impact is calculated.</p>
     <tr>
       <th>interaction_preference</th>
       <td><p>a constant that set the preference for interactions. By default `1`. The larger the more frequently intereactions will be presented in explanations</p></td>
+    </tr>
+    <tr>
+      <th>order</th>
+      <td><p>if not `NULL`, then it will be a fixed order of variables. It can be a numeric vector or vector with names of variables/interactions.</p></td>
     </tr>
     <tr>
       <th>label</th>

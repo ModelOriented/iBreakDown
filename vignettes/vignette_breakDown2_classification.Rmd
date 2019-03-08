@@ -72,14 +72,10 @@ bd_glm <- local_attributions(m_glm,
 
 We can simply print the result.
 
-```{r}
-head(bd_glm)
-```
-
 Or plot the result which is more clear.
 
 ```{r}
-#plot(bd_glm)
+plot(bd_glm)
 ```
 
 Use the `baseline` argument to set the origin of plots.

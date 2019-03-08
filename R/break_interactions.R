@@ -14,6 +14,7 @@
 #' @param interaction_preference a constant that set the preference for interactions. By default `1`. The larger the more frequently intereactions will be presented in explanations
 #' @param new_observation a new observation with columns that corresponds to variables used in the model
 #' @param keep_distributions if TRUE, then the distribution of partial predictions is stored in addition to the average.
+#' @param order if not `NULL`, then it will be a fixed order of variables. It can be a numeric vector or vector with names of variables/interactions.
 #' @param label character - the name of the model. By default it's extracted from the 'class' attribute of the model
 #' @importFrom stats predict
 #' @return an object of the `break_down` class
@@ -84,6 +85,7 @@ local_interactions.default <- function(x, data, predict_function = predict,
                                        new_observation,
                                        keep_distributions = FALSE,
                                        interaction_preference = 1,
+                                       order = NULL,
                                        label = class(x)[1], ...) {
   # just in case only some variables are specified
   # this will work only for data.frames
@@ -148,8 +150,20 @@ local_interactions.default <- function(x, data, predict_function = predict,
                        ind2 = inds$ind2)
     tmp <- rbind(tmp, tmp2)
 
-    # sort impacts and look for most importants elements
-    tmp <- tmp[order(tmp$adiff_norm, decreasing = TRUE),]
+    # how variables shall be ordered in the BD plot?
+    if (is.null(order)) {
+      # sort impacts and look for most importants elements
+      tmp <- tmp[order(tmp$adiff_norm, decreasing = TRUE),]
+    } else {
+      if (is.numeric(order)) {
+        tmp <- tmp[order,]
+      }
+      if (is.character(order)) {
+        rownames(tmp) <- names(average_yhats)
+        tmp <- tmp[order,]
+      }
+    }
+
 
     # Now we know the path, so we can calculate contributions
     # set variable indicators
@@ -228,7 +242,7 @@ local_interactions.default <- function(x, data, predict_function = predict,
 
   # merge results for all classess
   results <- do.call(rbind, lapply(results_list, function(x) x[[1]]))
-  results$position <- seq_along(results$position)
+  results$position <- rev(seq_along(results$position))
   class(results) <- "break_down"
   attr(results, "baseline") <- 0
 
