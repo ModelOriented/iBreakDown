@@ -76,7 +76,7 @@
       <h1>iBreakDown plots for regression models</h1>
                         <h4 class="author">Dariusz Komosinski</h4>
             
-            <h4 class="date">2019-02-28</h4>
+            <h4 class="date">2019-03-08</h4>
       
       
       <div class="hidden name"><code>vignette_breakDown2_regression.Rmd</code></div>
@@ -86,12 +86,12 @@
     
     
 <p>Here we will use the dragons data to present the iBreakDown package for regression models.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># devtools::install_github("pbiecek/DALEX")</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(DALEX)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(iBreakDown)
-
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(dragons)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># devtools::install_github("pbiecek/DALEX")</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(DALEX)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw">library</span>(iBreakDown)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw">head</span>(dragons)</a></code></pre></div>
 <pre><code>#&gt;   year_of_birth   height   weight scars colour year_of_discovery
 #&gt; 1         -1291 59.40365 15.32391     7    red              1700
 #&gt; 2          1589 46.21374 11.80819     5    red              1700
@@ -106,8 +106,8 @@
 #&gt; 4                   33   1434.4222
 #&gt; 5                   18    985.4905
 #&gt; 6                   20    969.5682</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">new_observation &lt;-<span class="st"> </span>dragons_test[<span class="dv">1</span>,]
-new_observation</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">new_observation &lt;-<span class="st"> </span>dragons_test[<span class="dv">1</span>,]</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">new_observation</a></code></pre></div>
 <pre><code>#&gt;   year_of_birth   height   weight scars colour year_of_discovery
 #&gt; 1          -938 39.18619 10.02391     4  black              1800
 #&gt;   number_of_lost_teeth life_length
@@ -116,68 +116,68 @@ new_observation</code></pre></div>
 <h2 class="hasAnchor">
 <a href="#linear-regression" class="anchor"></a>Linear regression</h2>
 <p>First, we fit a model.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m_lm &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(life_length <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> dragons)</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">m_lm &lt;-<span class="st"> </span><span class="kw">lm</span>(life_length <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> dragons)</a></code></pre></div>
 <p>To understand the factors that drive predictions for a single observation we use the <code>iBreakDown</code> package.</p>
 <p>Now we create an object of the <code>break_down</code> class. If we want to plot distributions of partial predictions, use argument <code>keep_distributions</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bd_lm &lt;-<span class="st"> </span><span class="kw"><a href="../reference/local_attributions.html">local_attributions</a></span>(m_lm,
-                            <span class="dt">data =</span> dragons_test,
-                            <span class="dt">new_observation =</span>  new_observation,
-                            <span class="dt">keep_distributions =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">bd_lm &lt;-<span class="st"> </span><span class="kw"><a href="../reference/local_attributions.html">local_attributions</a></span>(m_lm,</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">                            <span class="dt">data =</span> dragons_test,</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">                            <span class="dt">new_observation =</span>  new_observation,</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">                            <span class="dt">keep_distributions =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p>We can simply print the result.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bd_lm</code></pre></div>
-<pre><code>#&gt;                                 contribution
-#&gt; lm: baseline                        1356.562
-#&gt; lm: * scars = 4                     -235.221
-#&gt; lm: * number_of_lost_teeth = 30      205.037
-#&gt; lm: * year_of_birth = -940            22.193
-#&gt; lm: * height = 39                     11.296
-#&gt; lm: * colour = black                  10.856
-#&gt; lm: * weight = 10                     -9.217
-#&gt; lm: * year_of_discovery = 1800         4.668
-#&gt; lm: * life_length = 1400               0.000
-#&gt; lm: prediction                      1366.174
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">bd_lm</a></code></pre></div>
+<pre><code>#&gt;                               contribution
+#&gt; lm: intercept                     1356.562
+#&gt; lm: scars = 4                     -235.221
+#&gt; lm: number_of_lost_teeth = 30      205.037
+#&gt; lm: year_of_birth = -940            22.193
+#&gt; lm: height = 39                     11.296
+#&gt; lm: colour = black                  10.856
+#&gt; lm: weight = 10                     -9.217
+#&gt; lm: year_of_discovery = 1800         4.668
+#&gt; lm: life_length = 1400               0.000
+#&gt; lm: prediction                    1366.174
 #&gt; baseline:  0</code></pre>
 <p>Or plot the result which is more clear.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(bd_lm)</code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">plot</span>(bd_lm)</a></code></pre></div>
 <p><img src="vignette_breakDown2_regression_files/figure-html/unnamed-chunk-5-1.png" width="576"></p>
 <p>Use the <code>start_baseline</code> argument to set the origin of plots.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(bd_lm, <span class="dt">start_baseline =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">plot</span>(bd_lm, <span class="dt">start_baseline =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p><img src="vignette_breakDown2_regression_files/figure-html/unnamed-chunk-6-1.png" width="576"></p>
 <p>Use the <code>plot_distributions</code> argument to see distributions of partial predictions.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(bd_lm, <span class="dt">plot_distributions =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">plot</span>(bd_lm, <span class="dt">plot_distributions =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p><img src="vignette_breakDown2_regression_files/figure-html/unnamed-chunk-7-1.png" width="576"></p>
 <p>For another type of models we proceed analogously. However sometimes we need to create our own predict function (see <code>nnet</code> example).</p>
 </div>
 <div id="randomforest" class="section level2">
 <h2 class="hasAnchor">
 <a href="#randomforest" class="anchor"></a>randomForest</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(randomForest)
-
-m_rf &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(life_length <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> dragons)
-
-bd_rf &lt;-<span class="st"> </span><span class="kw"><a href="../reference/local_attributions.html">local_attributions</a></span>(m_rf,
-                            <span class="dt">data =</span> dragons_test,
-                            <span class="dt">new_observation =</span>  new_observation)
-
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(bd_rf)</code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">library</span>(randomForest)</a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3">m_rf &lt;-<span class="st"> </span><span class="kw">lm</span>(life_length <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> dragons)</a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb12-5" data-line-number="5">bd_rf &lt;-<span class="st"> </span><span class="kw"><a href="../reference/local_attributions.html">local_attributions</a></span>(m_rf,</a>
+<a class="sourceLine" id="cb12-6" data-line-number="6">                            <span class="dt">data =</span> dragons_test,</a>
+<a class="sourceLine" id="cb12-7" data-line-number="7">                            <span class="dt">new_observation =</span>  new_observation)</a>
+<a class="sourceLine" id="cb12-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="kw">head</span>(bd_rf)</a></code></pre></div>
 <pre><code>#&gt; $variable
-#&gt;  [1] baseline                    * scars = 4                
-#&gt;  [3] * number_of_lost_teeth = 30 * year_of_birth = -940     
-#&gt;  [5] * height = 39               * colour = black           
-#&gt;  [7] * weight = 10               * year_of_discovery = 1800 
-#&gt;  [9] * life_length = 1400        prediction                 
-#&gt; 10 Levels: * colour = black * height = 39 ... prediction
+#&gt;  [1] intercept                 scars = 4                
+#&gt;  [3] number_of_lost_teeth = 30 year_of_birth = -940     
+#&gt;  [5] height = 39               colour = black           
+#&gt;  [7] weight = 10               year_of_discovery = 1800 
+#&gt;  [9] life_length = 1400        prediction               
+#&gt; 10 Levels: colour = black height = 39 intercept ... year_of_discovery = 1800
 #&gt; 
 #&gt; $contribution
 #&gt;  [1] 1356.561920 -235.220797  205.036772   22.192939   11.296134
 #&gt;  [6]   10.856097   -9.216737    4.667763    0.000000 1366.174091
 #&gt; 
 #&gt; $variable_name
-#&gt;  [1] baseline             scars                number_of_lost_teeth
+#&gt;  [1] intercept            scars                number_of_lost_teeth
 #&gt;  [4] year_of_birth        height               colour              
 #&gt;  [7] weight               year_of_discovery    life_length         
 #&gt; [10]                     
-#&gt; 10 Levels:  baseline colour height life_length ... year_of_discovery
+#&gt; 10 Levels:  colour height intercept life_length ... year_of_discovery
 #&gt; 
 #&gt; $variable_value
 #&gt;  [1] 1     4     30    -940  39    black 10    1800  1400       
@@ -190,35 +190,35 @@ bd_rf &lt;-<span class="st"> </span><span class="kw"><a href="../reference/local
 #&gt; $sign
 #&gt;  [1] 1  -1 1  1  1  1  -1 1  0  X 
 #&gt; Levels: -1 0 1 X</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(bd_rf, <span class="dt">start_baseline =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">plot</span>(bd_rf, <span class="dt">start_baseline =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p><img src="vignette_breakDown2_regression_files/figure-html/unnamed-chunk-8-1.png" width="576"></p>
 </div>
 <div id="svm" class="section level2">
 <h2 class="hasAnchor">
 <a href="#svm" class="anchor"></a>SVM</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(e1071)
-
-m_svm &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/e1071/topics/svm">svm</a></span>(life_length <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> dragons)
-
-bd_svm &lt;-<span class="st"> </span><span class="kw"><a href="../reference/local_attributions.html">local_attributions</a></span>(m_svm,
-                            <span class="dt">data =</span> dragons_test,
-                            <span class="dt">new_observation =</span>  new_observation)
-
-<span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(bd_svm, <span class="dt">start_baseline =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">library</span>(e1071)</a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb15-3" data-line-number="3">m_svm &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/e1071/topics/svm">svm</a></span>(life_length <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> dragons)</a>
+<a class="sourceLine" id="cb15-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb15-5" data-line-number="5">bd_svm &lt;-<span class="st"> </span><span class="kw"><a href="../reference/local_attributions.html">local_attributions</a></span>(m_svm,</a>
+<a class="sourceLine" id="cb15-6" data-line-number="6">                            <span class="dt">data =</span> dragons_test,</a>
+<a class="sourceLine" id="cb15-7" data-line-number="7">                            <span class="dt">new_observation =</span>  new_observation)</a>
+<a class="sourceLine" id="cb15-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb15-9" data-line-number="9"><span class="kw">plot</span>(bd_svm, <span class="dt">start_baseline =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p><img src="vignette_breakDown2_regression_files/figure-html/unnamed-chunk-9-1.png" width="576"></p>
 </div>
 <div id="knn" class="section level2">
 <h2 class="hasAnchor">
 <a href="#knn" class="anchor"></a>knn</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(caret)
-
-m_knn &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/caret/topics/knnreg">knnreg</a></span>(life_length <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> dragons)
-
-bd_knn &lt;-<span class="st"> </span><span class="kw"><a href="../reference/local_attributions.html">local_attributions</a></span>(m_knn,
-                            <span class="dt">data =</span> dragons_test,
-                            <span class="dt">new_observation =</span>  new_observation)
-
-<span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(bd_knn, <span class="dt">start_baseline =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">library</span>(caret)</a>
+<a class="sourceLine" id="cb16-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb16-3" data-line-number="3">m_knn &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/caret/topics/knnreg">knnreg</a></span>(life_length <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> dragons)</a>
+<a class="sourceLine" id="cb16-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb16-5" data-line-number="5">bd_knn &lt;-<span class="st"> </span><span class="kw"><a href="../reference/local_attributions.html">local_attributions</a></span>(m_knn,</a>
+<a class="sourceLine" id="cb16-6" data-line-number="6">                            <span class="dt">data =</span> dragons_test,</a>
+<a class="sourceLine" id="cb16-7" data-line-number="7">                            <span class="dt">new_observation =</span>  new_observation)</a>
+<a class="sourceLine" id="cb16-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb16-9" data-line-number="9"><span class="kw">plot</span>(bd_knn, <span class="dt">start_baseline =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p><img src="vignette_breakDown2_regression_files/figure-html/unnamed-chunk-10-1.png" width="576"></p>
 </div>
 <div id="nnet" class="section level2">
@@ -226,36 +226,36 @@ bd_knn &lt;-<span class="st"> </span><span class="kw"><a href="../reference/loca
 <a href="#nnet" class="anchor"></a>nnet</h2>
 <p>When you use <code>nnet</code> package for regression, remember to normalize the resposne variable, in such a way that it is from interval <span class="math inline">\((0,1)\)</span>.</p>
 <p>In this case creating own predict function is also needed.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(nnet)
-
-x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Extremes">max</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/MathFun">abs</a></span>(dragons<span class="op">$</span>life_length))
-digits &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Round">floor</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">log10</a></span>(x))
-normalizing_factor &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Round">round</a></span>(x, <span class="op">-</span>digits)
-m_nnet &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/nnet/topics/nnet">nnet</a></span>(life_length<span class="op">/</span>normalizing_factor <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> dragons, <span class="dt">size =</span> <span class="dv">10</span>, <span class="dt">linout =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">library</span>(nnet)</a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb17-3" data-line-number="3">x &lt;-<span class="st"> </span><span class="kw">max</span>(<span class="kw">abs</span>(dragons<span class="op">$</span>life_length))</a>
+<a class="sourceLine" id="cb17-4" data-line-number="4">digits &lt;-<span class="st"> </span><span class="kw">floor</span>(<span class="kw">log10</span>(x))</a>
+<a class="sourceLine" id="cb17-5" data-line-number="5">normalizing_factor &lt;-<span class="st"> </span><span class="kw">round</span>(x, <span class="op">-</span>digits)</a>
+<a class="sourceLine" id="cb17-6" data-line-number="6">m_nnet &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/nnet/topics/nnet">nnet</a></span>(life_length<span class="op">/</span>normalizing_factor <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> dragons, <span class="dt">size =</span> <span class="dv">10</span>, <span class="dt">linout =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>#&gt; # weights:  111
-#&gt; initial  value 899.494268 
-#&gt; iter  10 value 46.051192
-#&gt; iter  20 value 27.800737
-#&gt; iter  30 value 21.048633
-#&gt; iter  40 value 11.450534
-#&gt; iter  50 value 7.354962
-#&gt; iter  60 value 2.987825
-#&gt; iter  70 value 0.753967
-#&gt; iter  80 value 0.360883
-#&gt; iter  90 value 0.281164
-#&gt; iter 100 value 0.255353
-#&gt; final  value 0.255353 
+#&gt; initial  value 948.612495 
+#&gt; iter  10 value 29.654588
+#&gt; iter  20 value 27.260430
+#&gt; iter  30 value 27.033954
+#&gt; iter  40 value 26.775571
+#&gt; iter  50 value 26.095510
+#&gt; iter  60 value 21.413943
+#&gt; iter  70 value 10.886920
+#&gt; iter  80 value 5.828974
+#&gt; iter  90 value 1.731753
+#&gt; iter 100 value 0.626635
+#&gt; final  value 0.626635 
 #&gt; stopped after 100 iterations</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_fun &lt;-<span class="st"> </span><span class="cf">function</span>(model, new_observation){
-  <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(model, <span class="dt">newdata =</span> new_observation)<span class="op">*</span>normalizing_factor
-}
-
-bd_nnet &lt;-<span class="st"> </span><span class="kw"><a href="../reference/local_attributions.html">local_attributions</a></span>(m_nnet,
-                            <span class="dt">data =</span> dragons_test,
-                            <span class="dt">new_observation =</span>  new_observation,
-                            <span class="dt">predict_function =</span> p_fun)
-
-<span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(bd_nnet, <span class="dt">start_baseline =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">p_fun &lt;-<span class="st"> </span><span class="cf">function</span>(model, new_observation){</a>
+<a class="sourceLine" id="cb19-2" data-line-number="2">  <span class="kw">predict</span>(model, <span class="dt">newdata =</span> new_observation)<span class="op">*</span>normalizing_factor</a>
+<a class="sourceLine" id="cb19-3" data-line-number="3">}</a>
+<a class="sourceLine" id="cb19-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb19-5" data-line-number="5">bd_nnet &lt;-<span class="st"> </span><span class="kw"><a href="../reference/local_attributions.html">local_attributions</a></span>(m_nnet,</a>
+<a class="sourceLine" id="cb19-6" data-line-number="6">                            <span class="dt">data =</span> dragons_test,</a>
+<a class="sourceLine" id="cb19-7" data-line-number="7">                            <span class="dt">new_observation =</span>  new_observation,</a>
+<a class="sourceLine" id="cb19-8" data-line-number="8">                            <span class="dt">predict_function =</span> p_fun)</a>
+<a class="sourceLine" id="cb19-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb19-10" data-line-number="10"><span class="kw">plot</span>(bd_nnet, <span class="dt">start_baseline =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p><img src="vignette_breakDown2_regression_files/figure-html/unnamed-chunk-11-1.png" width="576"></p>
 </div>
   </div>

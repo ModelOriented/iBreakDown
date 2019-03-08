@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Print Generic for Break Down Objects — print.break_down • iBreakDown</title>
+<title>DrWhy Theme for ggplot objects — theme_drwhy • iBreakDown</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -48,7 +48,7 @@
 	  <a class = "navbar-mi2logo" href="http://mi2.mini.pw.edu.pl/">
         <img src = "https://github.com/mi2-warsaw/MI2template/blob/master/inst/pkgdown/assets/MI2logo.jpg?raw=true" alt = "MI2" height = 46 title = "MI2">
 	  </a>
-      <a class="navbar-brand navbar-mi2" href="../index.html">Print Generic for Break Down Objects</a>
+      <a class="navbar-brand navbar-mi2" href="../index.html">DrWhy Theme for ggplot objects</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="navbar-mi2 nav navbar-nav">
@@ -97,44 +97,31 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Print Generic for Break Down Objects</h1>
+    <h1>DrWhy Theme for ggplot objects</h1>
     </div>
 
     
-    <p>Print Generic for Break Down Objects</p>
+    <p>DrWhy Theme for ggplot objects</p>
     
 
-    <pre class="usage"><span class='co'># S3 method for break_down</span>
-<span class='fu'>print</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>3</span>,
-  <span class='kw'>rounding_function</span> <span class='kw'>=</span> <span class='no'>round</span>)</pre>
+    <pre class="usage"><span class='fu'>theme_drwhy</span>()
+
+<span class='fu'>theme_drwhy_vertical</span>()
+
+<span class='fu'>theme_drwhy_colors</span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>the model model of `break_down` class</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>other parameters</p></td>
-    </tr>
-    <tr>
-      <th>digits</th>
-      <td><p>number of decimal places (round) or significant digits (signif) to be used.
-See the <code>rounding_function</code> argument</p></td>
-    </tr>
-    <tr>
-      <th>rounding_function</th>
-      <td><p>function that is to used for rounding numbers.
-It may be <code>signif()</code> which keeps a specified number of significant digits.
-Or the default <code>round()</code> to have the same precision for all components</p></td>
+      <th>n</th>
+      <td><p>number of colors for color palette</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a data frame</p>
+    <p>theme for ggplot2 objects</p>
     
 
   </div>
