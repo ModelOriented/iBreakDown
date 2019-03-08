@@ -10,6 +10,20 @@ break_down(..., interactions = FALSE)
 \item{...}{parameters passed to `local_*` functions}
 
 \item{interactions}{shall interactions be included}
+
+\item{x}{a model to be explained, or an explainer created with function `DALEX::explain()`.}
+
+\item{data}{validation dataset, will be extracted from `x` if it's an explainer}
+
+\item{predict_function}{predict function, will be extracted from `x` if it's an explainer}
+
+\item{new_observation}{a new observation with columns that corresponds to variables used in the model}
+
+\item{keep_distributions}{if `TRUE`, then distributions of partial predictions is stored and can be plotted with the generic `plot()`}
+
+\item{order}{if not `NULL`, then it will be a fixed order of variables. It can be a numeric vector or vector with names of variables.}
+
+\item{label}{name of the model. By default it's extracted from the 'class' attribute of the model}
 }
 \value{
 an object of the `break_down` class
@@ -37,6 +51,6 @@ explainer_rf <- explain(model,
 bd_rf <- break_down(explainer_rf,
                            new_observation)
 bd_rf
-plot(bd_rf, start_baseline = TRUE)
+plot(bd_rf)
 }
 }

@@ -62,7 +62,7 @@ bd_rf <- local_interactions(explainer_rf,
                  new_observation)
 
 bd_rf
-plot(bd_rf, start_baseline = TRUE)
+plot(bd_rf)
 
 # example for regression - apartment prices
 # here we do not have intreactions
@@ -78,7 +78,7 @@ bd_rf <- local_interactions(explainer_rf,
                  keep_distributions = TRUE)
 
 bd_rf
-plot(bd_rf, start_baseline = TRUE)
+plot(bd_rf)
 plot(bd_rf, plot_distributions = TRUE)
 }
 }

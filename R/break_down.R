@@ -35,7 +35,7 @@
 #'                            new_observation)
 #' bd_rf
 #' plot(bd_rf)
-#' plot(bd_rf, start_baseline = TRUE)
+#' plot(bd_rf, baseline = 0)
 #'
 #' # example for regression - apartment prices
 #' # here we do not have intreactions
@@ -48,7 +48,6 @@
 #'                            apartments_test[1,])
 #' bd_rf
 #' plot(bd_rf, digits = 1)
-#' plot(bd_rf, digits = 1, start_baseline = TRUE)
 #'
 #' bd_rf <- local_attributions(explainer_rf,
 #'                            apartments_test[1,],
@@ -142,9 +141,9 @@ local_attributions.default <- function(x, data, predict_function = predict,
       if (keep_distributions) {
         tmpj <- lapply(1:ncol(yhats_pred), function(j){
           data.frame(variable_name = paste(colnames(data)[candidates], collapse = ":"),
-                     variable = paste("*",
+                     variable = paste0(
                                    paste(colnames(data)[candidates], collapse = ":"),
-                                   "=",
+                                   " = ",
                                    nice_pair(new_observation, candidates[1], NA )),
                      id = 1:nrow(data),
                      prediction = yhats_pred[,j],
@@ -168,10 +167,10 @@ local_attributions.default <- function(x, data, predict_function = predict,
   })
 
   # prepare values
-  variable_name  <- c("baseline", colnames(current_data)[selected$ind1], "")
+  variable_name  <- c("intercept", colnames(current_data)[selected$ind1], "")
   variable_value <- c("1", selected_values, "")
-  variable       <- c("baseline",
-                      paste("*", colnames(current_data)[selected$ind1], "=",  selected_values) ,
+  variable       <- c("intercept",
+                      paste0(colnames(current_data)[selected$ind1], " = ",  selected_values) ,
                       "prediction")
   cummulative <- do.call(rbind, c(list(baseline_yhat), yhats_mean, list(target_yhat)))
   contribution <- rbind(0,apply(cummulative, 2, diff))
@@ -190,7 +189,7 @@ local_attributions.default <- function(x, data, predict_function = predict,
                        variable_value = variable_value,
                        cummulative = c(cummulative),
                        sign = factor(c(as.character(sign(contribution)[-length(contribution)]), "X"), levels = c("-1", "0", "1", "X")),
-                       position = 1:(step + 2),
+                       position = (step + 2):1,
                        label = label_class)
 
   class(result) <- "break_down"

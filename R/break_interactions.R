@@ -37,7 +37,7 @@
 #'                  new_observation)
 #'
 #' bd_rf
-#' plot(bd_rf, start_baseline = TRUE)
+#' plot(bd_rf)
 #'
 #' # example for regression - apartment prices
 #' # here we do not have intreactions
@@ -53,7 +53,7 @@
 #'                  keep_distributions = TRUE)
 #'
 #' bd_rf
-#' plot(bd_rf, start_baseline = TRUE)
+#' plot(bd_rf)
 #' plot(bd_rf, plot_distributions = TRUE)
 #' }
 #' @export
@@ -171,7 +171,7 @@ local_interactions.default <- function(x, data, predict_function = predict,
         yhats_pred <- single_predict_function(x, current_data)
         if (keep_distributions) {
           yhats[[step]] <- data.frame(variable_name = paste(colnames(data)[candidates], collapse = ":"),
-                                      variable = paste("*",
+                                      variable = paste(
                                                     paste(colnames(data)[candidates], collapse = ":"),
                                                     "=",
                                                     nice_pair(new_observation, candidates[1], candidates[2] )),
@@ -191,10 +191,10 @@ local_interactions.default <- function(x, data, predict_function = predict,
     })
 
     # prepare values
-    variable_name  <- c("baseline", rownames(selected), "")
+    variable_name  <- c("intercept", rownames(selected), "")
     variable_value <- c("1", selected_values, "")
-    variable       <- c("baseline",
-                        paste("*", rownames(selected), "=",  selected_values) ,
+    variable       <- c("intercept",
+                        paste(rownames(selected), "=",  selected_values) ,
                         "prediction")
     cummulative <- c(baseline_yhat, yhats_mean, target_yhat)
     contribution <- c(0, diff(cummulative))
@@ -209,7 +209,7 @@ local_interactions.default <- function(x, data, predict_function = predict,
                          variable_value = variable_value,
                          cummulative = cummulative,
                          sign = factor(c(as.character(sign(contribution)[-length(contribution)]), "X"), levels = c("-1", "0", "1", "X")),
-                         position = 1:(step + 2),
+                         position = (step + 2):1,
                          label = nlabel)
 
     yhats_distribution <- NULL

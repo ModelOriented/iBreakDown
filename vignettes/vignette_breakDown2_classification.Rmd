@@ -79,13 +79,13 @@ head(bd_glm)
 Or plot the result which is more clear.
 
 ```{r}
-plot(bd_glm)
+#plot(bd_glm)
 ```
 
-Use the `start_baseline` argument to set the origin of plots.
+Use the `baseline` argument to set the origin of plots.
 
 ```{r}
-plot(bd_glm, start_baseline = TRUE)
+plot(bd_glm, baseline = 0)
 ```
 
 Use the `plot_distributions` argument to see distributions of partial predictions.
@@ -111,7 +111,7 @@ bd_rf <- local_attributions(m_rf,
                             predict_function = p_fun)
 
 bd_rf
-plot(bd_rf, start_baseline = TRUE)
+plot(bd_rf)
 ```
 
 ## SVM

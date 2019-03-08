@@ -5,9 +5,9 @@
 \title{Plot Generic for Break Down Objects}
 \usage{
 \method{plot}{break_down}(x, ..., add_contributions = TRUE,
-  start_baseline = FALSE, vcolors = c(`-1` = "#d8b365", `0` =
-  "#f5f5f5", `1` = "#5ab4ac", X = "darkgrey"), digits = 3,
-  rounding_function = round, plot_distributions = FALSE)
+  baseline = NA, vcolors = c(`-1` = "#f05a71", `0` = "#371ea3", `1` =
+  "#8bdcbe", X = "#371ea3"), digits = 3, rounding_function = round,
+  plot_distributions = FALSE)
 }
 \arguments{
 \item{x}{the model model of 'break_down' class}
@@ -16,7 +16,7 @@
 
 \item{add_contributions}{shall variable contributions to be added on plot?}
 
-\item{start_baseline}{if TRUE then veritical line will start in baselines}
+\item{baseline}{if numeric then veritical line will start in baseline}
 
 \item{vcolors}{named vector with colors}
 
@@ -55,7 +55,7 @@ bd_rf <- local_attributions(explainer_rf,
                            new_observation)
 bd_rf
 plot(bd_rf)
-plot(bd_rf, start_baseline = TRUE)
+plot(bd_rf, baseline = 0)
 
 bd_rf <- local_attributions(explainer_rf,
                            new_observation,
@@ -82,7 +82,7 @@ bd_rf <- local_attributions(explainer_rf,
                            apartments_test[1,])
 bd_rf
 plot(bd_rf, digits = 1)
-plot(bd_rf, digits = 1, start_baseline = TRUE)
+plot(bd_rf, digits = 1, baseline = 0)
 
 bd_rf <- local_attributions(explainer_rf,
                            apartments_test[1,],
@@ -90,7 +90,7 @@ bd_rf <- local_attributions(explainer_rf,
 plot(bd_rf, plot_distributions = TRUE)
 
 bd_rf <- local_interactions(explainer_rf,
-                 new_observation,
+                 new_observation = apartments_test[1,],
                  keep_distributions = TRUE)
 
 bd_rf
