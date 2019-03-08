@@ -81,7 +81,7 @@
 plot.break_down <- function(x, ..., add_contributions = TRUE, baseline = NA,
                         vcolors = c("-1" = "#f05a71", "0" = "#371ea3", "1" = "#8bdcbe", "X" = "#371ea3"),
                         digits = 3, rounding_function = round, plot_distributions = FALSE) {
-  position <- cummulative <- prev <- variable <- right_side <- contribution <- trans_contribution <- prediction <- label <- id <- NULL
+  position <- cummulative <- prev <- variable <- pretty_text <- right_side <- contribution <- trans_contribution <- prediction <- label <- id <- NULL
 
   if (plot_distributions) {
     df <- attr(x, "yhats_distribution")
@@ -118,17 +118,19 @@ plot.break_down <- function(x, ..., add_contributions = TRUE, baseline = NA,
     broken_cumm$trans_contribution <- broken_cumm$cummulative - broken_cumm$text
     broken_cumm$right_side <- pmax(broken_cumm$cummulative,
                                    broken_cumm$cummulative - broken_cumm$contribution )
-    broken_cumm <- droplevels(broken_cumm)
-    ftmp <- function(tmp) {
-      ctmp <- as.character(rounding_function(tmp, digits))
-      paste0(ifelse(substr(ctmp, 1, 1) == "-", "", "+"), ctmp)
-    }
+#    broken_cumm <- droplevels(broken_cumm)
+      ctmp <- as.character(rounding_function(broken_cumm$trans_contribution, digits))
+      broken_cumm$pretty_text <-
+        paste0(ifelse((substr(ctmp, 1, 1) == "-") |
+                      (broken_cumm$variable == "prediction") |
+                      (broken_cumm$variable == "intercept"), "", "+"), ctmp)
+
     pl <- ggplot(broken_cumm, aes(x = position + 0.5,
                                   y = pmax(cummulative, prev),
                                   xmin = position + 0.15, xmax = position + 0.85,
                                   ymin = cummulative, ymax = prev,
                                   fill = sign,
-                                  label = sapply(trans_contribution, ftmp)))
+                                  label = pretty_text))
 
     if (add_contributions) {
       drange <- diff(range(broken_cumm$cummulative))

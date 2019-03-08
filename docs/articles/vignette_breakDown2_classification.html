@@ -119,15 +119,13 @@
 #&gt; converged</code></pre>
 <p>To understand the factors that drive predictions for a single observation we use the <code>iBreakDown</code> package.</p>
 <p>However sometimes we need to create our own predict function which returns probalilities.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">p_fun &lt;-<span class="st"> </span><span class="cf">function</span>(object, newdata){<span class="kw">predict</span>(object, <span class="dt">newdata=</span>newdata, <span class="dt">type=</span><span class="st">"prob"</span>)}</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co"># p_fun &lt;- function(object, newdata){</span></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">#   if (nrow(newdata) == 1) {</span></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">#      as.data.frame(t(predict(object, newdata, type = "prob")))</span></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co">#   } else {</span></a>
-<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co">#     as.data.frame(predict(object, newdata=newdata, type="prob"))</span></a>
-<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co">#   }</span></a>
-<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="co"># }</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">p_fun &lt;-<span class="st"> </span><span class="cf">function</span>(object, newdata) {</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">   <span class="cf">if</span> (<span class="kw">nrow</span>(newdata) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) {</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">      <span class="kw">as.matrix</span>(<span class="kw">t</span>(<span class="kw">predict</span>(object, newdata, <span class="dt">type =</span> <span class="st">"prob"</span>)))</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">   } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">     <span class="kw">as.matrix</span>(<span class="kw">predict</span>(object, <span class="dt">newdata=</span>newdata, <span class="dt">type =</span> <span class="st">"prob"</span>))</a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">   }</a>
+<a class="sourceLine" id="cb7-7" data-line-number="7"> }</a></code></pre></div>
 <p>Now we create an object of the <code>break_down</code> class. If we want to plot distributions of partial predictions, use argument <code>keep_distributions</code>.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">bd_glm &lt;-<span class="st"> </span><span class="kw"><a href="../reference/local_attributions.html">local_attributions</a></span>(m_glm,</a>
 <a class="sourceLine" id="cb8-2" data-line-number="2">                            <span class="dt">data =</span> HR_test,</a>
@@ -135,48 +133,36 @@
 <a class="sourceLine" id="cb8-4" data-line-number="4">                            <span class="dt">keep_distributions =</span> <span class="ot">TRUE</span>,</a>
 <a class="sourceLine" id="cb8-5" data-line-number="5">                            <span class="dt">predict_function =</span> p_fun)</a></code></pre></div>
 <p>We can simply print the result.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">head</span>(bd_glm)</a></code></pre></div>
-<pre><code>#&gt; $variable
-#&gt;  [1] intercept      evaluation = 2 hours = 42     gender = male 
-#&gt;  [5] age = 58       salary = 2     status = fired prediction    
-#&gt;  [9] intercept      evaluation = 2 hours = 42     gender = male 
-#&gt; [13] age = 58       salary = 2     status = fired prediction    
-#&gt; [17] intercept      evaluation = 2 hours = 42     gender = male 
-#&gt; [21] age = 58       salary = 2     status = fired prediction    
-#&gt; 8 Levels: age = 58 evaluation = 2 gender = male hours = 42 ... status = fired
-#&gt; 
-#&gt; $contribution
-#&gt;  [1]  0.3608970366  0.0836464487  0.1286468461 -0.0068466573 -0.0050727584
-#&gt;  [6]  0.0021435835  0.0000000000  0.5634144993  0.2811159833  0.1342029958
-#&gt; [11] -0.0158876669  0.0055539713  0.0035640252 -0.0020222182  0.0000000000
-#&gt; [16]  0.4065270905  0.3579869801 -0.2178494445 -0.1127591793  0.0012926860
-#&gt; [21]  0.0015087332 -0.0001213653  0.0000000000  0.0300584102
-#&gt; 
-#&gt; $variable_name
-#&gt;  [1] intercept  evaluation hours      gender     age        salary    
-#&gt;  [7] status                intercept  evaluation hours      gender    
-#&gt; [13] age        salary     status                intercept  evaluation
-#&gt; [19] hours      gender     age        salary     status               
-#&gt; Levels:  age evaluation gender hours intercept salary status
-#&gt; 
-#&gt; $variable_value
-#&gt;  [1] 1     2     42    male  58    2     fired       1     2     42   
-#&gt; [12] male  58    2     fired       1     2     42    male  58    2    
-#&gt; [23] fired      
-#&gt; Levels:  1 2 42 58 fired male
-#&gt; 
-#&gt; $cummulative
-#&gt;  [1] 0.36089704 0.44454349 0.57319033 0.56634367 0.56127092 0.56341450
-#&gt;  [7] 0.56341450 0.56341450 0.28111598 0.41531898 0.39943131 0.40498528
-#&gt; [13] 0.40854931 0.40652709 0.40652709 0.40652709 0.35798698 0.14013754
-#&gt; [19] 0.02737836 0.02867104 0.03017978 0.03005841 0.03005841 0.03005841
-#&gt; 
-#&gt; $sign
-#&gt;  [1] 1  1  1  -1 -1 1  0  1  1  1  -1 1  1  -1 0  1  1  -1 -1 1  1  -1 0 
-#&gt; [24] X 
-#&gt; Levels: -1 0 1 X</code></pre>
-<p>Or plot the result which is more clear.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="co">#plot(bd_glm)</span></a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">bd_glm</a></code></pre></div>
+<pre><code>#&gt;                                   contribution
+#&gt; multinom.fired: intercept                0.361
+#&gt; multinom.fired: evaluation = 2           0.084
+#&gt; multinom.fired: hours = 42               0.129
+#&gt; multinom.fired: gender = male           -0.007
+#&gt; multinom.fired: age = 58                -0.005
+#&gt; multinom.fired: salary = 2               0.002
+#&gt; multinom.fired: status = fired           0.000
+#&gt; multinom.fired: prediction               0.563
+#&gt; multinom.ok: intercept                   0.281
+#&gt; multinom.ok: evaluation = 2              0.134
+#&gt; multinom.ok: hours = 42                 -0.016
+#&gt; multinom.ok: gender = male               0.006
+#&gt; multinom.ok: age = 58                    0.004
+#&gt; multinom.ok: salary = 2                 -0.002
+#&gt; multinom.ok: status = fired              0.000
+#&gt; multinom.ok: prediction                  0.407
+#&gt; multinom.promoted: intercept             0.358
+#&gt; multinom.promoted: evaluation = 2       -0.218
+#&gt; multinom.promoted: hours = 42           -0.113
+#&gt; multinom.promoted: gender = male         0.001
+#&gt; multinom.promoted: age = 58              0.002
+#&gt; multinom.promoted: salary = 2            0.000
+#&gt; multinom.promoted: status = fired        0.000
+#&gt; multinom.promoted: prediction            0.030
+#&gt; baseline:  0</code></pre>
+<p>Or plot it.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">plot</span>(bd_glm)</a></code></pre></div>
+<p><img src="vignette_breakDown2_classification_files/figure-html/unnamed-chunk-6-1.png" width="576"></p>
 <p>Use the <code>baseline</code> argument to set the origin of plots.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">plot</span>(bd_glm, <span class="dt">baseline =</span> <span class="dv">0</span>)</a></code></pre></div>
 <p><img src="vignette_breakDown2_classification_files/figure-html/unnamed-chunk-7-1.png" width="576"></p>
@@ -201,30 +187,30 @@
 <a class="sourceLine" id="cb14-11" data-line-number="11"></a>
 <a class="sourceLine" id="cb14-12" data-line-number="12">bd_rf</a></code></pre></div>
 <pre><code>#&gt;                                               contribution
-#&gt; randomForest.formula.fired: intercept                0.378
-#&gt; randomForest.formula.fired: hours = 42               0.233
-#&gt; randomForest.formula.fired: evaluation = 2           0.059
-#&gt; randomForest.formula.fired: salary = 2              -0.256
-#&gt; randomForest.formula.fired: gender = male            0.027
-#&gt; randomForest.formula.fired: age = 58                 0.331
+#&gt; randomForest.formula.fired: intercept                0.376
+#&gt; randomForest.formula.fired: hours = 42               0.235
+#&gt; randomForest.formula.fired: evaluation = 2           0.058
+#&gt; randomForest.formula.fired: salary = 2              -0.255
+#&gt; randomForest.formula.fired: gender = male            0.014
+#&gt; randomForest.formula.fired: age = 58                 0.386
 #&gt; randomForest.formula.fired: status = fired           0.000
-#&gt; randomForest.formula.fired: prediction               0.772
-#&gt; randomForest.formula.ok: intercept                   0.269
-#&gt; randomForest.formula.ok: hours = 42                 -0.040
-#&gt; randomForest.formula.ok: evaluation = 2              0.094
-#&gt; randomForest.formula.ok: salary = 2                  0.256
-#&gt; randomForest.formula.ok: gender = male              -0.030
-#&gt; randomForest.formula.ok: age = 58                   -0.324
+#&gt; randomForest.formula.fired: prediction               0.814
+#&gt; randomForest.formula.ok: intercept                   0.271
+#&gt; randomForest.formula.ok: hours = 42                 -0.045
+#&gt; randomForest.formula.ok: evaluation = 2              0.099
+#&gt; randomForest.formula.ok: salary = 2                  0.254
+#&gt; randomForest.formula.ok: gender = male              -0.016
+#&gt; randomForest.formula.ok: age = 58                   -0.379
 #&gt; randomForest.formula.ok: status = fired              0.000
-#&gt; randomForest.formula.ok: prediction                  0.224
-#&gt; randomForest.formula.promoted: intercept             0.353
-#&gt; randomForest.formula.promoted: hours = 42           -0.193
-#&gt; randomForest.formula.promoted: evaluation = 2       -0.153
-#&gt; randomForest.formula.promoted: salary = 2            0.000
-#&gt; randomForest.formula.promoted: gender = male         0.003
+#&gt; randomForest.formula.ok: prediction                  0.184
+#&gt; randomForest.formula.promoted: intercept             0.354
+#&gt; randomForest.formula.promoted: hours = 42           -0.190
+#&gt; randomForest.formula.promoted: evaluation = 2       -0.158
+#&gt; randomForest.formula.promoted: salary = 2            0.001
+#&gt; randomForest.formula.promoted: gender = male         0.002
 #&gt; randomForest.formula.promoted: age = 58             -0.007
 #&gt; randomForest.formula.promoted: status = fired        0.000
-#&gt; randomForest.formula.promoted: prediction            0.004
+#&gt; randomForest.formula.promoted: prediction            0.002
 #&gt; baseline:  0</code></pre>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">plot</span>(bd_rf)</a></code></pre></div>
 <p><img src="vignette_breakDown2_classification_files/figure-html/unnamed-chunk-9-1.png" width="576"></p>
@@ -246,7 +232,7 @@
 <a class="sourceLine" id="cb17-12" data-line-number="12">                            <span class="dt">new_observation =</span>  new_observation,</a>
 <a class="sourceLine" id="cb17-13" data-line-number="13">                            <span class="dt">predict_function =</span> p_fun)</a>
 <a class="sourceLine" id="cb17-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb17-15" data-line-number="15"><span class="kw">plot</span>(bd_svm, <span class="dt">start_baseline =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb17-15" data-line-number="15"><span class="kw">plot</span>(bd_svm)</a></code></pre></div>
 <p><img src="vignette_breakDown2_classification_files/figure-html/unnamed-chunk-10-1.png" width="576"></p>
 </div>
 <div id="knn" class="section level2">
@@ -258,7 +244,7 @@
 <a class="sourceLine" id="cb18-4" data-line-number="4">                            <span class="dt">data =</span> HR_test,</a>
 <a class="sourceLine" id="cb18-5" data-line-number="5">                            <span class="dt">new_observation =</span>  new_observation)</a>
 <a class="sourceLine" id="cb18-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb18-7" data-line-number="7"><span class="kw">plot</span>(bd_knn, <span class="dt">start_baseline =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb18-7" data-line-number="7"><span class="kw">plot</span>(bd_knn)</a></code></pre></div>
 <p><img src="vignette_breakDown2_classification_files/figure-html/unnamed-chunk-11-1.png" width="576"></p>
 </div>
   </div>

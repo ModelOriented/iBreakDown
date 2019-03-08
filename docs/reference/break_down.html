@@ -105,11 +105,24 @@
 It calls either `local_attributions` or `local_interactions`.</p>
     
 
-    <pre class="usage"><span class='fu'>break_down</span>(<span class='no'>...</span>, <span class='kw'>interactions</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>break_down</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>interactions</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='co'># S3 method for explainer</span>
+<span class='fu'>break_down</span>(<span class='no'>x</span>, <span class='no'>new_observation</span>, <span class='no'>...</span>,
+  <span class='kw'>interactions</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='co'># S3 method for default</span>
+<span class='fu'>break_down</span>(<span class='no'>x</span>, <span class='no'>data</span>, <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict</span>,
+  <span class='no'>new_observation</span>, <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>order</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'>class</span>(<span class='no'>x</span>)[<span class='fl'>1</span>], <span class='no'>...</span>, <span class='kw'>interactions</span> <span class='kw'>=</span> <span class='no'>interactions</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>a model to be explained, or an explainer created with function `DALEX::explain()`.</p></td>
+    </tr>
     <tr>
       <th>...</th>
       <td><p>parameters passed to `local_*` functions</p></td>
@@ -119,8 +132,8 @@ It calls either `local_attributions` or `local_interactions`.</p>
       <td><p>shall interactions be included</p></td>
     </tr>
     <tr>
-      <th>x</th>
-      <td><p>a model to be explained, or an explainer created with function `DALEX::explain()`.</p></td>
+      <th>new_observation</th>
+      <td><p>a new observation with columns that corresponds to variables used in the model</p></td>
     </tr>
     <tr>
       <th>data</th>
@@ -129,10 +142,6 @@ It calls either `local_attributions` or `local_interactions`.</p>
     <tr>
       <th>predict_function</th>
       <td><p>predict function, will be extracted from `x` if it's an explainer</p></td>
-    </tr>
-    <tr>
-      <th>new_observation</th>
-      <td><p>a new observation with columns that corresponds to variables used in the model</p></td>
     </tr>
     <tr>
       <th>keep_distributions</th>

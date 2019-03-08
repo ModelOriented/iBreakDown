@@ -49,15 +49,13 @@ However sometimes we need to create our own predict function which returns proba
 
 
 ```{r}
-p_fun <- function(object, newdata){predict(object, newdata=newdata, type="prob")}
-
-# p_fun <- function(object, newdata){
-#   if (nrow(newdata) == 1) {
-#      as.data.frame(t(predict(object, newdata, type = "prob")))
-#   } else {
-#     as.data.frame(predict(object, newdata=newdata, type="prob"))
-#   }
-# }
+p_fun <- function(object, newdata) {
+   if (nrow(newdata) == 1) {
+      as.matrix(t(predict(object, newdata, type = "prob")))
+   } else {
+     as.matrix(predict(object, newdata=newdata, type = "prob"))
+   }
+ }
 ```
 
 Now we create an object of the `break_down` class. If we want to plot distributions of partial predictions, use argument `keep_distributions`. 
@@ -72,7 +70,11 @@ bd_glm <- local_attributions(m_glm,
 
 We can simply print the result.
 
-Or plot the result which is more clear.
+```{r}
+bd_glm
+```
+
+Or plot it.
 
 ```{r}
 plot(bd_glm)
@@ -127,7 +129,7 @@ bd_svm <- local_attributions(m_svm,
                             new_observation =  new_observation,
                             predict_function = p_fun)
 
-plot(bd_svm, start_baseline = TRUE)
+plot(bd_svm)
 ```
 
 ## knn
@@ -139,6 +141,6 @@ bd_knn <- local_attributions(m_knn,
                             data = HR_test,
                             new_observation =  new_observation)
 
-plot(bd_knn, start_baseline = TRUE)
+plot(bd_knn)
 ```
 
