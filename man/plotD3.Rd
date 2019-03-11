@@ -3,7 +3,7 @@
 \name{plotD3}
 \alias{plotD3}
 \alias{plotD3.break_down}
-\title{Plot Break Down Objects in D3 with r2d3}
+\title{Plot Break Down Objects in D3 with r2d3 package.}
 \usage{
 plotD3(x, ...)
 
@@ -12,28 +12,28 @@ plotD3(x, ...)
   "#0f6333"), digits = 3, rounding_function = round)
 }
 \arguments{
-\item{x}{the model model of 'break_down' class}
+\item{x}{the model model of `break_down`` class.}
 
-\item{...}{other parameters}
+\item{...}{other parameters.}
 
-\item{max_features}{default 4. Maximal number of features to be included in the plot}
+\item{max_features}{maximal number of features to be included in the plot. default value is 4.}
 
-\item{min_max}{range of OX axis. By deafult `NA` therefore will be extracted from the contributions of `x`. But can be set to some constants, usefull if these plots are used for comparisons.}
+\item{min_max}{a range of OX axis. By deafult `NA` therefore will be extracted from the contributions of `x`. But can be set to some constants, usefull if these plots are used for comparisons.}
 
-\item{vcolors}{named vector with colors}
+\item{vcolors}{named vector with colors.}
 
 \item{digits}{number of decimal places (round) or significant digits (signif) to be used.
-See the \code{rounding_function} argument}
+See the \code{rounding_function} argument.}
 
 \item{rounding_function}{function that is to used for rounding numbers.
-It may be \code{signif()} which keeps a specified number of significant digits.
-Or the default \code{round()} to have the same precision for all components}
+It may be \code{\link{signif}} which keeps a specified number of significant digits.
+Or the default \code{\link{round}} to have the same precision for all components.}
 }
 \value{
-a r2d3 object
+an `r2d3` object.
 }
 \description{
-Plot Break Down Objects in D3 with r2d3
+Plot Break Down Objects in D3 with r2d3 package.
 }
 \examples{
 \dontrun{

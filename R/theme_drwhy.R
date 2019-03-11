@@ -1,8 +1,8 @@
 #' DrWhy Theme for ggplot objects
 #'
-#' @param n number of colors for color palette
+#' @param n a number of colors for color palette.
 #'
-#' @return theme for ggplot2 objects
+#' @return theme for `ggplot2`` objects.
 #' @export
 #' @rdname theme_drwhy
 theme_drwhy <- function() {

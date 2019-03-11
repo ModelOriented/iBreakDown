@@ -10,27 +10,28 @@
   plot_distributions = FALSE)
 }
 \arguments{
-\item{x}{the model model of 'break_down' class}
+\item{x}{the model model of `break_down` class.}
 
-\item{...}{other parameters}
+\item{...}{other parameters.}
 
 \item{add_contributions}{shall variable contributions to be added on plot?}
 
-\item{baseline}{if numeric then veritical line will start in baseline}
+\item{baseline}{if numeric then veritical line will start in baseline.}
 
-\item{vcolors}{named vector with colors}
+\item{vcolors}{named vector with colors.}
 
 \item{digits}{number of decimal places (round) or significant digits (signif) to be used.
-See the \code{rounding_function} argument}
+See the \code{rounding_function} argument.}
 
 \item{rounding_function}{function that is to used for rounding numbers.
-It may be \code{signif()} which keeps a specified number of significant digits.
-Or the default \code{round()} to have the same precision for all components}
+It may be \code{\link{signif}} which keeps a specified number of significant digits.
+Or the default \code{\link{round}} to have the same precision for all components.}
 
-\item{plot_distributions}{if TRUE then distributions of conditional propotions will be plotted. This requires keep_distributions=TRUE in the broken.default().}
+\item{plot_distributions}{if `TRUE` then distributions of conditional propotions will be plotted. This requires \code{keep_distributions=TRUE} in the
+\code{\link{break_down}}, \code{\link{local_attributions}}, or \code{\link{local_interactions}}.}
 }
 \value{
-a ggplot2 object
+a `ggplot2` object.
 }
 \description{
 Plot Generic for Break Down Objects

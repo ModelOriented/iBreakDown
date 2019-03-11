@@ -1,19 +1,21 @@
 #' Model Agnostic Sequential Variable Attributions
 #'
-#' This function finds Variable Attributions via Sequential Variable Conditioning
-#' It calls either `local_attributions` or `local_interactions`.
+#' This function finds Variable Attributions via Sequential Variable Conditioning.
+#' It calls either \code{\link{local_attributions}} or \code{\link{local_interactions}}.
 #'
 #' @param x a model to be explained, or an explainer created with function `DALEX::explain()`.
-#' @param data validation dataset, will be extracted from `x` if it's an explainer
-#' @param predict_function predict function, will be extracted from `x` if it's an explainer
-#' @param new_observation a new observation with columns that corresponds to variables used in the model
-#' @param keep_distributions if `TRUE`, then distributions of partial predictions is stored and can be plotted with the generic `plot()`
+#' @param data validation dataset, will be extracted from `x` if it is an explainer.
+#' @param predict_function predict function, will be extracted from `x` if it's an explainer.
+#' @param new_observation a new observation with columns that correspond to variables used in the model.
+#' @param keep_distributions if `TRUE`, then distribution of partial predictions is stored and can be plotted with the generic `plot()`.
 #' @param order if not `NULL`, then it will be a fixed order of variables. It can be a numeric vector or vector with names of variables.
-#' @param ... parameters passed to `local_*` functions
-#' @param interactions shall interactions be included
-#' @param label name of the model. By default it's extracted from the 'class' attribute of the model
+#' @param ... parameters passed to `local_*` functions.
+#' @param interactions shall interactions be included?
+#' @param label name of the model. By default it is extracted from the 'class' attribute of the model.
 #'
-#' @return an object of the `break_down` class
+#' @return an object of the `break_down` class.
+#'
+#' @seealso \code{\link{local_attributions}}, \code{\link{local_interactions}}
 #'
 #' @examples
 #' \dontrun{

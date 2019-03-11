@@ -18,28 +18,28 @@ break_down(x, ..., interactions = FALSE)
 \arguments{
 \item{x}{a model to be explained, or an explainer created with function `DALEX::explain()`.}
 
-\item{...}{parameters passed to `local_*` functions}
+\item{...}{parameters passed to `local_*` functions.}
 
-\item{interactions}{shall interactions be included}
+\item{interactions}{shall interactions be included?}
 
-\item{new_observation}{a new observation with columns that corresponds to variables used in the model}
+\item{new_observation}{a new observation with columns that correspond to variables used in the model.}
 
-\item{data}{validation dataset, will be extracted from `x` if it's an explainer}
+\item{data}{validation dataset, will be extracted from `x` if it is an explainer.}
 
-\item{predict_function}{predict function, will be extracted from `x` if it's an explainer}
+\item{predict_function}{predict function, will be extracted from `x` if it's an explainer.}
 
-\item{keep_distributions}{if `TRUE`, then distributions of partial predictions is stored and can be plotted with the generic `plot()`}
+\item{keep_distributions}{if `TRUE`, then distribution of partial predictions is stored and can be plotted with the generic `plot()`.}
 
 \item{order}{if not `NULL`, then it will be a fixed order of variables. It can be a numeric vector or vector with names of variables.}
 
-\item{label}{name of the model. By default it's extracted from the 'class' attribute of the model}
+\item{label}{name of the model. By default it is extracted from the 'class' attribute of the model.}
 }
 \value{
-an object of the `break_down` class
+an object of the `break_down` class.
 }
 \description{
-This function finds Variable Attributions via Sequential Variable Conditioning
-It calls either `local_attributions` or `local_interactions`.
+This function finds Variable Attributions via Sequential Variable Conditioning.
+It calls either \code{\link{local_attributions}} or \code{\link{local_interactions}}.
 }
 \examples{
 \dontrun{
@@ -62,4 +62,7 @@ bd_rf <- break_down(explainer_rf,
 bd_rf
 plot(bd_rf)
 }
+}
+\seealso{
+\code{\link{local_attributions}}, \code{\link{local_interactions}}
 }

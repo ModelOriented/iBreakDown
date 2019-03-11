@@ -13,10 +13,10 @@ theme_drwhy_vertical()
 theme_drwhy_colors(n = 2)
 }
 \arguments{
-\item{n}{number of colors for color palette}
+\item{n}{a number of colors for color palette.}
 }
 \value{
-theme for ggplot2 objects
+theme for `ggplot2`` objects.
 }
 \description{
 DrWhy Theme for ggplot objects
