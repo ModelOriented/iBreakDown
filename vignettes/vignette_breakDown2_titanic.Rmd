@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 # Data for Titanic survival
 
 Let's see an example for `iBreakDown` plots for survival probability of Titanic passengers.
-First, let's see the data, we will find quite nice data from in the `titanic` package.
+First, let's see the data, we will find quite nice data from in the [`titanic`]( https://CRAN.R-project.org/package=titanic) package.
 
 ```{r}
 library("titanic")
@@ -36,7 +36,7 @@ head(titanic)
 
 # Model for Titanic survival
 
-Ok, not it's time to create a model. Let's use the Random Forest model.
+Ok, now it's time to create a model. Let's use the Random Forest model.
 
 ```{r}
 # prepare model
@@ -47,7 +47,7 @@ rf_model
 
 # Explainer for Titanic survival
 
-The third step (it's optional but useful) is to create a DALEX2 explainer for random forest model.
+The third step (it's optional but useful) is to create a DALEX explainer for Random Forest model.
 
 ```{r}
 library("DALEX")
@@ -57,9 +57,7 @@ rf_explain <- explain(rf_model, data = titanic,
 
 # Break Down plot with D3
 
-Ok, not it's time to create a model. Let's use the Random Forest model.
-
-Let's see break down for model predictions for 8 years old male from 1st class that embarked from port C.
+Let's see Break Down for model predictions for 8 years old male from 1st class that embarked from port C.
 
 ```{r}
 new_passanger <- data.frame(

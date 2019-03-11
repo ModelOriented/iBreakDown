@@ -20,12 +20,11 @@ knitr::opts_chunk$set(
 )
 ```
 
-Here we will use the HR data to present the iBreakDown package for classification models.
+Here we will use the `HR` data from [`DALEX`](https://github.com/pbiecek/DALEX) package to present the `iBreakDown` for classification models.
 
 ```{r}
 # devtools::install_github("ModelOriented/DALEX")
 library(DALEX)
-library(ggplot2)
 library(iBreakDown)
 
 head(HR)
@@ -45,7 +44,7 @@ m_glm <- multinom(status ~ . , data = HR, probabilities = TRUE, model = TRUE)
 
 To understand the factors that drive predictions for a single observation we use the `iBreakDown` package.
 
-However sometimes we need to create our own predict function which returns probalilities.
+However, sometimes we need to create custom predict function which returns probalilities.
 
 
 ```{r}
@@ -58,7 +57,7 @@ p_fun <- function(object, newdata) {
  }
 ```
 
-Now we create an object of the `break_down` class. If we want to plot distributions of partial predictions, use argument `keep_distributions`. 
+Now we create an object of the `break_down` class. If we want to plot distributions of partial predictions, set `keep_distributions = TRUE`. 
 
 ```{r}
 bd_glm <- local_attributions(m_glm,
@@ -92,7 +91,7 @@ Use the `plot_distributions` argument to see distributions of partial prediction
 plot(bd_glm, plot_distributions = TRUE)
 ```
 
-For another type of models we proceed analogously.
+For another types of models we proceed analogously.
 
 ## randomForest
 

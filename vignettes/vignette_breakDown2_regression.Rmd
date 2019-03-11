@@ -19,12 +19,11 @@ knitr::opts_chunk$set(
 )
 ```
 
-Here we will use the dragons data to present the iBreakDown package for regression models.
+Here we will use the `dragons` data from [`DALEX`](https://github.com/pbiecek/DALEX) package to present the `iBreakDown` for regression models.
 
 ```{r}
 # devtools::install_github("pbiecek/DALEX")
 library(DALEX)
-library(ggplot2)
 library(iBreakDown)
 
 head(dragons)
@@ -42,7 +41,7 @@ m_lm <- lm(life_length ~ . , data = dragons)
 
 To understand the factors that drive predictions for a single observation we use the `iBreakDown` package.
 
-Now we create an object of the `break_down` class. If we want to plot distributions of partial predictions, use argument `keep_distributions`.
+Now, we create an object of the `break_down` class. If we want to plot distributions of partial predictions, set `keep_distributions = TRUE`.
 
 ```{r}
 bd_lm <- local_attributions(m_lm,
@@ -63,19 +62,19 @@ Or plot the result which is more clear.
 plot(bd_lm)
 ```
 
-Use the `start_baseline` argument to set the origin of plots.
+Use the `baseline` parameter to set the origin of plots.
 
 ```{r}
-plot(bd_lm, start_baseline = TRUE)
+plot(bd_lm, baseline = 0)
 ```
 
-Use the `plot_distributions` argument to see distributions of partial predictions.
+Use the `plot_distributions` parameter to see distributions of partial predictions.
 
 ```{r}
 plot(bd_lm, plot_distributions = TRUE)
 ```
 
-For another type of models we proceed analogously. However sometimes we need to create our own predict function (see `nnet` example).
+For another types of models we proceed analogously. However, sometimes we need to create custom predict function (see `nnet` example).
 
 ## randomForest
 
@@ -89,7 +88,7 @@ bd_rf <- local_attributions(m_rf,
                             new_observation =  new_observation)
 
 head(bd_rf)
-plot(bd_rf, start_baseline = TRUE)
+plot(bd_rf)
 ```
 
 ## SVM
@@ -103,7 +102,7 @@ bd_svm <- local_attributions(m_svm,
                             data = dragons_test,
                             new_observation =  new_observation)
 
-plot(bd_svm, start_baseline = TRUE)
+plot(bd_svm)
 ```
 
 ## knn
@@ -117,14 +116,14 @@ bd_knn <- local_attributions(m_knn,
                             data = dragons_test,
                             new_observation =  new_observation)
 
-plot(bd_knn, start_baseline = TRUE)
+plot(bd_knn)
 ```
 
 ## nnet
 
 When you use `nnet` package for regression, remember to normalize the resposne variable, in such a way that it is from interval $(0,1)$.
 
-In this case creating own predict function is also needed.
+In this case, creating custom predict function is also needed.
 
 ```{r}
 library(nnet)
@@ -143,6 +142,6 @@ bd_nnet <- local_attributions(m_nnet,
                             new_observation =  new_observation,
                             predict_function = p_fun)
 
-plot(bd_nnet, start_baseline = TRUE)
+plot(bd_nnet)
 ```
 
