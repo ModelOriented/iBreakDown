@@ -13,7 +13,7 @@ Break Down Table shows contributions of every variable to a final prediction.
 Break Down Plot presents variable contributions in a concise graphical way. 
 This package works for binary classifiers and general regression models. 
 
-It's a part of [DrWhy](https://github.com/ModelOriented/DrWhy) collection of tools.
+It is a part of [DrWhy](https://github.com/ModelOriented/DrWhy) collection of tools.
 
 Find lots of R examples at `iBreakDown` website: https://ModelOriented.github.io/iBreakDown/
 

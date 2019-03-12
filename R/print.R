@@ -1,14 +1,14 @@
 #' Print Generic for Break Down Objects
 #'
-#' @param x the model model of `break_down` class
-#' @param ... other parameters
+#' @param x the model model of `break_down` class.
+#' @param ... other parameters.
 #' @param digits number of decimal places (round) or significant digits (signif) to be used.
-#' See the \code{rounding_function} argument
+#' See the \code{rounding_function} argument.
 #' @param rounding_function function that is to used for rounding numbers.
-#' It may be \code{signif()} which keeps a specified number of significant digits.
-#' Or the default \code{round()} to have the same precision for all components
+#' It may be \code{\link{signif}} which keeps a specified number of significant digits.
+#' Or the default \code{\link{round}} to have the same precision for all components.
 #'
-#' @return a data frame
+#' @return a data frame.
 #'
 #' @export
 print.break_down <- function(x, ..., digits = 3, rounding_function = round) {

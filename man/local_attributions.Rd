@@ -18,27 +18,29 @@ local_attributions(x, ...)
 \arguments{
 \item{x}{a model to be explained, or an explainer created with function `DALEX::explain()`.}
 
-\item{...}{other parameters}
+\item{...}{other parameters.}
 
-\item{new_observation}{a new observation with columns that corresponds to variables used in the model}
+\item{new_observation}{a new observation with columns that correspond to variables used in the model.}
 
-\item{keep_distributions}{if `TRUE`, then distributions of partial predictions is stored and can be plotted with the generic `plot()`}
+\item{keep_distributions}{if `TRUE`, then distribution of partial predictions is stored and can be plotted with the generic `plot()`.}
 
-\item{data}{validation dataset, will be extracted from `x` if it's an explainer}
+\item{data}{validation dataset, will be extracted from `x` if it's an explainer.}
 
-\item{predict_function}{predict function, will be extracted from `x` if it's an explainer}
+\item{predict_function}{predict function, will be extracted from `x` if it's an explainer.}
 
 \item{order}{if not `NULL`, then it will be a fixed order of variables. It can be a numeric vector or vector with names of variables.}
 
-\item{label}{name of the model. By default it's extracted from the 'class' attribute of the model}
+\item{label}{name of the model. By default it's extracted from the 'class' attribute of the model.}
 }
 \value{
-an object of the `break_down` class
+an object of the `break_down` class.
 }
 \description{
-This function finds Variable attributions via Sequential Variable Conditioning
+This function finds Variable attributions via Sequential Variable Conditioning.
 The complexity of this function is O(2*p).
-This function first determines the order for conditionings and then calculate variable effects via sequence of conditionings.
+This function works in a similar way to step-up and step-down greedy approximations in function `breakDown::break_down()`.
+The main difference is that in the first step the order of variables is determined.
+And in the second step the impact is calculated.
 }
 \examples{
 \dontrun{
@@ -79,4 +81,7 @@ bd_rf <- local_attributions(explainer_rf,
                            keep_distributions = TRUE)
 plot(bd_rf, plot_distributions = TRUE)
 }
+}
+\seealso{
+\code{\link{break_down}}, \code{\link{local_interactions}}
 }

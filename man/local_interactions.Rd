@@ -18,31 +18,31 @@ local_interactions(x, ...)
 \arguments{
 \item{x}{a model to be explained, or an explainer created with function `DALEX::explain()`.}
 
-\item{...}{other parameters}
+\item{...}{other parameters.}
 
-\item{new_observation}{a new observation with columns that corresponds to variables used in the model}
+\item{new_observation}{a new observation with columns that correspond to variables used in the model.}
 
-\item{keep_distributions}{if TRUE, then the distribution of partial predictions is stored in addition to the average.}
+\item{keep_distributions}{if `TRUE`, then the distribution of partial predictions is stored in addition to the average.}
 
-\item{data}{validation dataset, will be extracted from `x` if it's an explainer}
+\item{data}{validation dataset, will be extracted from `x` if it's an explainer.}
 
-\item{predict_function}{predict function, will be extracted from `x` if it's an explainer}
+\item{predict_function}{predict function, will be extracted from `x` if it's an explainer.}
 
-\item{interaction_preference}{a constant that set the preference for interactions. By default `1`. The larger the more frequently intereactions will be presented in explanations}
+\item{interaction_preference}{a constant that set the preference for interactions. By default `1`. The larger the more frequently intereactions will be presented in explanations.}
 
 \item{order}{if not `NULL`, then it will be a fixed order of variables. It can be a numeric vector or vector with names of variables/interactions.}
 
-\item{label}{character - the name of the model. By default it's extracted from the 'class' attribute of the model}
+\item{label}{character - the name of the model. By default it's extracted from the 'class' attribute of the model.}
 }
 \value{
-an object of the `break_down` class
+an object of the `break_down` class.
 }
 \description{
 This function implements decomposition of model predictions with identification
 of interactions.
 The complexity of this function is O(2*p) for additive models and O(2*p^2) for interactions.
-This function works in similar way to step-up and step-down greedy approximations,
-the main difference is that in the first step the order of variables is determined.
+This function works in a similar way to step-up and step-down greedy approximations in function `breakDown::break_down()`.
+The main difference is that in the first step the order of variables and interactions is determined.
 And in the second step the impact is calculated.
 }
 \examples{
@@ -83,4 +83,7 @@ bd_rf
 plot(bd_rf)
 plot(bd_rf, plot_distributions = TRUE)
 }
+}
+\seealso{
+\code{\link{break_down}}, \code{\link{local_attributions}}
 }
