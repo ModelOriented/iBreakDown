@@ -1,23 +1,21 @@
-#' Model Agnostic Sequential Variable attributions
+#' Model Agnostic Sequential Variable Attributions
 #'
-#' This function finds Variable attributions via Sequential Variable Conditioning.
-#' The complexity of this function is O(2*p).
-#' This function works in a similar way to step-up and step-down greedy approximations in function `breakDown::break_down()`.
-#' The main difference is that in the first step the order of variables is determined.
-#' And in the second step the impact is calculated.
+#' This function finds Variable Attributions via Sequential Variable Conditioning.
+#' It calls either \code{\link{local_attributions}} or \code{\link{local_interactions}}.
 #'
 #' @param x a model to be explained, or an explainer created with function `DALEX::explain()`.
-#' @param data validation dataset, will be extracted from `x` if it's an explainer.
+#' @param data validation dataset, will be extracted from `x` if it is an explainer.
 #' @param predict_function predict function, will be extracted from `x` if it's an explainer.
 #' @param new_observation a new observation with columns that correspond to variables used in the model.
 #' @param keep_distributions if `TRUE`, then distribution of partial predictions is stored and can be plotted with the generic `plot()`.
 #' @param order if not `NULL`, then it will be a fixed order of variables. It can be a numeric vector or vector with names of variables.
-#' @param ... other parameters.
-#' @param label name of the model. By default it's extracted from the 'class' attribute of the model.
+#' @param ... parameters passed to `local_*` functions.
+#' @param interactions shall interactions be included?
+#' @param label name of the model. By default it is extracted from the 'class' attribute of the model.
 #'
 #' @return an object of the `break_down` class.
 #'
-#' @seealso \code{\link{break_down}}, \code{\link{local_interactions}}
+#' @seealso \code{\link{local_attributions}}, \code{\link{local_interactions}}
 #'
 #' @examples
 #' \dontrun{
@@ -35,235 +33,54 @@
 #'                         data = HR[1:1000,1:5],
 #'                         y = HR$status[1:1000])
 #'
-#' bd_rf <- local_attributions(explainer_rf,
+#' bd_rf <- break_down(explainer_rf,
 #'                            new_observation)
 #' bd_rf
 #' plot(bd_rf)
-#' plot(bd_rf, baseline = 0)
-#'
-#' # example for regression - apartment prices
-#' # here we do not have intreactions
-#' model <- randomForest(m2.price ~ . , data = apartments)
-#' explainer_rf <- explain(model,
-#'                         data = apartments_test[1:1000,2:6],
-#'                         y = apartments_test$m2.price[1:1000])
-#'
-#' bd_rf <- local_attributions(explainer_rf,
-#'                            apartments_test[1,])
-#' bd_rf
-#' plot(bd_rf, digits = 1)
-#'
-#' bd_rf <- local_attributions(explainer_rf,
-#'                            apartments_test[1,],
-#'                            keep_distributions = TRUE)
-#' plot(bd_rf, plot_distributions = TRUE)
 #' }
 #' @export
-#' @rdname local_attributions
-local_attributions <- function(x, ...)
-  UseMethod("local_attributions")
+#' @rdname break_down
+break_down <- function(x, ..., interactions = FALSE)
+  UseMethod("break_down")
 
 #' @export
-#' @rdname local_attributions
-local_attributions.explainer <- function(x, new_observation,
-                       keep_distributions = FALSE, ...) {
-  # extracts model, data and predict function from the explainer
+#' @rdname break_down
+break_down.explainer <- function(x, new_observation,
+                                 ...,
+                                 interactions = FALSE) {
   model <- x$model
   data <- x$data
   predict_function <- x$predict_function
   label <- x$label
 
-  local_attributions.default(model, data, predict_function,
-                     new_observation = new_observation,
-                     keep_distributions = keep_distributions,
-                     label = label,
-                     ...)
+  break_down.default(model, data, predict_function,
+                             new_observation = new_observation,
+                             label = label,
+                             ...,
+                             interactions = interactions)
 }
+
 
 #' @export
-#' @rdname local_attributions
-local_attributions.default <- function(x, data, predict_function = predict,
-                               new_observation,
-                               keep_distributions = FALSE,
-                               order = NULL,
-                               label = class(x)[1], ...) {
-  # here one can add model and data and new observation
-  # just in case only some variables are specified
-  # this will work only for data.frames
-  if ("data.frame" %in% class(data)) {
-    common_variables <- intersect(colnames(new_observation), colnames(data))
-    new_observation <- new_observation[, common_variables, drop = FALSE]
-    data <- data[,common_variables, drop = FALSE]
-  }
-  p <- ncol(data)
-
-  #
-  # just in case the return has more columns
-  # set target
-  target_yhat <- predict_function(x, new_observation)
-  yhatpred <- as.data.frame(predict_function(x, data))
-  baseline_yhat <- colMeans(yhatpred)
-  # 1d changes
-  # how the average would change if single variable is changed
-  average_yhats <- calculate_1d_changes(x, new_observation, data, predict_function)
-  diffs_1d <- sapply(seq_along(average_yhats), function(i) {
-    mean((average_yhats[[i]] - baseline_yhat)^2)
-  })
-  # impact summary for 1d variables
-  tmp <- data.frame(diff = diffs_1d,
-                    ind1 = 1:p)
-  # how variables shall be ordered in the BD plot?
-  if (is.null(order)) {
-    # sort impacts and look for most importants elements
-    tmp <- tmp[order(tmp$diff, decreasing = TRUE),]
+#' @rdname break_down
+break_down.default <- function(x, data, predict_function = predict,
+                                       new_observation,
+                                       keep_distributions = FALSE,
+                                       order = NULL,
+                                       label = class(x)[1], ...,
+                               interactions = interactions) {
+  if (interactions) {
+    res <- local_interactions.default(x, data, predict_function = predict_function,
+                                      new_observation = new_observation,
+                                      keep_distributions = keep_distributions,
+                                      order = order,
+                                      label = label, ...)
   } else {
-    if (is.numeric(order)) {
-      tmp <- tmp[order,]
-    }
-    if (is.character(order)) {
-      rownames(tmp) <- names(average_yhats)
-      tmp <- tmp[order,]
-    }
+    res <- local_attributions.default(x, data, predict_function = predict_function,
+                                      new_observation = new_observation,
+                                      keep_distributions = keep_distributions,
+                                      order = order,
+                                      label = label, ...)
   }
-
-  # Now we know the path, so we can calculate contributions
-  # set variable indicators
-  open_variables <- 1:p
-  current_data <- data
-
-  step <- 0
-  yhats <- NULL
-  yhats_mean <- list()
-  selected_rows <- c()
-  for (i in 1:nrow(tmp)) {
-    candidates <- tmp$ind1[i]
-    if (all(candidates %in% open_variables)) {
-      # we can add this effect to our path
-      current_data[,candidates] <- new_observation[,candidates]
-      step <- step + 1
-      yhats_pred <- data.frame(predict_function(x, current_data))
-      if (keep_distributions) {
-        tmpj <- lapply(1:ncol(yhats_pred), function(j){
-          data.frame(variable_name = paste(colnames(data)[candidates], collapse = ":"),
-                     variable = paste0(
-                                   paste(colnames(data)[candidates], collapse = ":"),
-                                   " = ",
-                                   nice_pair(new_observation, candidates[1], NA )),
-                     id = 1:nrow(data),
-                     prediction = yhats_pred[,j],
-                     label = ifelse(ncol(yhats_pred) > 1, paste0(label, ".", colnames(yhats_pred)[j]), label) )
-        })
-        # setup labels
-
-        yhats[[step]] <- do.call(rbind, tmpj)
-      }
-      yhats_mean[[step]] <- colMeans(as.data.frame(yhats_pred))
-      selected_rows[step] <- i
-      open_variables <- setdiff(open_variables, candidates)
-    }
-  }
-  selected <- tmp[selected_rows,]
-
-
-  # extract values
-  selected_values <- sapply(1:nrow(selected), function(i) {
-    nice_pair(new_observation, selected$ind1[i], NA )
-  })
-
-  # prepare values
-  variable_name  <- c("intercept", colnames(current_data)[selected$ind1], "")
-  variable_value <- c("1", selected_values, "")
-  variable       <- c("intercept",
-                      paste0(colnames(current_data)[selected$ind1], " = ",  selected_values) ,
-                      "prediction")
-  cummulative <- do.call(rbind, c(list(baseline_yhat), yhats_mean, list(target_yhat)))
-  contribution <- rbind(0,apply(cummulative, 2, diff))
-  contribution[1,] <- cummulative[1,]
-  contribution[nrow(contribution),] <- cummulative[nrow(contribution),]
-
-  # setup labels
-  label_class <- label
-  if (ncol(as.data.frame(target_yhat)) > 1) {
-    label_class <- paste0(label, ".",rep(colnames(as.data.frame(target_yhat)), each = length(variable)))
-  }
-
-  result <- data.frame(variable = variable,
-                       contribution = c(contribution),
-                       variable_name = variable_name,
-                       variable_value = variable_value,
-                       cummulative = c(cummulative),
-                       sign = factor(c(as.character(sign(contribution)[-length(contribution)]), "X"), levels = c("-1", "0", "1", "X")),
-                       position = (step + 2):1,
-                       label = label_class)
-
-  class(result) <- "break_down"
-  attr(result, "baseline") <- 0
-  if (keep_distributions) {
-    allpredictions <- as.data.frame(predict_function(x, data))
-    tmp <- lapply(1:ncol(allpredictions), function(j) {
-      data.frame(variable_name = "all data",
-                 variable = "all data",
-                 id = 1:nrow(data),
-                 prediction = allpredictions[,j],
-                 label = ifelse(ncol(allpredictions) > 1, paste0(label, ".", colnames(allpredictions)[j]), label) )
-    })
-    yhats0 <- do.call(rbind, tmp)
-
-    yhats_distribution <- rbind(yhats0, do.call(rbind, yhats))
-    attr(result, "yhats_distribution") = yhats_distribution
-  }
-
-  result
-}
-
-
-# helper functions
-nice_format <- function(x) {
-  if (is.numeric(x)) {
-    as.character(signif(x, 2))
-  } else {
-    as.character(x)
-  }
-}
-
-nice_pair <- function(x, ind1, ind2) {
-  if (is.na(ind2)) {
-    nice_format(x[1,ind1])
-  } else {
-    paste(nice_format(x[1,ind1]), nice_format(x[1,ind2]), sep=":")
-  }
-}
-
-# 1d changes
-# how the average would change if single variable is changed
-calculate_1d_changes <- function(model, new_observation, data, predict_function) {
-  p <- ncol(data)
-  average_yhats <- list()
-  for (i in 1:p) {
-    current_data <- data
-    current_data[,i] <- new_observation[,i]
-    yhats <- predict_function(model, current_data)
-    average_yhats[[i]] <- colMeans(as.data.frame(yhats))
-  }
-  names(average_yhats) <- colnames(data)
-  average_yhats
-}
-
-# 2d changes
-# how the average would change if two variables are changed
-calculate_2d_changes <- function(model, new_observation, data, predict_function, inds, diffs_1d) {
-  average_yhats <- numeric(nrow(inds))
-  average_yhats_norm <- numeric(nrow(inds))
-  for (i in 1:nrow(inds)) {
-    current_data <- data
-    current_data[,inds[i, 1]] <- new_observation[,inds[i, 1]]
-    current_data[,inds[i, 2]] <- new_observation[,inds[i, 2]]
-    yhats <- predict_function(model, current_data)
-    average_yhats[i] <- mean(yhats)
-    average_yhats_norm[i] <- mean(yhats) - diffs_1d[inds[i, 1]] - diffs_1d[inds[i, 2]]
-  }
-  names(average_yhats) <- paste(colnames(data)[inds[,1]],
-                                colnames(data)[inds[,2]],
-                                sep = ":")
-  list(average_yhats = average_yhats, average_yhats_norm = average_yhats_norm)
+  res
 }
