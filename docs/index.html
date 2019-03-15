@@ -47,13 +47,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/vignette_breakDown2_classification.html">iBreakDown plots for classification models</a>
+      <a href="articles/vignette_iBreakDown_classification.html">iBreakDown plots for classification models</a>
     </li>
     <li>
-      <a href="articles/vignette_breakDown2_regression.html">iBreakDown plots for regression models</a>
+      <a href="articles/vignette_iBreakDown_regression.html">iBreakDown plots for regression models</a>
     </li>
     <li>
-      <a href="articles/vignette_breakDown2_titanic.html">iBreakDown plots for Titanic data</a>
+      <a href="articles/vignette_iBreakDown_titanic.html">iBreakDown plots for Titanic data</a>
     </li>
   </ul>
 </li>
@@ -74,13 +74,14 @@
   <div class="contents col-md-9">
     
 
-<div id="break-down-model-agnostic-explainers-for-individual-predictions" class="section level1">
+<div id="ibreakdown-model-agnostic-explainers-for-individual-predictions" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#break-down-model-agnostic-explainers-for-individual-predictions" class="anchor"></a>Break Down: Model Agnostic Explainers for Individual Predictions</h1></div>
-<p><strong>iBreakDown</strong> is an experimental version of the <a href="https://github.com/pbiecek/breakDown">breakDown</a> package. Expect rapid changes.</p>
-<p>The <code>iBreakDown</code> package is a model agnostic tool for decomposition of predictions from black boxes. Break Down Table shows contributions of every variable to a final prediction. Break Down Plot presents variable contributions in a concise graphical way. This package works for binary classifiers and general regression models.</p>
-<p>It’s a part of <a href="https://github.com/ModelOriented/DrWhy">DrWhy</a> collection of tools.</p>
+<a href="#ibreakdown-model-agnostic-explainers-for-individual-predictions" class="anchor"></a>iBreakDown: Model Agnostic Explainers for Individual Predictions</h1></div>
+<p>The <strong>iBreakDown</strong> package is a model agnostic tool for explanation of predictions from black boxes ML models. Break Down Table shows contributions of every variable to a final prediction. Break Down Plot presents variable contributions in a concise graphical way. This package works for binary classifiers as well as regression models.</p>
+<p><strong>iBreakDown</strong> is a successor of the <a href="https://github.com/pbiecek/breakDown">breakDown</a> package. It is faster (complexity O(p) instead of O(p^2)). It supports interactions and interactive explainers with D3.js plots.</p>
+<p>It is a part of <a href="http://DrWhy.AI">DrWhy.AI</a> collection of tools.</p>
 <p>Find lots of R examples at <code>iBreakDown</code> website: <a href="https://ModelOriented.github.io/iBreakDown/" class="uri">https://ModelOriented.github.io/iBreakDown/</a></p>
+<p>Methodology behind the <strong>iBreakDown</strong> package is described in the <a href="add%20link">arxiv paper</a> and <a href="https://pbiecek.github.io/PM_VEE/breakDown.html">VEEDD book</a>.</p>
 <p>This version works also with D3! <a href="https://modeloriented.github.io/iBreakDown/articles/vignette_iBreakDown_titanic.html#plot-attributions-with-d3">see an example</a>. <img src="images/plotD3.png" alt="plotD3"></p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">

@@ -69,13 +69,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/vignette_breakDown2_classification.html">iBreakDown plots for classification models</a>
+      <a href="../articles/vignette_iBreakDown_classification.html">iBreakDown plots for classification models</a>
     </li>
     <li>
-      <a href="../articles/vignette_breakDown2_regression.html">iBreakDown plots for regression models</a>
+      <a href="../articles/vignette_iBreakDown_regression.html">iBreakDown plots for regression models</a>
     </li>
     <li>
-      <a href="../articles/vignette_breakDown2_titanic.html">iBreakDown plots for Titanic data</a>
+      <a href="../articles/vignette_iBreakDown_titanic.html">iBreakDown plots for Titanic data</a>
     </li>
   </ul>
 </li>
@@ -101,9 +101,11 @@
     </div>
 
     
-    <p>This function finds Variable attributions via Sequential Variable Conditioning
+    <p>This function finds Variable attributions via Sequential Variable Conditioning.
 The complexity of this function is O(2*p).
-This function first determines the order for conditionings and then calculate variable effects via sequence of conditionings.</p>
+This function works in a similar way to step-up and step-down greedy approximations in function `breakDown::break_down()`.
+The main difference is that in the first step the order of variables is determined.
+And in the second step the impact is calculated.</p>
     
 
     <pre class="usage"><span class='fu'>local_attributions</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -126,23 +128,23 @@ This function first determines the order for conditionings and then calculate va
     </tr>
     <tr>
       <th>...</th>
-      <td><p>other parameters</p></td>
+      <td><p>other parameters.</p></td>
     </tr>
     <tr>
       <th>new_observation</th>
-      <td><p>a new observation with columns that corresponds to variables used in the model</p></td>
+      <td><p>a new observation with columns that correspond to variables used in the model.</p></td>
     </tr>
     <tr>
       <th>keep_distributions</th>
-      <td><p>if `TRUE`, then distributions of partial predictions is stored and can be plotted with the generic `plot()`</p></td>
+      <td><p>if `TRUE`, then distribution of partial predictions is stored and can be plotted with the generic `plot()`.</p></td>
     </tr>
     <tr>
       <th>data</th>
-      <td><p>validation dataset, will be extracted from `x` if it's an explainer</p></td>
+      <td><p>validation dataset, will be extracted from `x` if it's an explainer.</p></td>
     </tr>
     <tr>
       <th>predict_function</th>
-      <td><p>predict function, will be extracted from `x` if it's an explainer</p></td>
+      <td><p>predict function, will be extracted from `x` if it's an explainer.</p></td>
     </tr>
     <tr>
       <th>order</th>
@@ -150,13 +152,17 @@ This function first determines the order for conditionings and then calculate va
     </tr>
     <tr>
       <th>label</th>
-      <td><p>name of the model. By default it's extracted from the 'class' attribute of the model</p></td>
+      <td><p>name of the model. By default it's extracted from the 'class' attribute of the model.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>an object of the `break_down` class</p>
+    <p>an object of the `break_down` class.</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='break_down.html'>break_down</a></code>, <code><a href='local_interactions.html'>local_interactions</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -228,6 +234,8 @@ This function first determines the order for conditionings and then calculate va
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

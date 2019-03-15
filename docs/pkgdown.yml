@@ -2,7 +2,7 @@ pandoc: 2.3.1
 pkgdown: 1.0.0
 pkgdown_sha: ~
 articles:
-  vignette_breakDown2_classification: vignette_breakDown2_classification.html
-  vignette_breakDown2_regression: vignette_breakDown2_regression.html
-  vignette_breakDown2_titanic: vignette_breakDown2_titanic.html
+  vignette_iBreakDown_classification: vignette_iBreakDown_classification.html
+  vignette_iBreakDown_regression: vignette_iBreakDown_regression.html
+  vignette_iBreakDown_titanic: vignette_iBreakDown_titanic.html
 
