@@ -75,8 +75,8 @@ local_attributions.explainer <- function(x, new_observation,
 
   local_attributions.default(model, data, predict_function,
                      new_observation = new_observation,
-                     keep_distributions = keep_distributions,
                      label = label,
+                     keep_distributions = keep_distributions,
                      ...)
 }
 
@@ -84,9 +84,10 @@ local_attributions.explainer <- function(x, new_observation,
 #' @rdname local_attributions
 local_attributions.default <- function(x, data, predict_function = predict,
                                new_observation,
+                               label = class(x)[1],
                                keep_distributions = FALSE,
                                order = NULL,
-                               label = class(x)[1], ...) {
+                               ...) {
   # here one can add model and data and new observation
   # just in case only some variables are specified
   # this will work only for data.frames
@@ -109,22 +110,11 @@ local_attributions.default <- function(x, data, predict_function = predict,
   diffs_1d <- sapply(seq_along(average_yhats), function(i) {
     mean((average_yhats[[i]] - baseline_yhat)^2)
   })
+
   # impact summary for 1d variables
-  tmp <- data.frame(diff = diffs_1d,
-                    ind1 = 1:p)
-  # how variables shall be ordered in the BD plot?
-  if (is.null(order)) {
-    # sort impacts and look for most importants elements
-    tmp <- tmp[order(tmp$diff, decreasing = TRUE),]
-  } else {
-    if (is.numeric(order)) {
-      tmp <- tmp[order,]
-    }
-    if (is.character(order)) {
-      rownames(tmp) <- names(average_yhats)
-      tmp <- tmp[order,]
-    }
-  }
+  # prepare ordered path of features
+  feature_path <- create_ordered_path(diffs_1d, order, names(average_yhats))
+
 
   # Now we know the path, so we can calculate contributions
   # set variable indicators
@@ -135,8 +125,8 @@ local_attributions.default <- function(x, data, predict_function = predict,
   yhats <- NULL
   yhats_mean <- list()
   selected_rows <- c()
-  for (i in 1:nrow(tmp)) {
-    candidates <- tmp$ind1[i]
+  for (i in 1:nrow(feature_path)) {
+    candidates <- feature_path$ind1[i]
     if (all(candidates %in% open_variables)) {
       # we can add this effect to our path
       current_data[,candidates] <- new_observation[,candidates]
@@ -162,7 +152,7 @@ local_attributions.default <- function(x, data, predict_function = predict,
       open_variables <- setdiff(open_variables, candidates)
     }
   }
-  selected <- tmp[selected_rows,]
+  selected <- feature_path[selected_rows,]
 
 
   # extract values
@@ -196,7 +186,7 @@ local_attributions.default <- function(x, data, predict_function = predict,
                        position = (step + 2):1,
                        label = label_class)
 
-  class(result) <- "break_down"
+  class(result) <- c("break_down", "data.frame")
   attr(result, "baseline") <- 0
   if (keep_distributions) {
     allpredictions <- as.data.frame(predict_function(x, data))
@@ -218,6 +208,48 @@ local_attributions.default <- function(x, data, predict_function = predict,
 
 
 # helper functions
+
+# created ordered path of features
+create_ordered_path <- function(diffs_1d, order, average_yhats_names = NULL) {
+  feature_path <- data.frame(diff = diffs_1d,
+                             ind1 = seq_along(diffs_1d))
+  # how variables shall be ordered in the BD plot?
+  if (is.null(order)) {
+    # sort impacts and look for most importants elements
+    feature_path <- feature_path[order(feature_path$diff, decreasing = TRUE),]
+  } else {
+    # order is defined by indexes
+    if (is.numeric(order)) {
+      feature_path <- feature_path[order,]
+    }
+    # order is defined by names
+    if (is.character(order)) {
+      rownames(feature_path) <- average_yhats_names
+      feature_path <- feature_path[order,]
+    }
+  }
+
+  feature_path
+}
+
+create_ordered_path_2d <- function(feature_path, order, average_yhats_names) {
+  if (is.null(order)) {
+    # sort impacts and look for most importants elements
+    feature_path <- feature_path[order(feature_path$adiff_norm, decreasing = TRUE),]
+  } else {
+    if (is.numeric(order)) {
+      feature_path <- feature_path[order,]
+    }
+    if (is.character(order)) {
+      rownames(feature_path) <- average_yhats_names
+      feature_path <- feature_path[order,]
+    }
+  }
+  feature_path
+}
+
+
+# this formats numbers and factors
 nice_format <- function(x) {
   if (is.numeric(x)) {
     as.character(signif(x, 2))
@@ -226,6 +258,7 @@ nice_format <- function(x) {
   }
 }
 
+# this formats pairs of values
 nice_pair <- function(x, ind1, ind2) {
   if (is.na(ind2)) {
     nice_format(x[1,ind1])

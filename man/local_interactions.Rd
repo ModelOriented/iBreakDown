@@ -12,8 +12,8 @@ local_interactions(x, ...)
   keep_distributions = FALSE, ...)
 
 \method{local_interactions}{default}(x, data, predict_function = predict,
-  new_observation, keep_distributions = FALSE,
-  interaction_preference = 1, order = NULL, label = class(x)[1], ...)
+  new_observation, label = class(x)[1], keep_distributions = FALSE,
+  order = NULL, interaction_preference = 1, ...)
 }
 \arguments{
 \item{x}{a model to be explained, or an explainer created with function `DALEX::explain()`.}
@@ -28,11 +28,11 @@ local_interactions(x, ...)
 
 \item{predict_function}{predict function, will be extracted from `x` if it's an explainer.}
 
-\item{interaction_preference}{a constant that set the preference for interactions. By default `1`. The larger the more frequently intereactions will be presented in explanations.}
+\item{label}{character - the name of the model. By default it's extracted from the 'class' attribute of the model.}
 
 \item{order}{if not `NULL`, then it will be a fixed order of variables. It can be a numeric vector or vector with names of variables/interactions.}
 
-\item{label}{character - the name of the model. By default it's extracted from the 'class' attribute of the model.}
+\item{interaction_preference}{a constant that set the preference for interactions. By default `1`. The larger the more frequently intereactions will be presented in explanations.}
 }
 \value{
 an object of the `break_down` class.

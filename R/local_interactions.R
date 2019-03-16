@@ -78,8 +78,8 @@ local_interactions.explainer <- function(x, new_observation,
 
   local_interactions.default(model, data, predict_function,
                             new_observation = new_observation,
-                            keep_distributions = keep_distributions,
                             label = label,
+                            keep_distributions = keep_distributions,
                             ...)
 }
 
@@ -87,10 +87,11 @@ local_interactions.explainer <- function(x, new_observation,
 #' @rdname local_interactions
 local_interactions.default <- function(x, data, predict_function = predict,
                                        new_observation,
+                                       label = class(x)[1],
                                        keep_distributions = FALSE,
-                                       interaction_preference = 1,
                                        order = NULL,
-                                       label = class(x)[1], ...) {
+                                       interaction_preference = 1,
+                                       ...) {
   # just in case only some variables are specified
   # this will work only for data.frames
   if ("data.frame" %in% class(data)) {
@@ -126,13 +127,13 @@ local_interactions.default <- function(x, data, predict_function = predict,
     diffs_1d <- average_yhats - baseline_yhat
 
     # impact summary for 1d variables
-    tmp <- data.frame(diff = diffs_1d,
+    feature_path_1d <- data.frame(diff = diffs_1d,
                       adiff = abs(diffs_1d),
                       diff_norm = diffs_1d,
                       adiff_norm = abs(diffs_1d),
                       ind1 = 1:p,
                       ind2 = NA)
-    rownames(tmp) <- gsub(rownames(tmp), pattern = ".yhats", replacement = "")
+    rownames(feature_path_1d) <- gsub(rownames(feature_path_1d), pattern = ".yhats", replacement = "")
 
     inds <- data.frame(ind1 = unlist(lapply(2:p, function(i) i:p)),
                        ind2 = unlist(lapply(2:p, function(i) rep(i - 1, p - i + 1))))
@@ -146,27 +147,16 @@ local_interactions.default <- function(x, data, predict_function = predict,
 
     # impact summary for 2d variables
     # large interaction_preference force to use interactions
-    tmp2 <- data.frame(diff = diffs_2d,
+    feature_path_2d <- data.frame(diff = diffs_2d,
                        adiff = abs(diffs_2d) * interaction_preference,
                        diff_norm = diffs_2d_norm,
                        adiff_norm = abs(diffs_2d_norm) * interaction_preference,
                        ind1 = inds$ind1,
                        ind2 = inds$ind2)
-    tmp <- rbind(tmp, tmp2)
+    feature_path <- rbind(feature_path_1d, feature_path_2d)
 
     # how variables shall be ordered in the BD plot?
-    if (is.null(order)) {
-      # sort impacts and look for most importants elements
-      tmp <- tmp[order(tmp$adiff_norm, decreasing = TRUE),]
-    } else {
-      if (is.numeric(order)) {
-        tmp <- tmp[order,]
-      }
-      if (is.character(order)) {
-        rownames(tmp) <- names(average_yhats)
-        tmp <- tmp[order,]
-      }
-    }
+    feature_path <- create_ordered_path_2d(feature_path, order, names(average_yhats))
 
 
     # Now we know the path, so we can calculate contributions
@@ -178,10 +168,10 @@ local_interactions.default <- function(x, data, predict_function = predict,
     yhats <- NULL
     yhats_mean <- c()
     selected_rows <- c()
-    for (i in 1:nrow(tmp)) {
-      candidates <- tmp$ind1[i]
-      if (!is.na(tmp$ind2[i]))
-        candidates[2] <- tmp$ind2[i]
+    for (i in 1:nrow(feature_path)) {
+      candidates <- feature_path$ind1[i]
+      if (!is.na(feature_path$ind2[i]))
+        candidates[2] <- feature_path$ind2[i]
       if (all(candidates %in% open_variables)) {
         # we can add this effect to out path
         current_data[,candidates] <- new_observation[,candidates]
@@ -201,7 +191,7 @@ local_interactions.default <- function(x, data, predict_function = predict,
         open_variables <- setdiff(open_variables, candidates)
       }
     }
-    selected <- tmp[selected_rows,]
+    selected <- feature_path[selected_rows,]
 
     # extract values
     selected_values <- sapply(1:nrow(selected), function(i) {
@@ -247,7 +237,7 @@ local_interactions.default <- function(x, data, predict_function = predict,
   # merge results for all classess
   results <- do.call(rbind, lapply(results_list, function(x) x[[1]]))
   results$position <- rev(seq_along(results$position))
-  class(results) <- "break_down"
+  class(results) <- c("break_down", "data.frame")
   attr(results, "baseline") <- 0
 
   if (keep_distributions) {

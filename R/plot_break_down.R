@@ -16,6 +16,7 @@
 #' @return a `ggplot2` object.
 #'
 #' @import ggplot2
+#' @importFrom DALEX theme_drwhy theme_drwhy_vertical theme_drwhy_colors
 #'
 #' @examples
 #' \dontrun{
