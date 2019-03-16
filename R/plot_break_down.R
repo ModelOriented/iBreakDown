@@ -216,9 +216,9 @@ select_only_k_features <- function(x, k = 10) {
       }
     }
     # for each model we shall calculate the others statistic
-    x_others <- data.frame(variable = "+ all others",
+    x_others <- data.frame(variable = "+ all other factors",
                contribution = remainings,
-               variable_name = "+ all others",
+               variable_name = "+ all other factors",
                variable_value = "",
                cummulative = x_prediction[names(remainings),"cummulative"],
                sign = sign(remainings),

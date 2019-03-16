@@ -1,6 +1,6 @@
 Package: iBreakDown
 Title: Model Agnostic Instance Level Variable Attributions
-Version: 0.9.3
+Version: 0.9.4
 Authors@R: c(person("Przemyslaw", "Biecek", email = "przemyslaw.biecek@gmail.com", role = c("aut", "cre")),
     person("Alicja", "Gosiewska", email = "alicjagosiewska@gmail.com", role = c("aut")),
     person("Dariusz", "Komosinski", role = c("ctb")))
@@ -18,7 +18,6 @@ Imports:
     DALEX
 RoxygenNote: 6.1.1
 Suggests: knitr,
-    titanic,
     rmarkdown,
     caret,
     randomForest,

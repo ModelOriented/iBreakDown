@@ -72,7 +72,7 @@ plotD3.break_down <- function(x, ...,
          contribution = x$contribution[i],
          cummulative = x$cummulative[i],
          sign = as.character(x$sign[i]),
-         label = paste0(substr(x$variable[i], 3, 100),
+         label = paste0(substr(x$variable[i], 1, 100),
                         "<br>", ifelse(x$contribution[i] > 0, "increases", "decreases"),
                         " average response <br>by ",
                         rounding_function(abs(x$contribution[i]), digits))
@@ -103,7 +103,7 @@ prepare_data_for_break_down_plot3D <- function(x, vcolors, max_features = 10) {
     last_row <- max_features + 1
     new_x <- x[1:last_row,]
     new_x$variable <- as.character(new_x$variable)
-    new_x$variable[last_row] = "  all other factors"
+    new_x$variable[last_row] = "  + all other factors"
     new_x$contribution[last_row] = sum(x$contribution[last_row:nrow(x)])
     new_x$cummulative[last_row] = x$cummulative[nrow(x)]
     new_x$sign[last_row] = ifelse(new_x$contribution[last_row] > 0,

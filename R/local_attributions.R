@@ -96,7 +96,6 @@ local_attributions.default <- function(x, data, predict_function = predict,
     new_observation <- new_observation[, common_variables, drop = FALSE]
     data <- data[,common_variables, drop = FALSE]
   }
-  p <- ncol(data)
 
   #
   # just in case the return has more columns
@@ -118,6 +117,66 @@ local_attributions.default <- function(x, data, predict_function = predict,
 
   # Now we know the path, so we can calculate contributions
   # set variable indicators
+  tmp <- calculate_contributions_along_path(x, data, new_observation, feature_path, predict_function, keep_distributions, label, baseline_yhat, target_yhat)
+  contribution <- tmp$contribution
+  variable_name <- tmp$variable_name
+  variable_value <- tmp$variable_value
+  variable <- tmp$variable
+  yhats <- tmp$yhats
+  cummulative <- tmp$cummulative
+
+  # setup labels
+  label_class <- label
+  if (ncol(as.data.frame(target_yhat)) > 1) {
+    label_class <- paste0(label, ".",
+                          rep(colnames(as.data.frame(target_yhat)),
+                              each = length(variable)))
+  }
+
+  result <- data.frame(variable = variable,
+                       contribution = c(contribution),
+                       variable_name = variable_name,
+                       variable_value = variable_value,
+                       cummulative = c(cummulative),
+                       sign = factor(c(as.character(sign(contribution)[-length(contribution)]), "X"), levels = c("-1", "0", "1", "X")),
+                       position = length(variable):1,
+                       label = label_class)
+
+  class(result) <- c("break_down", "data.frame")
+  if (keep_distributions) {
+    yhats_distribution <- calculate_yhats_distribution(x, data, predict_function, label, yhats)
+
+    attr(result, "yhats_distribution") = yhats_distribution
+  }
+
+  result
+}
+
+
+# helper functions
+
+# if we need to add contributions
+calculate_yhats_distribution <- function(x, data, predict_function, label, yhats) {
+  allpredictions <- as.data.frame(predict_function(x, data))
+  predictions_for_batch <- lapply(1:ncol(allpredictions), function(j) {
+    data.frame(variable_name = "all data",
+               variable = "all data",
+               id = 1:nrow(data),
+               prediction = allpredictions[,j],
+               label = ifelse(ncol(allpredictions) > 1,
+                              paste0(label, ".", colnames(allpredictions)[j]),
+                              label)
+               )
+  })
+  yhats0 <- do.call(rbind, predictions_for_batch)
+
+  rbind(yhats0, do.call(rbind, yhats))
+}
+
+# Now we know the path, so we can calculate contributions
+# set variable indicators
+calculate_contributions_along_path <- function(x, data, new_observation, feature_path, predict_function, keep_distributions, label, baseline_yhat, target_yhat) {
+  p <- ncol(data)
   open_variables <- 1:p
   current_data <- data
 
@@ -133,19 +192,19 @@ local_attributions.default <- function(x, data, predict_function = predict,
       step <- step + 1
       yhats_pred <- data.frame(predict_function(x, current_data))
       if (keep_distributions) {
-        tmpj <- lapply(1:ncol(yhats_pred), function(j){
+        distribution_for_batch <- lapply(1:ncol(yhats_pred), function(j){
           data.frame(variable_name = paste(colnames(data)[candidates], collapse = ":"),
                      variable = paste0(
-                                   paste(colnames(data)[candidates], collapse = ":"),
-                                   " = ",
-                                   nice_pair(new_observation, candidates[1], NA )),
+                       paste(colnames(data)[candidates], collapse = ":"),
+                       " = ",
+                       nice_pair(new_observation, candidates[1], NA )),
                      id = 1:nrow(data),
                      prediction = yhats_pred[,j],
                      label = ifelse(ncol(yhats_pred) > 1, paste0(label, ".", colnames(yhats_pred)[j]), label) )
         })
         # setup labels
 
-        yhats[[step]] <- do.call(rbind, tmpj)
+        yhats[[step]] <- do.call(rbind, distribution_for_batch)
       }
       yhats_mean[[step]] <- colMeans(as.data.frame(yhats_pred))
       selected_rows[step] <- i
@@ -153,7 +212,6 @@ local_attributions.default <- function(x, data, predict_function = predict,
     }
   }
   selected <- feature_path[selected_rows,]
-
 
   # extract values
   selected_values <- sapply(1:nrow(selected), function(i) {
@@ -171,42 +229,13 @@ local_attributions.default <- function(x, data, predict_function = predict,
   contribution[1,] <- cummulative[1,]
   contribution[nrow(contribution),] <- cummulative[nrow(contribution),]
 
-  # setup labels
-  label_class <- label
-  if (ncol(as.data.frame(target_yhat)) > 1) {
-    label_class <- paste0(label, ".",rep(colnames(as.data.frame(target_yhat)), each = length(variable)))
-  }
-
-  result <- data.frame(variable = variable,
-                       contribution = c(contribution),
-                       variable_name = variable_name,
-                       variable_value = variable_value,
-                       cummulative = c(cummulative),
-                       sign = factor(c(as.character(sign(contribution)[-length(contribution)]), "X"), levels = c("-1", "0", "1", "X")),
-                       position = (step + 2):1,
-                       label = label_class)
-
-  class(result) <- c("break_down", "data.frame")
-  if (keep_distributions) {
-    allpredictions <- as.data.frame(predict_function(x, data))
-    tmp <- lapply(1:ncol(allpredictions), function(j) {
-      data.frame(variable_name = "all data",
-                 variable = "all data",
-                 id = 1:nrow(data),
-                 prediction = allpredictions[,j],
-                 label = ifelse(ncol(allpredictions) > 1, paste0(label, ".", colnames(allpredictions)[j]), label) )
-    })
-    yhats0 <- do.call(rbind, tmp)
-
-    yhats_distribution <- rbind(yhats0, do.call(rbind, yhats))
-    attr(result, "yhats_distribution") = yhats_distribution
-  }
-
-  result
+  list(variable_name = variable_name,
+       variable_value = variable_value,
+       variable = variable,
+       cummulative = cummulative,
+       contribution = contribution,
+       yhats = yhats)
 }
-
-
-# helper functions
 
 # created ordered path of features
 create_ordered_path <- function(diffs_1d, order, average_yhats_names = NULL) {

@@ -1,10 +1,10 @@
 ---
-title: "iBreakDown plots for Titanic data"
+title: "iBreakDown plots for Sinking of the RMS Titanic"
 author: "Przemyslaw Biecek"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_document
 vignette: >
-  %\VignetteIndexEntry{iBreakDown plots for Titanic data}
+  %\VignetteIndexEntry{iBreakDown plots for Sinking of the RMS Titanic}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -14,23 +14,17 @@ knitr::opts_chunk$set(
   collapse = FALSE,
   comment = "#>",
   warning = FALSE,
-  message = FALSE,
-  cache = TRUE
+  message = FALSE
 )
 ```
 
 # Data for Titanic survival
 
 Let's see an example for `iBreakDown` plots for survival probability of Titanic passengers.
-First, let's see the data, we will find quite nice data from in the [`titanic`]( https://CRAN.R-project.org/package=titanic) package.
+First, let's see the data, we will find quite nice data from in the `DALEX` package (orginally `stablelearner`).
 
 ```{r}
-library("titanic")
-titanic <- titanic_train[,c("Survived", "Pclass", "Sex", "Age", "SibSp", "Parch", "Fare", "Embarked")]
-titanic$Survived <- factor(titanic$Survived)
-titanic$Sex <- factor(titanic$Sex)
-titanic$Embarked <- factor(titanic$Embarked)
-titanic <- na.omit(titanic)
+library("DALEX")
 head(titanic)
 ```
 
@@ -41,8 +35,10 @@ Ok, now it's time to create a model. Let's use the Random Forest model.
 ```{r}
 # prepare model
 library("randomForest")
-rf_model <- randomForest(Survived ~ .,  data = titanic)
-rf_model
+titanic <- na.omit(titanic)
+model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
+                                   fare + sibsp + parch,  data = titanic)
+model_titanic_rf
 ```
 
 # Explainer for Titanic survival
@@ -51,8 +47,10 @@ The third step (it's optional but useful) is to create a DALEX explainer for Ran
 
 ```{r}
 library("DALEX")
-rf_explain <- explain(rf_model, data = titanic,
-                      y = titanic$Survived == "1", label = "RF")
+explain_titanic_rf <- explain(model_titanic_rf, 
+                      data = titanic[,-9],
+                      y = titanic$survived == "yes", 
+                      label = "Random Forest v7")
 ```
 
 # Break Down plot with D3
@@ -61,13 +59,13 @@ Let's see Break Down for model predictions for 8 years old male from 1st class t
 
 ```{r}
 new_passanger <- data.frame(
-  Pclass = 1,
-  Sex = factor("male", levels = c("female", "male")),
-  Age = 8,
-  SibSp = 0,
-  Parch = 0,
-  Fare = 72,
-  Embarked = factor("C", levels = c("","C","Q","S"))
+  class = factor("1st", levels = c("1st", "2nd", "3rd", "deck crew", "engineering crew", "restaurant staff", "victualling crew")),
+  gender = factor("male", levels = c("female", "male")),
+  age = 8,
+  sibsp = 0,
+  parch = 0,
+  fare = 72,
+  embarked = factor("Southampton", levels = c("Belfast", "Cherbourg", "Queenstown", "Southampton"))
 )
 ```
 
@@ -75,7 +73,7 @@ new_passanger <- data.frame(
 
 ```{r}
 library("iBreakDown")
-rf_la <- local_attributions(rf_explain, new_passanger)
+rf_la <- local_attributions(explain_titanic_rf, new_passanger)
 rf_la
 ```
 
@@ -91,16 +89,16 @@ plot(rf_la)
 plotD3(rf_la)
 ```
 
-## Show all features
+## Show only top features
 
 ```{r}
-plotD3(rf_la, max_features = 10)
+plotD3(rf_la, max_features = 3)
 ```
 
 ## Force OX axis to be from 0 to 1
 
 ```{r}
-plotD3(rf_la, max_features = 10, min_max = c(0,1))
+plotD3(rf_la, max_features = 3, min_max = c(0,1))
 ```
 
 

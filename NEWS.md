@@ -1,3 +1,7 @@
+iBreakDown 0.9.4
+----------------------------------------------------------------
+* code refactoring
+
 iBreakDown 0.9.3
 ----------------------------------------------------------------
 * `breakDown2` has changed name to `iBreakDown`
@@ -12,6 +16,5 @@ iBreakDown 0.9.1
 
 iBreakDown 0.9.0
 ----------------------------------------------------------------
-
 * Greedy strategies with time complexity O(p^2) are removed.
 * `iBreakDown` is forked from `breakDown` version 0.2.0

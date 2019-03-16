@@ -15,8 +15,7 @@ knitr::opts_chunk$set(
   comment = "#>",
   fig.width = 6, fig.height = 6,
   warning = FALSE,
-  message = FALSE,
-  cache = TRUE
+  message = FALSE
 )
 ```
 
@@ -134,7 +133,7 @@ plot(bd_svm)
 ## knn
 
 ```{r}
-library(caret)
+library("caret")
 m_knn <- knn3(status ~ . , data = HR, k = 5)
 bd_knn <- local_attributions(m_knn,
                             data = HR_test,
