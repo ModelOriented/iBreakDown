@@ -40,6 +40,7 @@ test_that("Output format", {
   expect_is(plot(bd_rf_class, start_baseline = TRUE), "gg")
   expect_is(plot(bd_rf_class_distr, plot_distributions = TRUE), "gg")
   expect_is(plot(bd_rf_reg), "gg")
+  expect_is(plot(bd_rf_reg, max_features = 2), "gg")
   expect_is(plot(bd_rf_reg, start_baseline = TRUE), "gg")
   expect_is(plot(bd_rf_reg_distr, plot_distributions = TRUE), "gg")
 })
@@ -52,6 +53,6 @@ test_that("Error when no distribution before provided", {
 test_that("Test plot3D", {
   expect_is(plotD3(bd_rf_class), "r2d3")
   expect_is(plotD3(bd_rf_class, max_features = 10), "r2d3")
-  expect_is(plotD3(bd_rf_class, max_features = 10, min_max = c(0,1)), "r2d3")
+  expect_is(plotD3(bd_rf_class, max_features = 2, min_max = c(0,1)), "r2d3")
 })
 
