@@ -7,16 +7,18 @@
 \usage{
 plotD3(x, ...)
 
-\method{plotD3}{break_down}(x, ..., max_features = 4, min_max = NA,
-  vcolors = c(`-1` = "#a3142f", `0` = "#a3142f", `1` = "#0f6333", X =
-  "#0f6333"), digits = 3, rounding_function = round)
+\method{plotD3}{break_down}(x, ..., baseline = NA, max_features = 10,
+  min_max = NA, vcolors = c(`-1` = "#a3142f", `0` = "#a3142f", `1` =
+  "#0f6333", X = "#0f6333"), digits = 3, rounding_function = round)
 }
 \arguments{
 \item{x}{the model model of `break_down`` class.}
 
 \item{...}{other parameters.}
 
-\item{max_features}{maximal number of features to be included in the plot. default value is 4.}
+\item{baseline}{if numeric then veritical line will start in baseline.}
+
+\item{max_features}{maximal number of features to be included in the plot. default value is 10.}
 
 \item{min_max}{a range of OX axis. By deafult `NA` therefore will be extracted from the contributions of `x`. But can be set to some constants, usefull if these plots are used for comparisons.}
 
@@ -64,7 +66,7 @@ plotD3(rf_la)
 
 rf_la <- local_attributions(rf_explain, titanic[3,])
 rf_la
-plotD3(rf_la, max_features = 10)
-plotD3(rf_la, max_features = 10, min_max = c(0,1))
+plotD3(rf_la, max_features = 4)
+plotD3(rf_la, max_features = 4, min_max = c(0,1))
 }
 }

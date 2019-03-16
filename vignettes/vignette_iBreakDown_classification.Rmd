@@ -24,8 +24,8 @@ Here we will use the `HR` data from [`DALEX`](https://github.com/pbiecek/DALEX) 
 
 ```{r}
 # devtools::install_github("ModelOriented/DALEX")
-library(DALEX)
-library(iBreakDown)
+library("DALEX")
+library("iBreakDown")
 
 head(HR)
 new_observation <- HR_test[1,]
@@ -38,7 +38,7 @@ new_observation
 First, we fit a model.
 
 ```{r}
-library(nnet)
+library("nnet")
 m_glm <- multinom(status ~ . , data = HR, probabilities = TRUE, model = TRUE)
 ```
 

@@ -4,9 +4,10 @@
 \alias{plot.break_down}
 \title{Plot Generic for Break Down Objects}
 \usage{
-\method{plot}{break_down}(x, ..., add_contributions = TRUE,
-  baseline = NA, vcolors = c(`-1` = "#f05a71", `0` = "#371ea3", `1` =
+\method{plot}{break_down}(x, ..., baseline = NA, max_features = 10,
+  min_max = NA, vcolors = c(`-1` = "#f05a71", `0` = "#371ea3", `1` =
   "#8bdcbe", X = "#371ea3"), digits = 3, rounding_function = round,
+  add_contributions = TRUE, shift_contributions = 0.05,
   plot_distributions = FALSE)
 }
 \arguments{
@@ -14,18 +15,24 @@
 
 \item{...}{other parameters.}
 
-\item{add_contributions}{shall variable contributions to be added on plot?}
+\item{baseline}{if numeric then veritical line starts in `baseline`.}
 
-\item{baseline}{if numeric then veritical line will start in baseline.}
+\item{max_features}{maximal number of features to be included in the plot. default value is 4.}
+
+\item{min_max}{a range of OX axis. By deafult `NA` therefore will be extracted from the contributions of `x`. But can be set to some constants, usefull if these plots are used for comparisons.}
 
 \item{vcolors}{named vector with colors.}
 
-\item{digits}{number of decimal places (round) or significant digits (signif) to be used.
+\item{digits}{number of decimal places (`round`) or significant digits (`signif`) to be used.
 See the \code{rounding_function} argument.}
 
 \item{rounding_function}{function that is to used for rounding numbers.
 It may be \code{\link{signif}} which keeps a specified number of significant digits.
 Or the default \code{\link{round}} to have the same precision for all components.}
+
+\item{add_contributions}{shall variable contributions to be added the the plot?}
+
+\item{shift_contributions}{how much labels sholud be shifted right as a fraction of range. By default 0.05}
 
 \item{plot_distributions}{if `TRUE` then distributions of conditional propotions will be plotted. This requires \code{keep_distributions=TRUE} in the
 \code{\link{break_down}}, \code{\link{local_attributions}}, or \code{\link{local_interactions}}.}
@@ -57,6 +64,7 @@ bd_rf <- local_attributions(explainer_rf,
 bd_rf
 plot(bd_rf)
 plot(bd_rf, baseline = 0)
+plot(bd_rf, min_max = c(0,1))
 
 bd_rf <- local_attributions(explainer_rf,
                            new_observation,

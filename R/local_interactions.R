@@ -238,7 +238,6 @@ local_interactions.default <- function(x, data, predict_function = predict,
   results <- do.call(rbind, lapply(results_list, function(x) x[[1]]))
   results$position <- rev(seq_along(results$position))
   class(results) <- c("break_down", "data.frame")
-  attr(results, "baseline") <- 0
 
   if (keep_distributions) {
     yhats_distribution <- do.call(rbind, lapply(results_list, function(x) x[[2]]))

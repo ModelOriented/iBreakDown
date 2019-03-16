@@ -2,7 +2,8 @@
 #'
 #' @param x the model model of `break_down`` class.
 #' @param ... other parameters.
-#' @param max_features maximal number of features to be included in the plot. default value is 4.
+#' @param baseline if numeric then veritical line will start in baseline.
+#' @param max_features maximal number of features to be included in the plot. default value is 10.
 #' @param min_max a range of OX axis. By deafult `NA` therefore will be extracted from the contributions of `x`. But can be set to some constants, usefull if these plots are used for comparisons.
 #' @param vcolors named vector with colors.
 #' @param digits number of decimal places (round) or significant digits (signif) to be used.
@@ -42,8 +43,8 @@
 #'
 #' rf_la <- local_attributions(rf_explain, titanic[3,])
 #' rf_la
-#' plotD3(rf_la, max_features = 10)
-#' plotD3(rf_la, max_features = 10, min_max = c(0,1))
+#' plotD3(rf_la, max_features = 4)
+#' plotD3(rf_la, max_features = 4, min_max = c(0,1))
 #' }
 #' @export
 #' @rdname plotD3
@@ -53,15 +54,16 @@ plotD3 <- function(x, ...)
 #' @export
 #' @rdname plotD3
 plotD3.break_down <- function(x, ...,
-                        max_features = 4,
+                        baseline = NA,
+                        max_features = 10,
                         min_max = NA,
                         vcolors = c("-1" = "#a3142f", "0" = "#a3142f", "1" = "#0f6333", "X" = "#0f6333"),
                         digits = 3, rounding_function = round) {
   class(x) = "data.frame"
 
   # remove first and last row
-  model_baseline <- rounding_function(x$contribution[1], digits)
   model_prediction <- rounding_function(x$contribution[nrow(x)], digits)
+  model_baseline <- rounding_function(ifelse(is.na(baseline), x$contribution[1], baseline), digits)
   x <- x[-c(1,nrow(x)),]
 
   if (nrow(x) > max_features) {

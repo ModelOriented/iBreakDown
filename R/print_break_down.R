@@ -12,10 +12,9 @@
 #'
 #' @export
 print.break_down <- function(x, ..., digits = 3, rounding_function = round) {
-  broken_cumm <- x
-  class(broken_cumm) = "data.frame"
-  broken_cumm$contribution <- rounding_function(broken_cumm$contribution, digits)
-  rownames(broken_cumm) <- paste0(broken_cumm$label, ": ", broken_cumm$variable)
-  print(broken_cumm[, "contribution", drop = FALSE])
-  cat("baseline: ", attr(broken_cumm, "baseline"), "\n")
+  class(x) = "data.frame"
+  x$contribution <- rounding_function(x$contribution, digits)
+  rownames(x) <- make.unique(paste0(x$label, ": ", x$variable), sep = "_")
+  print(x[, "contribution", drop = FALSE])
+  invisible(NULL)
 }

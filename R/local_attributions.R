@@ -187,7 +187,6 @@ local_attributions.default <- function(x, data, predict_function = predict,
                        label = label_class)
 
   class(result) <- c("break_down", "data.frame")
-  attr(result, "baseline") <- 0
   if (keep_distributions) {
     allpredictions <- as.data.frame(predict_function(x, data))
     tmp <- lapply(1:ncol(allpredictions), function(j) {
