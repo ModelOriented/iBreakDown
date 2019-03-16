@@ -24,9 +24,9 @@ local_attributions(x, ...)
 
 \item{keep_distributions}{if `TRUE`, then distribution of partial predictions is stored and can be plotted with the generic `plot()`.}
 
-\item{data}{validation dataset, will be extracted from `x` if it's an explainer.}
+\item{data}{validation dataset, will be extracted from `x` if it is an explainer.}
 
-\item{predict_function}{predict function, will be extracted from `x` if it's an explainer.}
+\item{predict_function}{predict function, will be extracted from `x` if it is an explainer.}
 
 \item{label}{name of the model. By default it's extracted from the 'class' attribute of the model.}
 

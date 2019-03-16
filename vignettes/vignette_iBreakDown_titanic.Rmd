@@ -13,6 +13,8 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = FALSE,
   comment = "#>",
+  fig.width = 7,
+  fig.height = 3.5,
   warning = FALSE,
   message = FALSE
 )
@@ -88,6 +90,15 @@ plot(rf_la)
 ```{r}
 plotD3(rf_la)
 ```
+
+## Calculate uncertainty for variable attributions
+
+```{r}
+rf_la_un <- local_attributions_uncertainty(explain_titanic_rf, new_passanger,
+                         path = c("age", "class", "gender" , "fare", "embarked", "sibsp", "parch"))
+plot(rf_la_un)
+```
+
 
 ## Show only top features
 

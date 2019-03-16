@@ -1,6 +1,7 @@
 iBreakDown 0.9.4
 ----------------------------------------------------------------
 * code refactoring
+* added `local_attributions_uncertainty()` function that measures uncertanity behind additive attributions 
 
 iBreakDown 0.9.3
 ----------------------------------------------------------------

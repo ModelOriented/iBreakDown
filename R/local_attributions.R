@@ -7,8 +7,8 @@
 #' And in the second step the impact is calculated.
 #'
 #' @param x a model to be explained, or an explainer created with function `DALEX::explain()`.
-#' @param data validation dataset, will be extracted from `x` if it's an explainer.
-#' @param predict_function predict function, will be extracted from `x` if it's an explainer.
+#' @param data validation dataset, will be extracted from `x` if it is an explainer.
+#' @param predict_function predict function, will be extracted from `x` if it is an explainer.
 #' @param new_observation a new observation with columns that correspond to variables used in the model.
 #' @param keep_distributions if `TRUE`, then distribution of partial predictions is stored and can be plotted with the generic `plot()`.
 #' @param order if not `NULL`, then it will be a fixed order of variables. It can be a numeric vector or vector with names of variables.
