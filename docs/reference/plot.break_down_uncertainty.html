@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Model Agnostic Sequential Variable attributions — local_attributions • iBreakDown</title>
+<title>Plot Generic for Break Down Uncertainty Objects — plot.break_down_uncertainty • iBreakDown</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -48,7 +48,7 @@
 	  <a class = "navbar-mi2logo" href="http://mi2.mini.pw.edu.pl/">
         <img src = "https://github.com/mi2-warsaw/MI2template/blob/master/inst/pkgdown/assets/MI2logo.jpg?raw=true" alt = "MI2" height = 46 title = "MI2">
 	  </a>
-      <a class="navbar-brand navbar-mi2" href="../index.html">Model Agnostic Sequential Variable attributions</a>
+      <a class="navbar-brand navbar-mi2" href="../index.html">Plot Generic for Break Down Uncertainty Objects</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="navbar-mi2 nav navbar-nav">
@@ -97,72 +97,37 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Model Agnostic Sequential Variable attributions</h1>
+    <h1>Plot Generic for Break Down Uncertainty Objects</h1>
     </div>
 
     
-    <p>This function finds Variable attributions via Sequential Variable Conditioning.
-The complexity of this function is O(2*p).
-This function works in a similar way to step-up and step-down greedy approximations in function `breakDown::break_down()`.
-The main difference is that in the first step the order of variables is determined.
-And in the second step the impact is calculated.</p>
+    <p>Plot Generic for Break Down Uncertainty Objects</p>
     
 
-    <pre class="usage"><span class='fu'>local_attributions</span>(<span class='no'>x</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for explainer</span>
-<span class='fu'>local_attributions</span>(<span class='no'>x</span>, <span class='no'>new_observation</span>,
-  <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for default</span>
-<span class='fu'>local_attributions</span>(<span class='no'>x</span>, <span class='no'>data</span>, <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict</span>,
-  <span class='no'>new_observation</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'>class</span>(<span class='no'>x</span>)[<span class='fl'>1</span>], <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>order</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='co'># S3 method for break_down_uncertainty</span>
+<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='no'>...</span>,
+  <span class='kw'>vcolors</span> <span class='kw'>=</span> <span class='kw pkg'>DALEX</span><span class='kw ns'>::</span><span class='fu'>theme_drwhy_colors_break_down</span>())</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a model to be explained, or an explainer created with function `DALEX::explain()`.</p></td>
+      <td><p>the model model of `break_down_uncertainty` class.</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>other parameters.</p></td>
     </tr>
     <tr>
-      <th>new_observation</th>
-      <td><p>a new observation with columns that correspond to variables used in the model.</p></td>
-    </tr>
-    <tr>
-      <th>keep_distributions</th>
-      <td><p>if `TRUE`, then distribution of partial predictions is stored and can be plotted with the generic `plot()`.</p></td>
-    </tr>
-    <tr>
-      <th>data</th>
-      <td><p>validation dataset, will be extracted from `x` if it is an explainer.</p></td>
-    </tr>
-    <tr>
-      <th>predict_function</th>
-      <td><p>predict function, will be extracted from `x` if it is an explainer.</p></td>
-    </tr>
-    <tr>
-      <th>label</th>
-      <td><p>name of the model. By default it's extracted from the 'class' attribute of the model.</p></td>
-    </tr>
-    <tr>
-      <th>order</th>
-      <td><p>if not `NULL`, then it will be a fixed order of variables. It can be a numeric vector or vector with names of variables.</p></td>
+      <th>vcolors</th>
+      <td><p>named vector with colors.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>an object of the `break_down` class.</p>
-    
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code><a href='break_down.html'>break_down</a></code>, <code><a href='local_interactions.html'>local_interactions</a></code></p></div>
+    <p>a `ggplot2` object.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -171,8 +136,7 @@ And in the second step the impact is calculated.</p>
 <span class='fu'>library</span>(<span class='st'>"iBreakDown"</span>)
 <span class='fu'>library</span>(<span class='st'>"randomForest"</span>)
 <span class='fu'>set.seed</span>(<span class='fl'>1313</span>)
-<span class='co'># example with interaction</span>
-<span class='co'># classification for HR data</span>
+
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>status</span> ~ <span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>)
 <span class='no'>new_observation</span> <span class='kw'>&lt;-</span> <span class='no'>HR_test</span>[<span class='fl'>1</span>,]
 
@@ -180,30 +144,41 @@ And in the second step the impact is calculated.</p>
                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>,<span class='fl'>1</span>:<span class='fl'>5</span>],
                         <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>])
 
-<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>local_attributions</span>(<span class='no'>explainer_rf</span>,
-                           <span class='no'>new_observation</span>)
-<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                       contribution
-#&gt; randomForest.fired: intercept                0.386
-#&gt; randomForest.fired: hours = 42               0.231
-#&gt; randomForest.fired: evaluation = 2           0.062
-#&gt; randomForest.fired: salary = 2              -0.272
-#&gt; randomForest.fired: age = 58                 0.092
-#&gt; randomForest.fired: gender = male            0.281
-#&gt; randomForest.fired: prediction               0.778
-#&gt; randomForest.ok: intercept                   0.278
-#&gt; randomForest.ok: hours = 42                 -0.053
-#&gt; randomForest.ok: evaluation = 2              0.091
-#&gt; randomForest.ok: salary = 2                  0.271
-#&gt; randomForest.ok: age = 58                   -0.086
-#&gt; randomForest.ok: gender = male              -0.283
-#&gt; randomForest.ok: prediction                  0.218
-#&gt; randomForest.promoted: intercept             0.336
-#&gt; randomForest.promoted: hours = 42           -0.178
-#&gt; randomForest.promoted: evaluation = 2       -0.152
-#&gt; randomForest.promoted: salary = 2            0.001
-#&gt; randomForest.promoted: age = 58             -0.006
-#&gt; randomForest.promoted: gender = male         0.002
-#&gt; randomForest.promoted: prediction            0.004</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='local_attributions-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>baseline</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='img'><img src='local_attributions-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>local_attributions_uncertainty</span>(<span class='no'>explainer_rf</span>,
+                           <span class='no'>new_observation</span>,
+                           <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>3</span>,<span class='fl'>2</span>,<span class='fl'>4</span>,<span class='fl'>1</span>,<span class='fl'>5</span>))
+<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                        min        q1       median        q3
+#&gt; randomForest.fired-age           -0.021328  0.019462  0.163675091  0.277413
+#&gt; randomForest.fired-evaluation    -0.018856 -0.018856  0.022113455  0.048419
+#&gt; randomForest.fired-gender        -0.002236  0.005474  0.088604364  0.197085
+#&gt; randomForest.fired-hours          0.174678  0.230614  0.262828727  0.290862
+#&gt; randomForest.fired-salary        -0.215994 -0.163913 -0.144807636 -0.119176
+#&gt; randomForest.ok-age              -0.346842 -0.216186 -0.136478000 -0.009476
+#&gt; randomForest.ok-evaluation        0.083034  0.099398  0.109666545  0.106311
+#&gt; randomForest.ok-gender           -0.282642 -0.188968 -0.087593091 -0.003480
+#&gt; randomForest.ok-hours            -0.102472 -0.075861 -0.061595818 -0.053010
+#&gt; randomForest.ok-salary            0.042420  0.118454  0.115850364  0.119146
+#&gt; randomForest.promoted-age        -0.126732 -0.022355 -0.027197091 -0.005548
+#&gt; randomForest.promoted-evaluation -0.201822 -0.157818 -0.131780000 -0.081440
+#&gt; randomForest.promoted-gender     -0.013566 -0.002331 -0.001011273  0.002276
+#&gt; randomForest.promoted-hours      -0.280566 -0.215001 -0.201232909 -0.175584
+#&gt; randomForest.promoted-salary     -0.003902  0.000722  0.028957273  0.049408
+#&gt;                                        max
+#&gt; randomForest.fired-age            0.362800
+#&gt; randomForest.fired-evaluation     0.068846
+#&gt; randomForest.fired-gender         0.280686
+#&gt; randomForest.fired-hours          0.383038
+#&gt; randomForest.fired-salary        -0.102574
+#&gt; randomForest.ok-age               0.005860
+#&gt; randomForest.ok-evaluation        0.196252
+#&gt; randomForest.ok-gender           -0.002292
+#&gt; randomForest.ok-hours            -0.006356
+#&gt; randomForest.ok-salary            0.181536
+#&gt; randomForest.promoted-age         0.028826
+#&gt; randomForest.promoted-evaluation -0.081440
+#&gt; randomForest.promoted-gender      0.004528
+#&gt; randomForest.promoted-hours      -0.168322
+#&gt; randomForest.promoted-salary      0.077562</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='plot.break_down_uncertainty-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># example for regression - apartment prices</span>
 <span class='co'># here we do not have intreactions</span>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
@@ -211,20 +186,22 @@ And in the second step the impact is calculated.</p>
                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>,<span class='fl'>2</span>:<span class='fl'>6</span>],
                         <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>$<span class='no'>m2.price</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>])
 
-<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>local_attributions</span>(<span class='no'>explainer_rf</span>,
-                           <span class='no'>apartments_test</span>[<span class='fl'>1</span>,])
-<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                        contribution
-#&gt; randomForest: intercept                    3487.722
-#&gt; randomForest: district = Srodmiescie       1034.737
-#&gt; randomForest: surface = 130                -315.991
-#&gt; randomForest: no.rooms = 5                 -163.113
-#&gt; randomForest: floor = 3                     150.529
-#&gt; randomForest: construction.year = 2000      -24.021
-#&gt; randomForest: prediction                   4169.863</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='img'><img src='local_attributions-3.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>local_attributions</span>(<span class='no'>explainer_rf</span>,
-                           <span class='no'>apartments_test</span>[<span class='fl'>1</span>,],
-                           <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='local_attributions-4.png' alt='' width='700' height='433' /></div></pre>
+<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>local_attributions_uncertainty</span>(<span class='no'>explainer_rf</span>,
+                                     <span class='no'>apartments_test</span>[<span class='fl'>1</span>,],
+                                     <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"floor"</span>, <span class='st'>"no.rooms"</span>, <span class='st'>"district"</span>,
+                                         <span class='st'>"construction.year"</span>, <span class='st'>"surface"</span>))
+<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                      min        q1     median         q3
+#&gt; randomForest-construction.year -128.1290 -126.3012  -96.41844  -75.28959
+#&gt; randomForest-district          1033.5280 1050.0080 1076.88062 1093.70274
+#&gt; randomForest-floor              165.9773  173.6559  197.75176  220.55557
+#&gt; randomForest-no.rooms          -246.9539 -227.9948 -201.47496 -173.26509
+#&gt; randomForest-surface           -331.4628 -289.1663 -276.45829 -258.97323
+#&gt;                                       max
+#&gt; randomForest-construction.year  -46.89048
+#&gt; randomForest-district          1142.44289
+#&gt; randomForest-floor              231.48942
+#&gt; randomForest-no.rooms          -143.89151
+#&gt; randomForest-surface           -229.42256</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='plot.break_down_uncertainty-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -232,8 +209,6 @@ And in the second step the impact is calculated.</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-
-      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

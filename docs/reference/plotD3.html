@@ -180,29 +180,29 @@ Or the default <code>round</code> to have the same precision for all components.
 <span class='fu'>library</span>(<span class='st'>"iBreakDown"</span>)
 <span class='no'>rf_la</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_attributions.html'>local_attributions</a></span>(<span class='no'>rf_explain</span>, <span class='no'>titanic</span>[<span class='fl'>2</span>,])
 <span class='no'>rf_la</span></div><div class='output co'>#&gt;                  contribution
-#&gt; RF: intercept           0.363
-#&gt; RF: Sex = female        0.302
-#&gt; RF: Pclass = 1          0.181
-#&gt; RF: Fare = 71           0.101
-#&gt; RF: Embarked = C        0.015
-#&gt; RF: Age = 38            0.019
-#&gt; RF: SibSp = 1           0.008
-#&gt; RF: Parch = 0           0.006
+#&gt; RF: intercept           0.364
+#&gt; RF: Sex = female        0.296
+#&gt; RF: Fare = 71           0.069
+#&gt; RF: Pclass = 1          0.223
+#&gt; RF: Embarked = C        0.010
+#&gt; RF: Age = 38            0.014
+#&gt; RF: SibSp = 1           0.013
+#&gt; RF: Parch = 0           0.007
 #&gt; RF: Survived = 1        0.000
 #&gt; RF: prediction          0.996</div><div class='input'><span class='fu'>plotD3</span>(<span class='no'>rf_la</span>)
 
 <span class='no'>rf_la</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_attributions.html'>local_attributions</a></span>(<span class='no'>rf_explain</span>, <span class='no'>titanic</span>[<span class='fl'>3</span>,])
 <span class='no'>rf_la</span></div><div class='output co'>#&gt;                  contribution
-#&gt; RF: intercept           0.363
-#&gt; RF: Sex = female        0.302
-#&gt; RF: Pclass = 3         -0.220
-#&gt; RF: Fare = 7.9         -0.049
-#&gt; RF: SibSp = 0           0.035
-#&gt; RF: Embarked = S       -0.022
-#&gt; RF: Age = 26            0.137
-#&gt; RF: Parch = 0          -0.040
+#&gt; RF: intercept           0.364
+#&gt; RF: Sex = female        0.296
+#&gt; RF: Pclass = 3         -0.218
+#&gt; RF: Fare = 7.9         -0.064
+#&gt; RF: SibSp = 0           0.028
+#&gt; RF: Embarked = S       -0.029
+#&gt; RF: Age = 26            0.123
+#&gt; RF: Parch = 0          -0.030
 #&gt; RF: Survived = 1        0.000
-#&gt; RF: prediction          0.506</div><div class='input'><span class='fu'>plotD3</span>(<span class='no'>rf_la</span>, <span class='kw'>max_features</span> <span class='kw'>=</span> <span class='fl'>4</span>)
+#&gt; RF: prediction          0.470</div><div class='input'><span class='fu'>plotD3</span>(<span class='no'>rf_la</span>, <span class='kw'>max_features</span> <span class='kw'>=</span> <span class='fl'>4</span>)
 <span class='fu'>plotD3</span>(<span class='no'>rf_la</span>, <span class='kw'>max_features</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>min_max</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>,<span class='fl'>1</span>))</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
