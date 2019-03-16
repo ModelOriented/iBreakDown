@@ -76,7 +76,7 @@
       <h1>iBreakDown plots for classification models</h1>
                         <h4 class="author">Dariusz Komosinski</h4>
             
-            <h4 class="date">2019-03-15</h4>
+            <h4 class="date">2019-03-16</h4>
       
       
       <div class="hidden name"><code>vignette_iBreakDown_classification.Rmd</code></div>
@@ -87,8 +87,8 @@
     
 <p>Here we will use the <code>HR</code> data from <a href="https://github.com/pbiecek/DALEX"><code>DALEX</code></a> package to present the <code>iBreakDown</code> for classification models.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># devtools::install_github("ModelOriented/DALEX")</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(DALEX)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">library</span>(iBreakDown)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(<span class="st">"DALEX"</span>)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">library</span>(<span class="st">"iBreakDown"</span>)</a>
 <a class="sourceLine" id="cb1-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw">head</span>(HR)</a></code></pre></div>
 <pre><code>#&gt;   gender      age    hours evaluation salary   status
@@ -106,7 +106,7 @@
 <h2 class="hasAnchor">
 <a href="#glm" class="anchor"></a>glm</h2>
 <p>First, we fit a model.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">library</span>(nnet)</a>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">library</span>(<span class="st">"nnet"</span>)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2">m_glm &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/nnet/topics/multinom">multinom</a></span>(status <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> HR, <span class="dt">probabilities =</span> <span class="ot">TRUE</span>, <span class="dt">model =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>#&gt; # weights:  21 (12 variable)
 #&gt; initial  value 8620.810629 
@@ -157,8 +157,7 @@
 #&gt; multinom.promoted: age = 58              0.002
 #&gt; multinom.promoted: salary = 2            0.000
 #&gt; multinom.promoted: status = fired        0.000
-#&gt; multinom.promoted: prediction            0.030
-#&gt; baseline:  0</code></pre>
+#&gt; multinom.promoted: prediction            0.030</code></pre>
 <p>Or plot it.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">plot</span>(bd_glm)</a></code></pre></div>
 <p><img src="vignette_iBreakDown_classification_files/figure-html/unnamed-chunk-6-1.png" width="576"></p>
@@ -186,31 +185,30 @@
 <a class="sourceLine" id="cb14-11" data-line-number="11"></a>
 <a class="sourceLine" id="cb14-12" data-line-number="12">bd_rf</a></code></pre></div>
 <pre><code>#&gt;                                               contribution
-#&gt; randomForest.formula.fired: intercept                0.379
+#&gt; randomForest.formula.fired: intercept                0.377
 #&gt; randomForest.formula.fired: hours = 42               0.235
-#&gt; randomForest.formula.fired: evaluation = 2           0.059
+#&gt; randomForest.formula.fired: evaluation = 2           0.057
 #&gt; randomForest.formula.fired: salary = 2              -0.247
-#&gt; randomForest.formula.fired: gender = male            0.012
-#&gt; randomForest.formula.fired: age = 58                 0.345
+#&gt; randomForest.formula.fired: gender = male            0.027
+#&gt; randomForest.formula.fired: age = 58                 0.338
 #&gt; randomForest.formula.fired: status = fired           0.000
-#&gt; randomForest.formula.fired: prediction               0.782
-#&gt; randomForest.formula.ok: intercept                   0.268
-#&gt; randomForest.formula.ok: hours = 42                 -0.045
+#&gt; randomForest.formula.fired: prediction               0.788
+#&gt; randomForest.formula.ok: intercept                   0.271
+#&gt; randomForest.formula.ok: hours = 42                 -0.046
 #&gt; randomForest.formula.ok: evaluation = 2              0.099
-#&gt; randomForest.formula.ok: salary = 2                  0.245
-#&gt; randomForest.formula.ok: gender = male              -0.014
-#&gt; randomForest.formula.ok: age = 58                   -0.340
+#&gt; randomForest.formula.ok: salary = 2                  0.246
+#&gt; randomForest.formula.ok: gender = male              -0.029
+#&gt; randomForest.formula.ok: age = 58                   -0.330
 #&gt; randomForest.formula.ok: status = fired              0.000
 #&gt; randomForest.formula.ok: prediction                  0.212
-#&gt; randomForest.formula.promoted: intercept             0.353
-#&gt; randomForest.formula.promoted: hours = 42           -0.189
-#&gt; randomForest.formula.promoted: evaluation = 2       -0.158
-#&gt; randomForest.formula.promoted: salary = 2            0.002
-#&gt; randomForest.formula.promoted: gender = male         0.003
-#&gt; randomForest.formula.promoted: age = 58             -0.005
+#&gt; randomForest.formula.promoted: intercept             0.352
+#&gt; randomForest.formula.promoted: hours = 42           -0.190
+#&gt; randomForest.formula.promoted: evaluation = 2       -0.157
+#&gt; randomForest.formula.promoted: salary = 2            0.001
+#&gt; randomForest.formula.promoted: gender = male         0.002
+#&gt; randomForest.formula.promoted: age = 58             -0.009
 #&gt; randomForest.formula.promoted: status = fired        0.000
-#&gt; randomForest.formula.promoted: prediction            0.006
-#&gt; baseline:  0</code></pre>
+#&gt; randomForest.formula.promoted: prediction            0.000</code></pre>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">plot</span>(bd_rf)</a></code></pre></div>
 <p><img src="vignette_iBreakDown_classification_files/figure-html/unnamed-chunk-9-1.png" width="576"></p>
 </div>

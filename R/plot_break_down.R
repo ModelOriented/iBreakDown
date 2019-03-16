@@ -90,11 +90,11 @@ plot.break_down <- function(x, ...,
                             baseline = NA,
                             max_features = 10,
                             min_max = NA,
-                            vcolors = c("-1" = "#f05a71", "0" = "#371ea3", "1" = "#8bdcbe", "X" = "#371ea3"),
+                            vcolors = DALEX::theme_drwhy_colors_break_down(),
                             digits = 3, rounding_function = round,
                             add_contributions = TRUE, shift_contributions = 0.05,
                             plot_distributions = FALSE) {
-  position <- cummulative <- prev <- variable <- pretty_text <- right_side <- contribution  <- prediction <- label <- id <- NULL
+  position <- cummulative <- prev <- pretty_text <- right_side <- contribution <- NULL
 
   if (plot_distributions) {
     df <- attr(x, "yhats_distribution")

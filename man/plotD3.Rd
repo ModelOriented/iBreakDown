@@ -8,8 +8,8 @@
 plotD3(x, ...)
 
 \method{plotD3}{break_down}(x, ..., baseline = NA, max_features = 10,
-  min_max = NA, vcolors = c(`-1` = "#a3142f", `0` = "#a3142f", `1` =
-  "#0f6333", X = "#0f6333"), digits = 3, rounding_function = round)
+  min_max = NA, vcolors = DALEX::theme_drwhy_colors_break_down(),
+  digits = 3, rounding_function = round)
 }
 \arguments{
 \item{x}{the model model of `break_down`` class.}

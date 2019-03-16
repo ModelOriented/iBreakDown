@@ -117,8 +117,8 @@ And in the second step the impact is calculated.</p>
 
 <span class='co'># S3 method for default</span>
 <span class='fu'>local_interactions</span>(<span class='no'>x</span>, <span class='no'>data</span>, <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict</span>,
-  <span class='no'>new_observation</span>, <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>interaction_preference</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>order</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'>class</span>(<span class='no'>x</span>)[<span class='fl'>1</span>], <span class='no'>...</span>)</pre>
+  <span class='no'>new_observation</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'>class</span>(<span class='no'>x</span>)[<span class='fl'>1</span>], <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>order</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>interaction_preference</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -148,16 +148,16 @@ And in the second step the impact is calculated.</p>
       <td><p>predict function, will be extracted from `x` if it's an explainer.</p></td>
     </tr>
     <tr>
-      <th>interaction_preference</th>
-      <td><p>a constant that set the preference for interactions. By default `1`. The larger the more frequently intereactions will be presented in explanations.</p></td>
+      <th>label</th>
+      <td><p>character - the name of the model. By default it's extracted from the 'class' attribute of the model.</p></td>
     </tr>
     <tr>
       <th>order</th>
       <td><p>if not `NULL`, then it will be a fixed order of variables. It can be a numeric vector or vector with names of variables/interactions.</p></td>
     </tr>
     <tr>
-      <th>label</th>
-      <td><p>character - the name of the model. By default it's extracted from the 'class' attribute of the model.</p></td>
+      <th>interaction_preference</th>
+      <td><p>a constant that set the preference for interactions. By default `1`. The larger the more frequently intereactions will be presented in explanations.</p></td>
     </tr>
     </table>
     
@@ -205,8 +205,7 @@ And in the second step the impact is calculated.</p>
 #&gt; randomForest.promoted: evaluation = 2             -0.152
 #&gt; randomForest.promoted: age:gender = 58:male       -0.003
 #&gt; randomForest.promoted: salary = 2                  0.001
-#&gt; randomForest.promoted: prediction                  0.004
-#&gt; baseline:  0 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='local_interactions-1.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; randomForest.promoted: prediction                  0.004</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='local_interactions-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># example for regression - apartment prices</span>
 <span class='co'># here we do not have intreactions</span>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
@@ -227,8 +226,7 @@ And in the second step the impact is calculated.</p>
 #&gt; randomForest: no.rooms = 5                 -163.113
 #&gt; randomForest: floor = 3                     150.529
 #&gt; randomForest: construction.year = 2000      -24.021
-#&gt; randomForest: prediction                   4169.863
-#&gt; baseline:  0 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='local_interactions-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='local_interactions-3.png' alt='' width='700' height='433' /></div></pre>
+#&gt; randomForest: prediction                   4169.863</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='local_interactions-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='local_interactions-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -105,10 +105,10 @@
     
 
     <pre class="usage"><span class='co'># S3 method for break_down</span>
-<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>add_contributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>baseline</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>vcolors</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='kw'>`-1`</span> <span class='kw'>=</span> <span class='st'>"#f05a71"</span>, <span class='kw'>`0`</span> <span class='kw'>=</span> <span class='st'>"#371ea3"</span>, <span class='kw'>`1`</span> <span class='kw'>=</span>
-  <span class='st'>"#8bdcbe"</span>, <span class='kw'>X</span> <span class='kw'>=</span> <span class='st'>"#371ea3"</span>), <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>rounding_function</span> <span class='kw'>=</span> <span class='no'>round</span>,
-  <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>baseline</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>max_features</span> <span class='kw'>=</span> <span class='fl'>10</span>,
+  <span class='kw'>min_max</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>vcolors</span> <span class='kw'>=</span> <span class='kw pkg'>DALEX</span><span class='kw ns'>::</span><span class='fu'>theme_drwhy_colors_break_down</span>(),
+  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>rounding_function</span> <span class='kw'>=</span> <span class='no'>round</span>, <span class='kw'>add_contributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>shift_contributions</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -122,12 +122,16 @@
       <td><p>other parameters.</p></td>
     </tr>
     <tr>
-      <th>add_contributions</th>
-      <td><p>shall variable contributions to be added on plot?</p></td>
+      <th>baseline</th>
+      <td><p>if numeric then veritical line starts in `baseline`.</p></td>
     </tr>
     <tr>
-      <th>baseline</th>
-      <td><p>if numeric then veritical line will start in baseline.</p></td>
+      <th>max_features</th>
+      <td><p>maximal number of features to be included in the plot. default value is 4.</p></td>
+    </tr>
+    <tr>
+      <th>min_max</th>
+      <td><p>a range of OX axis. By deafult `NA` therefore will be extracted from the contributions of `x`. But can be set to some constants, usefull if these plots are used for comparisons.</p></td>
     </tr>
     <tr>
       <th>vcolors</th>
@@ -135,7 +139,7 @@
     </tr>
     <tr>
       <th>digits</th>
-      <td><p>number of decimal places (round) or significant digits (signif) to be used.
+      <td><p>number of decimal places (`round`) or significant digits (`signif`) to be used.
 See the <code>rounding_function</code> argument.</p></td>
     </tr>
     <tr>
@@ -143,6 +147,14 @@ See the <code>rounding_function</code> argument.</p></td>
       <td><p>function that is to used for rounding numbers.
 It may be <code>signif</code> which keeps a specified number of significant digits.
 Or the default <code>round</code> to have the same precision for all components.</p></td>
+    </tr>
+    <tr>
+      <th>add_contributions</th>
+      <td><p>shall variable contributions to be added the the plot?</p></td>
+    </tr>
+    <tr>
+      <th>shift_contributions</th>
+      <td><p>how much labels sholud be shifted right as a fraction of range. By default 0.05</p></td>
     </tr>
     <tr>
       <th>plot_distributions</th>
@@ -194,8 +206,7 @@ Or the default <code>round</code> to have the same precision for all components.
 #&gt; randomForest.promoted: salary = 2            0.001
 #&gt; randomForest.promoted: age = 58             -0.006
 #&gt; randomForest.promoted: gender = male         0.002
-#&gt; randomForest.promoted: prediction            0.004
-#&gt; baseline:  0 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='plot.break_down-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>baseline</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='img'><img src='plot.break_down-2.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; randomForest.promoted: prediction            0.004</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='plot.break_down-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>baseline</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='img'><img src='plot.break_down-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>min_max</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>,<span class='fl'>1</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: the condition has length &gt; 1 and only the first element will be used</span></div><div class='img'><img src='plot.break_down-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_attributions.html'>local_attributions</a></span>(<span class='no'>explainer_rf</span>,
                            <span class='no'>new_observation</span>,
                            <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
@@ -220,8 +231,7 @@ Or the default <code>round</code> to have the same precision for all components.
 #&gt; randomForest.promoted: salary = 2            0.001
 #&gt; randomForest.promoted: age = 58             -0.006
 #&gt; randomForest.promoted: gender = male         0.002
-#&gt; randomForest.promoted: prediction            0.004
-#&gt; baseline:  0 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='plot.break_down-3.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; randomForest.promoted: prediction            0.004</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='plot.break_down-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_interactions.html'>local_interactions</a></span>(<span class='no'>explainer_rf</span>,
                  <span class='no'>new_observation</span>,
                  <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
@@ -244,8 +254,7 @@ Or the default <code>round</code> to have the same precision for all components.
 #&gt; randomForest.promoted: evaluation = 2             -0.152
 #&gt; randomForest.promoted: age:gender = 58:male       -0.003
 #&gt; randomForest.promoted: salary = 2                  0.001
-#&gt; randomForest.promoted: prediction                  0.004
-#&gt; baseline:  0 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='plot.break_down-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='plot.break_down-5.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; randomForest.promoted: prediction                  0.004</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='plot.break_down-5.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='plot.break_down-6.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># example for regression - apartment prices</span>
 <span class='co'># here we do not have intreactions</span>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
@@ -262,12 +271,11 @@ Or the default <code>round</code> to have the same precision for all components.
 #&gt; randomForest: no.rooms = 5                 -163.113
 #&gt; randomForest: floor = 3                     150.529
 #&gt; randomForest: construction.year = 2000      -24.021
-#&gt; randomForest: prediction                   4169.863
-#&gt; baseline:  0 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='img'><img src='plot.break_down-6.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>baseline</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='img'><img src='plot.break_down-7.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; randomForest: prediction                   4169.863</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='img'><img src='plot.break_down-7.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>baseline</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='img'><img src='plot.break_down-8.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_attributions.html'>local_attributions</a></span>(<span class='no'>explainer_rf</span>,
                            <span class='no'>apartments_test</span>[<span class='fl'>1</span>,],
                            <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='plot.break_down-8.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='plot.break_down-9.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_interactions.html'>local_interactions</a></span>(<span class='no'>explainer_rf</span>,
                  <span class='kw'>new_observation</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>[<span class='fl'>1</span>,],
                  <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
@@ -279,8 +287,7 @@ Or the default <code>round</code> to have the same precision for all components.
 #&gt; randomForest: no.rooms = 5                 -163.113
 #&gt; randomForest: floor = 3                     150.529
 #&gt; randomForest: construction.year = 2000      -24.021
-#&gt; randomForest: prediction                   4169.863
-#&gt; baseline:  0 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='plot.break_down-9.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='plot.break_down-10.png' alt='' width='700' height='433' /></div></pre>
+#&gt; randomForest: prediction                   4169.863</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='plot.break_down-10.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='plot.break_down-11.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

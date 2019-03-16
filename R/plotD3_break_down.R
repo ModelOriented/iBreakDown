@@ -57,31 +57,16 @@ plotD3.break_down <- function(x, ...,
                         baseline = NA,
                         max_features = 10,
                         min_max = NA,
-                        vcolors = c("-1" = "#a3142f", "0" = "#a3142f", "1" = "#0f6333", "X" = "#0f6333"),
+                        vcolors = DALEX::theme_drwhy_colors_break_down(),
                         digits = 3, rounding_function = round) {
-  class(x) = "data.frame"
 
   # remove first and last row
   model_prediction <- rounding_function(x$contribution[nrow(x)], digits)
   model_baseline <- rounding_function(ifelse(is.na(baseline), x$contribution[1], baseline), digits)
-  x <- x[-c(1,nrow(x)),]
-
-  if (nrow(x) > max_features) {
-    last_row <- max_features + 1
-    new_x <- x[1:last_row,]
-    new_x$variable <- as.character(new_x$variable)
-    new_x$variable[last_row] = "  all other factors"
-    new_x$contribution[last_row] = sum(x$contribution[last_row:nrow(x)])
-    new_x$cummulative[last_row] = x$cummulative[nrow(x)]
-    new_x$sign[last_row] = ifelse(new_x$contribution[last_row] > 0,
-                                  "1","-1")
-    x <- new_x
-  }
-
-  # add colors
-  x$sign <- vcolors[x$sign]
+  x <- prepare_data_for_break_down_plot3D(x, vcolors, max_features)
 
   # convert to list
+  # will be easier to pass to D3 plot
   x_as_list <- lapply(1:nrow(x), function(i) {
     list(variable = as.character(x$variable[i]),
          contribution = x$contribution[i],
@@ -110,3 +95,24 @@ plotD3.break_down <- function(x, ...,
     d3_version = "4"
   )
 }
+
+prepare_data_for_break_down_plot3D <- function(x, vcolors, max_features = 10) {
+  x <- x[-c(1,nrow(x)),]
+
+  if (nrow(x) > max_features) {
+    last_row <- max_features + 1
+    new_x <- x[1:last_row,]
+    new_x$variable <- as.character(new_x$variable)
+    new_x$variable[last_row] = "  all other factors"
+    new_x$contribution[last_row] = sum(x$contribution[last_row:nrow(x)])
+    new_x$cummulative[last_row] = x$cummulative[nrow(x)]
+    new_x$sign[last_row] = ifelse(new_x$contribution[last_row] > 0,
+                                  "1","-1")
+    x <- new_x
+  }
+
+  # add colors
+  x$sign <- vcolors[x$sign]
+  x
+}
+

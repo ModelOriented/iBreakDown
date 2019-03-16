@@ -5,10 +5,9 @@
 \title{Plot Generic for Break Down Objects}
 \usage{
 \method{plot}{break_down}(x, ..., baseline = NA, max_features = 10,
-  min_max = NA, vcolors = c(`-1` = "#f05a71", `0` = "#371ea3", `1` =
-  "#8bdcbe", X = "#371ea3"), digits = 3, rounding_function = round,
-  add_contributions = TRUE, shift_contributions = 0.05,
-  plot_distributions = FALSE)
+  min_max = NA, vcolors = DALEX::theme_drwhy_colors_break_down(),
+  digits = 3, rounding_function = round, add_contributions = TRUE,
+  shift_contributions = 0.05, plot_distributions = FALSE)
 }
 \arguments{
 \item{x}{the model model of `break_down` class.}

@@ -116,8 +116,8 @@ And in the second step the impact is calculated.</p>
 
 <span class='co'># S3 method for default</span>
 <span class='fu'>local_attributions</span>(<span class='no'>x</span>, <span class='no'>data</span>, <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict</span>,
-  <span class='no'>new_observation</span>, <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>order</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'>class</span>(<span class='no'>x</span>)[<span class='fl'>1</span>], <span class='no'>...</span>)</pre>
+  <span class='no'>new_observation</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'>class</span>(<span class='no'>x</span>)[<span class='fl'>1</span>], <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>order</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -147,12 +147,12 @@ And in the second step the impact is calculated.</p>
       <td><p>predict function, will be extracted from `x` if it's an explainer.</p></td>
     </tr>
     <tr>
-      <th>order</th>
-      <td><p>if not `NULL`, then it will be a fixed order of variables. It can be a numeric vector or vector with names of variables.</p></td>
-    </tr>
-    <tr>
       <th>label</th>
       <td><p>name of the model. By default it's extracted from the 'class' attribute of the model.</p></td>
+    </tr>
+    <tr>
+      <th>order</th>
+      <td><p>if not `NULL`, then it will be a fixed order of variables. It can be a numeric vector or vector with names of variables.</p></td>
     </tr>
     </table>
     
@@ -203,8 +203,7 @@ And in the second step the impact is calculated.</p>
 #&gt; randomForest.promoted: salary = 2            0.001
 #&gt; randomForest.promoted: age = 58             -0.006
 #&gt; randomForest.promoted: gender = male         0.002
-#&gt; randomForest.promoted: prediction            0.004
-#&gt; baseline:  0 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='local_attributions-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>baseline</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='img'><img src='local_attributions-2.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; randomForest.promoted: prediction            0.004</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='local_attributions-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>baseline</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='img'><img src='local_attributions-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># example for regression - apartment prices</span>
 <span class='co'># here we do not have intreactions</span>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
@@ -221,8 +220,7 @@ And in the second step the impact is calculated.</p>
 #&gt; randomForest: no.rooms = 5                 -163.113
 #&gt; randomForest: floor = 3                     150.529
 #&gt; randomForest: construction.year = 2000      -24.021
-#&gt; randomForest: prediction                   4169.863
-#&gt; baseline:  0 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='img'><img src='local_attributions-3.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; randomForest: prediction                   4169.863</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='img'><img src='local_attributions-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>local_attributions</span>(<span class='no'>explainer_rf</span>,
                            <span class='no'>apartments_test</span>[<span class='fl'>1</span>,],
                            <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
