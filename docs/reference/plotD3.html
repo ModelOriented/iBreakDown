@@ -108,7 +108,7 @@
 
 <span class='co'># S3 method for break_down</span>
 <span class='fu'>plotD3</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>baseline</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>max_features</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='kw'>min_max</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>vcolors</span> <span class='kw'>=</span> <span class='kw pkg'>DALEX</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/theme_drwhy'>theme_drwhy_colors_break_down</a></span>(),
+  <span class='kw'>min_max</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>vcolors</span> <span class='kw'>=</span> <span class='kw pkg'>DALEX</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/theme_drwhy'>theme_drwhy_colors_break_down</a></span>(),
   <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>rounding_function</span> <span class='kw'>=</span> <span class='no'>round</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
@@ -146,8 +146,8 @@ See the <code>rounding_function</code> argument.</p></td>
     <tr>
       <th>rounding_function</th>
       <td><p>function that is to used for rounding numbers.
-It may be <code>signif</code> which keeps a specified number of significant digits.
-Or the default <code>round</code> to have the same precision for all components.</p></td>
+It may be <code><a href='https://www.rdocumentation.org/packages/base/topics/Round'>signif</a></code> which keeps a specified number of significant digits.
+Or the default <code><a href='https://www.rdocumentation.org/packages/base/topics/Round'>round</a></code> to have the same precision for all components.</p></td>
     </tr>
     </table>
     
@@ -159,25 +159,25 @@ Or the default <code>round</code> to have the same precision for all components.
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## Not run:</span>
 <span class='co'># prepare dataset</span>
-<span class='fu'>library</span>(<span class='st'>"titanic"</span>)
-<span class='no'>titanic</span> <span class='kw'>&lt;-</span> <span class='no'>titanic_train</span>[,<span class='fu'>c</span>(<span class='st'>"Survived"</span>, <span class='st'>"Pclass"</span>, <span class='st'>"Sex"</span>, <span class='st'>"Age"</span>,
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"titanic"</span>)
+<span class='no'>titanic</span> <span class='kw'>&lt;-</span> <span class='no'>titanic_train</span>[,<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"Survived"</span>, <span class='st'>"Pclass"</span>, <span class='st'>"Sex"</span>, <span class='st'>"Age"</span>,
                             <span class='st'>"SibSp"</span>, <span class='st'>"Parch"</span>, <span class='st'>"Fare"</span>, <span class='st'>"Embarked"</span>)]
-<span class='no'>titanic</span>$<span class='no'>Survived</span> <span class='kw'>&lt;-</span> <span class='fu'>factor</span>(<span class='no'>titanic</span>$<span class='no'>Survived</span>)
-<span class='no'>titanic</span>$<span class='no'>Sex</span> <span class='kw'>&lt;-</span> <span class='fu'>factor</span>(<span class='no'>titanic</span>$<span class='no'>Sex</span>)
-<span class='no'>titanic</span>$<span class='no'>Embarked</span> <span class='kw'>&lt;-</span> <span class='fu'>factor</span>(<span class='no'>titanic</span>$<span class='no'>Embarked</span>)
-<span class='no'>titanic</span> <span class='kw'>&lt;-</span> <span class='fu'>na.omit</span>(<span class='no'>titanic</span>)
+<span class='no'>titanic</span>$<span class='no'>Survived</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a></span>(<span class='no'>titanic</span>$<span class='no'>Survived</span>)
+<span class='no'>titanic</span>$<span class='no'>Sex</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a></span>(<span class='no'>titanic</span>$<span class='no'>Sex</span>)
+<span class='no'>titanic</span>$<span class='no'>Embarked</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a></span>(<span class='no'>titanic</span>$<span class='no'>Embarked</span>)
+<span class='no'>titanic</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/na.fail'>na.omit</a></span>(<span class='no'>titanic</span>)
 
 <span class='co'># prepare model</span>
-<span class='fu'>library</span>(<span class='st'>"randomForest"</span>)
-<span class='no'>rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>Survived</span> ~ <span class='no'>.</span>,  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"randomForest"</span>)
+<span class='no'>rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>Survived</span> ~ <span class='no'>.</span>,  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>)
 
 <span class='co'># prepare explainer</span>
-<span class='fu'>library</span>(<span class='st'>"DALEX"</span>)
-<span class='no'>rf_explain</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>rf_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>,
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"DALEX"</span>)
+<span class='no'>rf_explain</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>rf_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>,
                       <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic</span>$<span class='no'>Survived</span> <span class='kw'>==</span> <span class='st'>"1"</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"RF"</span>)
 
 <span class='co'># plor D3 explainers</span>
-<span class='fu'>library</span>(<span class='st'>"iBreakDown"</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"iBreakDown"</span>)
 <span class='no'>rf_la</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_attributions.html'>local_attributions</a></span>(<span class='no'>rf_explain</span>, <span class='no'>titanic</span>[<span class='fl'>2</span>,])
 <span class='no'>rf_la</span></div><div class='output co'>#&gt;                  contribution
 #&gt; RF: intercept           0.364
@@ -203,7 +203,7 @@ Or the default <code>round</code> to have the same precision for all components.
 #&gt; RF: Parch = 0          -0.030
 #&gt; RF: Survived = 1        0.000
 #&gt; RF: prediction          0.470</div><div class='input'><span class='fu'>plotD3</span>(<span class='no'>rf_la</span>, <span class='kw'>max_features</span> <span class='kw'>=</span> <span class='fl'>4</span>)
-<span class='fu'>plotD3</span>(<span class='no'>rf_la</span>, <span class='kw'>max_features</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>min_max</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>,<span class='fl'>1</span>))</div></pre>
+<span class='fu'>plotD3</span>(<span class='no'>rf_la</span>, <span class='kw'>max_features</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>min_max</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>1</span>))</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

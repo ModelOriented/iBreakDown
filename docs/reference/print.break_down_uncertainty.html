@@ -105,7 +105,7 @@
     
 
     <pre class="usage"><span class='co'># S3 method for break_down_uncertainty</span>
-<span class='fu'>print</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -127,14 +127,14 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## Not run:</span>
-<span class='fu'>library</span>(<span class='st'>"DALEX"</span>)
-<span class='fu'>library</span>(<span class='st'>"iBreakDown"</span>)
-<span class='fu'>library</span>(<span class='st'>"randomForest"</span>)
-<span class='fu'>set.seed</span>(<span class='fl'>1313</span>)
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>status</span> ~ <span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"DALEX"</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"iBreakDown"</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"randomForest"</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>1313</span>)
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>status</span> ~ <span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>)
 <span class='no'>new_observation</span> <span class='kw'>&lt;-</span> <span class='no'>HR_test</span>[<span class='fl'>1</span>,]
 
-<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model</span>,
+<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model</span>,
                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>,<span class='fl'>1</span>:<span class='fl'>5</span>],
                         <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>])
 
@@ -174,8 +174,8 @@
 #&gt; randomForest.promoted-salary      0.077562</div><div class='input'>
 <span class='co'># example for regression - apartment prices</span>
 <span class='co'># here we do not have intreactions</span>
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
-<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model</span>,
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
+<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model</span>,
                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>,<span class='fl'>2</span>:<span class='fl'>6</span>],
                         <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>$<span class='no'>m2.price</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>])
 

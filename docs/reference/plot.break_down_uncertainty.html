@@ -105,8 +105,8 @@
     
 
     <pre class="usage"><span class='co'># S3 method for break_down_uncertainty</span>
-<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='no'>...</span>,
-  <span class='kw'>vcolors</span> <span class='kw'>=</span> <span class='kw pkg'>DALEX</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/theme_drwhy'>theme_drwhy_colors_break_down</a></span>())</pre>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>x</span>, <span class='no'>...</span>,
+  <span class='kw'>vcolors</span> <span class='kw'>=</span> <span class='kw pkg'>DALEX</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/theme_drwhy'>theme_drwhy_colors_break_down</a></span>())</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -132,21 +132,21 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## Not run:</span>
-<span class='fu'>library</span>(<span class='st'>"DALEX"</span>)
-<span class='fu'>library</span>(<span class='st'>"iBreakDown"</span>)
-<span class='fu'>library</span>(<span class='st'>"randomForest"</span>)
-<span class='fu'>set.seed</span>(<span class='fl'>1313</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"DALEX"</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"iBreakDown"</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"randomForest"</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>1313</span>)
 
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>status</span> ~ <span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>)
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>status</span> ~ <span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>)
 <span class='no'>new_observation</span> <span class='kw'>&lt;-</span> <span class='no'>HR_test</span>[<span class='fl'>1</span>,]
 
-<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model</span>,
+<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model</span>,
                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>,<span class='fl'>1</span>:<span class='fl'>5</span>],
                         <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>])
 
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_attributions_uncertainty.html'>local_attributions_uncertainty</a></span>(<span class='no'>explainer_rf</span>,
                            <span class='no'>new_observation</span>,
-                           <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>3</span>,<span class='fl'>2</span>,<span class='fl'>4</span>,<span class='fl'>1</span>,<span class='fl'>5</span>))
+                           <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>3</span>,<span class='fl'>2</span>,<span class='fl'>4</span>,<span class='fl'>1</span>,<span class='fl'>5</span>))
 <span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                        min        q1       median        q3
 #&gt; randomForest.fired-age           -0.021328  0.019462  0.163675091  0.277413
 #&gt; randomForest.fired-evaluation    -0.018856 -0.018856  0.022113455  0.048419
@@ -178,17 +178,17 @@
 #&gt; randomForest.promoted-evaluation -0.081440
 #&gt; randomForest.promoted-gender      0.004528
 #&gt; randomForest.promoted-hours      -0.168322
-#&gt; randomForest.promoted-salary      0.077562</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='plot.break_down_uncertainty-1.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; randomForest.promoted-salary      0.077562</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='plot.break_down_uncertainty-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># example for regression - apartment prices</span>
 <span class='co'># here we do not have intreactions</span>
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
-<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model</span>,
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
+<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model</span>,
                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>,<span class='fl'>2</span>:<span class='fl'>6</span>],
                         <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>$<span class='no'>m2.price</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>])
 
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_attributions_uncertainty.html'>local_attributions_uncertainty</a></span>(<span class='no'>explainer_rf</span>,
                                      <span class='no'>apartments_test</span>[<span class='fl'>1</span>,],
-                                     <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"floor"</span>, <span class='st'>"no.rooms"</span>, <span class='st'>"district"</span>,
+                                     <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"floor"</span>, <span class='st'>"no.rooms"</span>, <span class='st'>"district"</span>,
                                          <span class='st'>"construction.year"</span>, <span class='st'>"surface"</span>))
 <span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                      min        q1     median         q3
 #&gt; randomForest-construction.year -128.1290 -126.3012  -96.41844  -75.28959
@@ -201,7 +201,7 @@
 #&gt; randomForest-district          1142.44289
 #&gt; randomForest-floor              231.48942
 #&gt; randomForest-no.rooms          -143.89151
-#&gt; randomForest-surface           -229.42256</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='plot.break_down_uncertainty-2.png' alt='' width='700' height='433' /></div></pre>
+#&gt; randomForest-surface           -229.42256</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='plot.break_down_uncertainty-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
