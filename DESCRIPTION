@@ -1,15 +1,20 @@
 Package: iBreakDown
 Title: Model Agnostic Instance Level Variable Attributions
-Version: 0.9.4
+Version: 0.9.5
 Authors@R: c(person("Przemyslaw", "Biecek", email = "przemyslaw.biecek@gmail.com", role = c("aut", "cre")),
     person("Alicja", "Gosiewska", email = "alicjagosiewska@gmail.com", role = c("aut")),
     person("Dariusz", "Komosinski", role = c("ctb")))
 Description: Model agnostic tool for decomposition of predictions from black boxes.
     Break Down Table shows contributions of every variable to a final prediction. 
     Break Down Plot presents variable contributions in a concise graphical way. 
-    This package works for binary classifiers and general regression models. 
+    This package works for classification and regression models. 
+    It is an extension of the 'breakDown' package (Staniak and Biecek 2018) <doi:10.32614/RJ-2018-072>,
+    with new and faster strategies for orderings. 
+    It supports interactions in explanations and has interactive visuals implemented in 'D3.js' library. 
+    The methodology behind is described in the 'iBreakDown' article (Gosiewska and Biecek 2019) <arXiv:1903.11420>
+    This package is a part of the 'DrWhy.AI' universe (Biecek 2018) <arXiv:1806.08915>.
 Depends: R (>= 3.0)
-Date: 2019-02-22
+Date: 2019-03-28
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
