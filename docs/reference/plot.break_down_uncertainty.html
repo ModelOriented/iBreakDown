@@ -106,7 +106,7 @@
 
     <pre class="usage"><span class='co'># S3 method for break_down_uncertainty</span>
 <span class='fu'>plot</span>(<span class='no'>x</span>, <span class='no'>...</span>,
-  <span class='kw'>vcolors</span> <span class='kw'>=</span> <span class='kw pkg'>DALEX</span><span class='kw ns'>::</span><span class='fu'>theme_drwhy_colors_break_down</span>())</pre>
+  <span class='kw'>vcolors</span> <span class='kw'>=</span> <span class='kw pkg'>DALEX</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/theme_drwhy'>theme_drwhy_colors_break_down</a></span>())</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -144,7 +144,7 @@
                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>,<span class='fl'>1</span>:<span class='fl'>5</span>],
                         <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>])
 
-<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>local_attributions_uncertainty</span>(<span class='no'>explainer_rf</span>,
+<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_attributions_uncertainty.html'>local_attributions_uncertainty</a></span>(<span class='no'>explainer_rf</span>,
                            <span class='no'>new_observation</span>,
                            <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>3</span>,<span class='fl'>2</span>,<span class='fl'>4</span>,<span class='fl'>1</span>,<span class='fl'>5</span>))
 <span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                        min        q1       median        q3
@@ -186,7 +186,7 @@
                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>,<span class='fl'>2</span>:<span class='fl'>6</span>],
                         <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>$<span class='no'>m2.price</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>])
 
-<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>local_attributions_uncertainty</span>(<span class='no'>explainer_rf</span>,
+<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_attributions_uncertainty.html'>local_attributions_uncertainty</a></span>(<span class='no'>explainer_rf</span>,
                                      <span class='no'>apartments_test</span>[<span class='fl'>1</span>,],
                                      <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"floor"</span>, <span class='st'>"no.rooms"</span>, <span class='st'>"district"</span>,
                                          <span class='st'>"construction.year"</span>, <span class='st'>"surface"</span>))

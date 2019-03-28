@@ -138,7 +138,7 @@
                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>,<span class='fl'>1</span>:<span class='fl'>5</span>],
                         <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>])
 
-<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>local_attributions_uncertainty</span>(<span class='no'>explainer_rf</span>,
+<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_attributions_uncertainty.html'>local_attributions_uncertainty</a></span>(<span class='no'>explainer_rf</span>,
                            <span class='no'>new_observation</span>)
 <span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                        min         q1     median         q3
 #&gt; randomForest.fired-age           -0.021328  0.0459295  0.1780964  0.3151935
@@ -179,7 +179,7 @@
                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>,<span class='fl'>2</span>:<span class='fl'>6</span>],
                         <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>$<span class='no'>m2.price</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>])
 
-<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>local_attributions_uncertainty</span>(<span class='no'>explainer_rf</span>, <span class='no'>apartments_test</span>[<span class='fl'>1</span>,])
+<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_attributions_uncertainty.html'>local_attributions_uncertainty</a></span>(<span class='no'>explainer_rf</span>, <span class='no'>apartments_test</span>[<span class='fl'>1</span>,])
 <span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                      min        q1     median         q3
 #&gt; randomForest-construction.year -128.1290 -127.2151  -99.58822  -77.46586
 #&gt; randomForest-district          1050.0080 1050.0080 1081.21588 1093.92250
