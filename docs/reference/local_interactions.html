@@ -31,6 +31,15 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+<!-- Google analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-5650686-14"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-5650686-14');
+</script>
 
   </head>
 
@@ -45,8 +54,8 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-	  <a class = "navbar-mi2logo" href="http://mi2.mini.pw.edu.pl/">
-        <img src = "https://github.com/mi2-warsaw/MI2template/blob/master/inst/pkgdown/assets/MI2logo.jpg?raw=true" alt = "MI2" height = 46 title = "MI2">
+	  <a class = "navbar-mi2logo" href="http://DrWhy.AI/">
+        <img src = "https://github.com/ModelOriented/DrWhyTemplate/blob/master/inst/pkgdown/assets/drwhy_znak_violet_small.jpg?raw=true" alt = "MI2" height = 46 title = "MI2">
 	  </a>
       <a class="navbar-brand navbar-mi2" href="../index.html">Model Agnostic Sequential Variable Attributions with Interactions</a>
     </div>
@@ -117,7 +126,7 @@ And in the second step the impact is calculated.</p>
 
 <span class='co'># S3 method for default</span>
 <span class='fu'>local_interactions</span>(<span class='no'>x</span>, <span class='no'>data</span>, <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict</span>,
-  <span class='no'>new_observation</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/class'>class</a></span>(<span class='no'>x</span>)[<span class='fl'>1</span>], <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>new_observation</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'>class</span>(<span class='no'>x</span>)[<span class='fl'>1</span>], <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>order</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>interaction_preference</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
@@ -157,7 +166,7 @@ And in the second step the impact is calculated.</p>
     </tr>
     <tr>
       <th>interaction_preference</th>
-      <td><p>a constant that set the preference for interactions. By default `1`. The larger the more frequently intereactions will be presented in explanations.</p></td>
+      <td><p>a constant that set the preference for interactions. By default `1`. The larger the more frequently interactions will be presented in explanations.</p></td>
     </tr>
     </table>
     
@@ -165,53 +174,73 @@ And in the second step the impact is calculated.</p>
 
     <p>an object of the `break_down` class.</p>
     
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Predictive Models: Visual Exploration, Explanation and Debugging <a href='https://pbiecek.github.io/PM_VEE'>https://pbiecek.github.io/PM_VEE</a></p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='break_down.html'>break_down</a></code>, <code><a href='local_attributions.html'>local_attributions</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"DALEX"</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"iBreakDown"</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"randomForest"</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>1313</span>)
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='st'>"DALEX"</span>)
+<span class='fu'>library</span>(<span class='st'>"iBreakDown"</span>)
+<span class='co'># Toy examples, because CRAN angels ask for them</span>
+<span class='no'>titanic</span> <span class='kw'>&lt;-</span> <span class='fu'>na.omit</span>(<span class='no'>titanic</span>)
+<span class='fu'>set.seed</span>(<span class='fl'>1313</span>)
+<span class='no'>titanic_small</span> <span class='kw'>&lt;-</span> <span class='no'>titanic</span>[<span class='fu'>sample</span>(<span class='fl'>1</span>:<span class='fu'>nrow</span>(<span class='no'>titanic</span>), <span class='fl'>500</span>), <span class='fu'>c</span>(<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>6</span>,<span class='fl'>9</span>)]
+<span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'>glm</span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>fare</span>,
+                       <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
+<span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
+                           <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>[,-<span class='fl'>9</span>],
+                           <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>)
+
+<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>local_interactions</span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_small</span>[<span class='fl'>1</span>, ], <span class='kw'>interaction_preference</span> <span class='kw'>=</span> <span class='fl'>500</span>)
+<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                            contribution
+#&gt; lm: intercept                     0.308
+#&gt; lm: age:gender = 36:female        0.405
+#&gt; lm: fare = 0                     -0.028
+#&gt; lm: survived = yes                0.000
+#&gt; lm: prediction                    0.685</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>max_features</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='img'><img src='local_interactions-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='input'><span class='fu'>library</span>(<span class='st'>"DALEX"</span>)
 <span class='co'># example with interaction</span>
 <span class='co'># classification for HR data</span>
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>status</span> ~ <span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>)
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'>randomForest</span>(<span class='no'>status</span> ~ <span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>)
 <span class='no'>new_observation</span> <span class='kw'>&lt;-</span> <span class='no'>HR_test</span>[<span class='fl'>1</span>,]
 
-<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model</span>,
+<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model</span>,
                  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>,<span class='fl'>1</span>:<span class='fl'>5</span>],
                  <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>])
 
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>local_interactions</span>(<span class='no'>explainer_rf</span>,
                  <span class='no'>new_observation</span>)
 
-<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                       contribution
-#&gt; randomForest.fired: intercept                0.846
-#&gt; randomForest.fired: salary = 2              -0.352
-#&gt; randomForest.fired: age = 58                 0.396
-#&gt; randomForest.fired: evaluation = 2          -0.084
-#&gt; randomForest.fired: hours = 42              -0.028
-#&gt; randomForest.fired: gender = male            0.000
-#&gt; randomForest.fired: prediction               0.778
-#&gt; randomForest.ok: intercept                   0.990
-#&gt; randomForest.ok: salary = 2                 -0.632
-#&gt; randomForest.ok: hours:age = 42:58          -0.154
-#&gt; randomForest.ok: gender = male               0.574
-#&gt; randomForest.ok: evaluation = 2              0.000
-#&gt; randomForest.ok: prediction                  0.218
-#&gt; randomForest.promoted: intercept             0.990
-#&gt; randomForest.promoted: salary = 2           -0.588
-#&gt; randomForest.promoted: evaluation = 2       -0.304
-#&gt; randomForest.promoted: age = 58              0.802
-#&gt; randomForest.promoted: hours = 42           -0.122
-#&gt; randomForest.promoted: gender = male         0.000
-#&gt; randomForest.promoted: prediction            0.004</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='local_interactions-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                          contribution
+#&gt; randomForest.fired: intercept                   0.866
+#&gt; randomForest.fired: salary = 2                 -0.308
+#&gt; randomForest.fired: evaluation = 2             -0.142
+#&gt; randomForest.fired: age = 58                    0.436
+#&gt; randomForest.fired: gender = male               0.000
+#&gt; randomForest.fired: hours = 42                 -0.050
+#&gt; randomForest.fired: prediction                  0.802
+#&gt; randomForest.ok: intercept                      0.992
+#&gt; randomForest.ok: salary = 2                    -0.666
+#&gt; randomForest.ok: age = 58                      -0.048
+#&gt; randomForest.ok: hours = 42                    -0.050
+#&gt; randomForest.ok: gender = male                  0.574
+#&gt; randomForest.ok: evaluation = 2                 0.000
+#&gt; randomForest.ok: prediction                     0.196
+#&gt; randomForest.promoted: intercept                0.994
+#&gt; randomForest.promoted: salary = 2              -0.536
+#&gt; randomForest.promoted: evaluation = 2          -0.358
+#&gt; randomForest.promoted: hours:age = 42:58        0.702
+#&gt; randomForest.promoted: gender = male            0.000
+#&gt; randomForest.promoted: prediction               0.002</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='local_interactions-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># example for regression - apartment prices</span>
 <span class='co'># here we do not have intreactions</span>
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
-<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model</span>,
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'>randomForest</span>(<span class='no'>m2.price</span> ~ <span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
+<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model</span>,
          <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>,<span class='fl'>2</span>:<span class='fl'>6</span>],
          <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>$<span class='no'>m2.price</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>])
 
@@ -222,13 +251,13 @@ And in the second step the impact is calculated.</p>
                  <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                        contribution
-#&gt; randomForest: intercept                    3487.722
-#&gt; randomForest: district = Srodmiescie       1034.737
-#&gt; randomForest: surface = 130                -315.991
-#&gt; randomForest: no.rooms = 5                 -163.113
-#&gt; randomForest: floor = 3                     150.529
-#&gt; randomForest: construction.year = 2000      -24.021
-#&gt; randomForest: prediction                   4169.863</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='local_interactions-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>bd_rf</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='local_interactions-3.png' alt='' width='700' height='433' /></div></pre>
+#&gt; randomForest: intercept                    3487.846
+#&gt; randomForest: district = Srodmiescie       1053.472
+#&gt; randomForest: surface = 130                -330.441
+#&gt; randomForest: no.rooms = 5                 -158.926
+#&gt; randomForest: floor = 3                     179.011
+#&gt; randomForest: construction.year = 2000      -46.629
+#&gt; randomForest: prediction                   4184.333</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='local_interactions-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='local_interactions-4.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -236,6 +265,8 @@ And in the second step the impact is calculated.</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#references">References</a></li>
 
       <li><a href="#see-also">See also</a></li>
       
