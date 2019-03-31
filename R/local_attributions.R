@@ -17,13 +17,28 @@
 #'
 #' @return an object of the `break_down` class.
 #'
+#' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+#'
 #' @seealso \code{\link{break_down}}, \code{\link{local_interactions}}
 #'
 #' @examples
-#' \dontrun{
-#' ## Not run:
 #' library("DALEX")
 #' library("iBreakDown")
+#' # Toy examples, because CRAN angels ask for them
+#' titanic <- na.omit(titanic)
+#' set.seed(1313)
+#' titanic_small <- titanic[sample(1:nrow(titanic), 500), c(1,2,6,9)]
+#' model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
+#'                        data = titanic, family = "binomial")
+#' explain_titanic_glm <- explain(model_titanic_glm,
+#'                            data = titanic_small[,-9],
+#'                            y = titanic_small$survived == "yes")
+#' bd_rf <- local_attributions(explain_titanic_glm, titanic_small[1, ])
+#' bd_rf
+#' plot(bd_rf, max_features = 3)
+#'
+#' \dontrun{
+#' ## Not run:
 #' library("randomForest")
 #' set.seed(1313)
 #' # example with interaction

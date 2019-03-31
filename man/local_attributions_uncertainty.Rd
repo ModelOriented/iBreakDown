@@ -40,10 +40,25 @@ This function calculated uncertainty that comes from ordering in Sequential Vari
 It runs `break_down` algorithm B times with random ordering of variables and then we calculate the uncertanity of attributions that comes from the ordering.
 }
 \examples{
-\dontrun{
-## Not run:
 library("DALEX")
 library("iBreakDown")
+# Toy examples, because CRAN angels ask for them
+titanic <- na.omit(titanic)
+set.seed(1313)
+titanic_small <- titanic[sample(1:nrow(titanic), 500), c(1,2,6,9)]
+model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
+                       data = titanic_small, family = "binomial")
+explain_titanic_glm <- explain(model_titanic_glm,
+                           data = titanic_small[,-9],
+                           y = titanic_small$survived == "yes")
+
+# there is no explanation level uncertanity linked with additive models
+bd_rf <- local_attributions_uncertainty(explain_titanic_glm, titanic_small[1, ])
+bd_rf
+plot(bd_rf)
+
+\dontrun{
+## Not run:
 library("randomForest")
 set.seed(1313)
 model <- randomForest(status ~ . , data = HR)
@@ -68,6 +83,9 @@ bd_rf <- local_attributions_uncertainty(explainer_rf, apartments_test[1,])
 bd_rf
 plot(bd_rf)
 }
+}
+\references{
+Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 }
 \seealso{
 \code{\link{break_down}}, \code{\link{local_attributions}}

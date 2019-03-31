@@ -20,8 +20,11 @@ It may be \code{\link{signif}} which keeps a specified number of significant dig
 Or the default \code{\link{round}} to have the same precision for all components.}
 }
 \value{
-a data frame.
+a data frame
 }
 \description{
 Print Generic for Break Down Objects
+}
+\references{
+Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 }

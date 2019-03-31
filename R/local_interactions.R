@@ -11,7 +11,7 @@
 #' @param data validation dataset, will be extracted from `x` if it's an explainer.
 #' @param predict_function predict function, will be extracted from `x` if it's an explainer.
 #' @param ... other parameters.
-#' @param interaction_preference a constant that set the preference for interactions. By default `1`. The larger the more frequently intereactions will be presented in explanations.
+#' @param interaction_preference a constant that set the preference for interactions. By default `1`. The larger the more frequently interactions will be presented in explanations.
 #' @param new_observation a new observation with columns that correspond to variables used in the model.
 #' @param keep_distributions if `TRUE`, then the distribution of partial predictions is stored in addition to the average.
 #' @param order if not `NULL`, then it will be a fixed order of variables. It can be a numeric vector or vector with names of variables/interactions.
@@ -23,12 +23,27 @@
 #'
 #' @importFrom stats predict
 #'
+#' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+#'
 #' @examples
-#' \dontrun{
 #' library("DALEX")
 #' library("iBreakDown")
-#' library("randomForest")
+#' # Toy examples, because CRAN angels ask for them
+#' titanic <- na.omit(titanic)
 #' set.seed(1313)
+#' titanic_small <- titanic[sample(1:nrow(titanic), 500), c(1,2,6,9)]
+#' model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
+#'                        data = titanic_small, family = "binomial")
+#' explain_titanic_glm <- explain(model_titanic_glm,
+#'                            data = titanic_small[,-9],
+#'                            y = titanic_small$survived == "yes")
+#'
+#' bd_rf <- local_interactions(explain_titanic_glm, titanic_small[1, ], interaction_preference = 500)
+#' bd_rf
+#' plot(bd_rf, max_features = 2)
+#'
+#' \dontrun{
+#' library("DALEX")
 #' # example with interaction
 #' # classification for HR data
 #' model <- randomForest(status ~ . , data = HR)

@@ -32,7 +32,7 @@ local_interactions(x, ...)
 
 \item{order}{if not `NULL`, then it will be a fixed order of variables. It can be a numeric vector or vector with names of variables/interactions.}
 
-\item{interaction_preference}{a constant that set the preference for interactions. By default `1`. The larger the more frequently intereactions will be presented in explanations.}
+\item{interaction_preference}{a constant that set the preference for interactions. By default `1`. The larger the more frequently interactions will be presented in explanations.}
 }
 \value{
 an object of the `break_down` class.
@@ -46,11 +46,24 @@ The main difference is that in the first step the order of variables and interac
 And in the second step the impact is calculated.
 }
 \examples{
-\dontrun{
 library("DALEX")
 library("iBreakDown")
-library("randomForest")
+# Toy examples, because CRAN angels ask for them
+titanic <- na.omit(titanic)
 set.seed(1313)
+titanic_small <- titanic[sample(1:nrow(titanic), 500), c(1,2,6,9)]
+model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
+                       data = titanic_small, family = "binomial")
+explain_titanic_glm <- explain(model_titanic_glm,
+                           data = titanic_small[,-9],
+                           y = titanic_small$survived == "yes")
+
+bd_rf <- local_interactions(explain_titanic_glm, titanic_small[1, ], interaction_preference = 500)
+bd_rf
+plot(bd_rf, max_features = 2)
+
+\dontrun{
+library("DALEX")
 # example with interaction
 # classification for HR data
 model <- randomForest(status ~ . , data = HR)
@@ -83,6 +96,9 @@ bd_rf
 plot(bd_rf)
 plot(bd_rf, plot_distributions = TRUE)
 }
+}
+\references{
+Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 }
 \seealso{
 \code{\link{break_down}}, \code{\link{local_attributions}}

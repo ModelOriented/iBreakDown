@@ -8,7 +8,9 @@
 #' It may be \code{\link{signif}} which keeps a specified number of significant digits.
 #' Or the default \code{\link{round}} to have the same precision for all components.
 #'
-#' @return a data frame.
+#' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+#'
+#' @return a data frame
 #'
 #' @export
 print.break_down <- function(x, ..., digits = 3, rounding_function = round) {
