@@ -235,7 +235,7 @@ And in the second step the impact is calculated.</p>
 #&gt; randomForest.promoted: gender = male         0.002
 #&gt; randomForest.promoted: prediction            0.004</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='local_attributions-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>baseline</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='img'><img src='local_attributions-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># example for regression - apartment prices</span>
-<span class='co'># here we do not have intreactions</span>
+<span class='co'># here we do not have interactions</span>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
 <span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model</span>,
                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>,<span class='fl'>2</span>:<span class='fl'>6</span>],

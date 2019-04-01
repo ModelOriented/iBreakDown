@@ -82,7 +82,7 @@
       <h1>iBreakDown plots for regression models</h1>
                         <h4 class="author">Dariusz Komosinski</h4>
             
-            <h4 class="date">2019-03-31</h4>
+            <h4 class="date">2019-04-01</h4>
       
       
       <div class="hidden name"><code>vignette_iBreakDown_regression.Rmd</code></div>
@@ -214,18 +214,18 @@
 <a class="sourceLine" id="cb17-5" data-line-number="5">normalizing_factor &lt;-<span class="st"> </span><span class="kw">round</span>(x, <span class="op">-</span>digits)</a>
 <a class="sourceLine" id="cb17-6" data-line-number="6">m_nnet &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/nnet/topics/nnet">nnet</a></span>(life_length<span class="op">/</span>normalizing_factor <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> dragons, <span class="dt">size =</span> <span class="dv">10</span>, <span class="dt">linout =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>#&gt; # weights:  111
-#&gt; initial  value 2902.837971 
-#&gt; iter  10 value 27.676449
-#&gt; iter  20 value 27.167730
-#&gt; iter  30 value 26.716990
-#&gt; iter  40 value 25.988186
-#&gt; iter  50 value 21.387812
-#&gt; iter  60 value 11.505104
-#&gt; iter  70 value 8.947658
-#&gt; iter  80 value 7.645885
-#&gt; iter  90 value 4.840736
-#&gt; iter 100 value 3.747479
-#&gt; final  value 3.747479 
+#&gt; initial  value 11515.259445 
+#&gt; iter  10 value 88.114705
+#&gt; iter  20 value 28.993432
+#&gt; iter  30 value 27.361092
+#&gt; iter  40 value 27.024809
+#&gt; iter  50 value 26.975742
+#&gt; iter  60 value 26.948929
+#&gt; iter  70 value 25.248271
+#&gt; iter  80 value 10.171572
+#&gt; iter  90 value 8.581992
+#&gt; iter 100 value 5.712428
+#&gt; final  value 5.712428 
 #&gt; stopped after 100 iterations</code></pre>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">p_fun &lt;-<span class="st"> </span><span class="cf">function</span>(model, new_observation){</a>
 <a class="sourceLine" id="cb19-2" data-line-number="2">  <span class="kw">predict</span>(model, <span class="dt">newdata =</span> new_observation)<span class="op">*</span>normalizing_factor</a>
