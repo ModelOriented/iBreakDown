@@ -42,7 +42,7 @@
 #' bd_rf
 #' plot(bd_rf, max_features = 2)
 #'
-#' \dontrun{
+#' \donttest{
 #' library("DALEX")
 #' # example with interaction
 #' # classification for HR data

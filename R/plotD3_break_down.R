@@ -34,36 +34,34 @@
 #' bd_rf
 #' plotD3(bd_rf)
 #'
-#' \dontrun{
-#' ## Not run:
-#' # prepare dataset
-#' library("titanic")
-#' titanic <- titanic_train[,c("Survived", "Pclass", "Sex", "Age",
-#'                             "SibSp", "Parch", "Fare", "Embarked")]
-#' titanic$Survived <- factor(titanic$Survived)
-#' titanic$Sex <- factor(titanic$Sex)
-#' titanic$Embarked <- factor(titanic$Embarked)
-#' titanic <- na.omit(titanic)
-#'
-#' # prepare model
+#' \donttest{
 #' library("randomForest")
-#' rf_model <- randomForest(Survived ~ .,  data = titanic)
+#' titanic <- na.omit(titanic)
+#' model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
+#'                                    fare + sibsp + parch,  data = titanic)
 #'
-#' # prepare explainer
-#' library("DALEX")
-#' rf_explain <- explain(rf_model, data = titanic,
-#'                       y = titanic$Survived == "1", label = "RF")
+#' explain_titanic_rf <- explain(model_titanic_rf,
+#'                               data = titanic[,-9],
+#'                               y = titanic$survived == "yes",
+#'                               label = "Random Forest v7")
 #'
-#' # plor D3 explainers
-#' library("iBreakDown")
-#' rf_la <- local_attributions(rf_explain, titanic[2,])
-#' rf_la
-#' plotD3(rf_la)
+#' new_passanger <- data.frame(
+#'   class = factor("1st", levels = c("1st", "2nd", "3rd", "deck crew", "engineering crew",
+#'                                     "restaurant staff", "victualling crew")),
+#'   gender = factor("male", levels = c("female", "male")),
+#'   age = 8,
+#'   sibsp = 0,
+#'   parch = 0,
+#'   fare = 72,
+#'   embarked = factor("Southampton",
+#'                   levels = c("Belfast", "Cherbourg", "Queenstown", "Southampton")))
 #'
-#' rf_la <- local_attributions(rf_explain, titanic[3,])
-#' rf_la
-#' plotD3(rf_la, max_features = 4)
-#' plotD3(rf_la, max_features = 4, min_max = c(0,1))
+#'   rf_la <- local_attributions(explain_titanic_rf, new_passanger)
+#'   rf_la
+#'
+#'   plotD3(rf_la)
+#'   plotD3(rf_la, max_features = 3)
+#'   plotD3(rf_la, max_features = 3, min_max = c(0,1))
 #' }
 #' @export
 #' @rdname plotD3
@@ -109,7 +107,7 @@ plotD3.break_down <- function(x, ...,
     data = x_as_list,
     script = system.file("breakDownD3.js", package = "iBreakDown"),
     dependencies = system.file("tooltipD3.js", package = "iBreakDown"),
-    options = list(xmin =min_max[1], xmax = min_max[2],
+    options = list(xmin = min_max[1], xmax = min_max[2],
                    model_avg = model_baseline, model_res = model_prediction),
     d3_version = "4"
   )

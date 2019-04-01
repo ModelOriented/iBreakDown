@@ -62,7 +62,7 @@ bd_rf <- local_interactions(explain_titanic_glm, titanic_small[1, ], interaction
 bd_rf
 plot(bd_rf, max_features = 2)
 
-\dontrun{
+\donttest{
 library("DALEX")
 # example with interaction
 # classification for HR data

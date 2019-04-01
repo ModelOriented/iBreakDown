@@ -37,7 +37,7 @@ bd_rf <- local_attributions_uncertainty(explain_titanic_glm, titanic_small[1, ],
 bd_rf
 plot(bd_rf)
 
-\dontrun{
+\donttest{
 ## Not run:
 library("randomForest")
 set.seed(1313)

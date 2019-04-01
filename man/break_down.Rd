@@ -58,7 +58,7 @@ bd_rf <- break_down(explain_titanic_glm, titanic_small[1, ])
 bd_rf
 plot(bd_rf, max_features = 3)
 
-\dontrun{
+\donttest{
 ## Not run:
 library("randomForest")
 set.seed(1313)

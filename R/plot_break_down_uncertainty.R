@@ -26,7 +26,7 @@
 #' bd_rf
 #' plot(bd_rf)
 #'
-#' \dontrun{
+#' \donttest{
 #' ## Not run:
 #' library("randomForest")
 #' set.seed(1313)

@@ -15,7 +15,7 @@ Description: Model agnostic tool for decomposition of predictions from black box
     The methodology behind is described in the 'iBreakDown' article (Gosiewska and Biecek 2019) <arXiv:1903.11420>
     This package is a part of the 'DrWhy.AI' universe (Biecek 2018) <arXiv:1806.08915>.
 Depends: R (>= 3.0)
-Date: 2019-03-28
+Date: 2019-04-01
 License: GPL-2
 Encoding: UTF-8
 LazyData: true

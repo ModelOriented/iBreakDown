@@ -37,7 +37,7 @@
 #' bd_rf
 #' plot(bd_rf, max_features = 3)
 #'
-#' \dontrun{
+#' \donttest{
 #' ## Not run:
 #' library("randomForest")
 #' set.seed(1313)
@@ -57,7 +57,7 @@
 #' plot(bd_rf, baseline = 0)
 #'
 #' # example for regression - apartment prices
-#' # here we do not have intreactions
+#' # here we do not have interactions
 #' model <- randomForest(m2.price ~ . , data = apartments)
 #' explainer_rf <- explain(model,
 #'                         data = apartments_test[1:1000,2:6],

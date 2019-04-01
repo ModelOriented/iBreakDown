@@ -36,7 +36,7 @@
 #' bd_rf
 #' plot(bd_rf, max_features = 3)
 #'
-#' \dontrun{
+#' \donttest{
 #' ## Not run:
 #' library("randomForest")
 #' set.seed(1313)
