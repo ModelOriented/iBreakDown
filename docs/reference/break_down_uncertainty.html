@@ -110,8 +110,10 @@
     </div>
 
     
-    <p>This function calculated uncertainty that comes from ordering in Sequential Variable Attribution methods.
-It runs `break_down` algorithm B times with random ordering of variables and then we calculate the uncertanity of attributions that comes from the ordering.</p>
+    <p>The `break_down_uncertainty()` calles `B` times the break down algorithm for random orderings.
+Then it calculated distribution of attributions for these different orderings.
+Note that the `shap()` function is just a simplified interface to the `break_down_uncertainty()` function
+with by default `B=25` random draws.</p>
     
 
     <pre class="usage"><span class='fu'>break_down_uncertainty</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>10</span>)
@@ -123,7 +125,9 @@ It runs `break_down` algorithm B times with random ordering of variables and the
 <span class='co'># S3 method for default</span>
 <span class='fu'>break_down_uncertainty</span>(<span class='no'>x</span>, <span class='no'>data</span>,
   <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict</span>, <span class='no'>new_observation</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'>class</span>(<span class='no'>x</span>)[<span class='fl'>1</span>],
-  <span class='no'>...</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>10</span>)</pre>
+  <span class='no'>...</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>10</span>)
+
+<span class='fu'>shap</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>25</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -264,8 +268,24 @@ It runs `break_down` algorithm B times with random ordering of variables and the
 #&gt; randomForest-no.rooms          -158.57830 -143.89151
 #&gt; randomForest-surface           -262.73969 -229.42256</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='break_down_uncertainty-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>break_down_uncertainty</span>(<span class='no'>explainer_rf</span>, <span class='no'>apartments_test</span>[<span class='fl'>1</span>,], <span class='kw'>path</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>5</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: the condition has length &gt; 1 and only the first element will be used</span></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='break_down_uncertainty-4.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>break_down_uncertainty</span>(<span class='no'>explainer_rf</span>, <span class='no'>apartments_test</span>[<span class='fl'>1</span>,], <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"average"</span>)
-<span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='break_down_uncertainty-5.png' alt='' width='700' height='433' /></div></pre>
+<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>break_down_uncertainty</span>(<span class='no'>explainer_rf</span>,
+                                     <span class='no'>apartments_test</span>[<span class='fl'>1</span>,],
+                                     <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"floor"</span>, <span class='st'>"no.rooms"</span>, <span class='st'>"district"</span>,
+                                         <span class='st'>"construction.year"</span>, <span class='st'>"surface"</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: the condition has length &gt; 1 and only the first element will be used</span></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='break_down_uncertainty-5.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>shap</span>(<span class='no'>explainer_rf</span>,
+              <span class='no'>apartments_test</span>[<span class='fl'>1</span>,])
+<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                      min        q1    median       mean
+#&gt; randomForest-construction.year -132.6921 -128.1290 -107.6293  -94.12399
+#&gt; randomForest-district           991.7336 1040.6965 1060.8302 1073.92842
+#&gt; randomForest-floor              165.9773  180.7439  186.5775  193.39837
+#&gt; randomForest-no.rooms          -246.9539 -212.6299 -209.6331 -196.72477
+#&gt; randomForest-surface           -334.3250 -284.0079 -274.0391 -276.19735
+#&gt;                                        q3        max
+#&gt; randomForest-construction.year  -63.08031  -46.89048
+#&gt; randomForest-district          1130.14798 1142.44289
+#&gt; randomForest-floor              209.62172  231.48942
+#&gt; randomForest-no.rooms          -184.66853 -143.89151
+#&gt; randomForest-surface           -266.00934 -229.42256</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='break_down_uncertainty-6.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>show_boxplots</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='break_down_uncertainty-7.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
