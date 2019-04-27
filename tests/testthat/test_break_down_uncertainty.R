@@ -29,12 +29,18 @@ bd_rf_B <- break_down_uncertainty(explainer_rf,
                                         path = c("floor", "no.rooms", "district", "construction.year", "surface"))
 pl_B <- plot(bd_rf_B)
 
+bd_rf_C <- shap(explainer_rf,
+                  apartments_test[1,])
+pl_C <- plot(bd_rf_C, show_boxplots = FALSE)
+
 # tests
 
 test_that("Output format", {
   expect_is(bd_rf_A, "break_down_uncertainty")
   expect_is(bd_rf_B, "break_down_uncertainty")
+  expect_is(bd_rf_C, "break_down_uncertainty")
   expect_is(pl_A, "ggplot")
   expect_is(pl_B, "ggplot")
+  expect_is(pl_C, "ggplot")
 })
 

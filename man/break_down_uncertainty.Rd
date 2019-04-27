@@ -4,6 +4,7 @@
 \alias{break_down_uncertainty}
 \alias{break_down_uncertainty.explainer}
 \alias{break_down_uncertainty.default}
+\alias{shap}
 \title{Explanation Level Uncertainty of Sequential Variable Attribution}
 \usage{
 break_down_uncertainty(x, ..., B = 10)
@@ -14,6 +15,8 @@ break_down_uncertainty(x, ..., B = 10)
 \method{break_down_uncertainty}{default}(x, data,
   predict_function = predict, new_observation, label = class(x)[1],
   ..., path = NULL, B = 10)
+
+shap(x, ..., B = 25)
 }
 \arguments{
 \item{x}{a model to be explained, or an explainer created with function `DALEX::explain()`.}
@@ -36,8 +39,10 @@ break_down_uncertainty(x, ..., B = 10)
 an object of the `break_down_uncertainty` class.
 }
 \description{
-This function calculated uncertainty that comes from ordering in Sequential Variable Attribution methods.
-It runs `break_down` algorithm B times with random ordering of variables and then we calculate the uncertanity of attributions that comes from the ordering.
+The `break_down_uncertainty()` calles `B` times the break down algorithm for random orderings.
+Then it calculated distribution of attributions for these different orderings.
+Note that the `shap()` function is just a simplified interface to the `break_down_uncertainty()` function
+with by default `B=25` random draws.
 }
 \examples{
 library("DALEX")
@@ -86,8 +91,17 @@ plot(bd_rf)
 bd_rf <- break_down_uncertainty(explainer_rf, apartments_test[1,], path = 1:5)
 plot(bd_rf)
 
-bd_rf <- break_down_uncertainty(explainer_rf, apartments_test[1,], path = "average")
+bd_rf <- break_down_uncertainty(explainer_rf,
+                                     apartments_test[1,],
+                                     path = c("floor", "no.rooms", "district",
+                                         "construction.year", "surface"))
 plot(bd_rf)
+
+bd_rf <- shap(explainer_rf,
+              apartments_test[1,])
+bd_rf
+plot(bd_rf)
+plot(bd_rf, show_boxplots = FALSE)
 }
 }
 \references{

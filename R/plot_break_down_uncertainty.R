@@ -2,6 +2,7 @@
 #'
 #' @param x the model model of `break_down_uncertainty` class.
 #' @param ... other parameters.
+#' @param show_boxplots logical if `TRUE` (default) boxplot will be plotted to show uncertanity of attributions
 #' @param vcolors named vector with colors.
 #'
 #' @return a `ggplot2` object.
@@ -21,7 +22,7 @@
 #' explain_titanic_glm <- explain(model_titanic_glm,
 #'                            data = titanic_small[,-9],
 #'                            y = titanic_small$survived == "yes")
-#' bd_rf <- break_down_uncertainty(explain_titanic_glm, titanic_small[1, ],
+#' bd_rf <- shap(explain_titanic_glm, titanic_small[1, ],
 #'                            path = c(3,2,1))
 #' bd_rf
 #' plot(bd_rf)
@@ -58,29 +59,32 @@
 #' bd_rf
 #' plot(bd_rf)
 #'
-#' bd_rf <- break_down_uncertainty(explainer_rf,
-#'                                      apartments_test[1,],
-#'                                      path = "average")
+#' bd_rf <- shap(explainer_rf,
+#'               apartments_test[1,])
 #' bd_rf
 #' plot(bd_rf)
+#' plot(bd_rf, show_boxplots = FALSE)
 #' }
 #' @export
 plot.break_down_uncertainty <- function(x, ...,
-                                        vcolors = DALEX::theme_drwhy_colors_break_down()) {
+                  vcolors = DALEX::theme_drwhy_colors_break_down(),
+                  show_boxplots = TRUE) {
 
   variable <- contribution <- NULL
   x$variable <- reorder(x$variable, abs(x$contribution), mean)
 
   # base plot
+  pl <- ggplot(x, aes(x = variable, y = contribution))
   if (any(x$B == 0)) {
     x_bars <- x[x$B == 0,]
-    pl <- ggplot(x, aes(x = variable, y = contribution)) +
+    pl <- pl +
       geom_col(data = x_bars, aes(x = variable, y = contribution, fill = factor(sign(contribution)))) +
-      geom_boxplot(coef = 100, fill = "#371ea3", color = "#371ea3", width = 0.2) +
       scale_fill_manual(values = vcolors)
-  } else {
-    pl <- ggplot(x, aes(x = variable, y = contribution)) +
-      geom_boxplot(coef = 100, fill = "#371ea3", color = "#371ea3", width = 0.3)
+  }
+
+  if (show_boxplots) {
+    pl <- pl +
+      geom_boxplot(coef = 100, fill = "#371ea3", color = "#371ea3", width = 0.25)
   }
 
   pl +

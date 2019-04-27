@@ -1,7 +1,9 @@
 #' Explanation Level Uncertainty of Sequential Variable Attribution
 #'
-#' This function calculated uncertainty that comes from ordering in Sequential Variable Attribution methods.
-#' It runs `break_down` algorithm B times with random ordering of variables and then we calculate the uncertanity of attributions that comes from the ordering.
+#' The `break_down_uncertainty()` calles `B` times the break down algorithm for random orderings.
+#' Then it calculated distribution of attributions for these different orderings.
+#' Note that the `shap()` function is just a simplified interface to the `break_down_uncertainty()` function
+#' with by default `B=25` random draws.
 #'
 #' @param x a model to be explained, or an explainer created with function `DALEX::explain()`.
 #' @param data validation dataset, will be extracted from `x` if it is an explainer.
@@ -65,8 +67,17 @@
 #' bd_rf <- break_down_uncertainty(explainer_rf, apartments_test[1,], path = 1:5)
 #' plot(bd_rf)
 #'
-#' bd_rf <- break_down_uncertainty(explainer_rf, apartments_test[1,], path = "average")
+#' bd_rf <- break_down_uncertainty(explainer_rf,
+#'                                      apartments_test[1,],
+#'                                      path = c("floor", "no.rooms", "district",
+#'                                          "construction.year", "surface"))
 #' plot(bd_rf)
+#'
+#' bd_rf <- shap(explainer_rf,
+#'               apartments_test[1,])
+#' bd_rf
+#' plot(bd_rf)
+#' plot(bd_rf, show_boxplots = FALSE)
 #' }
 #' @export
 #' @rdname break_down_uncertainty
@@ -145,7 +156,7 @@ break_down_uncertainty.default <- function(x, data, predict_function = predict,
 }
 
 get_single_random_path <- function(x, data, predict_function, new_observation, label, random_path) {
-  # if predict_function returns a single vector, convet it to a data frame
+  # if predict_function returns a single vector, conrvet it to a data frame
   if (length(unlist(predict_function(x, new_observation))) > 1) {
     predict_function_df <- predict_function
   } else {
@@ -176,5 +187,11 @@ get_single_random_path <- function(x, data, predict_function, new_observation, l
   })
 
   do.call(rbind,single_cols)
+}
+
+#' @export
+#' @rdname break_down_uncertainty
+shap <- function(x, ..., B = 25) {
+  break_down_uncertainty(x, ..., B = B, path = "average")
 }
 
