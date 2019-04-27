@@ -155,13 +155,17 @@
 <span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
                            <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>[,-<span class='fl'>9</span>],
                            <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>)
-<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_attributions_uncertainty.html'>local_attributions_uncertainty</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_small</span>[<span class='fl'>1</span>, ],
-                           <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>3</span>,<span class='fl'>2</span>,<span class='fl'>1</span>))
-<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                     min          q1      median          q3         max
-#&gt; lm-age      -0.01286499 -0.01238880 -0.01200876 -0.01140905 -0.01117493
-#&gt; lm-fare     -0.02812337 -0.02812337 -0.02767168 -0.02727171 -0.02703759
-#&gt; lm-gender    0.41566086  0.41566086  0.41666053  0.41749227  0.41749227
-#&gt; lm-survived  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='plot.break_down_uncertainty-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='break_down_uncertainty.html'>break_down_uncertainty</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_small</span>[<span class='fl'>1</span>, ],
+                           <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>3</span>,<span class='fl'>2</span>,<span class='fl'>1</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: the condition has length &gt; 1 and only the first element will be used</span></div><div class='input'><span class='no'>bd_rf</span></div><div class='output co'>#&gt;                     min          q1      median        mean          q3
+#&gt; lm-age      -0.01286499 -0.01238880 -0.01238880 -0.01200876 -0.01140905
+#&gt; lm-fare     -0.02812337 -0.02812337 -0.02764718 -0.02767168 -0.02727171
+#&gt; lm-gender    0.41566086  0.41566086  0.41688268  0.41666053  0.41749227
+#&gt; lm-survived  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000
+#&gt;                     max
+#&gt; lm-age      -0.01117493
+#&gt; lm-fare     -0.02703759
+#&gt; lm-gender    0.41749227
+#&gt; lm-survived  0.00000000</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='plot.break_down_uncertainty-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div><div class='input'><span class='co'>## Not run:</span>
 <span class='fu'>library</span>(<span class='st'>"randomForest"</span>)
 <span class='fu'>set.seed</span>(<span class='fl'>1313</span>)
@@ -173,41 +177,40 @@
                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>,<span class='fl'>1</span>:<span class='fl'>5</span>],
                         <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>])
 
-<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_attributions_uncertainty.html'>local_attributions_uncertainty</a></span>(<span class='no'>explainer_rf</span>,
+<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='break_down_uncertainty.html'>break_down_uncertainty</a></span>(<span class='no'>explainer_rf</span>,
                            <span class='no'>new_observation</span>,
-                           <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>3</span>,<span class='fl'>2</span>,<span class='fl'>4</span>,<span class='fl'>1</span>,<span class='fl'>5</span>))
-<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                        min        q1       median        q3
-#&gt; randomForest.fired-age           -0.021328  0.019462  0.163675091  0.277413
-#&gt; randomForest.fired-evaluation    -0.018856 -0.018856  0.022113455  0.048419
-#&gt; randomForest.fired-gender        -0.002236  0.005474  0.088604364  0.197085
-#&gt; randomForest.fired-hours          0.174678  0.230614  0.262828727  0.290862
-#&gt; randomForest.fired-salary        -0.215994 -0.163913 -0.144807636 -0.119176
-#&gt; randomForest.ok-age              -0.346842 -0.216186 -0.136478000 -0.009476
-#&gt; randomForest.ok-evaluation        0.083034  0.099398  0.109666545  0.106311
-#&gt; randomForest.ok-gender           -0.282642 -0.188968 -0.087593091 -0.003480
-#&gt; randomForest.ok-hours            -0.102472 -0.075861 -0.061595818 -0.053010
-#&gt; randomForest.ok-salary            0.042420  0.118454  0.115850364  0.119146
-#&gt; randomForest.promoted-age        -0.126732 -0.022355 -0.027197091 -0.005548
-#&gt; randomForest.promoted-evaluation -0.201822 -0.157818 -0.131780000 -0.081440
-#&gt; randomForest.promoted-gender     -0.013566 -0.002331 -0.001011273  0.002276
-#&gt; randomForest.promoted-hours      -0.280566 -0.215001 -0.201232909 -0.175584
-#&gt; randomForest.promoted-salary     -0.003902  0.000722  0.028957273  0.049408
-#&gt;                                        max
-#&gt; randomForest.fired-age            0.362800
-#&gt; randomForest.fired-evaluation     0.068846
-#&gt; randomForest.fired-gender         0.280686
-#&gt; randomForest.fired-hours          0.383038
-#&gt; randomForest.fired-salary        -0.102574
-#&gt; randomForest.ok-age               0.005860
-#&gt; randomForest.ok-evaluation        0.196252
-#&gt; randomForest.ok-gender           -0.002292
-#&gt; randomForest.ok-hours            -0.006356
-#&gt; randomForest.ok-salary            0.181536
-#&gt; randomForest.promoted-age         0.028826
-#&gt; randomForest.promoted-evaluation -0.081440
-#&gt; randomForest.promoted-gender      0.004528
-#&gt; randomForest.promoted-hours      -0.168322
-#&gt; randomForest.promoted-salary      0.077562</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='plot.break_down_uncertainty-2.png' alt='' width='700' height='433' /></div><div class='input'>
+                           <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>3</span>,<span class='fl'>2</span>,<span class='fl'>4</span>,<span class='fl'>1</span>,<span class='fl'>5</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: the condition has length &gt; 1 and only the first element will be used</span></div><div class='input'><span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                        min        q1    median         mean
+#&gt; randomForest.fired-age           -0.021328  0.019462  0.190526  0.163675091
+#&gt; randomForest.fired-evaluation    -0.018856 -0.018856  0.039286  0.022113455
+#&gt; randomForest.fired-gender        -0.002236  0.005474  0.019250  0.088604364
+#&gt; randomForest.fired-hours          0.174678  0.230614  0.230614  0.262828727
+#&gt; randomForest.fired-salary        -0.215994 -0.163913 -0.132094 -0.144807636
+#&gt; randomForest.ok-age              -0.346842 -0.216186 -0.174234 -0.136478000
+#&gt; randomForest.ok-evaluation        0.083034  0.099398  0.100296  0.109666545
+#&gt; randomForest.ok-gender           -0.282642 -0.188968 -0.021756 -0.087593091
+#&gt; randomForest.ok-hours            -0.102472 -0.075861 -0.053010 -0.061595818
+#&gt; randomForest.ok-salary            0.042420  0.118454  0.118454  0.115850364
+#&gt; randomForest.promoted-age        -0.126732 -0.022355 -0.014030 -0.027197091
+#&gt; randomForest.promoted-evaluation -0.201822 -0.157818 -0.138684 -0.131780000
+#&gt; randomForest.promoted-gender     -0.013566 -0.002331 -0.001994 -0.001011273
+#&gt; randomForest.promoted-hours      -0.280566 -0.215001 -0.177604 -0.201232909
+#&gt; randomForest.promoted-salary     -0.003902  0.000722  0.041506  0.028957273
+#&gt;                                         q3       max
+#&gt; randomForest.fired-age            0.277413  0.362800
+#&gt; randomForest.fired-evaluation     0.048419  0.068846
+#&gt; randomForest.fired-gender         0.197085  0.280686
+#&gt; randomForest.fired-hours          0.290862  0.383038
+#&gt; randomForest.fired-salary        -0.119176 -0.102574
+#&gt; randomForest.ok-age              -0.009476  0.005860
+#&gt; randomForest.ok-evaluation        0.106311  0.196252
+#&gt; randomForest.ok-gender           -0.003480 -0.002292
+#&gt; randomForest.ok-hours            -0.053010 -0.006356
+#&gt; randomForest.ok-salary            0.119146  0.181536
+#&gt; randomForest.promoted-age        -0.005548  0.028826
+#&gt; randomForest.promoted-evaluation -0.081440 -0.081440
+#&gt; randomForest.promoted-gender      0.002276  0.004528
+#&gt; randomForest.promoted-hours      -0.175584 -0.168322
+#&gt; randomForest.promoted-salary      0.049408  0.077562</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='plot.break_down_uncertainty-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># example for regression - apartment prices</span>
 <span class='co'># here we do not have intreactions</span>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
@@ -215,22 +218,36 @@
                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>,<span class='fl'>2</span>:<span class='fl'>6</span>],
                         <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>$<span class='no'>m2.price</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>])
 
-<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_attributions_uncertainty.html'>local_attributions_uncertainty</a></span>(<span class='no'>explainer_rf</span>,
+<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='break_down_uncertainty.html'>break_down_uncertainty</a></span>(<span class='no'>explainer_rf</span>,
                                      <span class='no'>apartments_test</span>[<span class='fl'>1</span>,],
                                      <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"floor"</span>, <span class='st'>"no.rooms"</span>, <span class='st'>"district"</span>,
-                                         <span class='st'>"construction.year"</span>, <span class='st'>"surface"</span>))
-<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                      min        q1     median         q3
-#&gt; randomForest-construction.year -128.1290 -126.3012  -96.41844  -75.28959
-#&gt; randomForest-district          1033.5280 1050.0080 1076.88062 1093.70274
-#&gt; randomForest-floor              165.9773  173.6559  197.75176  220.55557
-#&gt; randomForest-no.rooms          -246.9539 -227.9948 -201.47496 -173.26509
-#&gt; randomForest-surface           -331.4628 -289.1663 -276.45829 -258.97323
-#&gt;                                       max
-#&gt; randomForest-construction.year  -46.89048
-#&gt; randomForest-district          1142.44289
-#&gt; randomForest-floor              231.48942
-#&gt; randomForest-no.rooms          -143.89151
-#&gt; randomForest-surface           -229.42256</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='plot.break_down_uncertainty-3.png' alt='' width='700' height='433' /></div></pre>
+                                         <span class='st'>"construction.year"</span>, <span class='st'>"surface"</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: the condition has length &gt; 1 and only the first element will be used</span></div><div class='input'><span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                      min        q1     median       mean
+#&gt; randomForest-construction.year -128.1290 -126.3012  -83.99468  -96.41844
+#&gt; randomForest-district          1033.5280 1050.0080 1063.12821 1076.88062
+#&gt; randomForest-floor              165.9773  173.6559  201.93875  197.75176
+#&gt; randomForest-no.rooms          -246.9539 -227.9948 -209.62696 -201.47496
+#&gt; randomForest-surface           -331.4628 -289.1663 -274.03910 -276.45829
+#&gt;                                        q3        max
+#&gt; randomForest-construction.year  -75.28959  -46.89048
+#&gt; randomForest-district          1093.70274 1142.44289
+#&gt; randomForest-floor              220.55557  231.48942
+#&gt; randomForest-no.rooms          -173.26509 -143.89151
+#&gt; randomForest-surface           -258.97323 -229.42256</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='plot.break_down_uncertainty-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='break_down_uncertainty.html'>break_down_uncertainty</a></span>(<span class='no'>explainer_rf</span>,
+                                     <span class='no'>apartments_test</span>[<span class='fl'>1</span>,],
+                                     <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"average"</span>)
+<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                      min        q1    median      mean
+#&gt; randomForest-construction.year -129.0031 -128.1290 -128.1290 -120.3624
+#&gt; randomForest-district          1033.5280 1048.0624 1089.8495 1089.7238
+#&gt; randomForest-floor              170.5289  172.1386  182.3098  185.1359
+#&gt; randomForest-no.rooms          -245.3544 -217.0949 -209.6331 -202.0295
+#&gt; randomForest-surface           -276.8529 -274.4762 -252.1870 -252.1870
+#&gt;                                       q3       max
+#&gt; randomForest-construction.year -121.0883  -64.7206
+#&gt; randomForest-district          1132.7038 1142.4429
+#&gt; randomForest-floor              193.5373  209.6217
+#&gt; randomForest-no.rooms          -202.3341 -143.8915
+#&gt; randomForest-surface           -229.4226 -229.4226</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='plot.break_down_uncertainty-4.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Print Generic for Break Down Uncertainty Objects — print.break_down_uncertainty • iBreakDown</title>
+<title>Explanation Level Uncertainty of Sequential Variable Attribution — break_down_uncertainty • iBreakDown</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -57,7 +57,7 @@
 	  <a class = "navbar-mi2logo" href="http://DrWhy.AI/">
         <img src = "https://github.com/ModelOriented/DrWhyTemplate/blob/master/inst/pkgdown/assets/drwhy_znak_violet_small.jpg?raw=true" alt = "MI2" height = 46 title = "MI2">
 	  </a>
-      <a class="navbar-brand navbar-mi2" href="../index.html">Print Generic for Break Down Uncertainty Objects</a>
+      <a class="navbar-brand navbar-mi2" href="../index.html">Explanation Level Uncertainty of Sequential Variable Attribution</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="navbar-mi2 nav navbar-nav">
@@ -106,36 +106,73 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Print Generic for Break Down Uncertainty Objects</h1>
+    <h1>Explanation Level Uncertainty of Sequential Variable Attribution</h1>
     </div>
 
     
-    <p>Print Generic for Break Down Uncertainty Objects</p>
+    <p>This function calculated uncertainty that comes from ordering in Sequential Variable Attribution methods.
+It runs `break_down` algorithm B times with random ordering of variables and then we calculate the uncertanity of attributions that comes from the ordering.</p>
     
 
-    <pre class="usage"><span class='co'># S3 method for break_down_uncertainty</span>
-<span class='fu'>print</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>break_down_uncertainty</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>10</span>)
+
+<span class='co'># S3 method for explainer</span>
+<span class='fu'>break_down_uncertainty</span>(<span class='no'>x</span>, <span class='no'>new_observation</span>, <span class='no'>...</span>,
+  <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>10</span>)
+
+<span class='co'># S3 method for default</span>
+<span class='fu'>break_down_uncertainty</span>(<span class='no'>x</span>, <span class='no'>data</span>,
+  <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict</span>, <span class='no'>new_observation</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'>class</span>(<span class='no'>x</span>)[<span class='fl'>1</span>],
+  <span class='no'>...</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>10</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>object of `break_down_uncertainty` class.</p></td>
+      <td><p>a model to be explained, or an explainer created with function `DALEX::explain()`.</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>other parameters.</p></td>
     </tr>
+    <tr>
+      <th>B</th>
+      <td><p>number of random paths</p></td>
+    </tr>
+    <tr>
+      <th>new_observation</th>
+      <td><p>a new observation with columns that correspond to variables used in the model.</p></td>
+    </tr>
+    <tr>
+      <th>data</th>
+      <td><p>validation dataset, will be extracted from `x` if it is an explainer.</p></td>
+    </tr>
+    <tr>
+      <th>predict_function</th>
+      <td><p>predict function, will be extracted from `x` if it is an explainer.</p></td>
+    </tr>
+    <tr>
+      <th>label</th>
+      <td><p>name of the model. By default it's extracted from the 'class' attribute of the model.</p></td>
+    </tr>
+    <tr>
+      <th>path</th>
+      <td><p>if specified, then this path will be highlighed on the plot. Use `average` in order to show an average effect</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a data frame.</p>
+    <p>an object of the `break_down_uncertainty` class.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Predictive Models: Visual Exploration, Explanation and Debugging <a href='https://pbiecek.github.io/PM_VEE'>https://pbiecek.github.io/PM_VEE</a></p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='break_down.html'>break_down</a></code>, <code><a href='local_attributions.html'>local_attributions</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -150,7 +187,9 @@
 <span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
                            <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>[,-<span class='fl'>9</span>],
                            <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>)
-<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='break_down_uncertainty.html'>break_down_uncertainty</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_small</span>[<span class='fl'>1</span>, ])
+
+<span class='co'># there is no explanation level uncertanity linked with additive models</span>
+<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>break_down_uncertainty</span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_small</span>[<span class='fl'>1</span>, ])
 <span class='no'>bd_rf</span></div><div class='output co'>#&gt;                     min          q1      median        mean          q3
 #&gt; lm-age      -0.01286499 -0.01238880 -0.01238880 -0.01204532 -0.01129199
 #&gt; lm-fare     -0.02812337 -0.02812337 -0.02788527 -0.02773508 -0.02750583
@@ -160,7 +199,7 @@
 #&gt; lm-age      -0.01117493
 #&gt; lm-fare     -0.02703759
 #&gt; lm-gender    0.41749227
-#&gt; lm-survived  0.00000000</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='print.break_down_uncertainty-1.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; lm-survived  0.00000000</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='break_down_uncertainty-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div><div class='input'><span class='co'>## Not run:</span>
 <span class='fu'>library</span>(<span class='st'>"randomForest"</span>)
 <span class='fu'>set.seed</span>(<span class='fl'>1313</span>)
@@ -168,10 +207,9 @@
 <span class='no'>new_observation</span> <span class='kw'>&lt;-</span> <span class='no'>HR_test</span>[<span class='fl'>1</span>,]
 
 <span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model</span>,
-                        <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>,<span class='fl'>1</span>:<span class='fl'>5</span>],
-                        <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>])
+                        <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>, <span class='fl'>1</span>:<span class='fl'>5</span>])
 
-<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='break_down_uncertainty.html'>break_down_uncertainty</a></span>(<span class='no'>explainer_rf</span>,
+<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>break_down_uncertainty</span>(<span class='no'>explainer_rf</span>,
                            <span class='no'>new_observation</span>)
 <span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                        min         q1    median       mean
 #&gt; randomForest.fired-age           -0.021328  0.0459295  0.196189  0.1780964
@@ -204,15 +242,15 @@
 #&gt; randomForest.promoted-evaluation -0.0814400 -0.081440
 #&gt; randomForest.promoted-gender      0.0023910  0.004528
 #&gt; randomForest.promoted-hours      -0.1745740 -0.168322
-#&gt; randomForest.promoted-salary      0.0500980  0.077562</div><div class='input'>
+#&gt; randomForest.promoted-salary      0.0500980  0.077562</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='break_down_uncertainty-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># example for regression - apartment prices</span>
 <span class='co'># here we do not have intreactions</span>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
 <span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model</span>,
-                        <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>,<span class='fl'>2</span>:<span class='fl'>6</span>],
+                        <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>, <span class='fl'>2</span>:<span class='fl'>6</span>],
                         <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>$<span class='no'>m2.price</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>])
 
-<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='break_down_uncertainty.html'>break_down_uncertainty</a></span>(<span class='no'>explainer_rf</span>, <span class='no'>apartments_test</span>[<span class='fl'>1</span>,])
+<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>break_down_uncertainty</span>(<span class='no'>explainer_rf</span>, <span class='no'>apartments_test</span>[<span class='fl'>1</span>,])
 <span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                      min        q1    median       mean
 #&gt; randomForest-construction.year -128.1290 -127.2151 -102.7788  -99.58822
 #&gt; randomForest-district          1050.0080 1050.0080 1069.9178 1081.21588
@@ -224,7 +262,10 @@
 #&gt; randomForest-district          1093.92250 1142.44289
 #&gt; randomForest-floor              226.02250  231.48942
 #&gt; randomForest-no.rooms          -158.57830 -143.89151
-#&gt; randomForest-surface           -262.73969 -229.42256</div></pre>
+#&gt; randomForest-surface           -262.73969 -229.42256</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='break_down_uncertainty-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>break_down_uncertainty</span>(<span class='no'>explainer_rf</span>, <span class='no'>apartments_test</span>[<span class='fl'>1</span>,], <span class='kw'>path</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>5</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: the condition has length &gt; 1 and only the first element will be used</span></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='break_down_uncertainty-4.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>break_down_uncertainty</span>(<span class='no'>explainer_rf</span>, <span class='no'>apartments_test</span>[<span class='fl'>1</span>,], <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"average"</span>)
+<span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='break_down_uncertainty-5.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -234,6 +275,8 @@
       <li><a href="#value">Value</a></li>
 
       <li><a href="#references">References</a></li>
+
+      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
