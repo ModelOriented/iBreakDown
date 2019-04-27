@@ -12,7 +12,7 @@ plotD3(x, ...)
   digits = 3, rounding_function = round)
 }
 \arguments{
-\item{x}{the model model of `break_down`` class.}
+\item{x}{the model model of `break_down` class.}
 
 \item{...}{other parameters.}
 

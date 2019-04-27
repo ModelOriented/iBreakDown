@@ -29,7 +29,7 @@ model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
 explain_titanic_glm <- explain(model_titanic_glm,
                            data = titanic_small[,-9],
                            y = titanic_small$survived == "yes")
-bd_rf <- local_attributions_uncertainty(explain_titanic_glm, titanic_small[1, ])
+bd_rf <- break_down_uncertainty(explain_titanic_glm, titanic_small[1, ])
 bd_rf
 plot(bd_rf)
 
@@ -44,7 +44,7 @@ explainer_rf <- explain(model,
                         data = HR[1:1000,1:5],
                         y = HR$status[1:1000])
 
-bd_rf <- local_attributions_uncertainty(explainer_rf,
+bd_rf <- break_down_uncertainty(explainer_rf,
                            new_observation)
 bd_rf
 
@@ -55,7 +55,7 @@ explainer_rf <- explain(model,
                         data = apartments_test[1:1000,2:6],
                         y = apartments_test$m2.price[1:1000])
 
-bd_rf <- local_attributions_uncertainty(explainer_rf, apartments_test[1,])
+bd_rf <- break_down_uncertainty(explainer_rf, apartments_test[1,])
 bd_rf
 }
 }

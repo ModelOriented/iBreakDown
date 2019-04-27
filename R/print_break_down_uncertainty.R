@@ -6,7 +6,7 @@
 #' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 #'
 #' @return a data frame.
-#' @importFrom stats quantile
+#' @importFrom stats quantile median
 #'
 #' @examples
 #' library("DALEX")
@@ -20,7 +20,7 @@
 #' explain_titanic_glm <- explain(model_titanic_glm,
 #'                            data = titanic_small[,-9],
 #'                            y = titanic_small$survived == "yes")
-#' bd_rf <- local_attributions_uncertainty(explain_titanic_glm, titanic_small[1, ])
+#' bd_rf <- break_down_uncertainty(explain_titanic_glm, titanic_small[1, ])
 #' bd_rf
 #' plot(bd_rf)
 #'
@@ -35,7 +35,7 @@
 #'                         data = HR[1:1000,1:5],
 #'                         y = HR$status[1:1000])
 #'
-#' bd_rf <- local_attributions_uncertainty(explainer_rf,
+#' bd_rf <- break_down_uncertainty(explainer_rf,
 #'                            new_observation)
 #' bd_rf
 #'
@@ -46,7 +46,7 @@
 #'                         data = apartments_test[1:1000,2:6],
 #'                         y = apartments_test$m2.price[1:1000])
 #'
-#' bd_rf <- local_attributions_uncertainty(explainer_rf, apartments_test[1,])
+#' bd_rf <- break_down_uncertainty(explainer_rf, apartments_test[1,])
 #' bd_rf
 #' }
 #' @export
@@ -55,7 +55,8 @@ print.break_down_uncertainty <- function(x, ...) {
   result <- data.frame(
     min = tapply(x$contribution, paste(x$label, x$variable, sep = "-"), min, na.rm = TRUE),
     q1 = tapply(x$contribution, paste(x$label, x$variable, sep = "-"), quantile, 0.25, na.rm = TRUE),
-    median = tapply(x$contribution, paste(x$label, x$variable, sep = "-"), mean, na.rm = TRUE),
+    median = tapply(x$contribution, paste(x$label, x$variable, sep = "-"), median, na.rm = TRUE),
+    mean = tapply(x$contribution, paste(x$label, x$variable, sep = "-"), mean, na.rm = TRUE),
     q3 = tapply(x$contribution, paste(x$label, x$variable, sep = "-"), quantile, 0.75, na.rm = TRUE),
     max = tapply(x$contribution, paste(x$label, x$variable, sep = "-"), max, na.rm = TRUE)
   )
