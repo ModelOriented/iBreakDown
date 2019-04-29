@@ -22,8 +22,7 @@
 #' explain_titanic_glm <- explain(model_titanic_glm,
 #'                            data = titanic_small[,-9],
 #'                            y = titanic_small$survived == "yes")
-#' bd_rf <- shap(explain_titanic_glm, titanic_small[1, ],
-#'                            path = c(3,2,1))
+#' bd_rf <- shap(explain_titanic_glm, titanic_small[1, ])
 #' bd_rf
 #' plot(bd_rf)
 #'
