@@ -160,8 +160,17 @@
 <span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
                            <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>[,-<span class='fl'>9</span>],
                            <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>)
-<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>shap</span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_small</span>[<span class='fl'>1</span>, ],
-                           <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>3</span>,<span class='fl'>2</span>,<span class='fl'>1</span>))</div><div class='output co'>#&gt; <span class='error'>Error in break_down_uncertainty.default(model, data, predict_function,     new_observation = new_observation, label = label, ..., B = B): formal argument "path" matched by multiple actual arguments</span></div><div class='input'><span class='no'>bd_rf</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'bd_rf' not found</span></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot(bd_rf): object 'bd_rf' not found</span></div><div class='input'>
+<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='break_down_uncertainty.html'>shap</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_small</span>[<span class='fl'>1</span>, ])
+<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                     min          q1      median        mean          q3
+#&gt; lm-age      -0.01286499 -0.01286499 -0.01238880 -0.01219879 -0.01129199
+#&gt; lm-fare     -0.02812337 -0.02812337 -0.02764718 -0.02760626 -0.02715465
+#&gt; lm-gender    0.41566086  0.41627840  0.41688268  0.41678515  0.41749227
+#&gt; lm-survived  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000
+#&gt;                     max
+#&gt; lm-age      -0.01117493
+#&gt; lm-fare     -0.02703759
+#&gt; lm-gender    0.41749227
+#&gt; lm-survived  0.00000000</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='plot.break_down_uncertainty-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div><div class='input'><span class='co'>## Not run:</span>
 <span class='fu'>library</span>(<span class='st'>"randomForest"</span>)
 <span class='fu'>set.seed</span>(<span class='fl'>1313</span>)
@@ -206,7 +215,7 @@
 #&gt; randomForest.promoted-evaluation -0.081440 -0.081440
 #&gt; randomForest.promoted-gender      0.002276  0.004528
 #&gt; randomForest.promoted-hours      -0.175584 -0.168322
-#&gt; randomForest.promoted-salary      0.049408  0.077562</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='plot.break_down_uncertainty-1.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; randomForest.promoted-salary      0.049408  0.077562</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='plot.break_down_uncertainty-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># example for regression - apartment prices</span>
 <span class='co'># here we do not have intreactions</span>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
@@ -228,8 +237,8 @@
 #&gt; randomForest-district          1093.70274 1142.44289
 #&gt; randomForest-floor              220.55557  231.48942
 #&gt; randomForest-no.rooms          -173.26509 -143.89151
-#&gt; randomForest-surface           -258.97323 -229.42256</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='plot.break_down_uncertainty-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>shap</span>(<span class='no'>explainer_rf</span>,
+#&gt; randomForest-surface           -258.97323 -229.42256</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='plot.break_down_uncertainty-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='break_down_uncertainty.html'>shap</a></span>(<span class='no'>explainer_rf</span>,
               <span class='no'>apartments_test</span>[<span class='fl'>1</span>,])
 <span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                      min        q1    median      mean
 #&gt; randomForest-construction.year -129.0031 -128.1290 -121.3487 -100.5381
@@ -242,7 +251,7 @@
 #&gt; randomForest-district          1115.5393 1142.44289
 #&gt; randomForest-floor              191.3698  231.48942
 #&gt; randomForest-no.rooms          -158.5111 -143.89151
-#&gt; randomForest-surface           -229.4226 -229.42256</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='plot.break_down_uncertainty-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>show_boxplots</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot.break_down_uncertainty-4.png' alt='' width='700' height='433' /></div></pre>
+#&gt; randomForest-surface           -229.4226 -229.42256</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='plot.break_down_uncertainty-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>show_boxplots</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot.break_down_uncertainty-5.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
