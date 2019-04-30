@@ -15,6 +15,7 @@
 #' @param label name of the model. By default it's extracted from the 'class' attribute of the model.
 #'
 #' @return an object of the `break_down_uncertainty` class.
+#' @importFrom utils head
 #'
 #' @seealso \code{\link{break_down}}, \code{\link{local_attributions}}
 #'
@@ -130,7 +131,7 @@ break_down_uncertainty.default <- function(x, data, predict_function = predict,
   # should we add a specific path?
   if (!is.null(path)) {
     # average or selected path
-    if (path == "average") {
+    if (head(path, 1) == "average") {
       # let's calculate an average attribution
       extracted_contributions <- sapply(result, function(chunk) {
         chunk[order(chunk$variable), "contribution"]
