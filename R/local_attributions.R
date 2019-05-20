@@ -284,7 +284,8 @@ create_ordered_path_2d <- function(feature_path, order, average_yhats_names) {
       feature_path <- feature_path[order,]
     }
     if (is.character(order)) {
-      rownames(feature_path) <- average_yhats_names
+      if (any(order %in% average_yhats_names))
+        rownames(feature_path) <- average_yhats_names
       feature_path <- feature_path[order,]
     }
   }
