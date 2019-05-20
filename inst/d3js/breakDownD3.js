@@ -1,17 +1,40 @@
-// !preview r2d3 data=list(structure(list("+ Sex = female", 0.306481792717087,    0.67272268907563, "#0f6333", "Sex = 'female' <br>increases average response <br>by 0.3065"), .Names = c("variable", "contribution","cummulative", "sign", "label")), structure(list("+ Fare = 71",    0.0709915966386554, 0.743714285714286, "#a3142f", "Fare = 71 (low value) <br>increases average response <br>by 0.071"), .Names = c("variable","contribution", "cummulative", "sign", "label")), structure(list(    "+ Pclass = 1", 0.210210084033614, 0.953924369747899, "#0f6333",    "Pclass = 1 (low value) <br>increases average response <br>by 0.2102"), .Names = c("variable", "contribution", "cummulative","sign", "label")), structure(list("+ Embarked = C", 0.0145014005602241,    0.968425770308123, "#a3142f", "Embarked = 'C' <br>decreases average response <br>by 0.02"), .Names = c("variable", "contribution","cummulative", "sign", "label")), structure(list("+ other factors",    0.0154089635854342, 0.983834733893557, "#a3142f", "All other features <br>decrease average response <br>by 0.01"), .Names = c("variable","contribution", "cummulative", "sign", "label"))), dependencies = "tooltipD3.js", css = "breakDownD3.css", options=list(xmin = 0.3, xmax = 1, model_avg = 0.3662, model_res = 0.9869), d3_version = "4"
-//
-// r2d3: https://rstudio.github.io/r2d3
-//
+var minValue   = options.xmin, maxValue = options.xmax,
+    n = options.n, m = options.m, barWidth = options.barWidth;
 
-var x_min   = options.xmin
-var x_max   = options.xmax
-var lmargin = 150
-var rmargin = 10
-var bmargin = 50
-var tmargin = 50
-var w     = width - lmargin - rmargin
-var h     = height - bmargin - tmargin
+var margin = {top: 98, right: 30, bottom: 71, left: 120, inner: 42},
+    w = width - margin.left - margin.right,
+    h = height - margin.top - margin.bottom,
+    labelsMargin = margin.left - 8,
+    plotTop = margin.top,
+    plotHeight = m*barWidth + (m+1)*barWidth/2,
+    plotBottom = margin.top + plotHeight;
 
+if (options.scaleHeight === true) {
+  if (h > n*plotHeight + (n-1)*margin.inner) {
+    var temp = h - n*plotHeight - (n-1)*margin.inner;
+    plotTop += temp/2;
+    plotBottom += temp/2;
+  }
+}
+
+breakDown(data);
+
+// change font
+svg.selectAll("text")
+  .style('font-family', 'Fira Sans, sans-serif');
+
+function breakDown(data){
+
+  for (let i=0; i<n; i++){
+      //let variableName = variableNames[i];
+      //singlePlot(variableName, profData[variableName], obsData, i+1);
+  }
+}
+
+function singlePlot(){
+
+}
+/*
 var yAxis  = d3.scaleLinear().domain([0, data.length + 1.5]).range([tmargin, tmargin+h])
 var xAxis  = d3.scaleLinear().domain([x_min, x_max]).range([lmargin,w + lmargin])
 
@@ -159,3 +182,4 @@ svg
   .attr("y2", function(d, i) { return yAxis(i + 2)-2 })
   .style("stroke","black")
   .style("stroke-width","1")
+*/
