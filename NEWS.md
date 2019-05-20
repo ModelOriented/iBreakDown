@@ -3,6 +3,7 @@ iBreakDown 0.9.6
 * Function `local_attributions_uncertainty()` now supports `path = "average"` argument and plots shapley values  ([#29](https://github.com/ModelOriented/iBreakDown/issues/29)). 
 * Function `local_attributions_uncertainty()` is renamed to  `break_down_uncertainty()`.
 * Function `shap()` is an alias for  `break_down_uncertainty()`.
+* binder is removed as it was not used.
 
 
 iBreakDown 0.9.5
