@@ -4,15 +4,18 @@
 #'
 #' @param x the model model of `break_down` class.
 #' @param ... other parameters.
-#' @param baseline if numeric then veritical line will start in baseline.
+#' @param baseline TODO if numeric then veritical line will start in baseline.
 #' @param max_features maximal number of features to be included in the plot. default value is 10.
 #' @param min_max a range of OX axis. By deafult `NA` therefore will be extracted from the contributions of `x`. But can be set to some constants, usefull if these plots are used for comparisons.
-#' @param vcolors named vector with colors.
+#' @param vcolors TODO named vector with colors.
 #' @param digits number of decimal places (round) or significant digits (signif) to be used.
 #' See the \code{rounding_function} argument.
 #' @param rounding_function function that is to used for rounding numbers.
 #' It may be \code{\link{signif}} which keeps a specified number of significant digits.
 #' Or the default \code{\link{round}} to have the same precision for all components.
+#' @param bar_width todo
+#' @param scale_height todo
+#' @param margin todo
 #'
 #' @return an `r2d3` object.
 #'
@@ -29,10 +32,11 @@
 #'                        data = titanic_small, family = "binomial")
 #' explain_titanic_glm <- explain(model_titanic_glm,
 #'                            data = titanic_small[,-9],
-#'                            y = titanic_small$survived == "yes")
-#' bd_rf <- local_attributions(explain_titanic_glm, titanic_small[1, ])
-#' bd_rf
-#' plotD3(bd_rf)
+#'                            y = titanic_small$survived == "yes",
+#'                            label = "glm")
+#' bd_glm <- local_attributions(explain_titanic_glm, titanic_small[1, ])
+#' bd_glm
+#' plotD3(bd_glm)
 #'
 #' \donttest{
 #' library("randomForest")
@@ -76,12 +80,14 @@ plotD3.break_down <- function(x, ...,
                         min_max = NA,
                         vcolors = DALEX::theme_drwhy_colors_break_down(),
                         digits = 3, rounding_function = round,
-                        bar_width = 12, scale_height = FALSE, margin = 0.10) {
+                        bar_width = 12, scale_height = FALSE, margin = 0.2) {
 
   n <- length(list(...)) + 1
-  m <- ifelse(nrow(x) - 2 <= max_features, nrow(x), max_features + 3)
+  m <- c()
 
   bdl <- list(x, ...)
+  deletedIndexes <- c()
+
   dl <- list()
   modelNames <- c()
 
@@ -90,15 +96,43 @@ plotD3.break_down <- function(x, ...,
 
     if (!("break_down" %in% class(x))) stop("The function requires an object created with local_attributions().")
 
+    # because apparently one explainer can make multiple plots
+    if (length(levels(x$label)) > 1) {
+      # update plot count
+      n <- n + length(levels(x$label)) - 1
+
+      # add new data frames to list
+      bdl <- c(bdl, split(x, f=x$label))
+
+      # remember indexes to delete
+      deletedIndexes <- c(deletedIndexes, i)
+    }
+  }
+
+  # delete doubled data frames
+  bdl[deletedIndexes] <- NULL
+
+  # iterate through updated data frame list
+  for (i in 1:n) {
+    x <- bdl[[i]]
+
+    # remember number of features to compare
+    m <- c(m, ifelse(nrow(x) - 2 <= max_features, nrow(x), max_features + 3))
+
     new_x <- prepare_data_for_break_down_plot3D(x, vcolors, max_features, rounding_function, digits)
 
     dl[[i]] <- new_x
+
+    # remember plot names
     modelNames <- c(modelNames,as.character(x$label[1]))
   }
 
+  if (length(unique(m)) > 1) stop("Models have different numbers of features.")
+
+  m <- unique(m)
   names(dl) <- modelNames
 
-  # range
+  # count margins
   if (any(is.na(min_max))) {
 
     df <- do.call(rbind, dl)
@@ -109,7 +143,11 @@ plotD3.break_down <- function(x, ...,
       model_baseline <- baseline
     }
 
-    min_max <- range(c(df$cummulative, model_baseline)) * c(1-margin, 1+margin)
+
+    min_max <- range(c(df$cummulative, model_baseline))
+    min_max_margin <- abs(min_max[2]-min_max[1])*margin
+    min_max[1] <- min_max[1] - min_max_margin
+    min_max[2] <- min_max[2] + min_max_margin
   }
 
   options <- list(xmin = min_max[1], xmax = min_max[2],
@@ -142,24 +180,27 @@ prepare_data_for_break_down_plot3D <- function(x, vcolors, max_features = 10, ro
     new_x$variable[last_row] <- "  + all other factors"
     new_x$contribution[last_row] <- sum(x$contribution[last_row:nrow(x)])
     new_x$cummulative[last_row] <- x$cummulative[nrow(x)]
-    new_x$sign[last_row] <- ifelse(new_x$contribution[last_row] > 0,"1","-1")
+    new_x$sign[last_row] <- ifelse(new_x$contribution[last_row] > 0,1,-1)
 
     x <- new_x
   }
 
   x <- rbind(temp[1,], x, temp[2,])
 
-  x$contribution <- rounding_function(abs(x$contribution), digits)
-  x$cummulative <- rounding_function(abs(x$cummulative), digits)
+  x$sign[x$variable_name == ""] <- "X"
+  x[1,"sign"] <- 0
+  x[1,"contribution"] <- 0
+
+  x$barStart <- ifelse(x$sign == "1", x$cummulative - x$contribution, x$cummulative)
+  x$barSupport <- ifelse(x$sign == "1", x$cummulative, x$cummulative - x$contribution)
+
+  x$contribution <- rounding_function(x$contribution, digits)
+  x$cummulative <- rounding_function(x$cummulative, digits)
 
   x$label <- paste0(substr(x$variable, 1, 25),
                         "<br>", ifelse(x$contribution > 0, "increases", "decreases"),
                         " average response <br>by ", x$contribution)
-  x$sign <- as.character(x$sign)
   x$variable <- as.character(x$variable)
-
-  # add colors
-  x$sign <- vcolors[x$sign]
 
   x
 }

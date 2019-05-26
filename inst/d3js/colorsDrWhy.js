@@ -1,7 +1,7 @@
 function getColors(n, type){
     var temp = ["#8bdcbe", "#f05a71", "#371ea3", "#46bac2", "#ae2c87", "#ffa58c", "#4378bf"];
     var ret = [];
-    
+
     if (type == "bar") {
       switch(n){
         case 1:
@@ -23,7 +23,7 @@ function getColors(n, type){
             ret = ret.concat(temp);
           }
           return ret;
-      } 
+      }
     } else if (type == "line") {
       switch(n){
         case 1:
@@ -50,6 +50,11 @@ function getColors(n, type){
       switch(n){
         default:
           return ["#371ea3", "#46bac2", "#ceced9"];
-      }    
+      }
+    } else if (type == "breakDown") {
+      switch(n){
+        default:
+          return ["#8bdcbe", "#f05a71", "#371ea3"];
+      }
     }
 }
