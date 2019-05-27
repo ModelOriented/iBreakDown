@@ -3,13 +3,33 @@ var minValue   = options.xmin,
     n = options.n, m = options.m,
     barWidth = options.barWidth;
 
-var margin = {top: 98, right: 30, bottom: 71, left: 120, inner: 42},
+// effort to make labels margin
+var temp = svg.selectAll()
+              .data(data[1])
+              .enter();
+
+var textWidth = [];
+
+temp.append("text")
+    .text(function(d) { return d;})
+    .style("font-size", "11px")
+    .each(function(d,i) {
+        var thisWidth = this.getComputedTextLength();
+        textWidth.push(thisWidth);
+    });
+
+svg.selectAll('text').remove();
+temp.remove();
+
+var maxLength = d3.max(textWidth)+10;
+////
+
+var margin = {top: 98, right: 30, bottom: 71, left: maxLength, inner: 42},
     w = width - margin.left - margin.right,
     h = height - margin.top - margin.bottom,
-    labelsMargin = margin.left - 8,
     plotTop = margin.top,
     plotHeight = m*barWidth + (m+1)*barWidth/2,
-    plotWidth = 420;
+    plotWidth = 420*1.3;
 
 var chartTitle = "Local attributions"; // subject to change
 
@@ -20,10 +40,18 @@ if (options.scaleHeight === true) {
   }
 }
 
-var colors = getColors(n, "breakDown"),
+if (options.vcolors === "default") {
+  var colors = getColors(n, "breakDown"),
     positiveColor = colors[0],
     negativeColor = colors[1],
     defaultColor = colors[2];
+} else {
+  var colors = options.vcolors,
+    positiveColor = colors[0],
+    negativeColor = colors[1],
+    defaultColor = colors[2];
+}
+
 
 breakDown(data);
 
@@ -95,9 +123,11 @@ function singlePlot(modelName, bData, i){
 
   yAxis = svg.append("g")
         .attr("class", "axisLabel")
-        .attr("transform","translate(" + (yGridStart-8) + ",0)")
+        .attr("transform","translate(" + (yGridStart-10) + ",0)")
         .call(yAxis)
         .call(g => g.select(".domain").remove());
+
+  yAxis.select(".tick:last-child").select("text").attr('font-weight', 600);
 
   svg.append("text")
         .attr("x", yGridStart)
@@ -113,20 +143,36 @@ function singlePlot(modelName, bData, i){
           .text(chartTitle);
   }
 
+  // add tooltip
+  var tool_tip = d3.tip()
+        .attr("class", "tooltip")
+        .offset([-8, 0])
+        .html(function(d) { return changedTooltipHtml(d); });
+
+  svg.call(tool_tip);
+
+  // find boundaries
+  let intercept = bData[0].barSupport;
+  let prediction = bData[m-1].cummulative;
+
+  // make dotted line from intercept to prediction
+  var dotLineData = [{"x": x(intercept), "y": y("intercept")},
+                     {"x": x(intercept), "y": y("prediction") + barWidth}];
+
+  var lineFunction = d3.line()
+                         .x(function(d) { return d.x; })
+                         .y(function(d) { return d.y; });
+  svg.append("path")
+        .data([dotLineData])
+        .attr("class", "dotLine")
+        .attr("d", lineFunction)
+        .style("stroke-dasharray", ("1, 2"));
+
+  // add bars
   var bars = svg.selectAll()
         .data(bData)
         .enter()
         .append("g");
-
-  var tool_tip = d3.tip()
-        .attr("class", "tooltip")
-        .offset([-8, 0])
-        .html(function(d) { return changedTooltipHtml(null); });
-
-  svg.call(tool_tip);
-
-  let intercept = bData[0].cummulative;
-  let prediction = bData[m-1].cummulative;
 
   bars.append("rect")
         .attr("class", modelName.replace(/\s/g,''))
@@ -165,9 +211,56 @@ function singlePlot(modelName, bData, i){
         .on('mouseover', tool_tip.show)
         .on('mouseout', tool_tip.hide);
 
+  // add labels to bars
+  var contributionLabel = svg.selectAll()
+        .data(bData)
+        .enter()
+        .append("g");
+
+  contributionLabel.append("text")
+        .attr("x", d => {
+          switch(d.sign){
+            case "X":
+              return intercept<prediction ? x(prediction) + 5 : x(prediction) - 5;
+            default:
+              return x(d.barSupport) + 5;
+          }
+        })
+        .attr("text-anchor", d => {
+          if (d.sign === "X" && intercept > prediction) return "end";
+        })
+        .attr("y", d => y(d.variable) + barWidth*3/4)
+        .attr("class", "axisLabel")
+        .text(d => {
+          switch(d.variable){
+            case "intercept":
+            case "prediction":
+              return d.cummulative;
+            default:
+              return d.sign === "-1" ? d.contribution : "+"+d.contribution;
+          }
+        });
+
+  // add lines to bars
+  var lines = svg.selectAll()
+        .data(bData)
+        .enter()
+        .append("g");
+
+  lines.append("line")
+        .attr("class", "interceptLine")
+        .attr("x1", d => d.sign == "-1" ? x(d.barStart) : x(d.barSupport))
+        .attr("y1", d => y(d.variable))
+        .attr("x2", d => d.sign == "-1" ? x(d.barStart) : x(d.barSupport))
+        .attr("y2", d => d.sign == "X" ? y(d.variable) : y(d.variable) + barWidth*2.5);
+
+  // update plotTop
   plotTop += (margin.inner + plotHeight);
 }
 
-function changedTooltipHtml(temp) {
-  return null;
+function changedTooltipHtml(d, prediction) {
+  var temp = "<center>";
+  temp += d.label;
+  temp += "</center>";
+  return temp;
 }

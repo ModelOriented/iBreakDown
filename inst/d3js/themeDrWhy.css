@@ -39,7 +39,15 @@ text {
 
 .interceptLine{
     stroke: #371ea3;
-	stroke-width: 0.5px;
+	stroke-width: 0.7px;
+	stroke-opacity: 1;
+	stroke-linecap: "butt";
+}
+
+.dotLine{
+  		fill: none;
+  		stroke: #371ea3;
+  		stroke-width: 0.7px;
 }
 
 .grid .tick line{
