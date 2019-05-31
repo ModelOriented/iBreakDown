@@ -1,9 +1,10 @@
 Package: iBreakDown
 Title: Model Agnostic Instance Level Variable Attributions
-Version: 0.9.6
+Version: 0.9.7
 Authors@R: c(person("Przemyslaw", "Biecek", email = "przemyslaw.biecek@gmail.com", role = c("aut", "cre")),
-    person("Alicja", "Gosiewska", email = "alicjagosiewska@gmail.com", role = c("aut")),
-    person("Dariusz", "Komosinski", role = c("ctb")))
+    person("Alicja", "Gosiewska", role = "aut"),
+    person("Hubert", "Baniecki", role = "aut"),
+    person("Dariusz", "Komosinski", role = "ctb"))
 Description: Model agnostic tool for decomposition of predictions from black boxes.
     Supports additive attributions and attributions with interactions.
     The Break Down Table shows contributions of every variable to a final prediction. 
