@@ -180,11 +180,11 @@
 
 <span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model</span>,
                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>,<span class='fl'>1</span>:<span class='fl'>5</span>],
-                        <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>])
-
+                        <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>])</div><div class='output co'>#&gt; <span class='message'>Please note that 'y' is a factor. The default loss functions assume numerical outputs (e.g. scores, probabilities, rates). Consider changing the y to the logical or numerical (0-1) vector.</span></div><div class='input'>
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='break_down_uncertainty.html'>break_down_uncertainty</a></span>(<span class='no'>explainer_rf</span>,
                            <span class='no'>new_observation</span>,
-                           <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>3</span>,<span class='fl'>2</span>,<span class='fl'>4</span>,<span class='fl'>1</span>,<span class='fl'>5</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: the condition has length &gt; 1 and only the first element will be used</span></div><div class='input'><span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                        min        q1    median         mean
+                           <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>3</span>,<span class='fl'>2</span>,<span class='fl'>4</span>,<span class='fl'>1</span>,<span class='fl'>5</span>))
+<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                        min        q1    median         mean
 #&gt; randomForest.fired-age           -0.021328  0.019462  0.190526  0.163675091
 #&gt; randomForest.fired-evaluation    -0.018856 -0.018856  0.039286  0.022113455
 #&gt; randomForest.fired-gender        -0.002236  0.005474  0.019250  0.088604364
@@ -226,7 +226,8 @@
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='break_down_uncertainty.html'>break_down_uncertainty</a></span>(<span class='no'>explainer_rf</span>,
                                      <span class='no'>apartments_test</span>[<span class='fl'>1</span>,],
                                      <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"floor"</span>, <span class='st'>"no.rooms"</span>, <span class='st'>"district"</span>,
-                                         <span class='st'>"construction.year"</span>, <span class='st'>"surface"</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: the condition has length &gt; 1 and only the first element will be used</span></div><div class='input'><span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                      min        q1     median       mean
+                                         <span class='st'>"construction.year"</span>, <span class='st'>"surface"</span>))
+<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                      min        q1     median       mean
 #&gt; randomForest-construction.year -128.1290 -126.3012  -83.99468  -96.41844
 #&gt; randomForest-district          1033.5280 1050.0080 1063.12821 1076.88062
 #&gt; randomForest-floor              165.9773  173.6559  201.93875  197.75176
@@ -270,7 +271,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Przemyslaw Biecek, Alicja Gosiewska.</p>
+  <p>Developed by Przemyslaw Biecek, Alicja Gosiewska, Hubert Baniecki.</p>
 </div>
 
 <div class="pkgdown">
