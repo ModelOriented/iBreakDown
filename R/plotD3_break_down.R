@@ -64,13 +64,15 @@ plotD3 <- function(x, ...)
 #' @export
 #' @rdname plotD3
 plotD3.break_down <- function(x, ...,
+                        baseline = NA,
                         max_features = 10,
                         digits = 3, rounding_function = round,
                         bar_width = 12,
                         margin = 0.2,
                         scale_height = FALSE,
                         min_max = NA,
-                        vcolors = NA) {
+                        vcolors = NA,
+                        chartTitle = NA) {
 
   n <- length(list(...)) + 1
   m <- c()
@@ -87,12 +89,12 @@ plotD3.break_down <- function(x, ...,
     if (!("break_down" %in% class(x))) stop("The function requires an object created with local_attributions().")
 
     # because apparently one explainer can make multiple plots
-    if (length(levels(x$label)) > 1) {
+    if (length(levels(x[,'label'])) > 1) {
       # update plot count
-      n <- n + length(levels(x$label)) - 1
+      n <- n + length(levels(x[,'label'])) - 1
 
       # add new data frames to list
-      bdl <- c(bdl, split(x, f=x$label))
+      bdl <- c(bdl, split(x, f=x[,'label']))
 
       # remember indexes to delete
       deletedIndexes <- c(deletedIndexes, i)
@@ -109,12 +111,12 @@ plotD3.break_down <- function(x, ...,
     # remember number of features to compare
     m <- c(m, ifelse(nrow(x) - 2 <= max_features, nrow(x), max_features + 3))
 
-    new_x <- prepare_data_for_break_down_plotD3(x, vcolors, max_features, rounding_function, digits)
+    new_x <- prepare_data_for_break_down_plotD3(x, baseline, max_features, rounding_function, digits)
 
     dl[[i]] <- new_x
 
     # remember plot names
-    modelNames <- c(modelNames,as.character(x$label[1]))
+    modelNames <- c(modelNames,as.character(x[,'label'][1]))
   }
 
   if (length(unique(m)) > 1) stop("Models have different numbers of features.")
@@ -125,27 +127,23 @@ plotD3.break_down <- function(x, ...,
   df <- do.call(rbind, dl)
 
   # later count longest label width in d3
-  labelList <- as.character(df$variable)
+  labelList <- as.character(df[,'variable'])
+
+  if (any(is.na(min_max))) {
+    min_max <- range(df[,'cummulative'])
+  }
 
   # count margins
-  if (any(is.na(min_max))) {
-    # todo?: add baseline
-    # if (is.na(baseline)) {
-    #   model_baseline <- NULL
-    # } else {
-    #   model_baseline <- baseline
-    # }
 
-    min_max <- range(c(df$cummulative)) #, model_baseline
-    min_max_margin <- abs(min_max[2]-min_max[1])*margin
-    min_max[1] <- min_max[1] - min_max_margin
-    min_max[2] <- min_max[2] + min_max_margin
-  }
+  min_max_margin <- abs(min_max[2]-min_max[1])*margin
+  min_max[1] <- min_max[1] - min_max_margin
+  min_max[2] <- min_max[2] + min_max_margin
 
   options <- list(xmin = min_max[1], xmax = min_max[2],
                   n = n, m = m, barWidth = bar_width,
                   scaleHeight = scale_height,
-                  vcolors = ifelse(is.na(vcolors), "default", vcolors))
+                  vcolors = ifelse(is.na(vcolors), "default", vcolors),
+                  chartTitle = ifelse(is.na(vcolors), "Local attributions", chartTitle))
 
   temp <- jsonlite::toJSON(list(dl, labelList))
 
@@ -163,9 +161,13 @@ plotD3.break_down <- function(x, ...,
   )
 }
 
-prepare_data_for_break_down_plotD3 <- function(x, vcolors, max_features = 10, rounding_function, digits) {
+prepare_data_for_break_down_plotD3 <- function(x, baseline, max_features = 10, rounding_function, digits) {
 
-  x$variable <- as.character(x$variable)
+  # fix df
+  x[,'variable'] <- as.character(x[,'variable'])
+  x[,'variable_name'] <- as.character(x[,'variable_name'])
+
+  x[x[,'variable_name']=="",'variable_name'] <- "prediction"
 
   temp <- data.frame(x[c(1,nrow(x)),])
   x <- data.frame(x[-c(1,nrow(x)),])
@@ -173,32 +175,42 @@ prepare_data_for_break_down_plotD3 <- function(x, vcolors, max_features = 10, ro
   if (nrow(x) > max_features) {
     last_row <- max_features + 1
     new_x <- x[1:last_row,]
-    new_x$variable[last_row] <- "+ all other factors"
-    new_x$contribution[last_row] <- sum(x$contribution[last_row:nrow(x)])
-    new_x$cummulative[last_row] <- x$cummulative[nrow(x)]
-    new_x$sign[last_row] <- ifelse(new_x$contribution[last_row] > 0,1,-1)
+    new_x[last_row,'variable'] <- "+ all other factors"
+    new_x[last_row,'contribution'] <- sum(x[last_row:nrow(x),'contribution'])
+    new_x[last_row,'cummulative'] <- x[nrow(x),'cummulative']
+    new_x[last_row,'sign'] <- ifelse(new_x[last_row,'contribution'] > 0,1,-1)
 
     x <- new_x
   }
 
   x <- rbind(temp[1,], x, temp[2,])
 
-  x$sign[x$variable_name == ""] <- "X"
-  x[1,"sign"] <- 0
-  x[1,"contribution"] <- 0
+  if (is.na(baseline)) {
+    baseline <- x[1,"cummulative"]
+  }
 
-  x$barStart <- ifelse(x$sign == "1", x$cummulative - x$contribution, x$cummulative)
-  x$barSupport <- ifelse(x$sign == "1", x$cummulative, x$cummulative - x$contribution)
+  # fix contribution and sign
+  x[c(1,nrow(x)),"contribution"] <- x[c(1,nrow(x)),"contribution"] - baseline
 
-  x$contribution <- rounding_function(x$contribution, digits)
-  x$cummulative <- rounding_function(x$cummulative, digits)
+  x[c(1,nrow(x)),"sign"] <- ifelse(x[c(1,nrow(x)),"contribution"] > 0,1,ifelse(x[c(1,nrow(x)),"contribution"] < 0,-1,0))
 
-  x$label <- ifelse(x$sign == "X", paste0("Average response: ",x$cummulative[1],
-                                          "<br>", "Prediction: ",x$contribution[length(x$contribution)]),
-                    paste0(substr(x$variable, 1, 25),
-                        "<br>", ifelse(x$contribution > 0, "increases", "decreases"),
-                        " average response <br>by ", x$contribution))
+  # use for bars
+  x[,'barStart'] <- ifelse(x[,'sign'] == "1", x[,'cummulative'] - x[,'contribution'], x[,'cummulative'])
+  x[,'barSupport'] <- ifelse(x[,'sign'] == "1", x[,'cummulative'], x[,'cummulative'] - x[,'contribution'])
+
+  # use for text label and tooltip
+  x[,'contribution'] <- rounding_function(x['contribution'], digits)
+  x[,'cummulative'] <- rounding_function(x['cummulative'], digits)
+
+  # use for color
+  x[c(1,nrow(x)),"sign"] <- "X"
+
+  x[,'tooltipText'] <- ifelse(x[,'sign'] == "X", paste0("Average response: ",x[1,'cummulative'],
+                                                        "<br>", "Prediction: ",
+                                                        x[nrow(x),'cummulative']),
+                              paste0(substr(x[,'variable'], 1, 25),
+                                     "<br>", ifelse(x[,'contribution'] > 0, "increases", "decreases"),
+                                     " average response <br>by ", abs(x[,'contribution'])))
 
   x
 }
-

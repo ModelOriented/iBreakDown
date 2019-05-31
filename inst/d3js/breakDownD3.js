@@ -1,7 +1,8 @@
 var minValue   = options.xmin,
     maxValue = options.xmax,
     n = options.n, m = options.m,
-    barWidth = options.barWidth;
+    barWidth = options.barWidth,
+    chartTitle = options.chartTitle;
 
 // effort to make labels margin
 var temp = svg.selectAll()
@@ -21,7 +22,7 @@ temp.append("text")
 svg.selectAll('text').remove();
 temp.remove();
 
-var maxLength = d3.max(textWidth)+10;
+var maxLength = d3.max(textWidth)+15;
 ////
 
 var margin = {top: 98, right: 30, bottom: 71, left: maxLength, inner: 42},
@@ -29,9 +30,7 @@ var margin = {top: 98, right: 30, bottom: 71, left: maxLength, inner: 42},
     h = height - margin.top - margin.bottom,
     plotTop = margin.top,
     plotHeight = m*barWidth + (m+1)*barWidth/2,
-    plotWidth = 420*1.3;
-
-var chartTitle = "Local attributions"; // subject to change
+    plotWidth = 420*1.2;
 
 if (options.scaleHeight === true) {
   if (h > n*plotHeight + (n-1)*margin.inner) {
@@ -147,13 +146,12 @@ function singlePlot(modelName, bData, i){
   var tool_tip = d3.tip()
         .attr("class", "tooltip")
         .offset([-8, 0])
-        .html(function(d) { return changedTooltipHtml(d); });
+        .html(function(d) { return staticTooltipHtml(d); });
 
   svg.call(tool_tip);
 
   // find boundaries
-  let intercept = bData[0].barSupport;
-  let prediction = bData[m-1].cummulative;
+  let intercept = bData[0].contribution > 0 ? bData[0].barStart : bData[0].barSupport;
 
   // make dotted line from intercept to prediction
   var dotLineData = [{"x": x(intercept), "y": y("intercept")},
@@ -188,26 +186,8 @@ function singlePlot(modelName, bData, i){
         })
         .attr("y", d => y(d.variable) )
         .attr("height", y.bandwidth() )
-        .attr("x", function(d){
-          switch(d.sign){
-            case "X":
-              return intercept<prediction ? x(intercept) : x(prediction);
-            default:
-              return x(d.barStart);
-          }
-        })
-        .attr("width", function(d){
-          switch(d.sign){
-            case "-1":
-              return x(d.barSupport) - x(d.barStart);
-            case "1":
-              return x(d.barSupport) - x(d.barStart);
-            case "X":
-              return intercept<prediction ? x(prediction)-x(intercept) : x(intercept)-x(prediction);
-            default:
-              return 0;
-          }
-        })
+        .attr("x", d => x(d.barStart))
+        .attr("width", d => x(d.barSupport) - x(d.barStart))
         .on('mouseover', tool_tip.show)
         .on('mouseout', tool_tip.hide);
 
@@ -221,14 +201,12 @@ function singlePlot(modelName, bData, i){
         .attr("x", d => {
           switch(d.sign){
             case "X":
-              return intercept<prediction ? x(prediction) + 5 : x(prediction) - 5;
+              return d.contribution < 0 ? x(d.barStart) - 5 : x(d.barSupport) + 5;
             default:
               return x(d.barSupport) + 5;
           }
         })
-        .attr("text-anchor", d => {
-          if (d.sign === "X" && intercept > prediction) return "end";
-        })
+        .attr("text-anchor", d => d.sign == "X" && d.contribution < 0 ? "end" : null)
         .attr("y", d => y(d.variable) + barWidth*3/4)
         .attr("class", "axisLabel")
         .text(d => {
@@ -249,18 +227,18 @@ function singlePlot(modelName, bData, i){
 
   lines.append("line")
         .attr("class", "interceptLine")
-        .attr("x1", d => d.sign == "-1" ? x(d.barStart) : x(d.barSupport))
+        .attr("x1", d => d.contribution < 0 ? x(d.barStart) : x(d.barSupport))
         .attr("y1", d => y(d.variable))
-        .attr("x2", d => d.sign == "-1" ? x(d.barStart) : x(d.barSupport))
-        .attr("y2", d => d.sign == "X" ? y(d.variable) : y(d.variable) + barWidth*2.5);
+        .attr("x2", d => d.contribution < 0 ? x(d.barStart) : x(d.barSupport))
+        .attr("y2", d => d.variable == "prediction" ? y(d.variable) : y(d.variable) + barWidth*2.5);
 
   // update plotTop
   plotTop += (margin.inner + plotHeight);
 }
 
-function changedTooltipHtml(d, prediction) {
+function staticTooltipHtml(d, prediction) {
   var temp = "<center>";
-  temp += d.label;
+  temp += d.tooltipText;
   temp += "</center>";
   return temp;
 }

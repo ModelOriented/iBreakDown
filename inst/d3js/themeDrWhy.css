@@ -39,7 +39,7 @@ text {
 
 .interceptLine{
     stroke: #371ea3;
-	stroke-width: 0.7px;
+	stroke-width: 1px;
 	stroke-opacity: 1;
 	stroke-linecap: "butt";
 }
