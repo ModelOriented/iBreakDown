@@ -7,14 +7,17 @@
 \usage{
 plotD3(x, ...)
 
-\method{plotD3}{break_down}(x, ..., max_features = 10, digits = 3,
-  rounding_function = round, bar_width = 12, margin = 0.2,
-  scale_height = FALSE, min_max = NA, vcolors = NA)
+\method{plotD3}{break_down}(x, ..., baseline = NA, max_features = 10,
+  digits = 3, rounding_function = round, bar_width = 12,
+  margin = 0.2, scale_height = FALSE, min_max = NA, vcolors = NA,
+  chartTitle = NA)
 }
 \arguments{
 \item{x}{the model model of `break_down` class.}
 
 \item{...}{other parameters.}
+
+\item{baseline}{if numeric then veritical line will start in baseline.}
 
 \item{max_features}{maximal number of features to be included in the plot. default value is 10.}
 
@@ -35,6 +38,8 @@ Or the default \code{\link{round}} to have the same precision for all components
 But can be set to some constants, usefull if these plots are used for comparisons.}
 
 \item{vcolors}{named vector with colors. By default `NA` therfore will choose DrWhy colors}
+
+\item{chartTitle}{a character. Set custom title}
 }
 \value{
 an `r2d3` object.

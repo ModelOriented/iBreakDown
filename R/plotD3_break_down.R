@@ -6,6 +6,7 @@
 #'
 #' @param x the model model of `break_down` class.
 #' @param ... other parameters.
+#' @param baseline if numeric then veritical line will start in baseline.
 #' @param max_features maximal number of features to be included in the plot. default value is 10.
 #' @param digits number of decimal places (round) or significant digits (signif) to be used.
 #' See the \code{rounding_function} argument.
@@ -18,6 +19,7 @@
 #' @param min_max a range of OX axis. By deafult `NA` therefore will be extracted from the contributions of `x`.
 #' But can be set to some constants, usefull if these plots are used for comparisons.
 #' @param vcolors named vector with colors. By default `NA` therfore will choose DrWhy colors
+#' @param chartTitle a character. Set custom title
 #'
 #' @return an `r2d3` object.
 #'
