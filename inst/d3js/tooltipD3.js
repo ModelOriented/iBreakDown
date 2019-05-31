@@ -6,6 +6,7 @@
 // Removal of ES6 for D3 v4 Adaption Copyright (c) 2016 David Gotz
 //
 // Tooltips for d3.js SVG visualizations
+
 d3.functor = function functor(v) {
   return typeof v === "function" ? v : function() {
     return v;
@@ -51,10 +52,27 @@ d3.tip = function() {
 
     while(i--) nodel.classed(directions[i], false)
     coords = direction_callbacks[dir].apply(this)
-    nodel.classed(dir, true)
-      .style('top', (coords.top +  poffset[0]) + scrollTop + 'px')
-      .style('left', (coords.left + poffset[1]) + scrollLeft + 'px')
 
+    ////////////////////////////////::::::::://///////////////////////////////////////////
+
+    var divDim = node.getBoundingClientRect(),
+        svgDim = svg.getBBox();
+
+    if (d3.event.pageY + divDim.height > svgDim.height) {
+      nodel.classed(dir, true).style('top', (d3.event.pageY - divDim.height - 10) + scrollTop  + 'px');
+    } else {
+      nodel.classed(dir, true).style('top', (d3.event.pageY + 10) + scrollTop  + 'px');
+    }
+
+    if (d3.event.pageX + divDim.width/2 > svgDim.width) {
+      nodel.classed(dir, true).style('left', (d3.event.pageX - divDim.width - 10) + scrollLeft + 'px');
+    } else if (d3.event.pageX - divDim.width/2 < 5) {
+      nodel.classed(dir, true).style('left', (d3.event.pageX + divDim.width + 10) + scrollLeft + 'px');
+    } else {
+      nodel.classed(dir, true).style('left', (d3.event.pageX - divDim.width/2) + scrollLeft + 'px');
+    }
+
+    ////////////////////////////////::::::::://///////////////////////////////////////////
     return tip
   }
 
@@ -255,6 +273,7 @@ d3.tip = function() {
 
     return node.node()
   }
+
 
   function getSVGNode(el) {
     el = el.node()

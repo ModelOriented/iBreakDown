@@ -32,7 +32,8 @@ Suggests: knitr,
     ranger,
     nnet,
     testthat,
-    r2d3
+    r2d3,
+    jsonlite
 VignetteBuilder: knitr
 URL: https://ModelOriented.github.io/iBreakDown/
 BugReports: https://github.com/ModelOriented/iBreakDown/issues
