@@ -110,15 +110,17 @@
     </div>
 
     
-    <p>Experimental interactive explainer created with 'D3.js' library.</p>
+    <p>Plots waterfall break down for objects of the `break_down` class.
+Usually executed after `break_down()` or `local_attributions()` function.</p>
     
 
     <pre class="usage"><span class='fu'>plotD3</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for break_down</span>
 <span class='fu'>plotD3</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>baseline</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>max_features</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='kw'>min_max</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>vcolors</span> <span class='kw'>=</span> <span class='kw pkg'>DALEX</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/theme_drwhy'>theme_drwhy_colors_break_down</a></span>(),
-  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>rounding_function</span> <span class='kw'>=</span> <span class='no'>round</span>)</pre>
+  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>rounding_function</span> <span class='kw'>=</span> <span class='no'>round</span>, <span class='kw'>bar_width</span> <span class='kw'>=</span> <span class='fl'>12</span>,
+  <span class='kw'>margin</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>scale_height</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>min_max</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>vcolors</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>chartTitle</span> <span class='kw'>=</span> <span class='fl'>NA</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -140,14 +142,6 @@
       <td><p>maximal number of features to be included in the plot. default value is 10.</p></td>
     </tr>
     <tr>
-      <th>min_max</th>
-      <td><p>a range of OX axis. By deafult `NA` therefore will be extracted from the contributions of `x`. But can be set to some constants, usefull if these plots are used for comparisons.</p></td>
-    </tr>
-    <tr>
-      <th>vcolors</th>
-      <td><p>named vector with colors.</p></td>
-    </tr>
-    <tr>
       <th>digits</th>
       <td><p>number of decimal places (round) or significant digits (signif) to be used.
 See the <code>rounding_function</code> argument.</p></td>
@@ -157,6 +151,31 @@ See the <code>rounding_function</code> argument.</p></td>
       <td><p>function that is to used for rounding numbers.
 It may be <code>signif</code> which keeps a specified number of significant digits.
 Or the default <code>round</code> to have the same precision for all components.</p></td>
+    </tr>
+    <tr>
+      <th>bar_width</th>
+      <td><p>width of bars in px. By default 12px</p></td>
+    </tr>
+    <tr>
+      <th>margin</th>
+      <td><p>extend x axis domain range to adjust the plot. Usually value between 0.1 and 0.3, by default it's 0.2</p></td>
+    </tr>
+    <tr>
+      <th>scale_height</th>
+      <td><p>should the height of plot scale with window size? By default it's FALSE</p></td>
+    </tr>
+    <tr>
+      <th>min_max</th>
+      <td><p>a range of OX axis. By deafult `NA` therefore will be extracted from the contributions of `x`.
+But can be set to some constants, usefull if these plots are used for comparisons.</p></td>
+    </tr>
+    <tr>
+      <th>vcolors</th>
+      <td><p>named vector with colors. By default `NA` therfore will choose DrWhy colors</p></td>
+    </tr>
+    <tr>
+      <th>chartTitle</th>
+      <td><p>a character. Set custom title</p></td>
     </tr>
     </table>
     
@@ -172,7 +191,7 @@ Or the default <code>round</code> to have the same precision for all components.
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='st'>"DALEX"</span>)
 <span class='fu'>library</span>(<span class='st'>"iBreakDown"</span>)
-<span class='co'># Toy examples, because CRAN angels ask for them</span>
+
 <span class='no'>titanic</span> <span class='kw'>&lt;-</span> <span class='fu'>na.omit</span>(<span class='no'>titanic</span>)
 <span class='fu'>set.seed</span>(<span class='fl'>1313</span>)
 <span class='no'>titanic_small</span> <span class='kw'>&lt;-</span> <span class='no'>titanic</span>[<span class='fu'>sample</span>(<span class='fl'>1</span>:<span class='fu'>nrow</span>(<span class='no'>titanic</span>), <span class='fl'>500</span>), <span class='fu'>c</span>(<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>6</span>,<span class='fl'>9</span>)]
@@ -180,48 +199,55 @@ Or the default <code>round</code> to have the same precision for all components.
                        <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
 <span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
                            <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>[,-<span class='fl'>9</span>],
-                           <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>)
-<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_attributions.html'>local_attributions</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_small</span>[<span class='fl'>1</span>, ])
-<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                     contribution
-#&gt; lm: intercept              0.308
-#&gt; lm: gender = female        0.417
-#&gt; lm: fare = 0              -0.028
-#&gt; lm: age = 36              -0.013
-#&gt; lm: survived = yes         0.000
-#&gt; lm: prediction             0.685</div><div class='input'><span class='fu'>plotD3</span>(<span class='no'>bd_rf</span>)</div><div class='input'><span class='fu'>library</span>(<span class='st'>"randomForest"</span>)
-<span class='no'>titanic</span> <span class='kw'>&lt;-</span> <span class='fu'>na.omit</span>(<span class='no'>titanic</span>)
-<span class='no'>model_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>class</span> + <span class='no'>embarked</span> +
-                                   <span class='no'>fare</span> + <span class='no'>sibsp</span> + <span class='no'>parch</span>,  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The response has five or fewer unique values.  Are you sure you want to do regression?</span></div><div class='input'>
-<span class='no'>explain_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_rf</span>,
-                              <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>[,-<span class='fl'>9</span>],
-                              <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>,
-                              <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Random Forest v7"</span>)
+                           <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>,
+                           <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"glm"</span>)
+<span class='no'>bd_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_attributions.html'>local_attributions</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_small</span>[<span class='fl'>1</span>, ])
+<span class='no'>bd_glm</span></div><div class='output co'>#&gt;                      contribution
+#&gt; glm: intercept              0.308
+#&gt; glm: gender = female        0.417
+#&gt; glm: fare = 0              -0.028
+#&gt; glm: age = 36              -0.013
+#&gt; glm: survived = yes         0.000
+#&gt; glm: prediction             0.685</div><div class='input'><span class='fu'>plotD3</span>(<span class='no'>bd_glm</span>)
 
-<span class='no'>new_passanger</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(
-  <span class='kw'>class</span> <span class='kw'>=</span> <span class='fu'>factor</span>(<span class='st'>"1st"</span>, <span class='kw'>levels</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"1st"</span>, <span class='st'>"2nd"</span>, <span class='st'>"3rd"</span>, <span class='st'>"deck crew"</span>, <span class='st'>"engineering crew"</span>,
-                                    <span class='st'>"restaurant staff"</span>, <span class='st'>"victualling crew"</span>)),
-  <span class='kw'>gender</span> <span class='kw'>=</span> <span class='fu'>factor</span>(<span class='st'>"male"</span>, <span class='kw'>levels</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"female"</span>, <span class='st'>"male"</span>)),
-  <span class='kw'>age</span> <span class='kw'>=</span> <span class='fl'>8</span>,
-  <span class='kw'>sibsp</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>parch</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>fare</span> <span class='kw'>=</span> <span class='fl'>72</span>,
-  <span class='kw'>embarked</span> <span class='kw'>=</span> <span class='fu'>factor</span>(<span class='st'>"Southampton"</span>,
-                  <span class='kw'>levels</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"Belfast"</span>, <span class='st'>"Cherbourg"</span>, <span class='st'>"Queenstown"</span>, <span class='st'>"Southampton"</span>)))
+<span class='fu'>library</span>(<span class='no'>randomForest</span>)
 
-  <span class='no'>rf_la</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_attributions.html'>local_attributions</a></span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>new_passanger</span>)
-  <span class='no'>rf_la</span></div><div class='output co'>#&gt;                                          contribution
-#&gt; Random Forest v7: intercept                     0.324
-#&gt; Random Forest v7: age = 8                       0.195
-#&gt; Random Forest v7: class = 1st                   0.071
-#&gt; Random Forest v7: gender = male                -0.055
-#&gt; Random Forest v7: fare = 72                    -0.043
-#&gt; Random Forest v7: embarked = Southampton       -0.018
-#&gt; Random Forest v7: sibsp = 0                    -0.003
-#&gt; Random Forest v7: parch = 0                    -0.024
-#&gt; Random Forest v7: prediction                    0.447</div><div class='input'>
-  <span class='fu'>plotD3</span>(<span class='no'>rf_la</span>)
-  <span class='fu'>plotD3</span>(<span class='no'>rf_la</span>, <span class='kw'>max_features</span> <span class='kw'>=</span> <span class='fl'>3</span>)
-  <span class='fu'>plotD3</span>(<span class='no'>rf_la</span>, <span class='kw'>max_features</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>min_max</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>,<span class='fl'>1</span>))</div></pre>
+<span class='no'>m_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>status</span> ~ <span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>[<span class='fl'>2</span>:<span class='fl'>2000</span>,])
+<span class='no'>new_observation</span> <span class='kw'>&lt;-</span> <span class='no'>HR_test</span>[<span class='fl'>1</span>,]
+<span class='no'>new_observation</span></div><div class='output co'>#&gt;   gender      age    hours evaluation salary status
+#&gt; 1   male 57.72683 42.31527          2      2  fired</div><div class='input'>
+<span class='no'>p_fun</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>object</span>, <span class='no'>newdata</span>){<span class='fu'>predict</span>(<span class='no'>object</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>newdata</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"prob"</span>)}
+
+<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_attributions.html'>local_attributions</a></span>(<span class='no'>m_rf</span>,
+                           <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR_test</span>,
+                           <span class='kw'>new_observation</span> <span class='kw'>=</span>  <span class='no'>new_observation</span>,
+                           <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>p_fun</span>)
+
+<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                               contribution
+#&gt; randomForest.formula.fired: intercept                0.377
+#&gt; randomForest.formula.fired: hours = 42               0.217
+#&gt; randomForest.formula.fired: evaluation = 2           0.060
+#&gt; randomForest.formula.fired: salary = 2              -0.169
+#&gt; randomForest.formula.fired: age = 58                 0.223
+#&gt; randomForest.formula.fired: gender = male            0.153
+#&gt; randomForest.formula.fired: status = fired           0.000
+#&gt; randomForest.formula.fired: prediction               0.860
+#&gt; randomForest.formula.ok: intercept                   0.281
+#&gt; randomForest.formula.ok: hours = 42                 -0.029
+#&gt; randomForest.formula.ok: evaluation = 2              0.086
+#&gt; randomForest.formula.ok: salary = 2                  0.171
+#&gt; randomForest.formula.ok: age = 58                   -0.225
+#&gt; randomForest.formula.ok: gender = male              -0.154
+#&gt; randomForest.formula.ok: status = fired              0.000
+#&gt; randomForest.formula.ok: prediction                  0.130
+#&gt; randomForest.formula.promoted: intercept             0.341
+#&gt; randomForest.formula.promoted: hours = 42           -0.187
+#&gt; randomForest.formula.promoted: evaluation = 2       -0.145
+#&gt; randomForest.formula.promoted: salary = 2           -0.002
+#&gt; randomForest.formula.promoted: age = 58              0.002
+#&gt; randomForest.formula.promoted: gender = male         0.001
+#&gt; randomForest.formula.promoted: status = fired        0.000
+#&gt; randomForest.formula.promoted: prediction            0.010</div><div class='input'><span class='fu'>plotD3</span>(<span class='no'>bd_rf</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -240,7 +266,7 @@ Or the default <code>round</code> to have the same precision for all components.
 
       <footer>
       <div class="copyright">
-  <p>Developed by Przemyslaw Biecek, Alicja Gosiewska.</p>
+  <p>Developed by Przemyslaw Biecek, Alicja Gosiewska, Hubert Baniecki.</p>
 </div>
 
 <div class="pkgdown">

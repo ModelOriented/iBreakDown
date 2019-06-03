@@ -267,11 +267,13 @@ with by default `B=25` random draws.</p>
 #&gt; randomForest-floor              226.02250  231.48942
 #&gt; randomForest-no.rooms          -158.57830 -143.89151
 #&gt; randomForest-surface           -262.73969 -229.42256</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='break_down_uncertainty-3.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>break_down_uncertainty</span>(<span class='no'>explainer_rf</span>, <span class='no'>apartments_test</span>[<span class='fl'>1</span>,], <span class='kw'>path</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>5</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: the condition has length &gt; 1 and only the first element will be used</span></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='break_down_uncertainty-4.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>break_down_uncertainty</span>(<span class='no'>explainer_rf</span>, <span class='no'>apartments_test</span>[<span class='fl'>1</span>,], <span class='kw'>path</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>5</span>)
+<span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='break_down_uncertainty-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>break_down_uncertainty</span>(<span class='no'>explainer_rf</span>,
                                      <span class='no'>apartments_test</span>[<span class='fl'>1</span>,],
                                      <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"floor"</span>, <span class='st'>"no.rooms"</span>, <span class='st'>"district"</span>,
-                                         <span class='st'>"construction.year"</span>, <span class='st'>"surface"</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: the condition has length &gt; 1 and only the first element will be used</span></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='break_down_uncertainty-5.png' alt='' width='700' height='433' /></div><div class='input'>
+                                         <span class='st'>"construction.year"</span>, <span class='st'>"surface"</span>))
+<span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='break_down_uncertainty-5.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>shap</span>(<span class='no'>explainer_rf</span>,
               <span class='no'>apartments_test</span>[<span class='fl'>1</span>,])
 <span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                      min        q1    median       mean
@@ -306,7 +308,7 @@ with by default `B=25` random draws.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Przemyslaw Biecek, Alicja Gosiewska.</p>
+  <p>Developed by Przemyslaw Biecek, Alicja Gosiewska, Hubert Baniecki.</p>
 </div>
 
 <div class="pkgdown">

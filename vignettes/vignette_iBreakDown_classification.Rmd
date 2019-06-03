@@ -99,7 +99,7 @@ library(randomForest)
 
 m_rf <- randomForest(status ~ . , data = HR)
 
-p_fun <- function(object, newdata){predict(object, newdata=newdata, type = "prob")}
+p_fun <- function(object, newdata){predict(object, newdata = newdata, type = "prob")}
 
 bd_rf <- local_attributions(m_rf,
                             data = HR_test,
@@ -108,6 +108,7 @@ bd_rf <- local_attributions(m_rf,
 
 bd_rf
 plot(bd_rf)
+plotD3(bd_rf)
 ```
 
 ## SVM
@@ -140,5 +141,6 @@ bd_knn <- local_attributions(m_knn,
                             new_observation =  new_observation)
 
 plot(bd_knn)
+plotD3(bd_knn)
 ```
 
