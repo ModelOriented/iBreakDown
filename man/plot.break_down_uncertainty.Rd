@@ -5,8 +5,7 @@
 \title{Plot Generic for Break Down Uncertainty Objects}
 \usage{
 \method{plot}{break_down_uncertainty}(x, ...,
-  vcolors = DALEX::theme_drwhy_colors_break_down(),
-  show_boxplots = TRUE)
+  vcolors = DALEX::colors_breakdown_drwhy(), show_boxplots = TRUE)
 }
 \arguments{
 \item{x}{the model model of `break_down_uncertainty` class.}

@@ -109,7 +109,7 @@ plotD3(rf_la, max_features = 3)
 ## Force OX axis to be from 0 to 1
 
 ```{r}
-plotD3(rf_la, max_features = 3, min_max = c(0,1))
+plotD3(rf_la, max_features = 3, min_max = c(0,1), margin = 0)
 ```
 
 

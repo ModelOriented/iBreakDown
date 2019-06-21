@@ -22,7 +22,7 @@
 #' @return a `ggplot2` object.
 #'
 #' @import ggplot2
-#' @importFrom DALEX theme_drwhy theme_drwhy_vertical theme_drwhy_colors
+#' @importFrom DALEX theme_drwhy theme_drwhy_vertical colors_breakdown_drwhy
 #' @importFrom utils tail
 #'
 #' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
@@ -108,7 +108,7 @@ plot.break_down <- function(x, ...,
                             baseline = NA,
                             max_features = 10,
                             min_max = NA,
-                            vcolors = DALEX::theme_drwhy_colors_break_down(),
+                            vcolors = DALEX::colors_breakdown_drwhy(),
                             digits = 3, rounding_function = round,
                             add_contributions = TRUE, shift_contributions = 0.05,
                             plot_distributions = FALSE) {
