@@ -213,6 +213,9 @@ function singlePlot(modelName, bData, i){
         .attr("text-anchor", d => d.sign == "X" && d.contribution < 0 ? "end" : null)
         .attr("y", d => y(d.variable) + barWidth*3/4)
         .attr("class", "axisLabel")
+        .transition()
+        .duration(2000)
+        .delay(function(d,i) { return i * 1000 })
         .text(d => {
           switch(d.variable){
             case "intercept":
@@ -234,6 +237,10 @@ function singlePlot(modelName, bData, i){
         .attr("x1", d => d.contribution < 0 ? x(d.barStart) : x(d.barSupport))
         .attr("y1", d => y(d.variable))
         .attr("x2", d => d.contribution < 0 ? x(d.barStart) : x(d.barSupport))
+        .attr("y2", d => y(d.variable))
+        .transition()
+        .duration(2000)
+        .delay(function(d,i) { return i * 1000 })
         .attr("y2", d => d.variable == "prediction" ? y(d.variable) : y(d.variable) + barWidth*2.5);
 
   // update plotTop
