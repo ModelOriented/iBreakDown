@@ -20,6 +20,7 @@
 #' But can be set to some constants, usefull if these plots are used for comparisons.
 #' @param vcolors named vector with colors. By default `NA` therfore will choose DrWhy colors
 #' @param chartTitle a character. Set custom title
+#' @param time in ms. Set animation length
 #'
 #' @return an `r2d3` object.
 #'
@@ -74,7 +75,8 @@ plotD3.break_down <- function(x, ...,
                         scale_height = FALSE,
                         min_max = NA,
                         vcolors = NA,
-                        chartTitle = NA) {
+                        chartTitle = NA,
+                        time = 0) {
 
   n <- length(list(...)) + 1
   m <- c()
@@ -143,7 +145,7 @@ plotD3.break_down <- function(x, ...,
 
   options <- list(xmin = min_max[1], xmax = min_max[2],
                   n = n, m = m, barWidth = bar_width,
-                  scaleHeight = scale_height,
+                  scaleHeight = scale_height, time = time,
                   vcolors = ifelse(is.na(vcolors), "default", vcolors),
                   chartTitle = ifelse(is.na(vcolors), "Local attributions", chartTitle))
 
