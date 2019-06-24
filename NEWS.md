@@ -1,6 +1,7 @@
 iBreakDown 0.9.8
 ----------------------------------------------------------------
 * New version of D3 plots in `plotD3()`.
+* Updated color palettes consistent with changes in DALEX 0.4.4
 
 iBreakDown 0.9.6
 ----------------------------------------------------------------

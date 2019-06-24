@@ -66,7 +66,7 @@
 #' }
 #' @export
 plot.break_down_uncertainty <- function(x, ...,
-                  vcolors = DALEX::theme_drwhy_colors_break_down(),
+                  vcolors = DALEX::colors_breakdown_drwhy(),
                   show_boxplots = TRUE) {
 
   variable <- contribution <- NULL
