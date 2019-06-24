@@ -152,7 +152,7 @@ plotD3.break_down <- function(x, ...,
   # plot D3 object
   r2d3::r2d3(
     data = temp,
-    script = system.file("d3js/breakDownD3.js", package = "iBreakDown"),
+    script = system.file("d3js/prototype.js", package = "iBreakDown"), #d3js/breakDownD3.js
     dependencies = list(
       system.file("d3js/colorsDrWhy.js", package = "iBreakDown"),
       system.file("d3js/tooltipD3.js", package = "iBreakDown")
