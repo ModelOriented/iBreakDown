@@ -10,7 +10,7 @@ plotD3(x, ...)
 \method{plotD3}{break_down}(x, ..., baseline = NA, max_features = 10,
   digits = 3, rounding_function = round, bar_width = 12,
   margin = 0.2, scale_height = FALSE, min_max = NA, vcolors = NA,
-  chartTitle = NA)
+  chartTitle = NA, time = 0)
 }
 \arguments{
 \item{x}{the model model of `break_down` class.}
@@ -40,6 +40,8 @@ But can be set to some constants, usefull if these plots are used for comparison
 \item{vcolors}{named vector with colors. By default `NA` therfore will choose DrWhy colors}
 
 \item{chartTitle}{a character. Set custom title}
+
+\item{time}{in ms. Set animation length}
 }
 \value{
 an `r2d3` object.
