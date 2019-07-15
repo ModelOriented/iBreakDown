@@ -134,7 +134,11 @@ plotD3.break_down <- function(x, ...,
   labelList <- as.character(df[,'variable'])
 
   if (any(is.na(min_max))) {
-    min_max <- range(df[,'cummulative'])
+    if (is.na(baseline)) {
+      min_max <- range(df[,'cummulative'])
+    } else {
+      min_max <- range(df[,'cummulative'], baseline)
+    }
   }
 
   # count margins
