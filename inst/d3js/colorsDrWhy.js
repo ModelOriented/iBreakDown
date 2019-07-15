@@ -58,3 +58,30 @@ function getColors(n, type){
       }
     }
 }
+
+function calculateTextWidth(text) {
+  // calculate max width of 11px text array
+
+  var temp = svg.selectAll()
+                .data(text)
+                .enter();
+
+  var textWidth = [];
+
+  temp.append("text")
+      .attr("class", "toRemove")
+      .text(function(d) { return d;})
+      .style("font-size", "11px")
+      .style('font-family', 'Fira Sans, sans-serif')
+      .each(function(d,i) {
+          var thisWidth = this.getComputedTextLength();
+          textWidth.push(thisWidth);
+      });
+
+  svg.selectAll('.toRemove').remove();
+  temp.remove();
+
+  var maxLength = d3.max(textWidth);
+
+  return maxLength;
+}

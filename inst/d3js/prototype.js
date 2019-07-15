@@ -6,26 +6,7 @@ var minValue   = options.xmin,
 
 var time = options.time;
 
-// effort to make labels margin
-var temp = svg.selectAll()
-              .data(data[1])
-              .enter();
-
-var textWidth = [];
-
-temp.append("text")
-    .text(function(d) { return d;})
-    .style("font-size", "11px")
-    .each(function(d,i) {
-        var thisWidth = this.getComputedTextLength();
-        textWidth.push(thisWidth);
-    });
-
-svg.selectAll('text').remove();
-temp.remove();
-
-var maxLength = d3.max(textWidth)+15;
-////
+var maxLength = calculateTextWidth(data[1])+15;
 
 var margin = {top: 98, right: 30, bottom: 71, left: maxLength, inner: 42},
     w = width - margin.left - margin.right,
@@ -213,7 +194,8 @@ function singlePlot(modelName, bData, i){
           }
         })
         .attr("text-anchor", d => d.sign == "X" && d.contribution < 0 ? "end" : null)
-        .attr("y", d => y(d.variable) + barWidth*3/4)
+        .attr("y", d => y(d.variable) + barWidth/2)
+        .attr("dy", "0.5em")
         .attr("class", "axisLabel")
         .transition()
         .duration(time)
