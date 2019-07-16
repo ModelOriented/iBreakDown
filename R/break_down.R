@@ -84,7 +84,7 @@ break_down.default <- function(x, data, predict_function = predict,
                                        keep_distributions = FALSE,
                                        order = NULL,
                                        label = class(x)[1], ...,
-                               interactions = interactions) {
+                               interactions = FALSE) {
   if (interactions) {
     res <- local_interactions.default(x, data, predict_function = predict_function,
                                       new_observation = new_observation,
