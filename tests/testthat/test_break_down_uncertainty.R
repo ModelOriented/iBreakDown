@@ -30,8 +30,12 @@ bd_rf_B <- break_down_uncertainty(explainer_rf,
 pl_B <- plot(bd_rf_B)
 
 bd_rf_C <- shap(explainer_rf,
-                  apartments_test[1,])
+                apartments_test[1,])
 pl_C <- plot(bd_rf_C, show_boxplots = FALSE)
+
+bd_rf_D <- shap(explainer_rf,
+                apartments_test[1,], keep_distribution = FALSE)
+pl_D <- plot(bd_rf_D, show_boxplots = FALSE)
 
 # tests
 

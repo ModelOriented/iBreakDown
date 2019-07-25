@@ -11,6 +11,7 @@
 #' @param new_observation a new observation with columns that correspond to variables used in the model.
 #' @param ... other parameters.
 #' @param B number of random paths
+#' @param keep_distribution if TRUE then we will keep distribution for predicted values. It's needed by the describe function.
 #' @param path if specified, then this path will be highlighed on the plot. Use `average` in order to show an average effect
 #' @param label name of the model. By default it's extracted from the 'class' attribute of the model.
 #'
@@ -82,13 +83,17 @@
 #' }
 #' @export
 #' @rdname break_down_uncertainty
-break_down_uncertainty <- function(x, ..., B = 10)
+break_down_uncertainty <- function(x, ...,
+                                   keep_distributions = TRUE,
+                                   B = 10)
   UseMethod("break_down_uncertainty")
 
 #' @export
 #' @rdname break_down_uncertainty
 break_down_uncertainty.explainer <- function(x, new_observation,
-                       ..., B = 10) {
+                       ...,
+                       keep_distributions = TRUE,
+                       B = 10) {
   # extracts model, data and predict function from the explainer
   model <- x$model
   data <- x$data
@@ -98,7 +103,9 @@ break_down_uncertainty.explainer <- function(x, new_observation,
   break_down_uncertainty.default(model, data, predict_function,
                      new_observation = new_observation,
                      label = label,
-                     ..., B = B)
+                     ...,
+                     keep_distributions = keep_distributions,
+                     B = B)
 }
 
 #' @export
@@ -108,6 +115,7 @@ break_down_uncertainty.default <- function(x, data, predict_function = predict,
                                label = class(x)[1],
                                ...,
                                path = NULL,
+                               keep_distributions = TRUE,
                                B = 10) {
   # here one can add model and data and new observation
   # just in case only some variables are specified
@@ -153,8 +161,6 @@ break_down_uncertainty.default <- function(x, data, predict_function = predict,
 
   class(result) <- c("break_down_uncertainty", "data.frame")
 
-  ##TODO add keep_distributions as argument?
-  keep_distributions <- TRUE
   if (keep_distributions) {
     ## this yhats is not calculated like in breakDown
     yhats <- list(NULL)
