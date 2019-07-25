@@ -7,14 +7,14 @@
 \alias{shap}
 \title{Explanation Level Uncertainty of Sequential Variable Attribution}
 \usage{
-break_down_uncertainty(x, ..., B = 10)
+break_down_uncertainty(x, ..., keep_distributions = TRUE, B = 10)
 
 \method{break_down_uncertainty}{explainer}(x, new_observation, ...,
-  B = 10)
+  keep_distributions = TRUE, B = 10)
 
 \method{break_down_uncertainty}{default}(x, data,
   predict_function = predict, new_observation, label = class(x)[1],
-  ..., path = NULL, B = 10)
+  ..., path = NULL, keep_distributions = TRUE, B = 10)
 
 shap(x, ..., B = 25)
 }
@@ -34,6 +34,8 @@ shap(x, ..., B = 25)
 \item{label}{name of the model. By default it's extracted from the 'class' attribute of the model.}
 
 \item{path}{if specified, then this path will be highlighed on the plot. Use `average` in order to show an average effect}
+
+\item{keep_distribution}{if TRUE then we will keep distribution for predicted values. It's needed by the describe function.}
 }
 \value{
 an object of the `break_down_uncertainty` class.
