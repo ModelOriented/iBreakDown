@@ -10,3 +10,5 @@
 ^docs.*$
 ^.*README.*$
 ^_pkgdown\.yml$
+^doc$
+^Meta$

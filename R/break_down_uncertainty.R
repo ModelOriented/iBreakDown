@@ -153,6 +153,24 @@ break_down_uncertainty.default <- function(x, data, predict_function = predict,
 
   class(result) <- c("break_down_uncertainty", "data.frame")
 
+  ##TODO add keep_distributions as argument?
+  keep_distributions <- TRUE
+  if (keep_distributions) {
+    ## this yhats is not calculated like in breakDown
+    yhats <- list(NULL)
+
+    yhats_distribution <- calculate_yhats_distribution(x, data, predict_function, label, yhats)
+
+    attr(result, "yhats_distribution") <- yhats_distribution
+  }
+
+  target_yhat <- predict_function(x, new_observation)
+  yhatpred <- as.data.frame(predict_function(x, data))
+  baseline_yhat <- colMeans(yhatpred)
+
+  attr(result, "prediction") <- as.numeric(target_yhat)
+  attr(result, "intercept") <- as.numeric(baseline_yhat)
+
   result
 }
 
@@ -181,10 +199,19 @@ get_single_random_path <- function(x, data, predict_function, new_observation, l
   }
 
   diffs <- apply(do.call(rbind, yhats), 2, diff)
+
   single_cols <- lapply(1:ncol(diffs), function(col) {
-    data.frame(contribution = diffs[,col],
-               label = ifelse(ncol(diffs) == 1, label, paste(label,colnames(diffs)[col], sep = ".")),
-               variable = vnames[random_path])
+
+    variable_names <- vnames[random_path]
+    data.frame(
+      variable = paste0(variable_names, " = ",
+                       sapply(new_observation[variable_names], as.character)),
+      contribution = diffs[,col],
+      variable_name = variable_names,
+      variable_value = sapply(new_observation[variable_names], as.character),
+      sign = sign(diffs[,col]),
+      label = ifelse(ncol(diffs) == 1, label, paste0(label,colnames(diffs)[col], sep = "."))
+    )
   })
 
   do.call(rbind,single_cols)

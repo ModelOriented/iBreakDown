@@ -2,7 +2,7 @@
 title: "iBreakDown plots for regression models"
 author: "Dariusz Komosinski"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_document
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{iBreakDown plots for regression models}
   %\VignetteEngine{knitr::rmarkdown}

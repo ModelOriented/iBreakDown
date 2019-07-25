@@ -2,7 +2,7 @@
 title: "iBreakDown plots for Sinking of the RMS Titanic"
 author: "Przemyslaw Biecek"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_document
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{iBreakDown plots for Sinking of the RMS Titanic}
   %\VignetteEngine{knitr::rmarkdown}
