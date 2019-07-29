@@ -11,7 +11,7 @@
 #' @param new_observation a new observation with columns that correspond to variables used in the model.
 #' @param ... other parameters.
 #' @param B number of random paths
-#' @param keep_distribution if TRUE then we will keep distribution for predicted values. It's needed by the describe function.
+#' @param keep_distributions if TRUE then we will keep distribution for predicted values. It's needed by the describe function.
 #' @param path if specified, then this path will be highlighed on the plot. Use `average` in order to show an average effect
 #' @param label name of the model. By default it's extracted from the 'class' attribute of the model.
 #'
