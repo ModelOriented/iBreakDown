@@ -35,13 +35,13 @@ if (vColors === "default") {
     defaultColor = colors[2];
 }
 
-breakDown(data);
+shap(data);
 
 // change font
 svg.selectAll("text")
   .style('font-family', 'Fira Sans, sans-serif');
 
-function breakDown(data){
+function shap(data){
   var barData = data[0];
   var modelNames = Object.keys(barData);
 
@@ -107,8 +107,6 @@ function singlePlot(modelName, bData, i){
         .call(yAxis)
         .call(g => g.select(".domain").remove());
 
-  yAxis.select(".tick:last-child").select("text").attr('font-weight', 600);
-
   svg.append("text")
         .attr("x", yGridStart)
         .attr("y", plotTop - 15)
@@ -131,22 +129,6 @@ function singlePlot(modelName, bData, i){
 
   svg.call(tool_tip);
 
-  // find boundaries
-  let intercept = bData[0].contribution > 0 ? bData[0].barStart : bData[0].barSupport;
-
-  // make dotted line from intercept to prediction
-  var dotLineData = [{"x": x(intercept), "y": y("intercept")},
-                     {"x": x(intercept), "y": y("prediction") + barWidth}];
-
-  var lineFunction = d3.line()
-                         .x(function(d) { return d.x; })
-                         .y(function(d) { return d.y; });
-  svg.append("path")
-        .data([dotLineData])
-        .attr("class", "dotLine")
-        .attr("d", lineFunction)
-        .style("stroke-dasharray", ("1, 2"));
-
   // add bars
   var bars = svg.selectAll()
         .data(bData)
@@ -165,8 +147,8 @@ function singlePlot(modelName, bData, i){
               return defaultColor;
           }
         })
-        .attr("y", d => y(d.variable) )
-        .attr("height", y.bandwidth() )
+        .attr("y", d => y(d.variable))
+        .attr("height", y.bandwidth())
         .attr("x", d => d.contribution > 0 ? x(d.barStart) : x(d.barSupport))
         .on('mouseover', tool_tip.show)
         .on('mouseout', tool_tip.hide)
@@ -183,30 +165,15 @@ function singlePlot(modelName, bData, i){
         .append("g");
 
   contributionLabel.append("text")
-        .attr("x", d => {
-          switch(d.sign){
-            case "X":
-              return d.contribution < 0 ? x(d.barStart) - 5 : x(d.barSupport) + 5;
-            default:
-              return x(d.barSupport) + 5;
-          }
-        })
-        .attr("text-anchor", d => d.sign == "X" && d.contribution < 0 ? "end" : null)
+        .attr("x", d => d.contribution < 0 ? x(d.barStart) - 5 : x(d.barSupport) + 5)
         .attr("y", d => y(d.variable) + barWidth/2)
         .attr("class", "axisLabel")
         .attr("dy", "0.4em")
+        .attr("text-anchor", d => d.sign == "-1" ? "end" : "start")
         .transition()
         .duration(time)
         .delay((d,i) => (i+1) * time)
-        .text(d => {
-          switch(d.variable){
-            case "intercept":
-            case "prediction":
-              return d.cummulative;
-            default:
-              return d.sign === "-1" ? d.contribution : "+"+d.contribution;
-          }
-        });
+        .text(d => d.sign === "-1" ? d.contribution : "+"+d.contribution);
 
   // add lines to bars
   var lines = svg.selectAll()
@@ -216,14 +183,14 @@ function singlePlot(modelName, bData, i){
 
   lines.append("line")
         .attr("class", "interceptLine")
-        .attr("x1", d => d.contribution < 0 ? x(d.barStart) : x(d.barSupport))
+        .attr("x1", d => d.contribution < 0 ? x(d.barSupport) : x(d.barStart))
         .attr("y1", d => y(d.variable))
-        .attr("x2", d => d.contribution < 0 ? x(d.barStart) : x(d.barSupport))
+        .attr("x2", d => d.contribution < 0 ? x(d.barSupport) : x(d.barStart))
         .attr("y2", d => y(d.variable))
         .transition()
         .duration(time)
         .delay((d,i) => (i+1) * time)
-        .attr("y2", d => d.variable == "prediction" ? y(d.variable) : y(d.variable) + barWidth*2.5);
+        .attr("y2", (d,i) => i == m-1 ? y(d.variable) + barWidth : y(d.variable) + barWidth*2.5);
 
   // update plotTop
   plotTop += (margin.inner + plotHeight);

@@ -1,19 +1,18 @@
-#' @title Plot Break Down Objects in D3 with r2d3 package.
+#' @title Plot Shap (Break Down Uncertainty) Objects in D3 with r2d3 package.
 #'
 #' @description
-#' Plots waterfall break down for objects of the `break_down` class.
-#' Usually executed after `break_down()` or `local_attributions()` function.
+#' Plots shapley values. Usually executed after `shap()` function.
 #'
-#' @param x the model model of `break_down` class.
+#' @param x the model model of `shap` class.
 #' @param ... other parameters.
 #' @param baseline if numeric then veritical line will start in baseline.
-#' @param max_features maximal number of features to be included in the plot. Default value is 10.
+#' @param max_features maximal number of features to be included in the plot. Default is 10.
 #' @param digits number of decimal places (round) or significant digits (signif) to be used.
 #' See the \code{rounding_function} argument.
 #' @param rounding_function function that is to used for rounding numbers.
 #' It may be \code{\link{signif}} which keeps a specified number of significant digits.
 #' Or the default \code{\link{round}} to have the same precision for all components.
-#' @param bar_width width of bars in px. By default 12px
+#' @param bar_width width of bars in px. Default is 12px
 #' @param margin extend x axis domain range to adjust the plot. Usually value between 0.1 and 0.3, by default it's 0.2
 #' @param scale_height should the height of plot scale with window size? By default it's FALSE
 #' @param min_max a range of OX axis. By deafult `NA` therefore will be extracted from the contributions of `x`.
@@ -32,44 +31,41 @@
 #'
 #' titanic <- na.omit(titanic)
 #' set.seed(1313)
-#' titanic_small <- titanic[sample(1:nrow(titanic), 500), c(1,2,6,9)]
-#' model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
-#'                        data = titanic_small, family = "binomial")
+#' titanic_small <- titanic[sample(1:nrow(titanic), 500),]
+#' model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare + class +
+#'                            embarked + country + sibsp + parch,
+#'                          data = titanic_small, family = "binomial")
 #' explain_titanic_glm <- explain(model_titanic_glm,
-#'                            data = titanic_small[,-9],
-#'                            y = titanic_small$survived == "yes",
-#'                            label = "glm")
-#' bd_glm <- local_attributions(explain_titanic_glm, titanic_small[1, ])
-#' bd_glm
-#' plotD3(bd_glm)
+#'                                data = titanic_small[,-9],
+#'                                y = titanic_small$survived == "yes",
+#'                                label = "glm")
+#' s_glm <- shap(explain_titanic_glm, titanic_small[1, ])
+#' s_glm
+#' plotD3(s_glm)
 #'
 #' library(randomForest)
 #'
-#' m_rf <- randomForest(status ~ . , data = HR[2:2000,])
+#' HR_small <- HR[2:500,]
+#' m_rf <- randomForest(status ~. , data = HR_small)
 #' new_observation <- HR_test[1,]
 #' new_observation
 #'
 #' p_fun <- function(object, newdata){predict(object, newdata=newdata, type = "prob")}
 #'
-#' bd_rf <- local_attributions(m_rf,
-#'                            data = HR_test,
-#'                            new_observation =  new_observation,
-#'                            predict_function = p_fun)
+#' s_rf <- shap(m_rf,
+#'              data = HR_small[,-6],
+#'              new_observation =  new_observation,
+#'              predict_function = p_fun)
 #'
-#' bd_rf
-#' plotD3(bd_rf)
+#' plotD3(s_rf, time = 500)
 #'
 #' @export
-#' @rdname plotD3_break_down
-plotD3 <- function(x, ...)
-  UseMethod("plotD3")
-
-#' @export
-#' @rdname plotD3_break_down
-plotD3.break_down <- function(x, ...,
+#' @rdname plotD3_shap
+plotD3.shap <- function(x, ...,
                         baseline = NA,
                         max_features = 10,
-                        digits = 3, rounding_function = round,
+                        digits = 3,
+                        rounding_function = round,
                         bar_width = 12,
                         margin = 0.2,
                         scale_height = FALSE,
@@ -82,6 +78,8 @@ plotD3.break_down <- function(x, ...,
   m <- c()
 
   bdl <- list(x, ...)
+  bdl <- lapply(bdl, function(x) x[x$B == 0,])
+
   deletedIndexes <- c()
 
   dl <- list()
@@ -90,7 +88,7 @@ plotD3.break_down <- function(x, ...,
   for (i in 1:n) {
     x <- bdl[[i]]
 
-    if (!("break_down" %in% class(x))) stop("The function requires an object created with local_attributions().")
+    if (!("shap" %in% class(x))) stop("The function requires an object created with shap().")
 
     # because apparently one explainer can make multiple plots
     if (length(levels(x[,'label'])) > 1) {
@@ -112,10 +110,14 @@ plotD3.break_down <- function(x, ...,
   for (i in 1:n) {
     x <- bdl[[i]]
 
+    if (is.na(baseline)) baseline <- attr(x, "intercept")[[i]]
+    prediction <- attr(x, "prediction")[[i]]
+
     # remember number of features to compare
     m <- c(m, ifelse(nrow(x) - 2 <= max_features, nrow(x), max_features + 3))
 
-    new_x <- prepare_data_for_break_down_plotD3(x, baseline, max_features, rounding_function, digits)
+    new_x <- prepare_data_for_shap_plotD3(x, baseline, prediction,
+                                          max_features, rounding_function, digits)
 
     dl[[i]] <- new_x
 
@@ -134,11 +136,7 @@ plotD3.break_down <- function(x, ...,
   labelList <- as.character(df[,'variable'])
 
   if (any(is.na(min_max))) {
-    if (is.na(baseline)) {
-      min_max <- range(df[,'cummulative'])
-    } else {
-      min_max <- range(df[,'cummulative'], baseline)
-    }
+    min_max <- range(df[,"barStart"], df[,"barSupport"])
   }
 
   # count margins
@@ -151,14 +149,13 @@ plotD3.break_down <- function(x, ...,
                   n = n, m = m, barWidth = bar_width,
                   scaleHeight = scale_height, time = time,
                   vcolors = ifelse(is.na(vcolors), "default", vcolors),
-                  chartTitle = ifelse(is.na(chartTitle), "Local attributions", chartTitle))
+                  chartTitle = ifelse(is.na(chartTitle), "Shapley values", chartTitle))
 
   temp <- jsonlite::toJSON(list(dl, labelList))
 
-  # plot D3 object
   r2d3::r2d3(
     data = temp,
-    script = system.file("d3js/breakDownD3.js", package = "iBreakDown"),
+    script = system.file("d3js/shapD3.js", package = "iBreakDown"),
     dependencies = list(
       system.file("d3js/colorsDrWhy.js", package = "iBreakDown"),
       system.file("d3js/tooltipD3.js", package = "iBreakDown")
@@ -169,53 +166,36 @@ plotD3.break_down <- function(x, ...,
   )
 }
 
-prepare_data_for_break_down_plotD3 <- function(x, baseline, max_features = 10, rounding_function, digits) {
+prepare_data_for_shap_plotD3 <- function(x, baseline, prediction,
+                                         max_features = 10, rounding_function, digits) {
 
   # fix df
   x[,'variable'] <- as.character(x[,'variable'])
   x[,'variable_name'] <- as.character(x[,'variable_name'])
-
-  x[x[,'variable_name']=="",'variable_name'] <- "prediction"
-
-  temp <- data.frame(x[c(1,nrow(x)),])
-  x <- data.frame(x[-c(1,nrow(x)),])
 
   if (nrow(x) > max_features) {
     last_row <- max_features + 1
     new_x <- x[1:last_row,]
     new_x[last_row,'variable'] <- "+ all other factors"
     new_x[last_row,'contribution'] <- sum(x[last_row:nrow(x),'contribution'])
-    new_x[last_row,'cummulative'] <- x[nrow(x),'cummulative']
     new_x[last_row,'sign'] <- ifelse(new_x[last_row,'contribution'] > 0,1,-1)
 
     x <- new_x
   }
 
-  x <- rbind(temp[1,], x, temp[2,])
-
-  if (is.na(baseline)) {
-    baseline <- x[1,"cummulative"]
-  }
-
-  # fix contribution and sign
-  x[c(1,nrow(x)),"contribution"] <- x[c(1,nrow(x)),"contribution"] - baseline
-
-  x[c(1,nrow(x)),"sign"] <- ifelse(x[c(1,nrow(x)),"contribution"] > 0,1,ifelse(x[c(1,nrow(x)),"contribution"] < 0,-1,0))
+  x[,"sign"] <- ifelse(x[,"contribution"] > 0,1,ifelse(x[,"contribution"] < 0,-1,0))
 
   # use for bars
-  x[,'barStart'] <- ifelse(x[,'sign'] == "1", x[,'cummulative'] - x[,'contribution'], x[,'cummulative'])
-  x[,'barSupport'] <- ifelse(x[,'sign'] == "1", x[,'cummulative'], x[,'cummulative'] - x[,'contribution'])
+  x[,'barStart'] <- ifelse(x[,'sign'] == "1", baseline, baseline + x[,'contribution'])
+  x[,'barSupport'] <- ifelse(x[,'sign'] == "1", baseline + x[,'contribution'], baseline)
 
   # use for text label and tooltip
   x[,'contribution'] <- rounding_function(x['contribution'], digits)
-  x[,'cummulative'] <- rounding_function(x['cummulative'], digits)
 
-  # use for color
-  x[c(1,nrow(x)),"sign"] <- "X"
+  x[,"sign"] <- as.character(x[,"sign"])
 
-  x[,'tooltipText'] <- ifelse(x[,'sign'] == "X", paste0("Average response: ",x[1,'cummulative'],
-                                                        "<br>", "Prediction: ",
-                                                        x[nrow(x),'cummulative']),
+  x[,'tooltipText'] <- ifelse(x[,'sign'] == "X", paste0("Average response: ", baseline,
+                                                "<br>", "Prediction: ", prediction),
                               paste0(substr(x[,'variable'], 1, 25),
                                      "<br>", ifelse(x[,'contribution'] > 0, "increases", "decreases"),
                                      " average response <br>by ", abs(x[,'contribution'])))

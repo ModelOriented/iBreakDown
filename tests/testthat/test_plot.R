@@ -14,6 +14,8 @@ exp_rf_class <- explain(m_rf_class,
 
 bd_rf_class <- local_attributions(exp_rf_class,
                                   new_observation)
+shap_rf_class <- shap(exp_rf_class,
+                                  new_observation)
 
 bd_rf_class_distr <- local_attributions(exp_rf_class,
                                         new_observation,
@@ -50,9 +52,15 @@ test_that("Error when no distribution before provided", {
   expect_error(plot(bd_rf_reg, plot_distributions = TRUE))
 })
 
-test_that("Test plot3D", {
+test_that("Test plotD3_break_down", {
   expect_is(plotD3(bd_rf_class), "r2d3")
   expect_is(plotD3(bd_rf_class, max_features = 10), "r2d3")
   expect_is(plotD3(bd_rf_class, max_features = 2, min_max = c(0,1)), "r2d3")
+})
+
+test_that("Test plotD3_shap", {
+  expect_is(plotD3(shap_rf_class), "r2d3")
+  expect_is(plotD3(shap_rf_class, max_features = 10), "r2d3")
+  expect_is(plotD3(shap_rf_class, max_features = 2, min_max = c(0,1)), "r2d3")
 })
 

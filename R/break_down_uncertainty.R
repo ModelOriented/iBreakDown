@@ -142,11 +142,11 @@ break_down_uncertainty.default <- function(x, data, predict_function = predict,
     if (head(path, 1) == "average") {
       # let's calculate an average attribution
       extracted_contributions <- sapply(result, function(chunk) {
-        chunk[order(chunk$variable), "contribution"]
+        chunk[order(chunk$label, chunk$variable), "contribution"]
       })
       result_average <- result[[1]]
+      result_average <- result_average[order(result_average$label, result_average$variable),]
       result_average$contribution <- rowMeans(extracted_contributions)
-      result_average$variable <- result_average$variable[order(result_average$variable)]
       result_average$B <- 0
       result <- c(result, list(result_average))
     } else {
@@ -206,6 +206,8 @@ get_single_random_path <- function(x, data, predict_function, new_observation, l
 
   diffs <- apply(do.call(rbind, yhats), 2, diff)
 
+  new_observation <- sapply(new_observation, nice_format) # same as in BD
+
   single_cols <- lapply(1:ncol(diffs), function(col) {
 
     variable_names <- vnames[random_path]
@@ -216,7 +218,7 @@ get_single_random_path <- function(x, data, predict_function, new_observation, l
       variable_name = variable_names,
       variable_value = sapply(new_observation[variable_names], as.character),
       sign = sign(diffs[,col]),
-      label = ifelse(ncol(diffs) == 1, label, paste0(label,colnames(diffs)[col], sep = "."))
+      label = ifelse(ncol(diffs) == 1, label, paste(label,colnames(diffs)[col], sep = "."))
     )
   })
 
@@ -226,6 +228,10 @@ get_single_random_path <- function(x, data, predict_function, new_observation, l
 #' @export
 #' @rdname break_down_uncertainty
 shap <- function(x, ..., B = 25) {
-  break_down_uncertainty(x, ..., B = B, path = "average")
+  ret <- break_down_uncertainty(x, ..., B = B, path = "average")
+
+  class(ret) <- c("shap", class(ret))
+
+  ret
 }
 
