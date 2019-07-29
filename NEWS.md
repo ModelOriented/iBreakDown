@@ -1,3 +1,8 @@
+iBreakDown 0.9.9
+----------------------------------------------------------------
+* Description of break_down explainer added
+* Description of break_down_uncertainty explainer added
+
 iBreakDown 0.9.8
 ----------------------------------------------------------------
 * New version of D3 plots in `plotD3()`.
