@@ -134,11 +134,11 @@ break_down_uncertainty.default <- function(x, data, predict_function = predict,
     if (head(path, 1) == "average") {
       # let's calculate an average attribution
       extracted_contributions <- sapply(result, function(chunk) {
-        chunk[order(chunk$variable), "contribution"]
+        chunk[order(chunk$label, chunk$variable), "contribution"]
       })
       result_average <- result[[1]]
+      result_average <- result_average[order(result_average$label, result_average$variable),]
       result_average$contribution <- rowMeans(extracted_contributions)
-      result_average$variable <- result_average$variable[order(result_average$variable)]
       result_average$B <- 0
       result <- c(result, list(result_average))
     } else {
