@@ -19,7 +19,7 @@ plotD3(x, ...)
 
 \item{baseline}{if numeric then veritical line will start in baseline.}
 
-\item{max_features}{maximal number of features to be included in the plot. default value is 10.}
+\item{max_features}{maximal number of features to be included in the plot. Default value is 10.}
 
 \item{digits}{number of decimal places (round) or significant digits (signif) to be used.
 See the \code{rounding_function} argument.}
