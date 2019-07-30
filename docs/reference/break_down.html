@@ -31,6 +31,15 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+<!-- Google analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-5650686-14"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-5650686-14');
+</script>
 
   </head>
 
@@ -54,7 +63,7 @@
       <ul class="navbar-mi2 nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -70,6 +79,9 @@
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="../articles/vignette_iBreakDown_classification.html">iBreakDown plots for classification models</a>
+    </li>
+    <li>
+      <a href="../articles/vignette_iBreakDown_description.html">vignette_iBreakDown_description</a>
     </li>
     <li>
       <a href="../articles/vignette_iBreakDown_regression.html">iBreakDown plots for regression models</a>
@@ -115,7 +127,7 @@ or <code><a href='local_interactions.html'>local_interactions</a></code> for att
 <span class='co'># S3 method for default</span>
 <span class='fu'>break_down</span>(<span class='no'>x</span>, <span class='no'>data</span>, <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict</span>,
   <span class='no'>new_observation</span>, <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>order</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>x</span>)[<span class='fl'>1</span>], <span class='no'>...</span>, <span class='kw'>interactions</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'>class</span>(<span class='no'>x</span>)[<span class='fl'>1</span>], <span class='no'>...</span>, <span class='kw'>interactions</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -172,52 +184,53 @@ or <code><a href='local_interactions.html'>local_interactions</a></code> for att
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)</div><div class='output co'>#&gt; <span class='message'>Welcome to DALEX (version: 0.4.6).</span>
-#&gt; <span class='message'>Find examples and detailed introduction at: https://pbiecek.github.io/PM_VEE/</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"iBreakDown"</span>)
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='st'>"DALEX"</span>)
+<span class='fu'>library</span>(<span class='st'>"iBreakDown"</span>)
 <span class='co'># Toy examples, because CRAN angels ask for them</span>
-<span class='no'>titanic</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/na.fail.html'>na.omit</a></span>(<span class='no'>titanic</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1313</span>)
-<span class='no'>titanic_small</span> <span class='kw'>&lt;-</span> <span class='no'>titanic</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>1</span>:<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>titanic</span>), <span class='fl'>500</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>6</span>,<span class='fl'>9</span>)]
-<span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>fare</span>,
+<span class='no'>titanic</span> <span class='kw'>&lt;-</span> <span class='fu'>na.omit</span>(<span class='no'>titanic</span>)
+<span class='fu'>set.seed</span>(<span class='fl'>1313</span>)
+<span class='no'>titanic_small</span> <span class='kw'>&lt;-</span> <span class='no'>titanic</span>[<span class='fu'>sample</span>(<span class='fl'>1</span>:<span class='fu'>nrow</span>(<span class='no'>titanic</span>), <span class='fl'>500</span>), <span class='fu'>c</span>(<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>6</span>,<span class='fl'>9</span>)]
+<span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'>glm</span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>fare</span>,
                        <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
-<span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
+<span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
                            <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>[,-<span class='fl'>9</span>],
                            <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  lm  (<span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; model label       :  lm  ([33mdefault[39m)
 #&gt;   -&gt; data              :  500  rows  4  cols 
 #&gt;   -&gt; target variable   :  500  values 
-#&gt;   -&gt; predict function  :  yhat.glm  will be used (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; predicted values  :  numerical, min =  0.111212 , mean =  0.298 , max =  0.9430377  
-#&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; residuals         :  numerical, min =  -0.789032 , mean =  1.818369e-14 , max =  0.8594593  
-#&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'><span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>break_down</span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_small</span>[<span class='fl'>1</span>, ])
-<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                   contribution
-#&gt; lm: intercept            0.298
-#&gt; lm: gender = male       -0.103
-#&gt; lm: age = 50            -0.038
-#&gt; lm: fare = 13           -0.005
-#&gt; lm: survived = no        0.000
-#&gt; lm: prediction           0.152</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>, <span class='kw'>max_features</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='img'><img src='break_down-1.png' alt='' width='700' height='433' /></div><div class='input'>
-</div></span><div class='input'><span class='co'>## Not run:</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)</div><div class='output co'>#&gt; <span class='message'>randomForest 4.6-14</span></div><div class='output co'>#&gt; <span class='message'>Type rfNews() to see new features/changes/bug fixes.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1313</span>)
+#&gt;   -&gt; predict function  :  yhat.glm  will be used ([33mdefault[39m)
+#&gt;   -&gt; predicted values  :  numerical, min =  0.1140608 , mean =  0.308 , max =  0.9600515  
+#&gt;   -&gt; residual function :  difference between y and yhat ([33mdefault[39m)
+#&gt;   -&gt; residuals         :  numerical, min =  -0.9238299 , mean =  1.839445e-13 , max =  0.8527178  
+#&gt; [32mA new explainer has been created![39m</div><div class='input'><span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>break_down</span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_small</span>[<span class='fl'>1</span>, ])
+<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                     contribution
+#&gt; lm: intercept              0.308
+#&gt; lm: gender = female        0.417
+#&gt; lm: fare = 0              -0.028
+#&gt; lm: age = 36              -0.013
+#&gt; lm: survived = yes         0.000
+#&gt; lm: prediction             0.685</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>max_features</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='img'><img src='break_down-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='input'><span class='co'>## Not run:</span>
+<span class='fu'>library</span>(<span class='st'>"randomForest"</span>)
+<span class='fu'>set.seed</span>(<span class='fl'>1313</span>)
 <span class='co'># example with interaction</span>
 <span class='co'># classification for HR data</span>
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span>(<span class='no'>status</span> ~ <span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>)
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>status</span> ~ <span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>)
 <span class='no'>new_observation</span> <span class='kw'>&lt;-</span> <span class='no'>HR_test</span>[<span class='fl'>1</span>,]
 
-<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model</span>,
+<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model</span>,
                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>,<span class='fl'>1</span>:<span class='fl'>5</span>],
                         <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>])</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  randomForest  (<span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; model label       :  randomForest  ([33mdefault[39m)
 #&gt;   -&gt; data              :  1000  rows  5  cols 
 #&gt;   -&gt; target variable   :  1000  values 
-#&gt;   -&gt; target variable   :  Please note that 'y' is a factor.  (</span><span style='color: #BB0000;'>WARNING</span><span>)
+#&gt;   -&gt; target variable   :  Please note that 'y' is a factor.  ([31mWARNING[39m)
 #&gt;   -&gt; target variable   :  Consider changing the 'y' to a logical or numerical vector.
 #&gt;   -&gt; target variable   :  Otherwise I will not be able to calculate residuals or loss function.
-#&gt;   -&gt; predict function  :  yhat.randomForest  will be used (</span><span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; predict function  :  yhat.randomForest  will be used ([33mdefault[39m)
 #&gt;   -&gt; predicted values  :  numerical, min =  0 , mean =  0.3333333 , max =  1  
-#&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: ‘-’ not meaningful for factors</span></div><div class='output co'>#&gt;   -&gt; residuals         :  numerical, min =  NA , mean =  NA , max =  NA  
-#&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
+#&gt;   -&gt; residual function :  difference between y and yhat ([33mdefault[39m)</div><div class='output co'>#&gt; <span class='warning'>Warning: ‘-’ not meaningful for factors</span></div><div class='output co'>#&gt;   -&gt; residuals         :  numerical, min =  NA , mean =  NA , max =  NA  
+#&gt; [32mA new explainer has been created![39m</div><div class='input'>
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>break_down</span>(<span class='no'>explainer_rf</span>,
                            <span class='no'>new_observation</span>)
 <span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                       contribution
@@ -241,7 +254,7 @@ or <code><a href='local_interactions.html'>local_interactions</a></code> for att
 #&gt; randomForest.promoted: salary = 2            0.001
 #&gt; randomForest.promoted: age = 58             -0.006
 #&gt; randomForest.promoted: gender = male         0.002
-#&gt; randomForest.promoted: prediction            0.004</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='break_down-2.png' alt='' width='700' height='433' /></div></span></pre>
+#&gt; randomForest.promoted: prediction            0.004</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='break_down-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

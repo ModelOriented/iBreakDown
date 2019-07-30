@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • iBreakDown</title>
+<title>Print Generic for Break Down Objects — print.descriptions • iBreakDown</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -44,7 +44,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top navbar-mi2" role="navigation">
   <div class="container">
@@ -57,7 +57,7 @@
 	  <a class = "navbar-mi2logo" href="http://DrWhy.AI/">
         <img src = "https://github.com/ModelOriented/DrWhyTemplate/blob/master/inst/pkgdown/assets/drwhy_znak_violet_small.jpg?raw=true" alt = "MI2" height = 46 title = "MI2">
 	  </a>
-      <a class="navbar-brand navbar-mi2" href="../index.html"></a>
+      <a class="navbar-brand navbar-mi2" href="../index.html">Print Generic for Break Down Objects</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="navbar-mi2 nav navbar-nav">
@@ -107,112 +107,45 @@
       </header>
 
       <div class="row">
-  <div class="col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>
-        Reference
-        <small>version&nbsp;0.9.9</small>
-      </h1>
+    <h1>Print Generic for Break Down Objects</h1>
     </div>
 
-    <div class="contents">
-      <table class="ref-index">
+    
+    <p>Print Generic for Break Down Objects</p>
+    
 
-      <colgroup>
-        <col class="alias" />
-        <col class="title" />
-      </colgroup>
+    <pre class="usage"><span class='co'># S3 method for descriptions</span>
+<span class='fu'>print</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>description of `descriptions` class.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>other parameters.</p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-      <tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-            <p class="section-desc"></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="break_down.html">break_down()</a></code> </p>
-          </td>
-          <td><p>Model Agnostic Sequential Variable Attributions</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="break_down_uncertainty.html">break_down_uncertainty()</a></code> <code><a href="break_down_uncertainty.html">shap()</a></code> </p>
-          </td>
-          <td><p>Explanation Level Uncertainty of Sequential Variable Attribution</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="describe.html">describe()</a></code> </p>
-          </td>
-          <td><p>Natural language description of a DALEX explainer</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="local_attributions.html">local_attributions()</a></code> </p>
-          </td>
-          <td><p>Model Agnostic Sequential Variable attributions</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="local_interactions.html">local_interactions()</a></code> </p>
-          </td>
-          <td><p>Model Agnostic Sequential Variable Attributions with Interactions</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="plot.break_down.html">plot(<i>&lt;break_down&gt;</i>)</a></code> </p>
-          </td>
-          <td><p>Plot Generic for Break Down Objects</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="plot.break_down_uncertainty.html">plot(<i>&lt;break_down_uncertainty&gt;</i>)</a></code> </p>
-          </td>
-          <td><p>Plot Generic for Break Down Uncertainty Objects</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="plotD3_break_down.html">plotD3()</a></code> </p>
-          </td>
-          <td><p>Plot Break Down Objects in D3 with r2d3 package.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="plotD3_shap.html">plotD3(<i>&lt;shap&gt;</i>)</a></code> </p>
-          </td>
-          <td><p>Plot Shap (Break Down Uncertainty) Objects in D3 with r2d3 package.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="print.break_down.html">print(<i>&lt;break_down&gt;</i>)</a></code> </p>
-          </td>
-          <td><p>Print Generic for Break Down Objects</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="print.break_down_uncertainty.html">print(<i>&lt;break_down_uncertainty&gt;</i>)</a></code> </p>
-          </td>
-          <td><p>Print Generic for Break Down Uncertainty Objects</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="print.descriptions.html">print(<i>&lt;descriptions&gt;</i>)</a></code> </p>
-          </td>
-          <td><p>Print Generic for Break Down Objects</p></td>
-        </tr>
-      </tbody>
-      </table>
-    </div>
+    <p>a string</p>
+    
+
   </div>
-
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked contents-mi2">
-      <li><a href="#section-all-functions">All functions</a></li>
-    </ul>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#value">Value</a></li>
+          </ul>
+
   </div>
 </div>
 

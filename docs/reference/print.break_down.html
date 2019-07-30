@@ -31,6 +31,15 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+<!-- Google analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-5650686-14"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-5650686-14');
+</script>
 
   </head>
 
@@ -54,7 +63,7 @@
       <ul class="navbar-mi2 nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -70,6 +79,9 @@
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="../articles/vignette_iBreakDown_classification.html">iBreakDown plots for classification models</a>
+    </li>
+    <li>
+      <a href="../articles/vignette_iBreakDown_description.html">vignette_iBreakDown_description</a>
     </li>
     <li>
       <a href="../articles/vignette_iBreakDown_regression.html">iBreakDown plots for regression models</a>
@@ -105,7 +117,7 @@
     
 
     <pre class="usage"><span class='co'># S3 method for break_down</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+<span class='fu'>print</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>3</span>,
   <span class='kw'>rounding_function</span> <span class='kw'>=</span> <span class='no'>round</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
@@ -127,8 +139,8 @@ See the <code>rounding_function</code> argument.</p></td>
     <tr>
       <th>rounding_function</th>
       <td><p>function that is to used for rounding numbers.
-It may be <code><a href='https://rdrr.io/r/base/Round.html'>signif</a></code> which keeps a specified number of significant digits.
-Or the default <code><a href='https://rdrr.io/r/base/Round.html'>round</a></code> to have the same precision for all components.</p></td>
+It may be <code>signif</code> which keeps a specified number of significant digits.
+Or the default <code>round</code> to have the same precision for all components.</p></td>
     </tr>
     </table>
     

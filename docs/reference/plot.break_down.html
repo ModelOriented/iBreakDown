@@ -31,6 +31,15 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+<!-- Google analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-5650686-14"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-5650686-14');
+</script>
 
   </head>
 
@@ -54,7 +63,7 @@
       <ul class="navbar-mi2 nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -70,6 +79,9 @@
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="../articles/vignette_iBreakDown_classification.html">iBreakDown plots for classification models</a>
+    </li>
+    <li>
+      <a href="../articles/vignette_iBreakDown_description.html">vignette_iBreakDown_description</a>
     </li>
     <li>
       <a href="../articles/vignette_iBreakDown_regression.html">iBreakDown plots for regression models</a>
@@ -106,8 +118,8 @@ Usually executed after `break_down()` function, `local_attributions()` or `local
     
 
     <pre class="usage"><span class='co'># S3 method for break_down</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>baseline</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>max_features</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='kw'>min_max</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>vcolors</span> <span class='kw'>=</span> <span class='kw pkg'>DALEX</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/colors_drwhy.html'>colors_breakdown_drwhy</a></span>(),
+<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>baseline</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>max_features</span> <span class='kw'>=</span> <span class='fl'>10</span>,
+  <span class='kw'>min_max</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>vcolors</span> <span class='kw'>=</span> <span class='kw pkg'>DALEX</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/colors_drwhy'>colors_breakdown_drwhy</a></span>(),
   <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>rounding_function</span> <span class='kw'>=</span> <span class='no'>round</span>, <span class='kw'>add_contributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>shift_contributions</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
@@ -146,8 +158,8 @@ See the <code>rounding_function</code> argument.</p></td>
     <tr>
       <th>rounding_function</th>
       <td><p>function that is to used for rounding numbers.
-It may be <code><a href='https://rdrr.io/r/base/Round.html'>signif</a></code> which keeps a specified number of significant digits.
-Or the default <code><a href='https://rdrr.io/r/base/Round.html'>round</a></code> to have the same precision for all components.</p></td>
+It may be <code>signif</code> which keeps a specified number of significant digits.
+Or the default <code>round</code> to have the same precision for all components.</p></td>
     </tr>
     <tr>
       <th>add_contributions</th>
@@ -174,53 +186,53 @@ Or the default <code><a href='https://rdrr.io/r/base/Round.html'>round</a></code
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"iBreakDown"</span>)
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='st'>"DALEX"</span>)
+<span class='fu'>library</span>(<span class='st'>"iBreakDown"</span>)
 <span class='co'># Toy examples, because CRAN angels ask for them</span>
-<span class='no'>titanic</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/na.fail.html'>na.omit</a></span>(<span class='no'>titanic</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1313</span>)
-<span class='no'>titanic_small</span> <span class='kw'>&lt;-</span> <span class='no'>titanic</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>1</span>:<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>titanic</span>), <span class='fl'>500</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>6</span>,<span class='fl'>9</span>)]
-<span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>fare</span>,
+<span class='no'>titanic</span> <span class='kw'>&lt;-</span> <span class='fu'>na.omit</span>(<span class='no'>titanic</span>)
+<span class='fu'>set.seed</span>(<span class='fl'>1313</span>)
+<span class='no'>titanic_small</span> <span class='kw'>&lt;-</span> <span class='no'>titanic</span>[<span class='fu'>sample</span>(<span class='fl'>1</span>:<span class='fu'>nrow</span>(<span class='no'>titanic</span>), <span class='fl'>500</span>), <span class='fu'>c</span>(<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>6</span>,<span class='fl'>9</span>)]
+<span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'>glm</span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>fare</span>,
                        <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
-<span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
+<span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
                            <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>[,-<span class='fl'>9</span>],
                            <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  lm  (<span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; model label       :  lm  ([33mdefault[39m)
 #&gt;   -&gt; data              :  500  rows  4  cols 
 #&gt;   -&gt; target variable   :  500  values 
-#&gt;   -&gt; predict function  :  yhat.glm  will be used (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; predicted values  :  numerical, min =  0.111212 , mean =  0.298 , max =  0.9430377  
-#&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; residuals         :  numerical, min =  -0.789032 , mean =  1.818369e-14 , max =  0.8594593  
-#&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'><span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='break_down.html'>break_down</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_small</span>[<span class='fl'>1</span>, ])
-<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                   contribution
-#&gt; lm: intercept            0.298
-#&gt; lm: gender = male       -0.103
-#&gt; lm: age = 50            -0.038
-#&gt; lm: fare = 13           -0.005
-#&gt; lm: survived = no        0.000
-#&gt; lm: prediction           0.152</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>, <span class='kw'>max_features</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='img'><img src='plot.break_down-1.png' alt='' width='700' height='433' /></div><div class='input'>
-</div></span><div class='input'><span class='co'>## Not run:</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1313</span>)
+#&gt;   -&gt; predict function  :  yhat.glm  will be used ([33mdefault[39m)
+#&gt;   -&gt; predicted values  :  numerical, min =  0.1140608 , mean =  0.308 , max =  0.9600515  
+#&gt;   -&gt; residual function :  difference between y and yhat ([33mdefault[39m)
+#&gt;   -&gt; residuals         :  numerical, min =  -0.9238299 , mean =  1.839445e-13 , max =  0.8527178  
+#&gt; [32mA new explainer has been created![39m</div><div class='input'><span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='break_down.html'>break_down</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_small</span>[<span class='fl'>1</span>, ])
+<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                     contribution
+#&gt; lm: intercept              0.308
+#&gt; lm: gender = female        0.417
+#&gt; lm: fare = 0              -0.028
+#&gt; lm: age = 36              -0.013
+#&gt; lm: survived = yes         0.000
+#&gt; lm: prediction             0.685</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>max_features</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='img'><img src='plot.break_down-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='input'><span class='co'>## Not run:</span>
+<span class='fu'>library</span>(<span class='st'>"randomForest"</span>)
+<span class='fu'>set.seed</span>(<span class='fl'>1313</span>)
 <span class='co'># example with interaction</span>
 <span class='co'># classification for HR data</span>
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span>(<span class='no'>status</span> ~ <span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>)
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>status</span> ~ <span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>)
 <span class='no'>new_observation</span> <span class='kw'>&lt;-</span> <span class='no'>HR_test</span>[<span class='fl'>1</span>,]
 
-<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model</span>,
+<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model</span>,
                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>,<span class='fl'>1</span>:<span class='fl'>5</span>],
                         <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>])</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  randomForest  (<span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; model label       :  randomForest  ([33mdefault[39m)
 #&gt;   -&gt; data              :  1000  rows  5  cols 
 #&gt;   -&gt; target variable   :  1000  values 
-#&gt;   -&gt; target variable   :  Please note that 'y' is a factor.  (</span><span style='color: #BB0000;'>WARNING</span><span>)
+#&gt;   -&gt; target variable   :  Please note that 'y' is a factor.  ([31mWARNING[39m)
 #&gt;   -&gt; target variable   :  Consider changing the 'y' to a logical or numerical vector.
 #&gt;   -&gt; target variable   :  Otherwise I will not be able to calculate residuals or loss function.
-#&gt;   -&gt; predict function  :  yhat.randomForest  will be used (</span><span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; predict function  :  yhat.randomForest  will be used ([33mdefault[39m)
 #&gt;   -&gt; predicted values  :  numerical, min =  0 , mean =  0.3333333 , max =  1  
-#&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: ‘-’ not meaningful for factors</span></div><div class='output co'>#&gt;   -&gt; residuals         :  numerical, min =  NA , mean =  NA , max =  NA  
-#&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
+#&gt;   -&gt; residual function :  difference between y and yhat ([33mdefault[39m)</div><div class='output co'>#&gt; <span class='warning'>Warning: ‘-’ not meaningful for factors</span></div><div class='output co'>#&gt;   -&gt; residuals         :  numerical, min =  NA , mean =  NA , max =  NA  
+#&gt; [32mA new explainer has been created![39m</div><div class='input'>
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_attributions.html'>local_attributions</a></span>(<span class='no'>explainer_rf</span>,
                            <span class='no'>new_observation</span>)
 <span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                       contribution
@@ -244,7 +256,7 @@ Or the default <code><a href='https://rdrr.io/r/base/Round.html'>round</a></code
 #&gt; randomForest.promoted: salary = 2            0.001
 #&gt; randomForest.promoted: age = 58             -0.006
 #&gt; randomForest.promoted: gender = male         0.002
-#&gt; randomForest.promoted: prediction            0.004</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='plot.break_down-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>, <span class='kw'>baseline</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='img'><img src='plot.break_down-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>, <span class='kw'>min_max</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>1</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: the condition has length &gt; 1 and only the first element will be used</span></div><div class='img'><img src='plot.break_down-4.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; randomForest.promoted: prediction            0.004</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='plot.break_down-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>baseline</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='img'><img src='plot.break_down-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>min_max</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>,<span class='fl'>1</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: the condition has length &gt; 1 and only the first element will be used</span></div><div class='img'><img src='plot.break_down-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_attributions.html'>local_attributions</a></span>(<span class='no'>explainer_rf</span>,
                            <span class='no'>new_observation</span>,
                            <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
@@ -269,7 +281,7 @@ Or the default <code><a href='https://rdrr.io/r/base/Round.html'>round</a></code
 #&gt; randomForest.promoted: salary = 2            0.001
 #&gt; randomForest.promoted: age = 58             -0.006
 #&gt; randomForest.promoted: gender = male         0.002
-#&gt; randomForest.promoted: prediction            0.004</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='plot.break_down-5.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; randomForest.promoted: prediction            0.004</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='plot.break_down-5.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_interactions.html'>local_interactions</a></span>(<span class='no'>explainer_rf</span>,
                  <span class='no'>new_observation</span>,
                  <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
@@ -294,21 +306,21 @@ Or the default <code><a href='https://rdrr.io/r/base/Round.html'>round</a></code
 #&gt; randomForest.promoted: age = 58              0.802
 #&gt; randomForest.promoted: hours = 42           -0.122
 #&gt; randomForest.promoted: gender = male         0.000
-#&gt; randomForest.promoted: prediction            0.004</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='plot.break_down-6.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='plot.break_down-7.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; randomForest.promoted: prediction            0.004</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='plot.break_down-6.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='plot.break_down-7.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># example for regression - apartment prices</span>
 <span class='co'># here we do not have intreactions</span>
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
-<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model</span>,
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
+<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model</span>,
                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>,<span class='fl'>2</span>:<span class='fl'>6</span>],
                         <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>$<span class='no'>m2.price</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>])</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  randomForest  (</span><span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; model label       :  randomForest  ([33mdefault[39m)
 #&gt;   -&gt; data              :  1000  rows  5  cols 
 #&gt;   -&gt; target variable   :  1000  values 
-#&gt;   -&gt; predict function  :  yhat.randomForest  will be used (</span><span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; predict function  :  yhat.randomForest  will be used ([33mdefault[39m)
 #&gt;   -&gt; predicted values  :  numerical, min =  2043.066 , mean =  3487.722 , max =  5773.976  
-#&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; residual function :  difference between y and yhat ([33mdefault[39m)
 #&gt;   -&gt; residuals         :  numerical, min =  -630.6766 , mean =  1.057813 , max =  1256.239  
-#&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
+#&gt; [32mA new explainer has been created![39m</div><div class='input'>
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_attributions.html'>local_attributions</a></span>(<span class='no'>explainer_rf</span>,
                            <span class='no'>apartments_test</span>[<span class='fl'>1</span>,])
 <span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                        contribution
@@ -318,11 +330,11 @@ Or the default <code><a href='https://rdrr.io/r/base/Round.html'>round</a></code
 #&gt; randomForest: no.rooms = 5                 -163.113
 #&gt; randomForest: floor = 3                     150.529
 #&gt; randomForest: construction.year = 2000      -24.021
-#&gt; randomForest: prediction                   4169.863</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='img'><img src='plot.break_down-8.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>baseline</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='img'><img src='plot.break_down-9.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; randomForest: prediction                   4169.863</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='img'><img src='plot.break_down-8.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>baseline</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='img'><img src='plot.break_down-9.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_attributions.html'>local_attributions</a></span>(<span class='no'>explainer_rf</span>,
                            <span class='no'>apartments_test</span>[<span class='fl'>1</span>,],
                            <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='plot.break_down-10.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='plot.break_down-10.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_interactions.html'>local_interactions</a></span>(<span class='no'>explainer_rf</span>,
                  <span class='kw'>new_observation</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>[<span class='fl'>1</span>,],
                  <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
@@ -334,7 +346,7 @@ Or the default <code><a href='https://rdrr.io/r/base/Round.html'>round</a></code
 #&gt; randomForest: no.rooms = 5                 -163.113
 #&gt; randomForest: floor = 3                     150.529
 #&gt; randomForest: construction.year = 2000      -24.021
-#&gt; randomForest: prediction                   4169.863</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='plot.break_down-11.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='plot.break_down-12.png' alt='' width='700' height='433' /></div></span></pre>
+#&gt; randomForest: prediction                   4169.863</div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='plot.break_down-11.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>bd_rf</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='plot.break_down-12.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
