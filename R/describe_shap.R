@@ -33,7 +33,9 @@
 #' @export
 #' @rdname describe
 
-describe.break_down_uncertainty <- function(explainer, nonsignificance_treshold = 0.15, ...,
+describe.break_down_uncertainty <- function(explainer,
+                                            nonsignificance_treshold = 0.15,
+                                            ...,
                                             label = NULL,
                                             short_description = FALSE,
                                             display_values = FALSE,
@@ -45,7 +47,6 @@ describe.break_down_uncertainty <- function(explainer, nonsignificance_treshold 
   explainer_break_down <- convert_explainer.break_down_uncertainty(explainer)
   describe(explainer = explainer_break_down,
            nonsignificance_treshold = nonsignificance_treshold,
-           ...,
            label = label,
            short_description = short_description,
            display_values = display_values,
@@ -55,11 +56,11 @@ describe.break_down_uncertainty <- function(explainer, nonsignificance_treshold 
            display_shap = display_shap)
 }
 
-#' Converts a `break_down_uncertainty` to `break_down` explainer
-#'
-#' Called by `r describe.break_down_uncertainty`.
-#'
-#' @param explainer explainer
+# Converts a `break_down_uncertainty` to `break_down` explainer
+#
+# Called by `r describe.break_down_uncertainty`.
+#
+# @param explainer explainer
 
 convert_explainer.break_down_uncertainty <- function(explainer) {
   # We transform explainer's data frame

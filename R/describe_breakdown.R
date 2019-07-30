@@ -75,7 +75,9 @@ describe <- function(explainer, nonsignificance_treshold = 0.15, ...)
 #' @export
 #' @rdname describe
 
-describe.break_down <- function(explainer, nonsignificance_treshold = 0.15, ...,
+describe.break_down <- function(explainer,
+                                nonsignificance_treshold = 0.15,
+                                ...,
                                 label = NULL,
                                 short_description = FALSE,
                                 display_values = FALSE,
@@ -130,18 +132,18 @@ describe.break_down <- function(explainer, nonsignificance_treshold = 0.15, ...,
   descriptions
 }
 
-#' Returns a scenario for a description
-#'
-#' 0 = prediction significantly higher than the average
-#' 1 = prediction significantly lower than the average
-#' 2 = prediction close to the average, but there are significant contributors
-#' 3 = prediction close to the average and there are no significant contributors
-#'
-#' @param explainer an iBreakDown explainer
-#' @param nonsignificance_treshold a treshold for specyfiying which predictions are close
-#' to the average model prediction.
-#' @return an integer from 0 to 3
-#'
+# Returns a scenario for a description
+#
+# 0 = prediction significantly higher than the average
+# 1 = prediction significantly lower than the average
+# 2 = prediction close to the average, but there are significant contributors
+# 3 = prediction close to the average and there are no significant contributors
+#
+# @param explainer an iBreakDown explainer
+# @param nonsignificance_treshold a treshold for specyfiying which predictions are close
+# to the average model prediction.
+# @return an integer from 0 to 3
+#
 
 description_profile <- function(explainer,
                                 nonsignificance_treshold){
@@ -161,14 +163,14 @@ description_profile <- function(explainer,
   profile
 }
 
-#'  Describes distribution of a model pedictions.
-#'
-#' @param explainer iBreakDown explainer
-#' @param display_numbers TRUE for displaying variable contributions and intercept
-#' @param display_distribution_details TRUE for displaying detailed description of predictions distribution
-#' @param model_name name of the model to be explained
-#'
-#' @return a decription of predictions distribution
+#  Describes distribution of a model pedictions.
+#
+# @param explainer iBreakDown explainer
+# @param display_numbers TRUE for displaying variable contributions and intercept
+# @param display_distribution_details TRUE for displaying detailed description of predictions distribution
+# @param model_name name of the model to be explained
+#
+# @return a decription of predictions distribution
 
 describe_distribution <- function(explainer,
                                   display_numbers,
@@ -215,17 +217,17 @@ describe_distribution <- function(explainer,
   description
 }
 
-#' Makes an introduction for the description function
-#'
-#' @param explainer an iBreakDown explainer
-#' @param label prediction description
-#' @param display_numbers TRUE for displaying variable contributions and intercept
-#' @param distribution_details TRUE for displaying detailed description of predictions distribution
-#' @param model_name name of the model to be explained
-#' @param distribution_kept TRUE if the distribution details are stored
-#' @param description_profile description scenario
-#'
-#' @return an introduction
+# Makes an introduction for the description function
+#
+# @param explainer an iBreakDown explainer
+# @param label prediction description
+# @param display_numbers TRUE for displaying variable contributions and intercept
+# @param distribution_details TRUE for displaying detailed description of predictions distribution
+# @param model_name name of the model to be explained
+# @param distribution_kept TRUE if the distribution details are stored
+# @param description_profile description scenario
+#
+# @return an introduction
 
 make_introduction <- function(explainer,
                               label,
@@ -261,18 +263,18 @@ make_introduction <- function(explainer,
   introduction
 }
 
-#' Makes an argument for description
-#'
-#' @param explainer an iBreakDown explanation
-#' @param label a prediction label
-#' @param display_values displays values
-#' @param display_numbers displays numbers
-#' @param display_argumentation displays argumentation mode
-#' @param model_name name of the model to be explained
-#' @param description_profile description scenario
-#' @param display_shap displays addition information about shap explanation
-#'
-#' @return an argument
+# Makes an argument for description
+#
+# @param explainer an iBreakDown explanation
+# @param label a prediction label
+# @param display_values displays values
+# @param display_numbers displays numbers
+# @param display_argumentation displays argumentation mode
+# @param model_name name of the model to be explained
+# @param description_profile description scenario
+# @param display_shap displays addition information about shap explanation
+#
+# @return an argument
 
 make_argument <- function(explainer,
                           label,
@@ -306,17 +308,15 @@ make_argument <- function(explainer,
         warning("Explainer is not a break_down_uncertainty/shap explainer")
       } else {
         show_shap <- TRUE
-        df['shap'] <- sapply(as.character(df[ ,'variable_name']), function(x) {
-          x <- as.character(x)
-          importance <- df[df$variable_name == x,'importance']
-          quantiles <- summary(attr(explainer, 'shap_contributions')[[x]])
-          # We check if the difference between 75% and 25% quantile is smaller than absolute contribution
-          important <- if (abs(quantiles[[4]] - quantiles[[2]]) < importance) TRUE else FALSE
-          # important <- if (sd(attr(explainer, 'shap_contributions')[[x]])/sqrt(B) < importance) T else F
-          if (important) "" else x
+        boxplot_length <- sapply(attr(explainer, 'shap_contributions'), function(x) {
+          abs(unname(quantile(x)['75%'] - quantile(x)['25%']))
+          })
+        is_important <- sapply(names(boxplot_length), function(x) {
+          df[df$variable_name == x, 'importance'] > unname(boxplot_length[x])
         })
-      }
-    }
+        sapply(names(is_important), function(x) {
+          df[df$variable_name == x, 'shap'] <- is_important[x]})
+    }}
     if (show_shap) {
       shap <-paste(df[1:3, 'shap'],collapse = "")
       shap <- ifelse(shap =="",
@@ -368,10 +368,10 @@ make_argument <- function(explainer,
 
   argumentation
 }
-#' Makes a summary for the description
-#' @param explainer an iBreakDown explainer
-#' @param display_argumentation displays argumentation mode
-#' @return a summary
+# Makes a summary for the description
+# @param explainer an iBreakDown explainer
+# @param display_argumentation displays argumentation mode
+# @return a summary
 
 
 make_summary <- function(explainer, display_argumentation){
@@ -389,15 +389,15 @@ make_summary <- function(explainer, display_argumentation){
   }
 
 }
-#' Makes a short description of iBreakDown explainer
-#'
-#' @param explainer iBreakDown explainer
-#' @param display_values if TRUE then displays variable valeus
-#' @param label prediction label
-#' @param model_name name of the model to be explained
-#' @param description_profile a scenario for description
-#'
-#'
+# Makes a short description of iBreakDown explainer
+#
+# @param explainer iBreakDown explainer
+# @param display_values if TRUE then displays variable valeus
+# @param label prediction label
+# @param model_name name of the model to be explained
+# @param description_profile a scenario for description
+#
+#
 
 make_short_description <- function(explainer, display_values, label, model_name, description_profile) {
   # Returns a short description of a break_down explanation
