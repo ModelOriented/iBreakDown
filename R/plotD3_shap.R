@@ -114,7 +114,7 @@ plotD3.shap <- function(x, ...,
     prediction <- attr(x, "prediction")[[i]]
 
     # remember number of features to compare
-    m <- c(m, ifelse(nrow(x) - 2 <= max_features, nrow(x), max_features + 3))
+    m <- c(m, ifelse(nrow(x) <= max_features, nrow(x), max_features + 1))
 
     new_x <- prepare_data_for_shap_plotD3(x, baseline, prediction,
                                           max_features, rounding_function, digits)
