@@ -6,16 +6,16 @@
 \alias{describe.break_down_uncertainty}
 \title{Natural language description of a DALEX explainer}
 \usage{
-describe(explainer, nonsignificance_treshold = 0,15, ...)
+describe(explainer, nonsignificance_treshold = 0.15, ...)
 
-\method{describe}{break_down}(explainer, nonsignificance_treshold = 0,15,
+\method{describe}{break_down}(explainer, nonsignificance_treshold = 0.15,
   ..., label = NULL, short_description = FALSE,
   display_values = FALSE, display_numbers = FALSE,
   display_distribution_details = FALSE, display_argumentation = 1,
   display_shap = FALSE)
 
 \method{describe}{break_down_uncertainty}(explainer,
-  nonsignificance_treshold = 0,15, ..., label = NULL,
+  nonsignificance_treshold = 0.15, ..., label = NULL,
   short_description = FALSE, display_values = FALSE,
   display_numbers = FALSE, display_distribution_details = FALSE,
   display_argumentation = 1, display_shap = FALSE)

@@ -23,6 +23,8 @@ shap(x, ..., B = 25)
 
 \item{...}{other parameters.}
 
+\item{keep_distributions}{if TRUE then we will keep distribution for predicted values. It's needed by the describe function.}
+
 \item{B}{number of random paths}
 
 \item{new_observation}{a new observation with columns that correspond to variables used in the model.}
@@ -34,8 +36,6 @@ shap(x, ..., B = 25)
 \item{label}{name of the model. By default it's extracted from the 'class' attribute of the model.}
 
 \item{path}{if specified, then this path will be highlighed on the plot. Use `average` in order to show an average effect}
-
-\item{keep_distribution}{if TRUE then we will keep distribution for predicted values. It's needed by the describe function.}
 }
 \value{
 an object of the `break_down_uncertainty` class.
