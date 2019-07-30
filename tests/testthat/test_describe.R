@@ -12,10 +12,8 @@ explain_titanic_rf <- explain(model_titanic_rf,
                               data = titanic[,-9],
                               y = titanic$survived == "yes",
                               label = "Random Forest v7")
-set.seed(1234)
 random_passanger <- titanic[sample(nrow(titanic),1),c(1,2,3,4,6,7,8)]
 rf_la <- break_down(explain_titanic_rf, random_passanger, keep_distributions = TRUE)
-rf_la_shap <- break_down_uncertainty(explain_titanic_rf, random_passanger, B = 5)
 
 description <- describe(rf_la)
 test_that("Output format", {
@@ -25,19 +23,25 @@ test_that("Output format", {
 n <- 4
 test <- expand.grid(replicate(n, c(TRUE,FALSE), simplify = FALSE))
 test_result <- apply(test, MARGIN = 1, function(x){
-                       description <- iBreakDown::describe(explainer = rf_la,
-                                               label = "the passanger will survive with probability",
-                                               short_description = x[[1]],
-                                               display_values =  x[[2]],
-                                               display_numbers = x[[3]],
-                                               display_distribution_details = x[[4]])
-                       test_that("Output format", {
-                         expect_is(description, "descriptions")
-                       })
-                      })
-
-test_result_shap <- apply(test, MARGIN = 1, function(x){
+  random_passanger <- titanic[sample(nrow(titanic),1),c(1,2,3,4,6,7,8)]
+  rf_la <- break_down(explain_titanic_rf, random_passanger, keep_distributions = TRUE)
   description <- iBreakDown::describe(explainer = rf_la,
+                                      label = "the passanger will survive with probability",
+                                      short_description = x[[1]],
+                                      display_values =  x[[2]],
+                                      display_numbers = x[[3]],
+                                      display_distribution_details = x[[4]])
+  test_that("Output format", {
+    expect_is(description, "descriptions")
+  })
+})
+
+n <- 4
+test <- expand.grid(replicate(n, c(TRUE,FALSE), simplify = FALSE))
+test_result_shap <- apply(test, MARGIN = 1, function(x){
+  random_passanger <- titanic[sample(nrow(titanic),1),c(1,2,3,4,6,7,8)]
+  rf_la_shap <- shap(explain_titanic_rf, random_passanger, B = 2)
+  description <- iBreakDown::describe(explainer = rf_la_shap,
                                       label = "the passanger will survive with probability",
                                       short_description = x[[1]],
                                       display_values =  x[[2]],
