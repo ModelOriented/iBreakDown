@@ -2,6 +2,8 @@ iBreakDown 0.9.9
 ----------------------------------------------------------------
 * Description of break_down explainer added
 * Description of break_down_uncertainty explainer added
+* plotD3 for shap added
+* chose first row when passing more than one `new_observation`
 
 iBreakDown 0.9.8
 ----------------------------------------------------------------
