@@ -110,8 +110,8 @@ plotD3.shap <- function(x, ...,
   for (i in 1:n) {
     x <- bdl[[i]]
 
-    if (is.na(baseline)) baseline <- attr(x, "intercept")[[i]]
-    prediction <- attr(x, "prediction")[[i]]
+    if (is.na(baseline)) baseline <- attr(x, "intercept")[[1]]
+    prediction <- attr(x, "prediction")[[1]]
 
     # remember number of features to compare
     m <- c(m, ifelse(nrow(x) <= max_features, nrow(x), max_features + 1))
