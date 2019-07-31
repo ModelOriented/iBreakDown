@@ -122,7 +122,7 @@ break_down_uncertainty.default <- function(x, data, predict_function = predict,
   # this will work only for data.frames
   if ("data.frame" %in% class(data)) {
     common_variables <- intersect(colnames(new_observation), colnames(data))
-    new_observation <- new_observation[, common_variables, drop = FALSE]
+    new_observation <- new_observation[1, common_variables, drop = FALSE]
     data <- data[,common_variables, drop = FALSE]
   }
 
