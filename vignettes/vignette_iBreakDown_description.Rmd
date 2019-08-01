@@ -46,7 +46,9 @@ explain_titanic_glm <- explain(model_titanic_glm,
                             y = titanic$survived == "yes",
                             label = "glm")
 ```
+
 Now we randomly select a passanger and generate a `break_down` description. We keep the distributions to display more informative descriptions. Unfortunatelly, interactions are not supported yet. 
+
 ```{r}
 passanger <- titanic[sample(nrow(titanic), 1) ,-9]
 bd_glm <- break_down(explain_titanic_glm, passanger,
@@ -54,6 +56,7 @@ bd_glm <- break_down(explain_titanic_glm, passanger,
 
 plot(bd_glm)
 ```
+
 We explain the model with `break_down()` function. The picture that emerges is not complex but it lacks a clear narration. We can describe the plot by calling `describe()`.
 
 ```{r}
@@ -62,11 +65,14 @@ describe(bd_glm,
 ```
 
 If we want to generate a similar description for a shap explainer it is simple.
+
 ```{r}
 shap_glm <- shap(explain_titanic_glm, passanger)
 plot(shap_glm)
 ```
+
 We set `display_numbers = TRUE` for a more detailed explanation and `display_shap = TRUE` for displaying details about shap explainer. 
+
 ```{r}
 describe(shap_glm,
          label = "the selected passanger survives with probability",

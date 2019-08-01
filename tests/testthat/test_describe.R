@@ -17,7 +17,7 @@ rf_la <- break_down(explain_titanic_rf, random_passanger, keep_distributions = T
 
 description <- describe(rf_la)
 test_that("Output format", {
-  expect_is(description, "descriptions")
+  expect_is(description, "break_down_description")
 })
 
 n <- 4
@@ -32,7 +32,7 @@ test_result <- apply(test, MARGIN = 1, function(x){
                                       display_numbers = x[[3]],
                                       display_distribution_details = x[[4]])
   test_that("Output format", {
-    expect_is(description, "descriptions")
+    expect_is(description, "break_down_description")
   })
 })
 
@@ -49,7 +49,7 @@ test_result_shap <- apply(test, MARGIN = 1, function(x){
                                       display_distribution_details = x[[4]],
                                       display_shap = TRUE)
   test_that("Output format", {
-    expect_is(description, "descriptions")
+    expect_is(description, "break_down_description")
   })
 })
 

@@ -14,7 +14,7 @@ This package works for binary classifiers as well as regression models.
 
 **iBreakDown** is a successor of the [breakDown](https://github.com/pbiecek/breakDown) package. It is faster (complexity O(p) instead of O(p^2)). It supports interactions and interactive explainers with D3.js plots.
 
-It is a part of [DrWhy.AI](http://DrWhy.AI) collection of tools fo XAI.
+It is a part of [DrWhy.AI](http://DrWhy.AI) collection of tools for XAI.
 
 Find lots of R examples at `iBreakDown` website: https://ModelOriented.github.io/iBreakDown/
 
