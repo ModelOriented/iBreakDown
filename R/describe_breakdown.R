@@ -101,7 +101,7 @@ describe.break_down <- function(explainer,
 
   description_profile <- description_profile(explainer, nonsignificance_treshold)
 
-  distribution_kept <- ifelse(is.null(attr(explainer, "yhats_distribution")), TRUE, FALSE)
+  distribution_kept <- ifelse(is.null(attr(explainer, "yhats_distribution")), FALSE, TRUE)
 
   if (is.null(label)) label = "the prediction for the selected instance is"
 
