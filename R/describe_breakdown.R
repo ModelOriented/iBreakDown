@@ -128,7 +128,7 @@ describe.break_down <- function(explainer,
 
     descriptions <- paste0(introduction,"\n \n",argumentation, "\n \n",summary)
   }
-  class(descriptions) <- "descriptions"
+  class(descriptions) <- c("descriptions", "character")
   descriptions
 }
 
