@@ -17,12 +17,12 @@ random_passanger <- titanic[sample(nrow(titanic),1),c(1,2,3,4,6,7,8)]
 
 rf_la <- break_down(explain_titanic_rf, random_passanger, keep_distributions = TRUE)
 test_that("Output format", {
-  expect_is(describe(rf_la), "break_down_description")
+  expect_is(iBreakDown::describe(rf_la), "break_down_description")
 })
 
 rf_la <- break_down(explain_titanic_rf, random_passanger, keep_distributions = FALSE)
 test_that("Output format", {
-  expect_is(describe(rf_la), "break_down_description")})
+  expect_is(iBreakDown::describe(rf_la), "break_down_description")})
 
 
 test_that("Output format", {
@@ -61,5 +61,31 @@ test_result_shap <- apply(test, MARGIN = 1, function(x){
   })
 })
 
+## test for less than 3 variables
+titanic_small <- titanic[sample(1:nrow(titanic), 500),]
 
+
+model_small <- glm(survived == "yes" ~ age + gender,
+                   data = titanic_small[, c(1,2,9)],
+                   family = "binomial")
+
+explain_model_small <- explain(model_small,
+                               data = titanic_small[, c(1,2)],
+                               y = titanic_small$survived == "yes")
+
+
+shap_small <- shap(explain_model_small, new_observation = titanic_small[1,c(1,2)])
+bd_small <- break_down(explain_model_small, new_observation = titanic_small[1,c(1,2)])
+
+test_that("Output format", {
+  expect_is(iBreakDown::describe(shap_small, display_numbers = TRUE,
+                                 display_values = TRUE, display_shap = TRUE)
+            ,"break_down_description")
+})
+
+test_that("Output format", {
+  expect_is(iBreakDown::describe(bd_small, display_numers = TRUE,
+                                 display_values = TRUE)
+            ,"break_down_description")
+})
 

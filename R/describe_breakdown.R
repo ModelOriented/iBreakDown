@@ -213,7 +213,7 @@ describe_distribution <- function(explainer,
     quartile <- which(predictions_quartile < prediction)[length(which(predictions_quartile < prediction))][[1]]
     quartile_which <- if (quartile == 1) "first" else if (quartile == 2) "second" else if (quartile == 3) "third" else "fourth"
 
-    description <- paste0("Model predictions ranges from ", round(min(model_predictions),3), " to ", round(max(model_predictions), 3), ". The distribution of ", model_name, "'s predictions is ", skeweness, " with average equal to ", mean , " and median equal to ", median, ". The standard deviation is ", sd, ". Model's prediction for the selected instance is in the ", quartile_which, " quartile.")
+    description <- paste0("Model predictions range from ", round(min(model_predictions),3), " to ", round(max(model_predictions), 3), ". The distribution of ", model_name, "'s predictions is ", skeweness, " with average equal to ", mean , " and median equal to ", median, ". The standard deviation is ", sd, ". Model's prediction for the selected instance is in the ", quartile_which, " quartile.")
   }
   description
 }
@@ -321,11 +321,11 @@ make_argument <- function(explainer,
     if (show_shap) {
       shap <-paste(df[1:nrow_df, 'shap'],collapse = "")
       shap <- ifelse(shap =="",
-                     "The average contribution of all the above variable's is significant.",
+                     "The average contribution of all the above variables is significant.",
                       paste0("From the above variables ",
                       paste(df[!(df$shap == ""), 'shap'], collapse = ", "),
-                      " may not be significant may not be significant",
-                      "duu to high average contribution dispersion."))
+                      " may not be significant",
+                      " due to high average contribution dispersion."))
     }
 
     if (display_numbers) {
