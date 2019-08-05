@@ -330,13 +330,27 @@ make_argument <- function(explainer,
     if (display_numbers) {
       sign1 <- if (df$contribution[1] > 0) "increases" else "decreases"
       argument1 <- paste0("The ", {df$order[1]}, "most important variable is ", {df$variable_name[1]}, ". It ",{sign1}, " the prediction by ", {abs(df$contribution[1])}, ".", df$shap[1])
-      sign2 <- if (df$contribution[2] > 0) "increases" else "decreases"
-      argument2 <- paste0("The ", {df$order[2]}, "most important variable is ", {df$variable_name[2]},". It ", {sign2}, " the prediction by ", {abs(df$contribution[2])}, ".", df$shap[2])
-      sign3 <- if (df$contribution[3] > 0) "increases" else "decreases"
-      argument3 <- paste0("The ", {df$order[3]}, "most important variable is ", {df$variable_name[3]},". It ", {sign3}, " the prediction by ", {abs(df$contribution[3])}, ".", df$shap[3])
-      argumentation <- ifelse(show_shap,
-                              paste(argument1, argument2, argument3, shap, sep = " \n"),
-                              paste(argument1, argument2, argument3, sep = " \n"))
+      if (nrow(df) == 1) {
+        argumentation <- ifelse(show_shap,
+                                paste(argument1, shap, sep = " \n"),
+                                paste(argument1, sep = " \n"))
+      }
+      if (nrow(df) > 1) {
+        sign2 <- if (df$contribution[2] > 0) "increases" else "decreases"
+        argument2 <- paste0("The ", {df$order[2]}, "most important variable is ", {df$variable_name[2]},". It ", {sign2}, " the prediction by ", {abs(df$contribution[2])}, ".", df$shap[2])
+      }
+      if (nrow(df) == 2) {
+        argumentation <- ifelse(show_shap,
+                                paste(argument1, argument2, shap, sep = " \n"),
+                                paste(argument1, argument2, sep = " \n"))
+      }
+      if (nrow(df) > 2) {
+        sign3 <- if (df$contribution[3] > 0) "increases" else "decreases"
+        argument3 <- paste0("The ", {df$order[3]}, "most important variable is ", {df$variable_name[3]},". It ", {sign3}, " the prediction by ", {abs(df$contribution[3])}, ".", df$shap[3])
+        argumentation <- ifelse(show_shap,
+                                paste(argument1, argument2, argument3, shap, sep = " \n"),
+                                paste(argument1, argument2, argument3, sep = " \n"))
+      }
     } else {
       df <- df[1:3, ]
       df_positive <- df[which(df$contribution >= 0), ]
