@@ -13,12 +13,20 @@ explain_titanic_rf <- explain(model_titanic_rf,
                               y = titanic$survived == "yes",
                               label = "Random Forest v7")
 random_passanger <- titanic[sample(nrow(titanic),1),c(1,2,3,4,6,7,8)]
-rf_la <- break_down(explain_titanic_rf, random_passanger, keep_distributions = TRUE)
 
-description <- describe(rf_la)
+
+rf_la <- break_down(explain_titanic_rf, random_passanger, keep_distributions = TRUE)
 test_that("Output format", {
-  expect_is(description, "break_down_description")
+  expect_is(describe(rf_la), "break_down_description")
 })
+
+rf_la <- break_down(explain_titanic_rf, random_passanger, keep_distributions = FALSE)
+test_that("Output format", {
+  expect_is(describe(rf_la), "break_down_description")})
+
+
+test_that("Output format", {
+  expect_error(describe(rf_la, display_values = 4))})
 
 n <- 4
 test <- expand.grid(replicate(n, c(TRUE,FALSE), simplify = FALSE))
