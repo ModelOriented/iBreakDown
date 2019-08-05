@@ -105,7 +105,8 @@ describe.break_down <- function(explainer,
 
   if (is.null(label)) label = "the prediction for the selected instance is"
 
-  if (short_description) {
+  if (short_description | nrow(explainer) < 5) {
+    # If explainer contains less than three variables, short description is forced
     descriptions <- make_short_description(explainer, display_values, label, model_name, description_profile)
   } else {
     introduction <- make_introduction(explainer,
@@ -292,7 +293,7 @@ make_argument <- function(explainer,
     df <- explainer[-c(1,nrow(explainer)), c("variable_name","contribution", "variable_value")]
     df['importance'] <- abs(df$contribution)
     df <- df[order(df$importance, decreasing = TRUE), ] # We do not cut arguments with importance below the treshold
-    df[1:3,'order'] <- c("", "second ", "third ") # We choose three most significant variables
+    nrow_df <- min(3, nrow(df))
     df['contribution'] <- round(df['contribution'], 3)
     df['shap'] <- "" # needed for shap explanation
 
@@ -318,7 +319,7 @@ make_argument <- function(explainer,
           df[df$variable_name == x, 'shap'] <- is_important[x]})
     }}
     if (show_shap) {
-      shap <-paste(df[1:3, 'shap'],collapse = "")
+      shap <-paste(df[1:nrow_df, 'shap'],collapse = "")
       shap <- ifelse(shap =="",
                      "The average contribution of all the above variable's is significant.",
                       paste0("From the above variables ",
@@ -329,7 +330,7 @@ make_argument <- function(explainer,
 
     if (display_numbers) {
       sign1 <- if (df$contribution[1] > 0) "increases" else "decreases"
-      argument1 <- paste0("The ", {df$order[1]}, "most important variable is ", {df$variable_name[1]}, ". It ",{sign1}, " the prediction by ", {abs(df$contribution[1])}, ".", df$shap[1])
+      argument1 <- paste0("The most important variable is ", {df$variable_name[1]}, ". It ",{sign1}, " the prediction by ", {abs(df$contribution[1])}, ".", df$shap[1])
       if (nrow(df) == 1) {
         argumentation <- ifelse(show_shap,
                                 paste(argument1, shap, sep = " \n"),
@@ -337,7 +338,7 @@ make_argument <- function(explainer,
       }
       if (nrow(df) > 1) {
         sign2 <- if (df$contribution[2] > 0) "increases" else "decreases"
-        argument2 <- paste0("The ", {df$order[2]}, "most important variable is ", {df$variable_name[2]},". It ", {sign2}, " the prediction by ", {abs(df$contribution[2])}, ".", df$shap[2])
+        argument2 <- paste0("The second most important variable is ", {df$variable_name[2]},". It ", {sign2}, " the prediction by ", {abs(df$contribution[2])}, ".", df$shap[2])
       }
       if (nrow(df) == 2) {
         argumentation <- ifelse(show_shap,
@@ -346,13 +347,13 @@ make_argument <- function(explainer,
       }
       if (nrow(df) > 2) {
         sign3 <- if (df$contribution[3] > 0) "increases" else "decreases"
-        argument3 <- paste0("The ", {df$order[3]}, "most important variable is ", {df$variable_name[3]},". It ", {sign3}, " the prediction by ", {abs(df$contribution[3])}, ".", df$shap[3])
+        argument3 <- paste0("The third most important variable is ", {df$variable_name[3]},". It ", {sign3}, " the prediction by ", {abs(df$contribution[3])}, ".", df$shap[3])
         argumentation <- ifelse(show_shap,
                                 paste(argument1, argument2, argument3, shap, sep = " \n"),
                                 paste(argument1, argument2, argument3, sep = " \n"))
       }
     } else {
-      df <- df[1:3, ]
+      df <- df[1:nrow_df, ]
       df_positive <- df[which(df$contribution >= 0), ]
       df_negative <- df[which(df$contribution < 0), ]
       prefix_pos <- if (nrow(df_positive) > 1) "are" else "is"
