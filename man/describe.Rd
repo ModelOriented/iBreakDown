@@ -11,14 +11,13 @@ describe(explainer, nonsignificance_treshold = 0.15, ...)
 \method{describe}{break_down}(explainer, nonsignificance_treshold = 0.15,
   ..., label = NULL, short_description = FALSE,
   display_values = FALSE, display_numbers = FALSE,
-  display_distribution_details = FALSE, display_argumentation = 1,
-  display_shap = FALSE)
+  display_distribution_details = FALSE, display_shap = FALSE)
 
 \method{describe}{break_down_uncertainty}(explainer,
   nonsignificance_treshold = 0.15, ..., label = NULL,
   short_description = FALSE, display_values = FALSE,
   display_numbers = FALSE, display_distribution_details = FALSE,
-  display_argumentation = 1, display_shap = FALSE)
+  display_shap = FALSE)
 }
 \arguments{
 \item{explainer}{a DALEX explainer}
@@ -36,8 +35,6 @@ describe(explainer, nonsignificance_treshold = 0.15, ...)
 \item{display_numbers}{allows for displaying numerical values}
 
 \item{display_distribution_details}{displays detailed description of predictions distribution}
-
-\item{display_argumentation}{choosing the type of argumentation to be displayed}
 
 \item{display_shap}{displays additional information about average contribution. Use only if the explainer is a shap explainer}
 }
@@ -64,8 +61,8 @@ Arguments \code{display_values}, which shows values of the variables, and
 \code{display_numbers}, which allows for displaying numerical values of prediciton changes, controls
 the complexity of the generated description. Additional parameter \code{short_description} allows for generating short description,
 while \code{display_distribution_details} displays additional details of the distribution of
-model's prediction for all instances, if describing a break_down explanation. Currently only the default
-mode of argumentation is supported.
+model's prediction for all instances, if describing a break_down explanation. To add other modes
+of argumentation add parameter argumentation_mode.
 
 Function \code{describe.break_down_uncertainty()} generates a natural language description
 for a shap explanation. It imitates the \code{describe.break_down()}, the only difference is that contributions
@@ -94,8 +91,7 @@ description <- describe(rf_la,
                         short_description = FALSE,
                         display_values =  TRUE,
                         display_numbers = TRUE,
-                        display_distribution_details = FALSE,
-                        display_argumentation = 1)
+                        display_distribution_details = FALSE)
 
 description
 

@@ -41,7 +41,6 @@ describe.break_down_uncertainty <- function(explainer,
                                             display_values = FALSE,
                                             display_numbers = FALSE,
                                             display_distribution_details = FALSE,
-                                            display_argumentation = 1,
                                             display_shap = FALSE) {
 
   explainer_break_down <- convert_explainer.break_down_uncertainty(explainer)
@@ -52,7 +51,6 @@ describe.break_down_uncertainty <- function(explainer,
            display_values = display_values,
            display_numbers = display_numbers,
            display_distribution_details = display_distribution_details,
-           display_argumentation = display_argumentation,
            display_shap = display_shap)
 }
 
