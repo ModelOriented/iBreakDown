@@ -250,16 +250,16 @@ make_introduction <- function(explainer,
 
   numbers <- if (display_numbers) paste0(" ",as.character(intercept)) else NULL
   introduction <- switch(description_profile,
-                         paste0({model_name}," predicts, that ",label," ",prediction,
+                         '1' = paste0({model_name}," predicts, that ",label," ",prediction,
                                 " which is higher than the average model prediction",
                                 numbers,"."),
-                         paste0({model_name}," predicts, that ", label," ", prediction,
+                         '2' = paste0({model_name}," predicts, that ", label," ", prediction,
                                 " which is lower than the average model prediction",
                                 numbers,"."),
-                         paste0({model_name}," predicts, that ", label," ", prediction,
+                         '3' = paste0({model_name}," predicts, that ", label," ", prediction,
                                 " which is close to the average model prediction",
                                 numbers, "."),
-                         paste0({model_name}," predicts, that ", label," ", prediction,
+                         '4' = paste0({model_name}," predicts, that ", label," ", prediction,
                                 " which is close to the average model prediction",
                                 numbers, ".")
                          )
@@ -350,10 +350,10 @@ make_argument <- function(explainer,
 
     #arguments' order depends on description_profile
     argumentation <- switch(description_profile,
-                            paste(arguments_increasing, arguments_decreasing, shap, sep = "\n"),
-                            paste(arguments_decreasing, arguments_increasing, shap, sep = "\n"),
-                            paste(arguments_increasing,arguments_decreasing, shap, sep = "\n"),
-                            paste(arguments_increasing,arguments_decreasing, shap, sep = "\n")
+                            '1' = paste(arguments_increasing, arguments_decreasing, shap, sep = "\n"),
+                            '2' = paste(arguments_decreasing, arguments_increasing, shap, sep = "\n"),
+                            '3' = paste(arguments_increasing,arguments_decreasing, shap, sep = "\n"),
+                            '4' = paste(arguments_increasing,arguments_decreasing, shap, sep = "\n")
                             )
   }
   argumentation <- gsub("\n\n","\n", argumentation)
