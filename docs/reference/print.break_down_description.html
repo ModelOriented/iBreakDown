@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Changelog • iBreakDown</title>
+<title>Print Generic for Break Down Objects — print.break_down_description • iBreakDown</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -35,7 +35,10 @@
 
 
 
-<meta property="og:title" content="Changelog" />
+<meta property="og:title" content="Print Generic for Break Down Objects — print.break_down_description" />
+
+<meta property="og:description" content="Print Generic for Break Down Objects" />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -60,7 +63,7 @@
   </head>
 
   <body>
-    <div class="container template-news">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -133,105 +136,48 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Changelog <small></small></h1>
-      
+    <h1>Print Generic for Break Down Objects</h1>
+    
+    <div class="hidden name"><code>print.break_down_description.Rd</code></div>
     </div>
 
-    <div id="ibreakdown-0-9-9" class="section level2">
-<h2 class="hasAnchor">
-<a href="#ibreakdown-0-9-9" class="anchor"></a>iBreakDown 0.9.9</h2>
-<ul>
-<li>Description of break_down explainer added</li>
-<li>Description of break_down_uncertainty explainer added</li>
-<li>plotD3 for shap added</li>
-<li>chose first row when passing more than one <code>new_observation</code>
-</li>
-</ul>
-</div>
-    <div id="ibreakdown-0-9-8" class="section level2">
-<h2 class="hasAnchor">
-<a href="#ibreakdown-0-9-8" class="anchor"></a>iBreakDown 0.9.8</h2>
-<ul>
-<li>New version of D3 plots in <code><a href="../reference/plotD3_break_down.html">plotD3()</a></code>.</li>
-<li>Updated color palettes consistent with changes in DALEX 0.4.4</li>
-</ul>
-</div>
-    <div id="ibreakdown-0-9-6" class="section level2">
-<h2 class="hasAnchor">
-<a href="#ibreakdown-0-9-6" class="anchor"></a>iBreakDown 0.9.6</h2>
-<ul>
-<li>Function <code>local_attributions_uncertainty()</code> now supports <code>path = "average"</code> argument and plots shapley values (<a href="https://github.com/ModelOriented/iBreakDown/issues/29">#29</a>).</li>
-<li>Function <code>local_attributions_uncertainty()</code> is renamed to <code><a href="../reference/break_down_uncertainty.html">break_down_uncertainty()</a></code>.</li>
-<li>Function <code><a href="../reference/break_down_uncertainty.html">shap()</a></code> is an alias for <code><a href="../reference/break_down_uncertainty.html">break_down_uncertainty()</a></code>.</li>
-<li>binder is removed as it was not used.</li>
-</ul>
-</div>
-    <div id="ibreakdown-0-9-5" class="section level2">
-<h2 class="hasAnchor">
-<a href="#ibreakdown-0-9-5" class="anchor"></a>iBreakDown 0.9.5</h2>
-<ul>
-<li>methodology behind <code>iBreakDown</code> is described on arXiv and linked in the CITATION</li>
-</ul>
-</div>
-    <div id="ibreakdown-0-9-4" class="section level2">
-<h2 class="hasAnchor">
-<a href="#ibreakdown-0-9-4" class="anchor"></a>iBreakDown 0.9.4</h2>
-<ul>
-<li>code refactoring</li>
-<li>added <code>local_attributions_uncertainty()</code> function that measures uncertanity behind additive attributions</li>
-</ul>
-</div>
-    <div id="ibreakdown-0-9-3" class="section level2">
-<h2 class="hasAnchor">
-<a href="#ibreakdown-0-9-3" class="anchor"></a>iBreakDown 0.9.3</h2>
-<ul>
-<li>
-<code>breakDown2</code> has changed name to <code>iBreakDown</code>
-</li>
-</ul>
-</div>
-    <div id="ibreakdown-0-9-2" class="section level2">
-<h2 class="hasAnchor">
-<a href="#ibreakdown-0-9-2" class="anchor"></a>iBreakDown 0.9.2</h2>
-<ul>
-<li>in the <code><a href="../reference/local_attributions.html">local_attributions()</a></code> function user can force order in which variables shall be presented</li>
-</ul>
-</div>
-    <div id="ibreakdown-0-9-1" class="section level2">
-<h2 class="hasAnchor">
-<a href="#ibreakdown-0-9-1" class="anchor"></a>iBreakDown 0.9.1</h2>
-<ul>
-<li>added <code><a href="../reference/plotD3_break_down.html">plotD3()</a></code> function, that uses <code>r2d3</code> package to generate interactive D3 plots</li>
-</ul>
-</div>
-    <div id="ibreakdown-0-9-0" class="section level2">
-<h2 class="hasAnchor">
-<a href="#ibreakdown-0-9-0" class="anchor"></a>iBreakDown 0.9.0</h2>
-<ul>
-<li>Greedy strategies with time complexity O(p^2) are removed.</li>
-<li>
-<code>iBreakDown</code> is forked from <code>breakDown</code> version 0.2.0</li>
-</ul>
-</div>
-  </div>
+    <div class="ref-description">
+    
+    <p>Print Generic for Break Down Objects</p>
+    
+    </div>
 
+    <pre class="usage"><span class='co'># S3 method for break_down_description</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>description of `break_down_description` class.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>other parameters.</p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>a string</p>
+    
+
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <div id="tocnav">
-      <h2>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="#ibreakdown-0-9-9">0.9.9</a></li>
-        <li><a href="#ibreakdown-0-9-8">0.9.8</a></li>
-        <li><a href="#ibreakdown-0-9-6">0.9.6</a></li>
-        <li><a href="#ibreakdown-0-9-5">0.9.5</a></li>
-        <li><a href="#ibreakdown-0-9-4">0.9.4</a></li>
-        <li><a href="#ibreakdown-0-9-3">0.9.3</a></li>
-        <li><a href="#ibreakdown-0-9-2">0.9.2</a></li>
-        <li><a href="#ibreakdown-0-9-1">0.9.1</a></li>
-        <li><a href="#ibreakdown-0-9-0">0.9.0</a></li>
-      </ul>
-    </div>
-  </div>
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#value">Value</a></li>
+          </ul>
 
+  </div>
 </div>
 
 
