@@ -1,5 +1,5 @@
-var minValue   = options.xmin,
-    maxValue = options.xmax,
+var xMin = options.xmin,
+    xMax = options.xmax,
     n = options.n, m = options.m,
     barWidth = options.barWidth,
     scaleHeight = options.scaleHeight,
@@ -7,10 +7,14 @@ var minValue   = options.xmin,
     chartTitle = options.chartTitle;
 
 var time = options.time;
+/// prevent plot from reloading onResize
+r2d3.onResize(function() {
+  return;
+});
 
 var maxLength = calculateTextWidth(data[1])+15;
 
-var margin = {top: 98, right: 30, bottom: 71, left: maxLength, inner: 42},
+var margin = {top: 78, right: 30, bottom: 71, left: maxLength, inner: 42},
     h = height - margin.top - margin.bottom,
     plotTop = margin.top,
     plotHeight = m*barWidth + (m+1)*barWidth/2,
@@ -41,21 +45,21 @@ breakDown(data);
 svg.selectAll("text")
   .style('font-family', 'Fira Sans, sans-serif');
 
-function breakDown(data){
+function breakDown(data) {
   var barData = data[0];
   var modelNames = Object.keys(barData);
 
-  for (let i=0; i<n; i++){
+  for (let i=0; i<n; i++) {
       let modelName = modelNames[i];
       singlePlot(modelName, barData[modelName], i+1);
   }
 }
 
-function singlePlot(modelName, bData, i){
+function singlePlot(modelName, bData, i) {
 
   var x = d3.scaleLinear()
         .range([margin.left,  margin.left + plotWidth])
-        .domain([minValue, maxValue]);
+        .domain([xMin, xMax]);
 
   if (i == n) {
 
@@ -118,15 +122,14 @@ function singlePlot(modelName, bData, i){
   if (i == 1) {
     svg.append("text")
           .attr("x", yGridStart)
-          .attr("y", plotTop - 60)
+          .attr("y", plotTop - 40)
           .attr("class", "bigTitle")
           .text(chartTitle);
   }
 
   // add tooltip
   var tool_tip = d3.tip()
-        .attr("class", "tooltip")
-        .offset([-8, 0])
+        .attr("class", "d3-tip")
         .html(d => staticTooltipHtml(d));
 
   svg.call(tool_tip);
@@ -139,8 +142,8 @@ function singlePlot(modelName, bData, i){
                      {"x": x(intercept), "y": y("prediction") + barWidth}];
 
   var lineFunction = d3.line()
-                         .x(function(d) { return d.x; })
-                         .y(function(d) { return d.y; });
+                         .x(d => d.x)
+                         .y(d => d.y);
   svg.append("path")
         .data([dotLineData])
         .attr("class", "dotLine")
@@ -155,8 +158,8 @@ function singlePlot(modelName, bData, i){
 
   bars.append("rect")
         .attr("class", modelName.replace(/\s/g,''))
-        .attr("fill",function(d){
-          switch(d.sign){
+        .attr("fill", function(d) {
+          switch (d.sign) {
             case "-1":
               return negativeColor;
             case "1":
@@ -184,7 +187,7 @@ function singlePlot(modelName, bData, i){
 
   contributionLabel.append("text")
         .attr("x", d => {
-          switch(d.sign){
+          switch (d.sign) {
             case "X":
               return d.contribution < 0 ? x(d.barStart) - 5 : x(d.barSupport) + 5;
             default:
@@ -199,7 +202,7 @@ function singlePlot(modelName, bData, i){
         .duration(time)
         .delay((d,i) => (i+1) * time)
         .text(d => {
-          switch(d.variable){
+          switch (d.variable) {
             case "intercept":
             case "prediction":
               return d.cummulative;

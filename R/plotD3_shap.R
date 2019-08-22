@@ -18,10 +18,10 @@
 #' @param min_max a range of OX axis. By deafult `NA` therefore will be extracted from the contributions of `x`.
 #' But can be set to some constants, usefull if these plots are used for comparisons.
 #' @param vcolors named vector with colors. By default `NA` therfore will choose DrWhy colors
-#' @param chartTitle a character. Set custom title
+#' @param chart_title a character. Set custom title
 #' @param time in ms. Set animation length
 #'
-#' @return an `r2d3` object.
+#' @return a `r2d3` object.
 #'
 #' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 #'
@@ -71,7 +71,7 @@ plotD3.shap <- function(x, ...,
                         scale_height = FALSE,
                         min_max = NA,
                         vcolors = NA,
-                        chartTitle = NA,
+                        chart_title = NA,
                         time = 0) {
 
   n <- length(list(...)) + 1
@@ -80,10 +80,10 @@ plotD3.shap <- function(x, ...,
   bdl <- list(x, ...)
   bdl <- lapply(bdl, function(x) x[x$B == 0,])
 
-  deletedIndexes <- c()
+  deleted_indexes <- c()
 
   dl <- list()
-  modelNames <- c()
+  model_names <- c()
 
   for (i in 1:n) {
     x <- bdl[[i]]
@@ -99,12 +99,12 @@ plotD3.shap <- function(x, ...,
       bdl <- c(bdl, split(x, f=x[,'label']))
 
       # remember indexes to delete
-      deletedIndexes <- c(deletedIndexes, i)
+      deleted_indexes <- c(deleted_indexes, i)
     }
   }
 
   # delete doubled data frames
-  bdl[deletedIndexes] <- NULL
+  bdl[deleted_indexes] <- NULL
 
   # iterate through updated data frame list
   for (i in 1:n) {
@@ -122,18 +122,18 @@ plotD3.shap <- function(x, ...,
     dl[[i]] <- new_x
 
     # remember plot names
-    modelNames <- c(modelNames,as.character(x[,'label'][1]))
+    model_names <- c(model_names,as.character(x[,'label'][1]))
   }
 
   if (length(unique(m)) > 1) stop("Models have different numbers of features.")
 
   m <- unique(m)
-  names(dl) <- modelNames
+  names(dl) <- model_names
 
   df <- do.call(rbind, dl)
 
   # later count longest label width in d3
-  labelList <- as.character(df[,'variable'])
+  label_list <- as.character(df[,'variable'])
 
   if (any(is.na(min_max))) {
     min_max <- range(df[,"barStart"], df[,"barSupport"])
@@ -142,23 +142,24 @@ plotD3.shap <- function(x, ...,
   # count margins
 
   min_max_margin <- abs(min_max[2]-min_max[1])*margin
-  min_max[1] <- min_max[1] - min_max_margin
-  min_max[2] <- min_max[2] + min_max_margin
+  xmin <- min_max[1] - min_max_margin
+  xmax <- min_max[2] + min_max_margin
 
-  options <- list(xmin = min_max[1], xmax = min_max[2],
+  options <- list(xmin = xmin, xmax = xmax,
                   n = n, m = m, barWidth = bar_width,
                   scaleHeight = scale_height, time = time,
                   vcolors = ifelse(is.na(vcolors), "default", vcolors),
-                  chartTitle = ifelse(is.na(chartTitle), "Shapley values", chartTitle))
+                  chartTitle = ifelse(is.na(chart_title), "Shapley values", chart_title))
 
-  temp <- jsonlite::toJSON(list(dl, labelList))
+  temp <- jsonlite::toJSON(list(dl, label_list))
 
   r2d3::r2d3(
     data = temp,
     script = system.file("d3js/shapD3.js", package = "iBreakDown"),
     dependencies = list(
       system.file("d3js/colorsDrWhy.js", package = "iBreakDown"),
-      system.file("d3js/tooltipD3.js", package = "iBreakDown")
+      system.file("d3js/d3-tip.js", package = "iBreakDown"),
+      system.file("d3js/hackHead.js", package = "iBreakDown")
     ),
     css = system.file("d3js/themeDrWhy.css", package = "iBreakDown"),
     options = options,
