@@ -39,8 +39,8 @@ describe.break_down_uncertainty <- function(x,
                                             display_distribution_details = FALSE,
                                             display_shap = FALSE) {
 
-  explainer_break_down <- convert_explainer.break_down_uncertainty(x)
-  describe(x = explainer_break_down,
+  explanation_break_down <- convert_explanation.break_down_uncertainty(x)
+  describe(x = explanation_break_down,
            nonsignificance_treshold = nonsignificance_treshold,
            label = label,
            short_description = short_description,
@@ -54,7 +54,7 @@ describe.break_down_uncertainty <- function(x,
 #
 # Called by `r describe.break_down_uncertainty`.
 
-convert_explainer.break_down_uncertainty <- function(x) {
+convert_explanation.break_down_uncertainty <- function(x) {
   # We transform explanations's data frame
   df <- x[which(x$B == 0), -ncol(x)]
   df <- df[order(abs(df$contribution), decreasing = TRUE), ]
