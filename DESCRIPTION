@@ -27,7 +27,6 @@ Imports:
 RoxygenNote: 6.1.1
 Suggests: knitr,
     rmarkdown,
-    caret,
     randomForest,
     e1071,
     xgboost,
@@ -35,7 +34,8 @@ Suggests: knitr,
     nnet,
     testthat,
     r2d3,
-    jsonlite
+    jsonlite,
+    caret
 VignetteBuilder: knitr
 URL: https://ModelOriented.github.io/iBreakDown/
 BugReports: https://github.com/ModelOriented/iBreakDown/issues

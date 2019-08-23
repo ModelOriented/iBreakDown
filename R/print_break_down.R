@@ -1,12 +1,11 @@
 #' Print Generic for Break Down Objects
 #'
-#' @param x the model model of `break_down` class.
+#' @param x an explanation created with \code{\link{break_down}}
 #' @param ... other parameters.
 #' @param digits number of decimal places (round) or significant digits (signif) to be used.
 #' See the \code{rounding_function} argument.
-#' @param rounding_function function that is to used for rounding numbers.
-#' It may be \code{\link{signif}} which keeps a specified number of significant digits.
-#' Or the default \code{\link{round}} to have the same precision for all components.
+#' @param rounding_function a function to be used for rounding numbers.
+#' This should be \code{\link{signif}} which keeps a specified number of significant digits or \code{\link{round}} (which is default) to have the same precision for all components.
 #'
 #' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 #'

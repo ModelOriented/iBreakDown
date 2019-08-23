@@ -7,11 +7,11 @@
 #' The main difference is that in the first step the order of variables and interactions is determined.
 #' And in the second step the impact is calculated.
 #'
-#' @param x a model to be explained, or an explainer created with function `DALEX::explain()`.
+#' @param x an explainer created with function \code{\link[DALEX]{explain}} or a model.
 #' @param data validation dataset, will be extracted from `x` if it's an explainer.
 #' @param predict_function predict function, will be extracted from `x` if it's an explainer.
 #' @param ... other parameters.
-#' @param interaction_preference a constant that set the preference for interactions. By default `1`. The larger the more frequently interactions will be presented in explanations.
+#' @param interaction_preference an integer specifying which interactions will be present in an explanation. The larger the integer, the more frequently interactions will be presented.
 #' @param new_observation a new observation with columns that correspond to variables used in the model.
 #' @param keep_distributions if `TRUE`, then the distribution of partial predictions is stored in addition to the average.
 #' @param order if not `NULL`, then it will be a fixed order of variables. It can be a numeric vector or vector with names of variables/interactions.

@@ -4,7 +4,7 @@
 #' It calls either \code{\link{local_attributions}} for additive attributions
 #' or \code{\link{local_interactions}} for attributions with interactions.
 #'
-#' @param x a model to be explained, or an explainer created with function `DALEX::explain()`.
+#' @param x an explainer created with function \code{\link[DALEX]{explain}} or a model.
 #' @param data validation dataset, will be extracted from `x` if it is an explainer.
 #' @param predict_function predict function, will be extracted from `x` if it's an explainer.
 #' @param new_observation a new observation with columns that correspond to variables used in the model.

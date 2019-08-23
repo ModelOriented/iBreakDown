@@ -13,12 +13,14 @@ explainer_rf <- explain(model,
                          y = HR$status[1:1000])
 
 bd_rf <- break_down(explainer_rf, new_observation)
+bd_rf_interactions <- break_down(explainer_rf, new_observation, keep_distributions = TRUE, interactions = TRUE)
 pl_rf <- plot(bd_rf)
 
 # tests
 
 test_that("Output format", {
   expect_is(bd_rf, "break_down")
+  expect_is(bd_rf_interactions, "break_down")
   expect_is(pl_rf, "ggplot")
 })
 

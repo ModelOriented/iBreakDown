@@ -10,7 +10,7 @@
   shift_contributions = 0.05, plot_distributions = FALSE)
 }
 \arguments{
-\item{x}{the model model of `break_down` class.}
+\item{x}{an explanation created with \code{\link{break_down}}}
 
 \item{...}{other parameters.}
 
@@ -18,20 +18,19 @@
 
 \item{max_features}{maximal number of features to be included in the plot. default value is 4.}
 
-\item{min_max}{a range of OX axis. By deafult `NA` therefore will be extracted from the contributions of `x`. But can be set to some constants, usefull if these plots are used for comparisons.}
+\item{min_max}{a range of OX axis. By default `NA`, therefore it will be extracted from the contributions of `x`. But it can be set to some constants, useful if these plots are to be used for comparisons.}
 
 \item{vcolors}{named vector with colors.}
 
 \item{digits}{number of decimal places (`round`) or significant digits (`signif`) to be used.
 See the \code{rounding_function} argument.}
 
-\item{rounding_function}{function that is to used for rounding numbers.
-It may be \code{\link{signif}} which keeps a specified number of significant digits.
-Or the default \code{\link{round}} to have the same precision for all components.}
+\item{rounding_function}{a function to be used for rounding numbers.
+This should be \code{\link{signif}} which keeps a specified number of significant digits or \code{\link{round}} (which is default) to have the same precision for all components.}
 
-\item{add_contributions}{shall variable contributions to be added the the plot?}
+\item{add_contributions}{if TRUE, variable contributions will be added to the plot}
 
-\item{shift_contributions}{how much labels sholud be shifted right as a fraction of range. By default 0.05}
+\item{shift_contributions}{number describing how much labels should be shifted to the right, as a fraction of range. By default equal to 0.05.}
 
 \item{plot_distributions}{if `TRUE` then distributions of conditional propotions will be plotted. This requires \code{keep_distributions=TRUE} in the
 \code{\link{break_down}}, \code{\link{local_attributions}}, or \code{\link{local_interactions}}.}
@@ -40,8 +39,7 @@ Or the default \code{\link{round}} to have the same precision for all components
 a `ggplot2` object.
 }
 \description{
-Plots waterfall break down for objects of the `break_down` class.
-Usually executed after `break_down()` function, `local_attributions()` or `local_interactions()`.
+Displays a waterfall break down plot for objects of `break_down` class.
 }
 \examples{
 library("DALEX")

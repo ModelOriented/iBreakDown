@@ -16,7 +16,7 @@ break_down(x, ..., interactions = FALSE)
   label = class(x)[1], ..., interactions = FALSE)
 }
 \arguments{
-\item{x}{a model to be explained, or an explainer created with function `DALEX::explain()`.}
+\item{x}{an explainer created with function \code{\link[DALEX]{explain}} or a model.}
 
 \item{...}{parameters passed to `local_*` functions.}
 

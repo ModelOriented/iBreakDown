@@ -19,7 +19,7 @@ break_down_uncertainty(x, ..., keep_distributions = TRUE, B = 10)
 shap(x, ..., B = 25)
 }
 \arguments{
-\item{x}{a model to be explained, or an explainer created with function `DALEX::explain()`.}
+\item{x}{an explainer created with function \code{\link[DALEX]{explain}} or a model.}
 
 \item{...}{other parameters.}
 
@@ -41,10 +41,10 @@ shap(x, ..., B = 25)
 an object of the `break_down_uncertainty` class.
 }
 \description{
-The `break_down_uncertainty()` calles `B` times the break down algorithm for random orderings.
+Function `break_down_uncertainty()` calls `B` times the break down algorithm for random orderings.
 Then it calculated distribution of attributions for these different orderings.
 Note that the `shap()` function is just a simplified interface to the `break_down_uncertainty()` function
-with by default `B=25` random draws.
+with a default value set to `B=25`.
 }
 \examples{
 library("DALEX")

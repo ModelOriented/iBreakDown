@@ -7,7 +7,7 @@
 \method{print}{break_down_description}(x, ...)
 }
 \arguments{
-\item{x}{description of `break_down_description` class.}
+\item{x}{a description of `break_down_description` class.}
 
 \item{...}{other parameters.}
 }
