@@ -37,5 +37,5 @@ Suggests: knitr,
     jsonlite,
     caret
 VignetteBuilder: knitr
-URL: https://ModelOriented.github.io/iBreakDown/
+URL: https://ModelOriented.github.io/iBreakDown/, https://github.com/ModelOriented/iBreakDown
 BugReports: https://github.com/ModelOriented/iBreakDown/issues

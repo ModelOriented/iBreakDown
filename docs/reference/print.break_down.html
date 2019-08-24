@@ -59,7 +59,6 @@
 
  gtag('config', 'UA-5650686-14');
 </script>
-
   </head>
 
   <body>
@@ -91,7 +90,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -109,20 +108,25 @@
       <a href="../articles/vignette_iBreakDown_classification.html">iBreakDown plots for classification models</a>
     </li>
     <li>
-      <a href="../articles/vignette_iBreakDown_description.html">Describing Explanations</a>
+      <a href="../articles/vignette_iBreakDown_description.html">Explanations in natural language</a>
     </li>
     <li>
       <a href="../articles/vignette_iBreakDown_regression.html">iBreakDown plots for regression models</a>
     </li>
     <li>
-      <a href="../articles/vignette_iBreakDown_titanic.html">iBreakDown plots for Sinking of the RMS Titanic</a>
+      <a href="../articles/vignette_iBreakDown_titanic.html">General introduction: iBreakDown plots for Sinking of the RMS Titanic</a>
     </li>
   </ul>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-        
+        <li>
+  <a href="https://github.com/ModelOriented/iBreakDown">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -130,14 +134,13 @@
 </div><!--/.navbar -->
 
       
-
       </header>
 
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Print Generic for Break Down Objects</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/ModelOriented/iBreakDown/blob/master/R/print_break_down.R'><code>R/print_break_down.R</code></a></small>
     <div class="hidden name"><code>print.break_down.Rd</code></div>
     </div>
 
@@ -148,7 +151,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for break_down</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>3</span>,
   <span class='kw'>rounding_function</span> <span class='kw'>=</span> <span class='no'>round</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -156,7 +159,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>the model model of `break_down` class.</p></td>
+      <td><p>an explanation created with <code><a href='break_down.html'>break_down</a></code></p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -169,9 +172,8 @@ See the <code>rounding_function</code> argument.</p></td>
     </tr>
     <tr>
       <th>rounding_function</th>
-      <td><p>function that is to used for rounding numbers.
-It may be <code><a href='https://rdrr.io/r/base/Round.html'>signif</a></code> which keeps a specified number of significant digits.
-Or the default <code><a href='https://rdrr.io/r/base/Round.html'>round</a></code> to have the same precision for all components.</p></td>
+      <td><p>a function to be used for rounding numbers.
+This should be <code><a href='https://www.rdocumentation.org/packages/base/topics/Round'>signif</a></code> which keeps a specified number of significant digits or <code><a href='https://www.rdocumentation.org/packages/base/topics/Round'>round</a></code> (which is default) to have the same precision for all components.</p></td>
     </tr>
     </table>
     
@@ -198,7 +200,6 @@ Or the default <code><a href='https://rdrr.io/r/base/Round.html'>round</a></code
   </div>
 </div>
 
-
       <footer>
       <div class="author">
   <p>
@@ -206,14 +207,11 @@ Or the default <code><a href='https://rdrr.io/r/base/Round.html'>round</a></code
     Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
   </p>
 </div>
-
       </footer>
    </div>
 
   
 
-
   </body>
 </html>
-
 

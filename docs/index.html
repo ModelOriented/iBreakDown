@@ -16,11 +16,11 @@
     The Break Down Table shows contributions of every variable to a final prediction. 
     The Break Down Plot presents variable contributions in a concise graphical way. 
     This package works for classification and regression models. 
-    It is an extension of the breakDown package (Staniak and Biecek 2018) &lt;doi:10.32614/RJ-2018-072&gt;,
+    It is an extension of the 'breakDown' package (Staniak and Biecek 2018) &lt;doi:10.32614/RJ-2018-072&gt;,
     with new and faster strategies for orderings. 
-    It supports interactions in explanations and has interactive visuals (implemented with D3.js library). 
-    The methodology behind is described in the iBreakDown article (Gosiewska and Biecek 2019) &lt;arXiv:1903.11420&gt;
-    This package is a part of the DrWhy.AI universe (Biecek 2018) &lt;arXiv:1806.08915&gt;.">
+    It supports interactions in explanations and has interactive visuals (implemented with 'D3.js' library). 
+    The methodology behind is described in the 'iBreakDown' article (Gosiewska and Biecek 2019) &lt;arXiv:1903.11420&gt;
+    This package is a part of the 'DrWhy.AI' universe (Biecek 2018) &lt;arXiv:1806.08915&gt;.">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -60,7 +60,7 @@
       <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -78,20 +78,25 @@
       <a href="articles/vignette_iBreakDown_classification.html">iBreakDown plots for classification models</a>
     </li>
     <li>
-      <a href="articles/vignette_iBreakDown_description.html">Describing Explanations</a>
+      <a href="articles/vignette_iBreakDown_description.html">Explanations in natural language</a>
     </li>
     <li>
       <a href="articles/vignette_iBreakDown_regression.html">iBreakDown plots for regression models</a>
     </li>
     <li>
-      <a href="articles/vignette_iBreakDown_titanic.html">iBreakDown plots for Sinking of the RMS Titanic</a>
+      <a href="articles/vignette_iBreakDown_titanic.html">General introduction: iBreakDown plots for Sinking of the RMS Titanic</a>
     </li>
   </ul>
 </li>
 <li>
   <a href="news/index.html">Changelog</a>
 </li>
-        
+        <li>
+  <a href="https://github.com/ModelOriented/iBreakDown">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
 </div>
 <!--/.nav-collapse -->
@@ -101,28 +106,42 @@
 <!--/.navbar -->
 
       
-
       </header><div class="row">
   <div class="contents col-md-9">
-
-
 <div id="ibreakdown-model-agnostic-explainers-for-individual-predictions" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#ibreakdown-model-agnostic-explainers-for-individual-predictions" class="anchor"></a>iBreakDown: Model Agnostic Explainers for Individual Predictions</h1></div>
-<p>The <strong>iBreakDown</strong> package is a model agnostic tool for explanation of predictions from black boxes ML models. Break Down Table shows contributions of every variable to a final prediction. Break Down Plot presents variable contributions in a concise graphical way. This package works for binary classifiers as well as regression models.</p>
-<p><strong>iBreakDown</strong> is a successor of the <a href="https://github.com/pbiecek/breakDown">breakDown</a> package. It is faster (complexity O(p) instead of O(p^2)). It supports interactions and interactive explainers with D3.js plots.</p>
+
+<div id="overview" class="section level2">
+<h2 class="hasAnchor">
+<a href="#overview" class="anchor"></a>Overview</h2>
+<p>The <code>iBreakDown</code> package is a model agnostic tool for explanation of predictions from black boxes ML models. Break Down Table shows contributions of every variable to a final prediction. Break Down Plot presents variable contributions in a concise graphical way. SHAP (Shapley Additive Attributions) values are calculated as average from random Break Down profiles. This package works for binary classifiers as well as regression models.</p>
+<p><code>iBreakDown</code> is a successor of the <a href="https://github.com/pbiecek/breakDown">breakDown</a> package. It is faster (complexity O(p) instead of O(p^2)). It supports interactions and interactive explainers with D3.js plots.</p>
 <p>It is a part of <a href="http://DrWhy.AI">DrWhy.AI</a> collection of tools for XAI.</p>
-<p>Find lots of R examples at <code>iBreakDown</code> website: <a href="https://ModelOriented.github.io/iBreakDown/" class="uri">https://ModelOriented.github.io/iBreakDown/</a></p>
-<p>Methodology behind the <strong>iBreakDown</strong> package is described in the <a href="https://arxiv.org/abs/1903.11420">arxiv paper</a> and <a href="https://pbiecek.github.io/PM_VEE/breakDown.html">VEEDD book</a>.</p>
-<p>This version also works with <strong>D3</strong>! <a href="https://modeloriented.github.io/iBreakDown/prototypeDemo.html">see an example</a> and <a href="https://modeloriented.github.io/iBreakDown/articles/vignette_iBreakDown_titanic.html#plot-attributions-with-d3">demo</a> <img src="images/plotD3.png" alt="plotD3"></p>
+</div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>Install from GitHub</p>
-<pre><code><a href="https://rdrr.io/pkg/devtools/man/reexports.html">devtools::install_github("ModelOriented/iBreakDown")</a></code></pre>
-</div>
-</div>
+<pre class="{r}"><code># the easiest way to get iBreakDown is to install it from CRAN:
+install.packages("iBreakDown")
 
+# Or the the development version from GitHub:
+# install.packages("devtools")
+devtools::install_github("ModelOriented/iBreakDown")</code></pre>
+</div>
+<div id="learn-more" class="section level2">
+<h2 class="hasAnchor">
+<a href="#learn-more" class="anchor"></a>Learn more</h2>
+<p>Find lots of R examples at <code>iBreakDown</code> website: <a href="https://ModelOriented.github.io/iBreakDown/" class="uri">https://ModelOriented.github.io/iBreakDown/</a></p>
+<p>Methodology behind the <strong>iBreakDown</strong> package is described in the <a href="https://arxiv.org/abs/1903.11420">arxiv paper</a> and <a href="https://pbiecek.github.io/PM_VEE/breakDown.html">VEEDD book</a>.</p>
+<p>This version also works with <strong>D3</strong>! <a href="https://modeloriented.github.io/iBreakDown/prototypeDemo.html">see an example</a> and <a href="https://modeloriented.github.io/iBreakDown/articles/vignette_iBreakDown_titanic.html#plot-attributions-with-d3">demo</a> <img src="images/plotD3.png" alt="plotD3"></p>
+</div>
+<div id="acknowledgments" class="section level2">
+<h2 class="hasAnchor">
+<a href="#acknowledgments" class="anchor"></a>Acknowledgments</h2>
+<p>Work on this package was financially supported by the ‘NCN Opus grant 2016/21/B/ST6/02176’.</p>
+</div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -130,6 +149,8 @@
 <h2>Links</h2>
 <ul class="list-unstyled">
 <li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=iBreakDown">https://​cloud.r-project.org/​package=iBreakDown</a>
+</li>
+<li>Browse source code at <br><a href="https://github.com/ModelOriented/iBreakDown">https://​github.com/​ModelOriented/​iBreakDown</a>
 </li>
 <li>Report a bug at <br><a href="https://github.com/ModelOriented/iBreakDown/issues">https://​github.com/​ModelOriented/​iBreakDown/​issues</a>
 </li>
@@ -161,15 +182,14 @@
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://cran.r-project.org/package=iBreakDown"><img src="http://www.r-pkg.org/badges/version/iBreakDown" alt="CRAN_Status_Badge"></a></li>
-<li><a href="http://cranlogs.r-pkg.org/badges/grand-total/iBreakDown"><img src="http://cranlogs.r-pkg.org/badges/grand-total/iBreakDown?color=orange" alt="Total Downloads"></a></li>
 <li><a href="https://travis-ci.org/ModelOriented/iBreakDown"><img src="https://api.travis-ci.org/ModelOriented/iBreakDown.png" alt="Build Status"></a></li>
 <li><a href="https://codecov.io/github/ModelOriented/iBreakDown?branch=master"><img src="https://img.shields.io/codecov/c/github/ModelOriented/iBreakDown/master.svg" alt="Coverage Status"></a></li>
+<li><a href="https://cran.r-project.org/package=iBreakDown"><img src="http://www.r-pkg.org/badges/version/iBreakDown" alt="CRAN_Status_Badge"></a></li>
+<li><a href="http://cranlogs.r-pkg.org/badges/grand-total/iBreakDown"><img src="http://cranlogs.r-pkg.org/badges/grand-total/iBreakDown?color=orange" alt="Total Downloads"></a></li>
 </ul>
 </div>
 </div>
 </div>
-
 
       <footer><div class="author">
   <p>
@@ -177,12 +197,10 @@
     Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
   </p>
 </div>
-
       </footer>
 </div>
 
   
-
 
   </body>
 </html>

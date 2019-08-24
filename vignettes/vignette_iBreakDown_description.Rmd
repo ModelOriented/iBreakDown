@@ -1,5 +1,5 @@
 ---
-title: "Describing Explanations"
+title: "Explanations in natural language"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{vignette_iBreakDown_description}

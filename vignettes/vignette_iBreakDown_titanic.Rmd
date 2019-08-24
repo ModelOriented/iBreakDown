@@ -1,5 +1,5 @@
 ---
-title: "iBreakDown plots for Sinking of the RMS Titanic"
+title: "General introduction: iBreakDown plots for Sinking of the RMS Titanic"
 author: "Przemyslaw Biecek"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
