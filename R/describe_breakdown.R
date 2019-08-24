@@ -1,37 +1,34 @@
-#' Natural language description of a DALEX explainer
+#' Generates Textual Explanations for Predictive Models
 #'
-#' @description  Generic function \code{describe} generates a natural language description of
-#' \code{break_down()} and \code{shap()}explanations what enchaces their interpretability.
+#' @description Generic function \code{describe} generates natural language explanations based on
+#' \code{\link{break_down}} and \code{\link{shap}} explanations, what enhances their interpretability.
 #'
-#' @details Function \code{describe.break_down()} first selects one of four different description
-#' scenarios. Depending on \code{nonsignificance_treshold} which selects variables with
-#' significant contribution to model's final prediction, the scenario can be one of the following:
+#' @details Function \code{describe} generates a textual explanations by extracting information from
+#' a \code{\link{break_down}} or \code{\link{shap}} explanation. It makes an argument justifying why
+#' the model's prediction is lower or higher, than it's average prediction. The description consists of
+#' an introduction, argumenation and summary making use from the claim, support, evidence argumentation
+#' structure, as recomended for the World Universities Debating style.
+#'
+#' The function first selects one of four different scenarios, due to
+#' \code{nonsignificance_treshold}. The chosen scenario can be one of the following:
 #' 1. Model's prediction for the selected instance is significantly higher than the average prediction.
 #' 2. Model's prediction is significantly lower.
 #' 3. Model's prediction is close to it's average prediction, however there are significant
 #' variables counteracting with each other
 #' 4. Model's prediction is close to it's average prediction and all the variables are rather nonsignificant.
-#' For each scenario, a template is choosen. Currently only the defalut \code{argumentation_mode} can be choosen, which
-#' chooses three most significant variables and dicribes them.
+#' Then an explanation due to the chosen scenario is generated.
 #'
-#' @details Arguments \code{display_values}, which shows values of the variables, and
-#' \code{display_numbers}, which allows for displaying numerical values of prediciton changes, controls
-#' the complexity of the generated description. Additional parameter \code{short_description} allows for generating short description,
-#' while \code{display_distribution_details} displays additional details of the distribution of
-#' model's prediction for all instances, if describing a break_down explanation. To add other modes
-#' of argumentation add parameter argumentation_mode.
-#'
-#' @param explainer a DALEX explainer
-#' @param nonsignificance_treshold a parameter specifying a treshold for variable importance
+#' @param x an explanation created with \code{\link{break_down}} or \code{\link{shap}}
+#' @param nonsignificance_treshold a numeric specifying a treshold for variable importance
 #' @param ... other arguments
-#' @param label a short description describing model's prediction
-#' @param short_description allows for generating short description
-#' @param display_values allows for displaying variable values
-#' @param display_numbers allows for displaying numerical values
-#' @param display_distribution_details displays detailed description of predictions distribution
-#' @param display_shap displays additional information about average contribution. Use only if the explainer is a shap explainer
+#' @param label a character string describing model's prediction
+#' @param short_description a boolean, returns a short description
+#' @param display_values a boolean, displays variables' values
+#' @param display_numbers a boolean, displays a description containing numerical values
+#' @param display_distribution_details a boolean, displays details about the distribution of model's predictions
+#' @param display_shap a boolean, adds information about variables' average contribution. Use only with \code{\link{shap}} explanation.
 #'
-#' @return A string of natural language description of an explainer
+#' @return A character string of textual explanation
 #'
 #' @importFrom graphics plot
 #' @importFrom stats quantile aggregate sd
@@ -46,14 +43,13 @@
 #'                                   fare + sibsp + parch,  data = titanic)
 #'
 #' explain_titanic_rf <- explain(model_titanic_rf,
-#'                               data = titanic[,-9],
+#'                               data = titanic[ ,-9],
 #'                               y = titanic$survived == "yes",
 #'                               label = "Random Forest v7")
-#' set.seed(1234)
-#' random_passanger <- titanic[sample(nrow(titanic),1),c(1,2,3,4,6,7,8)]
-#' rf_la <- break_down(explain_titanic_rf, random_passanger, keep_distributions = TRUE)
 #'
-#' description <- describe(rf_la,
+#' bd_explanation <- break_down(explain_titanic_rf, titanic[1, ], keep_distributions = TRUE)
+#'
+#' description <- describe(bd_explanation,
 #'                         label = "the passanger will survive with probability",
 #'                         short_description = FALSE,
 #'                         display_values =  TRUE,
@@ -67,13 +63,13 @@
 #' @export
 #' @rdname describe
 
-describe <- function(explainer, nonsignificance_treshold = 0.15, ...)
+describe <- function(x, nonsignificance_treshold = 0.15, ...)
   UseMethod("describe")
 
 #' @export
 #' @rdname describe
 
-describe.break_down <- function(explainer,
+describe.break_down <- function(x,
                                 nonsignificance_treshold = 0.15,
                                 ...,
                                 label = NULL,
@@ -93,37 +89,38 @@ describe.break_down <- function(explainer,
     stop("Arguments are not valid")
   }
 
-  model_name <- as.character(explainer$label[1])
+  # check model's name for description
+  model_name <- as.character(x$label[1])
   model_name <- paste(toupper(substr(model_name, 1, 1)), substr(model_name, 2, nchar(model_name)), sep="")
 
-  description_profile <- description_profile(explainer, nonsignificance_treshold)
+  description_profile <- description_profile(x, nonsignificance_treshold)
 
-  distribution_kept <- ifelse(is.null(attr(explainer, "yhats_distribution")), FALSE, TRUE)
+  distribution_kept <- ifelse(is.null(attr(x, "yhats_distribution")), FALSE, TRUE)
 
   if (is.null(label)) label <- "the prediction for the selected instance is"
 
   if (short_description) {
-    descriptions <- make_short_description(explainer,
+    descriptions <- make_short_description(x,
                                            display_values,
                                            label,
                                            model_name,
                                            description_profile)
   } else {
-    introduction <- make_introduction(explainer,
+    introduction <- make_introduction(x,
                                      label,
                                      display_numbers,
                                      display_distribution_details,
                                      model_name,
                                      distribution_kept,
                                      description_profile)
-    argumentation <- make_argument(explainer,
+    argumentation <- make_argument(x,
                                    label,
                                    display_values,
                                    display_numbers,
                                    model_name,
                                    description_profile,
                                    display_shap)
-    summary <- make_summary(explainer)
+    summary <- make_summary(x)
 
     descriptions <- paste0(introduction,"\n\n",argumentation, "\n\n",summary)
    descriptions <- gsub("\n\n\n","\n\n", descriptions)
@@ -134,23 +131,20 @@ describe.break_down <- function(explainer,
 
 # Returns a scenario for a description
 #
-# 0 = prediction significantly higher than the average
-# 1 = prediction significantly lower than the average
-# 2 = prediction close to the average, but there are significant contributors
-# 3 = prediction close to the average and there are no significant contributors
+# 1 = prediction significantly higher than the average
+# 2 = prediction significantly lower than the average
+# 3 = prediction close to the average, but there are significant contributors
+# 4 = prediction close to the average and there are no significant contributors
 #
-# @param explainer an iBreakDown explainer
-# @param nonsignificance_treshold a treshold for specyfiying which predictions are close
-# to the average model prediction.
 # @return an integer from 1 to 4
 #
 
-description_profile <- function(explainer,
+description_profile <- function(x,
                                 nonsignificance_treshold){
 
-  model_intercept <- round(explainer$contribution[1],3)
-  model_prediction <- round(explainer$contribution[length(explainer$contribution)],3)
-  model_contributions <- explainer$contribution[-c(1,length(explainer$contribution))]
+  model_intercept <- round(x$contribution[1],3)
+  model_prediction <- round(x$contribution[length(x$contribution)],3)
+  model_contributions <- x$contribution[-c(1,length(x$contribution))]
   model_highest_contribution <- sort(abs(model_contributions), decreasing = TRUE)[1]
   distance <- abs(model_intercept - model_prediction)
 
@@ -165,22 +159,17 @@ description_profile <- function(explainer,
 
 #  Describes a distribution of model's pedictions.
 #
-# @param explainer iBreakDown explainer
-# @param display_numbers TRUE for displaying variable contributions and intercept
-# @param display_distribution_details TRUE for displaying detailed description of predictions distribution
-# @param model_name name of the model to be explained
-#
 # @return a decription of predictions distribution
 
-describe_distribution <- function(explainer,
+describe_distribution <- function(x,
                                   display_numbers,
                                   display_distribution_details,
                                   model_name) {
 
-  yhats_distribution <- attr(explainer, "yhats_distribution")
+  yhats_distribution <- attr(x, "yhats_distribution")
   model_predictions <- yhats_distribution[which(yhats_distribution$variable == "all data"),]$prediction
-  prediction <- round(explainer[dim(explainer)[1],'contribution'],3)
-  intercept <- round(explainer$contribution[1],3)
+  prediction <- round(x[dim(x)[1],'contribution'],3)
+  intercept <- round(x$contribution[1],3)
   median_prediction <- round(median(model_predictions),3)
 
   if (!display_distribution_details) {
@@ -211,8 +200,13 @@ describe_distribution <- function(explainer,
     if (abs(((median - mean)*3)/sd) < 0.5) skeweness <- "central"
 
     predictions_quartile <- quantile(model_predictions)
-    quartile <- which(predictions_quartile < prediction)[length(which(predictions_quartile < prediction))][[1]]
-    quartile_which <- if (quartile == 1) "first" else if (quartile == 2) "second" else if (quartile == 3) "third" else "fourth"
+    quartile <- which(predictions_quartile < prediction)
+    quartile <- quartile[[length(quartile)]]
+    quartile_which <- switch(quartile,
+                             '1' = "first",
+                             '2' = "second",
+                             '3' = 'third',
+                             '4' = "fourth")
 
     description <- paste0("Model predictions range from ", round(min(model_predictions),3),
                           " to ", round(max(model_predictions), 3), ". The distribution of ",
@@ -225,18 +219,8 @@ describe_distribution <- function(explainer,
 }
 
 # Makes an introduction for the description function
-#
-# @param explainer an iBreakDown explainer
-# @param label prediction description
-# @param display_numbers TRUE for displaying variable contributions and intercept
-# @param distribution_details TRUE for displaying detailed description of predictions distribution
-# @param model_name name of the model to be explained
-# @param distribution_kept TRUE if the distribution details are stored
-# @param description_profile description scenario
-#
-# @return an introduction
 
-make_introduction <- function(explainer,
+make_introduction <- function(x,
                               label,
                               display_numbers,
                               distribution_details,
@@ -244,28 +228,28 @@ make_introduction <- function(explainer,
                               distribution_kept,
                               description_profile){
 
-  intercept <- round(explainer$contribution[1],3)
-  prediction <- round(explainer$contribution[length(explainer$contribution)],3)
-  contributions <- explainer$contribution[-c(1,length(explainer$contribution))]
+  intercept <- round(x$contribution[1],3)
+  prediction <- round(x$contribution[length(x$contribution)],3)
+  contributions <- x$contribution[-c(1,length(x$contribution))]
 
   numbers <- if (display_numbers) paste0(" ",as.character(intercept)) else NULL
   introduction <- switch(description_profile,
-                         '1' = paste0({model_name}," predicts, that ",label," ",prediction,
+                         '1' = paste0(model_name," predicts, that ",label," ",prediction,
                                 " which is higher than the average model prediction",
                                 numbers,"."),
-                         '2' = paste0({model_name}," predicts, that ", label," ", prediction,
+                         '2' = paste0(model_name," predicts, that ", label," ", prediction,
                                 " which is lower than the average model prediction",
                                 numbers,"."),
-                         '3' = paste0({model_name}," predicts, that ", label," ", prediction,
+                         '3' = paste0(model_name," predicts, that ", label," ", prediction,
                                 " which is close to the average model prediction",
                                 numbers, "."),
-                         '4' = paste0({model_name}," predicts, that ", label," ", prediction,
+                         '4' = paste0(model_name," predicts, that ", label," ", prediction,
                                 " which is close to the average model prediction",
                                 numbers, ".")
                          )
 
   if (distribution_kept) {
-    distribution_description <- describe_distribution(explainer,
+    distribution_description <- describe_distribution(x,
                                                       display_numbers,
                                                       distribution_details,
                                                       model_name)
@@ -276,18 +260,8 @@ make_introduction <- function(explainer,
 }
 
 # Makes an argument for description
-#
-# @param explainer an iBreakDown explanation
-# @param label a prediction label
-# @param display_values displays values
-# @param display_numbers displays numbers
-# @param model_name name of the model to be explained
-# @param description_profile description scenario
-# @param display_shap displays addition information about shap explanation
-#
-# @return an argument
 
-make_argument <- function(explainer,
+make_argument <- function(x,
                           label,
                           display_values,
                           display_numbers,
@@ -296,7 +270,7 @@ make_argument <- function(explainer,
                           display_shap) {
 
   # Preparing a data frame for generating arguments
-  df <- explainer[-c(1,nrow(explainer)), c("variable_name","contribution", "variable_value")]
+  df <- x[-c(1,nrow(x)), c("variable_name","contribution", "variable_value")]
   df['importance'] <- abs(df$contribution)
   df <- df[order(df$importance, decreasing = TRUE), ] # We do not cut arguments with importance below the treshold
   nrow_df <- min(3, nrow(df))
@@ -309,13 +283,9 @@ make_argument <- function(explainer,
     df$variable_name <- paste0(df$variable_name, " ", df$variable_value)
   }
 
-  #display_shap <- describe_shap(display_shap = display_shap,
-  #                              show_shap = show_shap,
-  #                              explainer = explainer,
-  #                              df = df,
-  #                              mode = 'logical')
+
   shap <- describe_shap(display_shap = display_shap,
-                        explainer = explainer,
+                        x = x,
                         df = df,
                         nrow_df = nrow_df)
 
@@ -361,13 +331,11 @@ make_argument <- function(explainer,
 }
 
 # Makes a summary for the description
-# @param explainer an iBreakDown explainer
-# @return a summary
 
 
-make_summary <- function(explainer){
+make_summary <- function(x){
     # We make the same df as during argument selection
-    df <- explainer[-c(1,dim(explainer)[1]), c("contribution","variable")]
+    df <- x[-c(1,dim(x)[1]), c("contribution","variable")]
     df['importance'] <- abs(df$contribution)
     df <- df[order(df$importance, decreasing = TRUE), ]
     other_importance <- sum(df[ ,'contribution']) -sum(head(df[ ,'contribution'],3))
@@ -380,26 +348,16 @@ make_summary <- function(explainer){
   }
 
 
-# Makes a short description of iBreakDown explainer
-#
-# @param explainer iBreakDown explainer
-# @param display_values if TRUE then displays variable valeus
-# @param label prediction label
-# @param model_name name of the model to be explained
-# @param description_profile a scenario for description
-#
-#
-
-make_short_description <- function(explainer,
+make_short_description <- function(x,
                                    display_values,
                                    label,
                                    model_name,
                                    description_profile) {
   # Returns a short description of a break_down explanation
 
-  intercept <- round(explainer$contribution[1],3)
-  prediction <- round(explainer$contribution[length(explainer$contribution)],3)
-  most_important_variable <- explainer[2, ]
+  intercept <- round(x$contribution[1],3)
+  prediction <- round(x$contribution[length(x$contribution)],3)
+  most_important_variable <- x[2, ]
   most_important_contribution <- most_important_variable$contribution
 
   # We choose the most informative description depending on possible cases:
@@ -447,19 +405,19 @@ make_argument_plain <- function(df, mode) {
 }
 # Generates SHAP values' description
 
-describe_shap <- function(display_shap, explainer, df, nrow_df){
+describe_shap <- function(display_shap, x, df, nrow_df){
   if (display_shap) {
-    if (is.null(attr(explainer, 'shap_contributions'))) {
-      warning("Explainer is not a break_down_uncertainty/shap explainer")
+    if (is.null(attr(x, 'shap_contributions'))) {
+      warning("Explanation is not a break_down_uncertainty/shap explanation")
     } else {
-      boxplot_length <- sapply(attr(explainer, 'shap_contributions'), function(x) {
-        abs(unname(quantile(x)['75%'] - quantile(x)['25%']))
+      boxplot_length <- sapply(attr(x, 'shap_contributions'), function(contribution) {
+        abs(unname(quantile(contribution)['75%'] - quantile(contribution)['25%']))
       })
-      is_important <- sapply(names(boxplot_length), function(x) {
-        df[df$variable_name == x, 'importance'] > unname(boxplot_length[x])
+      is_important <- sapply(names(boxplot_length), function(name) {
+        df[df$variable_name == name, 'importance'] > unname(boxplot_length[name])
       })
-      sapply(names(is_important), function(x) {
-        df[df$variable_name == x, 'shap'] <- is_important[x]})
+      sapply(names(is_important), function(name) {
+        df[df$variable_name == name, 'shap'] <- is_important[name]})
       shap <- paste(df[seq_along(nrow_df), 'shap'], collapse = "")
       shap <- ifelse(shap =="",
                      "The average contribution of all the above variables is significant.",

@@ -8,16 +8,15 @@
   rounding_function = round)
 }
 \arguments{
-\item{x}{the model model of `break_down` class.}
+\item{x}{an explanation created with \code{\link{break_down}}}
 
 \item{...}{other parameters.}
 
 \item{digits}{number of decimal places (round) or significant digits (signif) to be used.
 See the \code{rounding_function} argument.}
 
-\item{rounding_function}{function that is to used for rounding numbers.
-It may be \code{\link{signif}} which keeps a specified number of significant digits.
-Or the default \code{\link{round}} to have the same precision for all components.}
+\item{rounding_function}{a function to be used for rounding numbers.
+This should be \code{\link{signif}} which keeps a specified number of significant digits or \code{\link{round}} (which is default) to have the same precision for all components.}
 }
 \value{
 a data frame

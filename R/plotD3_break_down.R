@@ -2,23 +2,21 @@
 #'
 #' @description
 #' Plots waterfall break down for objects of the `break_down` class.
-#' Usually executed after `break_down()` or `local_attributions()` function.
 #'
-#' @param x the model model of `break_down` class.
+#' @param x an explanation created with \code{\link{break_down}}
 #' @param ... other parameters.
 #' @param baseline if numeric then veritical line will start in baseline.
 #' @param max_features maximal number of features to be included in the plot. Default value is 10.
 #' @param digits number of decimal places (round) or significant digits (signif) to be used.
 #' See the \code{rounding_function} argument.
-#' @param rounding_function function that is to used for rounding numbers.
-#' It may be \code{\link{signif}} which keeps a specified number of significant digits.
-#' Or the default \code{\link{round}} to have the same precision for all components.
+#' @param rounding_function a function to be used for rounding numbers.
+#' This should be \code{\link{signif}} which keeps a specified number of significant digits or \code{\link{round}} (which is default) to have the same precision for all components.
 #' @param bar_width width of bars in px. By default 12px
 #' @param margin extend x axis domain range to adjust the plot. Usually value between 0.1 and 0.3, by default it's 0.2
-#' @param scale_height should the height of plot scale with window size? By default it's FALSE
+#' @param scale_height if TRUE, the height of the plot scales with window size
 #' @param min_max a range of OX axis. By deafult `NA` therefore will be extracted from the contributions of `x`.
 #' But can be set to some constants, usefull if these plots are used for comparisons.
-#' @param vcolors named vector with colors. By default `NA` therfore will choose DrWhy colors
+#' @param vcolors If NA (default), DrWhy colors are used.
 #' @param chart_title a character. Set custom title
 #' @param time in ms. Set animation length
 #'

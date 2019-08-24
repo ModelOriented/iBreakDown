@@ -7,7 +7,7 @@
 \method{print}{break_down_uncertainty}(x, ...)
 }
 \arguments{
-\item{x}{object of `break_down_uncertainty` class.}
+\item{x}{an explanation created with \code{\link{break_down_uncertainty}}}
 
 \item{...}{other parameters.}
 }

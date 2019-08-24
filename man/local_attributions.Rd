@@ -16,7 +16,7 @@ local_attributions(x, ...)
   order = NULL, ...)
 }
 \arguments{
-\item{x}{a model to be explained, or an explainer created with function `DALEX::explain()`.}
+\item{x}{an explainer created with function \code{\link[DALEX]{explain}} or a model.}
 
 \item{...}{other parameters.}
 
@@ -38,7 +38,7 @@ an object of the `break_down` class.
 \description{
 This function finds Variable attributions via Sequential Variable Conditioning.
 The complexity of this function is O(2*p).
-This function works in a similar way to step-up and step-down greedy approximations in function `breakDown::break_down()`.
+This function works in a similar way to step-up and step-down greedy approximations in function \code{\link{break_down}}.
 The main difference is that in the first step the order of variables is determined.
 And in the second step the impact is calculated.
 }

@@ -4,70 +4,62 @@
 \alias{describe}
 \alias{describe.break_down}
 \alias{describe.break_down_uncertainty}
-\title{Natural language description of a DALEX explainer}
+\title{Generates Textual Explanations for Predictive Models}
 \usage{
-describe(explainer, nonsignificance_treshold = 0.15, ...)
+describe(x, nonsignificance_treshold = 0.15, ...)
 
-\method{describe}{break_down}(explainer, nonsignificance_treshold = 0.15,
-  ..., label = NULL, short_description = FALSE,
-  display_values = FALSE, display_numbers = FALSE,
-  display_distribution_details = FALSE, display_shap = FALSE)
+\method{describe}{break_down}(x, nonsignificance_treshold = 0.15, ...,
+  label = NULL, short_description = FALSE, display_values = FALSE,
+  display_numbers = FALSE, display_distribution_details = FALSE,
+  display_shap = FALSE)
 
-\method{describe}{break_down_uncertainty}(explainer,
+\method{describe}{break_down_uncertainty}(x,
   nonsignificance_treshold = 0.15, ..., label = NULL,
   short_description = FALSE, display_values = FALSE,
   display_numbers = FALSE, display_distribution_details = FALSE,
   display_shap = FALSE)
 }
 \arguments{
-\item{explainer}{a DALEX explainer}
+\item{x}{an explanation created with \code{\link{break_down}} or \code{\link{shap}}}
 
-\item{nonsignificance_treshold}{a parameter specifying a treshold for variable importance}
+\item{nonsignificance_treshold}{a numeric specifying a treshold for variable importance}
 
 \item{...}{other arguments}
 
-\item{label}{a short description describing model's prediction}
+\item{label}{a character string describing model's prediction}
 
-\item{short_description}{allows for generating short description}
+\item{short_description}{a boolean, returns a short description}
 
-\item{display_values}{allows for displaying variable values}
+\item{display_values}{a boolean, displays variables' values}
 
-\item{display_numbers}{allows for displaying numerical values}
+\item{display_numbers}{a boolean, displays a description containing numerical values}
 
-\item{display_distribution_details}{displays detailed description of predictions distribution}
+\item{display_distribution_details}{a boolean, displays details about the distribution of model's predictions}
 
-\item{display_shap}{displays additional information about average contribution. Use only if the explainer is a shap explainer}
+\item{display_shap}{a boolean, adds information about variables' average contribution. Use only with \code{\link{shap}} explanation.}
 }
 \value{
-A string of natural language description of an explainer
+A character string of textual explanation
 }
 \description{
-Generic function \code{describe} generates a natural language description of
-\code{break_down()} and \code{shap()}explanations what enchaces their interpretability.
+Generic function \code{describe} generates natural language explanations based on
+\code{\link{break_down}} and \code{\link{shap}} explanations, what enhances their interpretability.
 }
 \details{
-Function \code{describe.break_down()} first selects one of four different description
-scenarios. Depending on \code{nonsignificance_treshold} which selects variables with
-significant contribution to model's final prediction, the scenario can be one of the following:
+Function \code{describe} generates a textual explanations by extracting information from
+a \code{\link{break_down}} or \code{\link{shap}} explanation. It makes an argument justifying why
+the model's prediction is lower or higher, than it's average prediction. The description consists of
+an introduction, argumenation and summary making use from the claim, support, evidence argumentation
+structure, as recomended for the World Universities Debating style.
+
+The function first selects one of four different scenarios, due to
+\code{nonsignificance_treshold}. The chosen scenario can be one of the following:
 1. Model's prediction for the selected instance is significantly higher than the average prediction.
 2. Model's prediction is significantly lower.
 3. Model's prediction is close to it's average prediction, however there are significant
 variables counteracting with each other
 4. Model's prediction is close to it's average prediction and all the variables are rather nonsignificant.
-For each scenario, a template is choosen. Currently only the defalut \code{argumentation_mode} can be choosen, which
-chooses three most significant variables and dicribes them.
-
-Arguments \code{display_values}, which shows values of the variables, and
-\code{display_numbers}, which allows for displaying numerical values of prediciton changes, controls
-the complexity of the generated description. Additional parameter \code{short_description} allows for generating short description,
-while \code{display_distribution_details} displays additional details of the distribution of
-model's prediction for all instances, if describing a break_down explanation. To add other modes
-of argumentation add parameter argumentation_mode.
-
-Function \code{describe.break_down_uncertainty()} generates a natural language description
-for a shap explanation. It imitates the \code{describe.break_down()}, the only difference is that contributions
-are average contributions of iterated break_down contributions. Argument `display_shap` allows for
-average's dispersion description.
+Then an explanation due to the chosen scenario is generated.
 }
 \examples{
 library("DALEX")
@@ -79,14 +71,13 @@ model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + emba
                                   fare + sibsp + parch,  data = titanic)
 
 explain_titanic_rf <- explain(model_titanic_rf,
-                              data = titanic[,-9],
+                              data = titanic[ ,-9],
                               y = titanic$survived == "yes",
                               label = "Random Forest v7")
-set.seed(1234)
-random_passanger <- titanic[sample(nrow(titanic),1),c(1,2,3,4,6,7,8)]
-rf_la <- break_down(explain_titanic_rf, random_passanger, keep_distributions = TRUE)
 
-description <- describe(rf_la,
+bd_explanation <- break_down(explain_titanic_rf, titanic[1, ], keep_distributions = TRUE)
+
+description <- describe(bd_explanation,
                         label = "the passanger will survive with probability",
                         short_description = FALSE,
                         display_values =  TRUE,

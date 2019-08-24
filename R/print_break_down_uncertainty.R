@@ -1,6 +1,6 @@
 #' Print Generic for Break Down Uncertainty Objects
 #'
-#' @param x object of `break_down_uncertainty` class.
+#' @param x an explanation created with \code{\link{break_down_uncertainty}}
 #' @param ... other parameters.
 #'
 #' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}

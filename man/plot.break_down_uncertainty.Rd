@@ -8,7 +8,7 @@
   vcolors = DALEX::colors_breakdown_drwhy(), show_boxplots = TRUE)
 }
 \arguments{
-\item{x}{the model model of `break_down_uncertainty` class.}
+\item{x}{an explanation created with \code{\link{break_down_uncertainty}}}
 
 \item{...}{other parameters.}
 

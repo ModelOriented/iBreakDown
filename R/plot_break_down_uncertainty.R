@@ -1,6 +1,6 @@
 #' Plot Generic for Break Down Uncertainty Objects
 #'
-#' @param x the model model of `break_down_uncertainty` class.
+#' @param x an explanation created with \code{\link{break_down_uncertainty}}
 #' @param ... other parameters.
 #' @param show_boxplots logical if `TRUE` (default) boxplot will be plotted to show uncertanity of attributions
 #' @param vcolors named vector with colors.

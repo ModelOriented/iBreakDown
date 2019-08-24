@@ -33,7 +33,7 @@ test <- expand.grid(replicate(n, c(TRUE,FALSE), simplify = FALSE))
 test_result <- apply(test, MARGIN = 1, function(x){
   random_passanger <- titanic[sample(nrow(titanic),1),c(1,2,3,4,6,7,8)]
   rf_la <- break_down(explain_titanic_rf, random_passanger, keep_distributions = TRUE)
-  description <- iBreakDown::describe(explainer = rf_la,
+  description <- iBreakDown::describe(x = rf_la,
                                       label = "the passanger will survive with probability",
                                       short_description = x[[1]],
                                       display_values =  x[[2]],
@@ -49,7 +49,7 @@ test <- expand.grid(replicate(n, c(TRUE,FALSE), simplify = FALSE))
 test_result_shap <- apply(test, MARGIN = 1, function(x){
   random_passanger <- titanic[sample(nrow(titanic),1),c(1,2,3,4,6,7,8)]
   rf_la_shap <- shap(explain_titanic_rf, random_passanger, B = 2)
-  description <- iBreakDown::describe(explainer = rf_la_shap,
+  description <- iBreakDown::describe(x = rf_la_shap,
                                       label = "the passanger will survive with probability",
                                       short_description = x[[1]],
                                       display_values =  x[[2]],

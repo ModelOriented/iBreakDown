@@ -16,7 +16,7 @@ local_interactions(x, ...)
   order = NULL, interaction_preference = 1, ...)
 }
 \arguments{
-\item{x}{a model to be explained, or an explainer created with function `DALEX::explain()`.}
+\item{x}{an explainer created with function \code{\link[DALEX]{explain}} or a model.}
 
 \item{...}{other parameters.}
 
@@ -32,7 +32,7 @@ local_interactions(x, ...)
 
 \item{order}{if not `NULL`, then it will be a fixed order of variables. It can be a numeric vector or vector with names of variables/interactions.}
 
-\item{interaction_preference}{a constant that set the preference for interactions. By default `1`. The larger the more frequently interactions will be presented in explanations.}
+\item{interaction_preference}{an integer specifying which interactions will be present in an explanation. The larger the integer, the more frequently interactions will be presented.}
 }
 \value{
 an object of the `break_down` class.

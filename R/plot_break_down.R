@@ -1,20 +1,18 @@
 #' Plot Generic for Break Down Objects
 #'
-#' Plots waterfall break down for objects of the `break_down` class.
-#' Usually executed after `break_down()` function, `local_attributions()` or `local_interactions()`.
+#' Displays a waterfall break down plot for objects of `break_down` class.
 #'
-#' @param x the model model of `break_down` class.
+#' @param x an explanation created with \code{\link{break_down}}
 #' @param ... other parameters.
 #' @param max_features maximal number of features to be included in the plot. default value is 4.
-#' @param min_max a range of OX axis. By deafult `NA` therefore will be extracted from the contributions of `x`. But can be set to some constants, usefull if these plots are used for comparisons.
-#' @param add_contributions shall variable contributions to be added the the plot?
-#' @param shift_contributions how much labels sholud be shifted right as a fraction of range. By default 0.05
+#' @param min_max a range of OX axis. By default `NA`, therefore it will be extracted from the contributions of `x`. But it can be set to some constants, useful if these plots are to be used for comparisons.
+#' @param add_contributions if TRUE, variable contributions will be added to the plot
+#' @param shift_contributions number describing how much labels should be shifted to the right, as a fraction of range. By default equal to 0.05.
 #' @param vcolors named vector with colors.
 #' @param digits number of decimal places (`round`) or significant digits (`signif`) to be used.
 #' See the \code{rounding_function} argument.
-#' @param rounding_function function that is to used for rounding numbers.
-#' It may be \code{\link{signif}} which keeps a specified number of significant digits.
-#' Or the default \code{\link{round}} to have the same precision for all components.
+#' @param rounding_function a function to be used for rounding numbers.
+#' This should be \code{\link{signif}} which keeps a specified number of significant digits or \code{\link{round}} (which is default) to have the same precision for all components.
 #' @param plot_distributions if `TRUE` then distributions of conditional propotions will be plotted. This requires \code{keep_distributions=TRUE} in the
 #' \code{\link{break_down}}, \code{\link{local_attributions}}, or \code{\link{local_interactions}}.
 #' @param baseline if numeric then veritical line starts in `baseline`.

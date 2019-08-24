@@ -10,7 +10,7 @@
   chart_title = NA, time = 0)
 }
 \arguments{
-\item{x}{the model model of `shap` class.}
+\item{x}{an explanation created with \code{\link{shap}}}
 
 \item{...}{other parameters.}
 
@@ -21,20 +21,19 @@
 \item{digits}{number of decimal places (round) or significant digits (signif) to be used.
 See the \code{rounding_function} argument.}
 
-\item{rounding_function}{function that is to used for rounding numbers.
-It may be \code{\link{signif}} which keeps a specified number of significant digits.
-Or the default \code{\link{round}} to have the same precision for all components.}
+\item{rounding_function}{a function to be used for rounding numbers.
+This should be \code{\link{signif}} which keeps a specified number of significant digits or \code{\link{round}} (which is default) to have the same precision for all components.}
 
 \item{bar_width}{width of bars in px. Default is 12px}
 
 \item{margin}{extend x axis domain range to adjust the plot. Usually value between 0.1 and 0.3, by default it's 0.2}
 
-\item{scale_height}{should the height of plot scale with window size? By default it's FALSE}
+\item{scale_height}{if TRUE, the height of the plot scales with window size.}
 
 \item{min_max}{a range of OX axis. By deafult `NA` therefore will be extracted from the contributions of `x`.
 But can be set to some constants, usefull if these plots are used for comparisons.}
 
-\item{vcolors}{named vector with colors. By default `NA` therfore will choose DrWhy colors}
+\item{vcolors}{If NA (default), DrWhy colors are used.}
 
 \item{chart_title}{a character. Set custom title}
 
@@ -44,7 +43,7 @@ But can be set to some constants, usefull if these plots are used for comparison
 a `r2d3` object.
 }
 \description{
-Plots shapley values. Usually executed after `shap()` function.
+Plots shapley values.
 }
 \examples{
 library("DALEX")

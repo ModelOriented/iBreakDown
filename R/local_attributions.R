@@ -1,12 +1,13 @@
+
 #' Model Agnostic Sequential Variable attributions
 #'
 #' This function finds Variable attributions via Sequential Variable Conditioning.
 #' The complexity of this function is O(2*p).
-#' This function works in a similar way to step-up and step-down greedy approximations in function `breakDown::break_down()`.
+#' This function works in a similar way to step-up and step-down greedy approximations in function \code{\link{break_down}}.
 #' The main difference is that in the first step the order of variables is determined.
 #' And in the second step the impact is calculated.
 #'
-#' @param x a model to be explained, or an explainer created with function `DALEX::explain()`.
+#' @param x an explainer created with function \code{\link[DALEX]{explain}} or a model.
 #' @param data validation dataset, will be extracted from `x` if it is an explainer.
 #' @param predict_function predict function, will be extracted from `x` if it is an explainer.
 #' @param new_observation a new observation with columns that correspond to variables used in the model.
@@ -81,7 +82,7 @@ local_attributions <- function(x, ...)
 #' @export
 #' @rdname local_attributions
 local_attributions.explainer <- function(x, new_observation,
-                       keep_distributions = FALSE, ...) {
+                                         keep_distributions = FALSE, ...) {
   # extracts model, data and predict function from the explainer
   model <- x$model
   data <- x$data
@@ -89,20 +90,20 @@ local_attributions.explainer <- function(x, new_observation,
   label <- x$label
 
   local_attributions.default(model, data, predict_function,
-                     new_observation = new_observation,
-                     label = label,
-                     keep_distributions = keep_distributions,
-                     ...)
+                             new_observation = new_observation,
+                             label = label,
+                             keep_distributions = keep_distributions,
+                             ...)
 }
 
 #' @export
 #' @rdname local_attributions
 local_attributions.default <- function(x, data, predict_function = predict,
-                               new_observation,
-                               label = class(x)[1],
-                               keep_distributions = FALSE,
-                               order = NULL,
-                               ...) {
+                                       new_observation,
+                                       label = class(x)[1],
+                                       keep_distributions = FALSE,
+                                       order = NULL,
+                                       ...) {
   # here one can add model and data and new observation
   # just in case only some variables are specified
   # this will work only for data.frames
@@ -161,7 +162,7 @@ local_attributions.default <- function(x, data, predict_function = predict,
   if (keep_distributions) {
     yhats_distribution <- calculate_yhats_distribution(x, data, predict_function, label, yhats)
 
-    attr(result, "yhats_distribution") = yhats_distribution
+    attr(result, "yhats_distribution") <- yhats_distribution
   }
 
   result
@@ -181,7 +182,7 @@ calculate_yhats_distribution <- function(x, data, predict_function, label, yhats
                label = ifelse(ncol(allpredictions) > 1,
                               paste0(label, ".", colnames(allpredictions)[j]),
                               label)
-               )
+    )
   })
   yhats0 <- do.call(rbind, predictions_for_batch)
 
@@ -190,7 +191,15 @@ calculate_yhats_distribution <- function(x, data, predict_function, label, yhats
 
 # Now we know the path, so we can calculate contributions
 # set variable indicators
-calculate_contributions_along_path <- function(x, data, new_observation, feature_path, predict_function, keep_distributions, label, baseline_yhat, target_yhat) {
+calculate_contributions_along_path <- function(x,
+                                               data,
+                                               new_observation,
+                                               feature_path,
+                                               predict_function,
+                                               keep_distributions,
+                                               label,
+                                               baseline_yhat,
+                                               target_yhat) {
   p <- ncol(data)
   open_variables <- 1:p
   current_data <- data
@@ -209,13 +218,14 @@ calculate_contributions_along_path <- function(x, data, new_observation, feature
       if (keep_distributions) {
         distribution_for_batch <- lapply(1:ncol(yhats_pred), function(j){
           data.frame(variable_name = paste(colnames(data)[candidates], collapse = ":"),
-                     variable = paste0(
-                       paste(colnames(data)[candidates], collapse = ":"),
-                       " = ",
-                       nice_pair(new_observation, candidates[1], NA )),
+                     variable = paste0(paste(colnames(data)[candidates], collapse = ":"),
+                                       " = ", nice_pair(new_observation, candidates[1], NA )),
                      id = 1:nrow(data),
                      prediction = yhats_pred[,j],
-                     label = ifelse(ncol(yhats_pred) > 1, paste0(label, ".", colnames(yhats_pred)[j]), label) )
+                     label = ifelse(ncol(yhats_pred) > 1,
+                                    paste0(label, ".", colnames(yhats_pred)[j]),
+                                    label)
+                     )
         })
         # setup labels
 

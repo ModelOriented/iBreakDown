@@ -1,11 +1,11 @@
 #' Explanation Level Uncertainty of Sequential Variable Attribution
 #'
-#' The `break_down_uncertainty()` calles `B` times the break down algorithm for random orderings.
+#' Function `break_down_uncertainty()` calls `B` times the break down algorithm for random orderings.
 #' Then it calculated distribution of attributions for these different orderings.
 #' Note that the `shap()` function is just a simplified interface to the `break_down_uncertainty()` function
-#' with by default `B=25` random draws.
+#' with a default value set to `B=25`.
 #'
-#' @param x a model to be explained, or an explainer created with function `DALEX::explain()`.
+#' @param x an explainer created with function \code{\link[DALEX]{explain}} or a model.
 #' @param data validation dataset, will be extracted from `x` if it is an explainer.
 #' @param predict_function predict function, will be extracted from `x` if it is an explainer.
 #' @param new_observation a new observation with columns that correspond to variables used in the model.
