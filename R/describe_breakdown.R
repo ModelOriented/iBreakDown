@@ -48,6 +48,7 @@
 #'                               label = "Random Forest v7")
 #'
 #' bd_explanation <- break_down(explain_titanic_rf, titanic[1, ], keep_distributions = TRUE)
+#' plot(bd_explanation)
 #'
 #' description <- describe(bd_explanation,
 #'                         label = "the passanger will survive with probability",
@@ -57,8 +58,6 @@
 #'                         display_distribution_details = FALSE)
 #'
 #' description
-#'
-#'
 #'
 #' @export
 #' @rdname describe

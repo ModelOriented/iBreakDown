@@ -76,6 +76,7 @@ explain_titanic_rf <- explain(model_titanic_rf,
                               label = "Random Forest v7")
 
 bd_explanation <- break_down(explain_titanic_rf, titanic[1, ], keep_distributions = TRUE)
+plot(bd_explanation)
 
 description <- describe(bd_explanation,
                         label = "the passanger will survive with probability",
@@ -86,9 +87,6 @@ description <- describe(bd_explanation,
 
 description
 
-
-
-
 library("DALEX")
 library("iBreakDown")
 titanic <- na.omit(titanic)
@@ -98,7 +96,7 @@ explain_titanic_glm <- explain(model_titanic_glm,
                               data = titanic[,-9],
                               y = titanic$survived == "yes",
                               label = "glm")
-passanger <- titanic[sample(nrow(titanic), 1) ,-9]
+passanger <- titanic[1, -9]
 shap_glm <- shap(explain_titanic_glm, passanger)
 plot(shap_glm)
 
@@ -106,6 +104,5 @@ describe(shap_glm,
          label = "the selected passanger survives with probability",
          display_shap = TRUE,
          display_numbers = TRUE)
-
 
 }

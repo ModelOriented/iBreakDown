@@ -2,9 +2,8 @@
 #'
 #'
 #' @examples
-#'
-#'library("DALEX")
-#'library("iBreakDown")
+#' library("DALEX")
+#' library("iBreakDown")
 #' titanic <- na.omit(titanic)
 #' model_titanic_glm <- glm(titanic$survived == "yes" ~ age + gender + class + fare + sibsp,
 #'                          data = titanic[ ,-9], family = "binomial")
@@ -12,7 +11,7 @@
 #'                               data = titanic[,-9],
 #'                               y = titanic$survived == "yes",
 #'                               label = "glm")
-#' passanger <- titanic[sample(nrow(titanic), 1) ,-9]
+#' passanger <- titanic[1, -9]
 #' shap_glm <- shap(explain_titanic_glm, passanger)
 #' plot(shap_glm)
 #'
@@ -21,10 +20,8 @@
 #'          display_shap = TRUE,
 #'          display_numbers = TRUE)
 #'
-#'
 #' @importFrom graphics plot
 #' @importFrom stats quantile
-#'
 #'
 #' @export
 #' @rdname describe

@@ -1,4 +1,4 @@
-# Model Agnostic Attributions  <img src="man/figures/logo.png" align="right" width="150"/>
+# Model Agnostic Local Attributions  <img src="man/figures/logo.png" align="right" width="150"/>
 
 [![Build Status](https://api.travis-ci.org/ModelOriented/iBreakDown.png)](https://travis-ci.org/ModelOriented/iBreakDown)
 [![Coverage
