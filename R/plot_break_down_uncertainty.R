@@ -70,7 +70,7 @@ plot.break_down_uncertainty <- function(x, ...,
                   show_boxplots = TRUE) {
 
   variable <- contribution <- NULL
-  x$variable <- reorder(x$variable, abs(x$contribution), mean)
+  x$variable <- reorder(x$variable, x$contribution, function(x)abs(mean(x)))
 
   # base plot
   pl <- ggplot(x, aes(x = variable, y = contribution))
