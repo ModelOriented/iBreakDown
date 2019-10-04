@@ -230,26 +230,26 @@ with a default value set to `B=25`.</p>
 <span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
                            <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>[,-<span class='fl'>9</span>],
                            <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  lm  (<span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; model label       :  lm  ( <span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; data              :  500  rows  4  cols 
 #&gt;   -&gt; target variable   :  500  values 
-#&gt;   -&gt; predict function  :  yhat.glm  will be used (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; predicted values  :  numerical, min =  0.111212 , mean =  0.298 , max =  0.9430377  
-#&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; residuals         :  numerical, min =  -0.789032 , mean =  1.799189e-14 , max =  0.8594593  
-#&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
+#&gt;   -&gt; predict function  :  yhat.glm  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
+#&gt;   -&gt; predicted values  :  numerical, min =  0.1140608 , mean =  0.308 , max =  0.9600515  
+#&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
+#&gt;   -&gt; residuals         :  numerical, min =  -0.9238299 , mean =  1.839445e-13 , max =  0.8527178  
+#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='co'># there is no explanation level uncertanity linked with additive models</span>
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>break_down_uncertainty</span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_small</span>[<span class='fl'>1</span>, ])
-<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                            min          q1       median         mean
-#&gt; lm: age = 50      -0.041452499 -0.04145250 -0.038439639 -0.039633973
-#&gt; lm: fare = 13     -0.005977352 -0.00537534 -0.005339308 -0.005413922
-#&gt; lm: gender = male -0.102615297 -0.10261530 -0.102615297 -0.101346348
-#&gt; lm: survived = no  0.000000000  0.00000000  0.000000000  0.000000000
-#&gt;                             q3          max
-#&gt; lm: age = 50      -0.038412614 -0.038403606
-#&gt; lm: fare = 13     -0.005339308 -0.005339308
-#&gt; lm: gender = male -0.099602437 -0.098964393
-#&gt; lm: survived = no  0.000000000  0.000000000</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='break_down_uncertainty-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                             min          q1      median        mean          q3
+#&gt; lm: age = 36        -0.01286499 -0.01238880 -0.01238880 -0.01204532 -0.01129199
+#&gt; lm: fare = 0        -0.02812337 -0.02812337 -0.02788527 -0.02773508 -0.02750583
+#&gt; lm: gender = female  0.41566086  0.41581525  0.41718748  0.41676050  0.41749227
+#&gt; lm: survived = yes   0.00000000  0.00000000  0.00000000  0.00000000  0.00000000
+#&gt;                             max
+#&gt; lm: age = 36        -0.01117493
+#&gt; lm: fare = 0        -0.02703759
+#&gt; lm: gender = female  0.41749227
+#&gt; lm: survived = yes   0.00000000</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='break_down_uncertainty-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># \donttest{</span>
 <span class='co'>## Not run:</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
@@ -259,73 +259,73 @@ with a default value set to `B=25`.</p>
 
 <span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model</span>,
                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>, <span class='fl'>1</span>:<span class='fl'>5</span>])</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  randomForest  (</span><span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; model label       :  randomForest  ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; data              :  1000  rows  5  cols 
-#&gt;   -&gt; target variable   :  not specified! (</span><span style='color: #BB0000;'>WARNING</span><span>)
-#&gt;   -&gt; predict function  :  yhat.randomForest  will be used (</span><span style='color: #BBBB00;'>default</span><span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: the condition has length &gt; 1 and only the first element will be used</span></div><div class='output co'>#&gt;   -&gt; predicted values  :  numerical, min =  0 , mean =  0.3333333 , max =  1  
-#&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
+#&gt;   -&gt; target variable   :  not specified! ( </span><span style='color: #BB0000;'> WARNING </span><span> )
+#&gt;   -&gt; predict function  :  yhat.randomForest  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )</div><div class='output co'>#&gt; <span class='warning'>Warning: the condition has length &gt; 1 and only the first element will be used</span></div><div class='output co'>#&gt;   -&gt; predicted values  :  numerical, min =  0 , mean =  0.3333333 , max =  1  
+#&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
+#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>break_down_uncertainty</span>(<span class='no'>explainer_rf</span>,
                            <span class='no'>new_observation</span>)
 <span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                             min         q1    median       mean
-#&gt; randomForest.fired: age = 58          -0.021328  0.0247710  0.253395  0.1946016
-#&gt; randomForest.fired: evaluation = 2    -0.018856  0.0073270  0.032725  0.0216108
-#&gt; randomForest.fired: gender = male     -0.009380  0.0054740  0.019250  0.0911182
-#&gt; randomForest.fired: hours = 42         0.167650  0.1953890  0.220689  0.2461712
-#&gt; randomForest.fired: salary = 2        -0.270298 -0.1751675 -0.160058 -0.1610878
-#&gt; randomForest.ok: age = 58             -0.346842 -0.3468420 -0.199269 -0.1834688
-#&gt; randomForest.ok: evaluation = 2        0.028666  0.1002960  0.125760  0.1215018
-#&gt; randomForest.ok: gender = male        -0.282642 -0.1062540 -0.021756 -0.0845928
-#&gt; randomForest.ok: hours = 42           -0.106876 -0.0970580 -0.046824 -0.0447352
-#&gt; randomForest.ok: salary = 2            0.046824  0.1184785  0.118552  0.1311450
-#&gt; randomForest.promoted: age = 58       -0.126732 -0.0061320 -0.006132 -0.0111328
-#&gt; randomForest.promoted: evaluation = 2 -0.201822 -0.1749640 -0.166262 -0.1431126
-#&gt; randomForest.promoted: gender = male  -0.045880 -0.0019940 -0.000019 -0.0065254
-#&gt; randomForest.promoted: hours = 42     -0.247972 -0.2398625 -0.189205 -0.2014360
-#&gt; randomForest.promoted: salary = 2     -0.003902  0.0069900  0.034329  0.0299428
+#&gt; randomForest.fired: age = 58          -0.021328  0.0459295  0.196189  0.1780964
+#&gt; randomForest.fired: evaluation = 2    -0.018856 -0.0188560  0.022428  0.0203962
+#&gt; randomForest.fired: gender = male     -0.002236  0.0054740  0.014764  0.0752420
+#&gt; randomForest.fired: hours = 42         0.174678  0.2306140  0.233016  0.2660502
+#&gt; randomForest.fired: salary = 2        -0.215994 -0.1658405 -0.146076 -0.1473708
+#&gt; randomForest.ok: age = 58             -0.346842 -0.2261270 -0.185269 -0.1495826
+#&gt; randomForest.ok: evaluation = 2        0.083034  0.0996225  0.100296  0.1106934
+#&gt; randomForest.ok: gender = male        -0.282642 -0.1279255 -0.017040 -0.0743964
+#&gt; randomForest.ok: hours = 42           -0.102472 -0.0765455 -0.057432 -0.0624544
+#&gt; randomForest.ok: salary = 2            0.042420  0.1184540  0.118503  0.1155900
+#&gt; randomForest.promoted: age = 58       -0.126732 -0.0253865 -0.010081 -0.0285138
+#&gt; randomForest.promoted: evaluation = 2 -0.201822 -0.1607870 -0.145282 -0.1310896
+#&gt; randomForest.promoted: gender = male  -0.013566 -0.0019940 -0.000019 -0.0008456
+#&gt; randomForest.promoted: hours = 42     -0.280566 -0.2314865 -0.177604 -0.2035958
+#&gt; randomForest.promoted: salary = 2     -0.003902  0.0007220  0.041506  0.0317808
 #&gt;                                               q3       max
-#&gt; randomForest.fired: age = 58           0.3529740  0.362800
-#&gt; randomForest.fired: evaluation = 2     0.0418870  0.045408
-#&gt; randomForest.fired: gender = male      0.1521340  0.280686
-#&gt; randomForest.fired: hours = 42         0.3072255  0.351330
-#&gt; randomForest.fired: salary = 2        -0.1390850 -0.070866
-#&gt; randomForest.ok: age = 58             -0.0178415  0.005860
-#&gt; randomForest.ok: evaluation = 2        0.1307830  0.196252
-#&gt; randomForest.ok: gender = male        -0.0061560 -0.003480
-#&gt; randomForest.ok: hours = 42            0.0010015  0.030996
-#&gt; randomForest.ok: salary = 2            0.1542220  0.268992
-#&gt; randomForest.promoted: age = 58        0.0129425  0.015468
-#&gt; randomForest.promoted: evaluation = 2 -0.0957510 -0.058120
-#&gt; randomForest.promoted: gender = male   0.0023685  0.023564
-#&gt; randomForest.promoted: hours = 42     -0.1719955 -0.156930
-#&gt; randomForest.promoted: salary = 2      0.0415060  0.077562</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='break_down_uncertainty-2.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; randomForest.fired: age = 58           0.3151935  0.362800
+#&gt; randomForest.fired: evaluation = 2     0.0499245  0.068846
+#&gt; randomForest.fired: gender = male      0.1374190  0.280686
+#&gt; randomForest.fired: hours = 42         0.3066630  0.383038
+#&gt; randomForest.fired: salary = 2        -0.1191760 -0.102574
+#&gt; randomForest.ok: age = 58             -0.0343685  0.005860
+#&gt; randomForest.ok: evaluation = 2        0.1093185  0.196252
+#&gt; randomForest.ok: gender = male        -0.0034800 -0.002292
+#&gt; randomForest.ok: hours = 42           -0.0530100 -0.006356
+#&gt; randomForest.ok: salary = 2            0.1194430  0.181536
+#&gt; randomForest.promoted: age = 58       -0.0055480  0.028826
+#&gt; randomForest.promoted: evaluation = 2 -0.0814400 -0.081440
+#&gt; randomForest.promoted: gender = male   0.0023910  0.004528
+#&gt; randomForest.promoted: hours = 42     -0.1745740 -0.168322
+#&gt; randomForest.promoted: salary = 2      0.0500980  0.077562</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='break_down_uncertainty-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># example for regression - apartment prices</span>
 <span class='co'># here we do not have intreactions</span>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
 <span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model</span>,
                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>, <span class='fl'>2</span>:<span class='fl'>6</span>],
                         <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>$<span class='no'>m2.price</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>])</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  randomForest  (</span><span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; model label       :  randomForest  ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; data              :  1000  rows  5  cols 
 #&gt;   -&gt; target variable   :  1000  values 
-#&gt;   -&gt; predict function  :  yhat.randomForest  will be used (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; predicted values  :  numerical, min =  2052.033 , mean =  3487.71 , max =  5776.623  
-#&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; residuals         :  numerical, min =  -632.8469 , mean =  1.070017 , max =  1328.352  
-#&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
+#&gt;   -&gt; predict function  :  yhat.randomForest  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
+#&gt;   -&gt; predicted values  :  numerical, min =  2057.499 , mean =  3488.271 , max =  5767.995  
+#&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
+#&gt;   -&gt; residuals         :  numerical, min =  -654.6455 , mean =  0.5089961 , max =  1289.694  
+#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>break_down_uncertainty</span>(<span class='no'>explainer_rf</span>, <span class='no'>apartments_test</span>[<span class='fl'>1</span>,])
-<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                              min        q1     median
-#&gt; randomForest: construction.year = 2000 -128.5908 -119.3910  -75.48837
-#&gt; randomForest: district = Srodmiescie    981.8193 1036.9753 1054.79081
-#&gt; randomForest: floor = 3                 178.8471  189.5230  194.12751
-#&gt; randomForest: no.rooms = 5             -229.8610 -225.7194 -212.31243
-#&gt; randomForest: surface = 130            -272.2211 -266.0785 -250.70512
-#&gt;                                              mean         q3        max
-#&gt; randomForest: construction.year = 2000  -82.87975  -50.06424  -47.64365
-#&gt; randomForest: district = Srodmiescie   1046.73182 1054.79081 1091.59037
-#&gt; randomForest: floor = 3                 197.65920  210.33113  215.52532
-#&gt; randomForest: no.rooms = 5             -200.17988 -203.34626 -130.21186
-#&gt; randomForest: surface = 130            -250.99715 -234.39585 -229.21426</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='break_down_uncertainty-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                              min        q1    median       mean
+#&gt; randomForest: construction.year = 2000 -128.1290 -127.2151 -102.7788  -99.58822
+#&gt; randomForest: district = Srodmiescie   1050.0080 1050.0080 1069.9178 1081.21588
+#&gt; randomForest: floor = 3                 165.9773  174.1976  205.7802  200.16135
+#&gt; randomForest: no.rooms = 5             -246.9539 -233.1218 -209.6270 -200.34645
+#&gt; randomForest: surface = 130            -331.4628 -291.4353 -274.4762 -281.16186
+#&gt;                                                q3        max
+#&gt; randomForest: construction.year = 2000  -77.46586  -46.89048
+#&gt; randomForest: district = Srodmiescie   1093.92250 1142.44289
+#&gt; randomForest: floor = 3                 226.02250  231.48942
+#&gt; randomForest: no.rooms = 5             -158.57830 -143.89151
+#&gt; randomForest: surface = 130            -262.73969 -229.42256</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='break_down_uncertainty-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>break_down_uncertainty</span>(<span class='no'>explainer_rf</span>, <span class='no'>apartments_test</span>[<span class='fl'>1</span>,], <span class='kw'>path</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>5</span>)
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='break_down_uncertainty-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>break_down_uncertainty</span>(<span class='no'>explainer_rf</span>,
@@ -336,17 +336,17 @@ with a default value set to `B=25`.</p>
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>shap</span>(<span class='no'>explainer_rf</span>,
               <span class='no'>apartments_test</span>[<span class='fl'>1</span>,])
 <span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                              min        q1    median       mean
-#&gt; randomForest: construction.year = 2000 -128.5908 -127.7759 -116.5361  -97.94983
-#&gt; randomForest: district = Srodmiescie    981.8193 1054.7908 1074.7538 1078.05046
-#&gt; randomForest: floor = 3                 159.4690  172.8786  187.2105  190.61682
-#&gt; randomForest: no.rooms = 5             -233.0194 -209.3096 -204.8655 -183.54147
-#&gt; randomForest: surface = 130            -343.0658 -284.8054 -273.9106 -276.84173
+#&gt; randomForest: construction.year = 2000 -132.6921 -128.1290 -107.6293  -94.12399
+#&gt; randomForest: district = Srodmiescie    991.7336 1040.6965 1060.8302 1073.92842
+#&gt; randomForest: floor = 3                 165.9773  180.7439  186.5775  193.39837
+#&gt; randomForest: no.rooms = 5             -246.9539 -212.6299 -209.6331 -196.72477
+#&gt; randomForest: surface = 130            -334.3250 -284.0079 -274.0391 -276.19735
 #&gt;                                                q3        max
-#&gt; randomForest: construction.year = 2000  -69.15964  -47.64365
-#&gt; randomForest: district = Srodmiescie   1100.63043 1139.28110
-#&gt; randomForest: floor = 3                 206.40993  215.52532
-#&gt; randomForest: no.rooms = 5             -135.54778 -130.21186
-#&gt; randomForest: surface = 130            -255.12184 -229.21426</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='break_down_uncertainty-6.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>, <span class='kw'>show_boxplots</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='break_down_uncertainty-7.png' alt='' width='700' height='433' /></div><div class='input'># }
+#&gt; randomForest: construction.year = 2000  -63.08031  -46.89048
+#&gt; randomForest: district = Srodmiescie   1130.14798 1142.44289
+#&gt; randomForest: floor = 3                 209.62172  231.48942
+#&gt; randomForest: no.rooms = 5             -184.66853 -143.89151
+#&gt; randomForest: surface = 130            -266.00934 -229.42256</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='break_down_uncertainty-6.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>, <span class='kw'>show_boxplots</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='break_down_uncertainty-7.png' alt='' width='700' height='433' /></div><div class='input'># }
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

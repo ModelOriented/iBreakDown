@@ -103,7 +103,7 @@
       <h1>iBreakDown plots for regression models</h1>
                         <h4 class="author">Dariusz Komosinski</h4>
             
-            <h4 class="date">2019-09-07</h4>
+            <h4 class="date">2019-10-04</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ModelOriented/iBreakDown/blob/master/vignettes/vignette_iBreakDown_regression.Rmd"><code>vignettes/vignette_iBreakDown_regression.Rmd</code></a></small>
       <div class="hidden name"><code>vignette_iBreakDown_regression.Rmd</code></div>
@@ -235,19 +235,17 @@
 <a class="sourceLine" id="cb17-5" data-line-number="5">normalizing_factor &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/Round.html">round</a></span>(x, <span class="op">-</span>digits)</a>
 <a class="sourceLine" id="cb17-6" data-line-number="6">m_nnet &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/nnet/man/nnet.html">nnet</a></span>(life_length<span class="op">/</span>normalizing_factor <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> dragons, <span class="dt">size =</span> <span class="dv">10</span>, <span class="dt">linout =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>#&gt; # weights:  111
-#&gt; initial  value 2781.620407 
-#&gt; iter  10 value 34.610693
-#&gt; iter  20 value 28.731518
-#&gt; iter  30 value 27.555372
-#&gt; iter  40 value 26.413933
-#&gt; iter  50 value 24.183990
-#&gt; iter  60 value 14.086360
-#&gt; iter  70 value 10.594963
-#&gt; iter  80 value 7.731425
-#&gt; iter  90 value 2.982037
-#&gt; iter 100 value 1.533715
-#&gt; final  value 1.533715 
-#&gt; stopped after 100 iterations</code></pre>
+#&gt; initial  value 3011.401421 
+#&gt; iter  10 value 196.423655
+#&gt; iter  20 value 28.266090
+#&gt; iter  30 value 27.420857
+#&gt; iter  40 value 27.295769
+#&gt; iter  50 value 27.247387
+#&gt; iter  60 value 27.237962
+#&gt; iter  60 value 27.237962
+#&gt; iter  60 value 27.237962
+#&gt; final  value 27.237962 
+#&gt; converged</code></pre>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">p_fun &lt;-<span class="st"> </span><span class="cf">function</span>(model, new_observation){</a>
 <a class="sourceLine" id="cb19-2" data-line-number="2">  <span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(model, <span class="dt">newdata =</span> new_observation)<span class="op">*</span>normalizing_factor</a>
 <a class="sourceLine" id="cb19-3" data-line-number="3">}</a>

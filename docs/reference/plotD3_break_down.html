@@ -239,18 +239,18 @@ But can be set to some constants, usefull if these plots are used for comparison
 #&gt;   -&gt; model label       :  glm 
 #&gt;   -&gt; data              :  500  rows  4  cols 
 #&gt;   -&gt; target variable   :  500  values 
-#&gt;   -&gt; predict function  :  yhat.glm  will be used (<span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; predicted values  :  numerical, min =  0.111212 , mean =  0.298 , max =  0.9430377  
-#&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; residuals         :  numerical, min =  -0.789032 , mean =  1.799189e-14 , max =  0.8594593  
-#&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'><span class='no'>bd_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_attributions.html'>local_attributions</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_small</span>[<span class='fl'>1</span>, ])
-<span class='no'>bd_glm</span></div><div class='output co'>#&gt;                    contribution
-#&gt; glm: intercept            0.298
-#&gt; glm: gender = male       -0.103
-#&gt; glm: age = 50            -0.038
-#&gt; glm: fare = 13           -0.005
-#&gt; glm: survived = no        0.000
-#&gt; glm: prediction           0.152</div><div class='input'><span class='fu'>plotD3</span>(<span class='no'>bd_glm</span>)
+#&gt;   -&gt; predict function  :  yhat.glm  will be used ( <span style='color: #BBBB00;'> default </span><span> )
+#&gt;   -&gt; predicted values  :  numerical, min =  0.1140608 , mean =  0.308 , max =  0.9600515  
+#&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
+#&gt;   -&gt; residuals         :  numerical, min =  -0.9238299 , mean =  1.839445e-13 , max =  0.8527178  
+#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'><span class='no'>bd_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_attributions.html'>local_attributions</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_small</span>[<span class='fl'>1</span>, ])
+<span class='no'>bd_glm</span></div><div class='output co'>#&gt;                      contribution
+#&gt; glm: intercept              0.308
+#&gt; glm: gender = female        0.417
+#&gt; glm: fare = 0              -0.028
+#&gt; glm: age = 36              -0.013
+#&gt; glm: survived = yes         0.000
+#&gt; glm: prediction             0.685</div><div class='input'><span class='fu'>plotD3</span>(<span class='no'>bd_glm</span>)
 
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>randomForest</span>)
 
@@ -266,30 +266,30 @@ But can be set to some constants, usefull if these plots are used for comparison
                            <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>p_fun</span>)
 
 <span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                               contribution
-#&gt; randomForest.formula.fired: intercept                0.378
-#&gt; randomForest.formula.fired: hours = 42               0.215
-#&gt; randomForest.formula.fired: evaluation = 2           0.061
-#&gt; randomForest.formula.fired: salary = 2              -0.163
+#&gt; randomForest.formula.fired: intercept                0.377
+#&gt; randomForest.formula.fired: hours = 42               0.217
+#&gt; randomForest.formula.fired: evaluation = 2           0.060
+#&gt; randomForest.formula.fired: salary = 2              -0.169
 #&gt; randomForest.formula.fired: age = 58                 0.223
-#&gt; randomForest.formula.fired: gender = male            0.165
+#&gt; randomForest.formula.fired: gender = male            0.153
 #&gt; randomForest.formula.fired: status = fired           0.000
-#&gt; randomForest.formula.fired: prediction               0.878
+#&gt; randomForest.formula.fired: prediction               0.860
 #&gt; randomForest.formula.ok: intercept                   0.281
-#&gt; randomForest.formula.ok: hours = 42                 -0.031
-#&gt; randomForest.formula.ok: evaluation = 2              0.087
-#&gt; randomForest.formula.ok: salary = 2                  0.165
-#&gt; randomForest.formula.ok: age = 58                   -0.230
-#&gt; randomForest.formula.ok: gender = male              -0.163
+#&gt; randomForest.formula.ok: hours = 42                 -0.029
+#&gt; randomForest.formula.ok: evaluation = 2              0.086
+#&gt; randomForest.formula.ok: salary = 2                  0.171
+#&gt; randomForest.formula.ok: age = 58                   -0.225
+#&gt; randomForest.formula.ok: gender = male              -0.154
 #&gt; randomForest.formula.ok: status = fired              0.000
-#&gt; randomForest.formula.ok: prediction                  0.110
+#&gt; randomForest.formula.ok: prediction                  0.130
 #&gt; randomForest.formula.promoted: intercept             0.341
-#&gt; randomForest.formula.promoted: hours = 42           -0.184
-#&gt; randomForest.formula.promoted: evaluation = 2       -0.149
+#&gt; randomForest.formula.promoted: hours = 42           -0.187
+#&gt; randomForest.formula.promoted: evaluation = 2       -0.145
 #&gt; randomForest.formula.promoted: salary = 2           -0.002
-#&gt; randomForest.formula.promoted: age = 58              0.007
-#&gt; randomForest.formula.promoted: gender = male        -0.002
+#&gt; randomForest.formula.promoted: age = 58              0.002
+#&gt; randomForest.formula.promoted: gender = male         0.001
 #&gt; randomForest.formula.promoted: status = fired        0.000
-#&gt; randomForest.formula.promoted: prediction            0.012</div><div class='input'><span class='fu'>plotD3</span>(<span class='no'>bd_rf</span>)</div></span></pre>
+#&gt; randomForest.formula.promoted: prediction            0.010</div><div class='input'><span class='fu'>plotD3</span>(<span class='no'>bd_rf</span>)</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
