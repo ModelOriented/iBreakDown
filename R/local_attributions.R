@@ -305,11 +305,7 @@ create_ordered_path_2d <- function(feature_path, order, average_yhats_names) {
 
 # this formats numbers and factors
 nice_format <- function(x) {
-  if (is.numeric(x)) {
-    as.character(signif(x, 2))
-  } else {
-    as.character(x)
-  }
+  as.character(x)
 }
 
 # this formats pairs of values
