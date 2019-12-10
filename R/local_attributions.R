@@ -304,8 +304,15 @@ create_ordered_path_2d <- function(feature_path, order, average_yhats_names) {
 
 
 # this formats numbers and factors
+# note that in previoiuse version there was signif(x, 2)
+# with unexpected side effect for dates signif(1999, 4) = 2000
+# signif(x, 4) shall work for dates and also shall be readable in case of ,,angular'' numbers (like pi)
 nice_format <- function(x) {
-  as.character(x)
+  if (is.numeric(x)) {
+    as.character(signif(x, 4))
+  } else {
+    as.character(x)
+  }
 }
 
 # this formats pairs of values
