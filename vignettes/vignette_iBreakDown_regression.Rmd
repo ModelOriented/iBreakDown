@@ -80,7 +80,7 @@ For another types of models we proceed analogously. However, sometimes we need t
 ```{r}
 library(randomForest)
 
-m_rf <- lm(life_length ~ . , data = dragons)
+m_rf <- randomForest(life_length ~ . , data = dragons)
 
 bd_rf <- local_attributions(m_rf,
                             data = dragons_test,
