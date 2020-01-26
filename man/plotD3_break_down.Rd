@@ -7,10 +7,21 @@
 \usage{
 plotD3(x, ...)
 
-\method{plotD3}{break_down}(x, ..., baseline = NA, max_features = 10,
-  digits = 3, rounding_function = round, bar_width = 12,
-  margin = 0.2, scale_height = FALSE, min_max = NA, vcolors = NA,
-  chart_title = NA, time = 0)
+\method{plotD3}{break_down}(
+  x,
+  ...,
+  baseline = NA,
+  max_features = 10,
+  digits = 3,
+  rounding_function = round,
+  bar_width = 12,
+  margin = 0.2,
+  scale_height = FALSE,
+  min_max = NA,
+  vcolors = NA,
+  chart_title = NA,
+  time = 0
+)
 }
 \arguments{
 \item{x}{an explanation created with \code{\link{break_down}}}
@@ -83,5 +94,5 @@ plotD3(bd_rf)
 
 }
 \references{
-Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
 }

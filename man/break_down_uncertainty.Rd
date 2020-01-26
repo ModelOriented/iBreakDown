@@ -9,12 +9,25 @@
 \usage{
 break_down_uncertainty(x, ..., keep_distributions = TRUE, B = 10)
 
-\method{break_down_uncertainty}{explainer}(x, new_observation, ...,
-  keep_distributions = TRUE, B = 10)
+\method{break_down_uncertainty}{explainer}(
+  x,
+  new_observation,
+  ...,
+  keep_distributions = TRUE,
+  B = 10
+)
 
-\method{break_down_uncertainty}{default}(x, data,
-  predict_function = predict, new_observation, label = class(x)[1],
-  ..., path = NULL, keep_distributions = TRUE, B = 10)
+\method{break_down_uncertainty}{default}(
+  x,
+  data,
+  predict_function = predict,
+  new_observation,
+  label = class(x)[1],
+  ...,
+  path = NULL,
+  keep_distributions = TRUE,
+  B = 10
+)
 
 shap(x, ..., B = 25)
 }
@@ -107,7 +120,7 @@ plot(bd_rf, show_boxplots = FALSE)
 }
 }
 \references{
-Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
 }
 \seealso{
 \code{\link{break_down}}, \code{\link{local_attributions}}

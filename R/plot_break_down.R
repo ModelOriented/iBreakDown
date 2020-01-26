@@ -23,7 +23,7 @@
 #' @importFrom DALEX theme_drwhy theme_drwhy_vertical colors_breakdown_drwhy
 #' @importFrom utils tail
 #'
-#' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+#' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
 #'
 #' @examples
 #' library("DALEX")

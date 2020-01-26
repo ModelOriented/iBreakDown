@@ -4,8 +4,7 @@
 \alias{print.break_down}
 \title{Print Generic for Break Down Objects}
 \usage{
-\method{print}{break_down}(x, ..., digits = 3,
-  rounding_function = round)
+\method{print}{break_down}(x, ..., digits = 3, rounding_function = round)
 }
 \arguments{
 \item{x}{an explanation created with \code{\link{break_down}}}
@@ -25,5 +24,5 @@ a data frame
 Print Generic for Break Down Objects
 }
 \references{
-Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
 }

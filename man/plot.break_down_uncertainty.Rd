@@ -4,8 +4,7 @@
 \alias{plot.break_down_uncertainty}
 \title{Plot Generic for Break Down Uncertainty Objects}
 \usage{
-\method{plot}{break_down_uncertainty}(x, ...,
-  vcolors = DALEX::colors_breakdown_drwhy(), show_boxplots = TRUE)
+\method{plot}{break_down_uncertainty}(x, ..., vcolors = DALEX::colors_breakdown_drwhy(), show_boxplots = TRUE)
 }
 \arguments{
 \item{x}{an explanation created with \code{\link{break_down_uncertainty}}}
@@ -78,5 +77,5 @@ plot(bd_rf, show_boxplots = FALSE)
 }
 }
 \references{
-Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
 }

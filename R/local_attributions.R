@@ -18,7 +18,7 @@
 #'
 #' @return an object of the `break_down` class.
 #'
-#' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+#' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
 #'
 #' @seealso \code{\link{break_down}}, \code{\link{local_interactions}}
 #'

@@ -8,16 +8,29 @@
 \usage{
 describe(x, nonsignificance_treshold = 0.15, ...)
 
-\method{describe}{break_down}(x, nonsignificance_treshold = 0.15, ...,
-  label = NULL, short_description = FALSE, display_values = FALSE,
-  display_numbers = FALSE, display_distribution_details = FALSE,
-  display_shap = FALSE)
+\method{describe}{break_down}(
+  x,
+  nonsignificance_treshold = 0.15,
+  ...,
+  label = NULL,
+  short_description = FALSE,
+  display_values = FALSE,
+  display_numbers = FALSE,
+  display_distribution_details = FALSE,
+  display_shap = FALSE
+)
 
-\method{describe}{break_down_uncertainty}(x,
-  nonsignificance_treshold = 0.15, ..., label = NULL,
-  short_description = FALSE, display_values = FALSE,
-  display_numbers = FALSE, display_distribution_details = FALSE,
-  display_shap = FALSE)
+\method{describe}{break_down_uncertainty}(
+  x,
+  nonsignificance_treshold = 0.15,
+  ...,
+  label = NULL,
+  short_description = FALSE,
+  display_values = FALSE,
+  display_numbers = FALSE,
+  display_distribution_details = FALSE,
+  display_shap = FALSE
+)
 }
 \arguments{
 \item{x}{an explanation created with \code{\link{break_down}} or \code{\link{shap}}}

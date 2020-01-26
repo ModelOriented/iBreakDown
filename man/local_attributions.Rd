@@ -8,12 +8,18 @@
 \usage{
 local_attributions(x, ...)
 
-\method{local_attributions}{explainer}(x, new_observation,
-  keep_distributions = FALSE, ...)
+\method{local_attributions}{explainer}(x, new_observation, keep_distributions = FALSE, ...)
 
-\method{local_attributions}{default}(x, data, predict_function = predict,
-  new_observation, label = class(x)[1], keep_distributions = FALSE,
-  order = NULL, ...)
+\method{local_attributions}{default}(
+  x,
+  data,
+  predict_function = predict,
+  new_observation,
+  label = class(x)[1],
+  keep_distributions = FALSE,
+  order = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{an explainer created with function \code{\link[DALEX]{explain}} or a model.}
@@ -96,7 +102,7 @@ plot(bd_rf, plot_distributions = TRUE)
 }
 }
 \references{
-Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
 }
 \seealso{
 \code{\link{break_down}}, \code{\link{local_interactions}}

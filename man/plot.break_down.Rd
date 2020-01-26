@@ -4,10 +4,19 @@
 \alias{plot.break_down}
 \title{Plot Generic for Break Down Objects}
 \usage{
-\method{plot}{break_down}(x, ..., baseline = NA, max_features = 10,
-  min_max = NA, vcolors = DALEX::colors_breakdown_drwhy(),
-  digits = 3, rounding_function = round, add_contributions = TRUE,
-  shift_contributions = 0.05, plot_distributions = FALSE)
+\method{plot}{break_down}(
+  x,
+  ...,
+  baseline = NA,
+  max_features = 10,
+  min_max = NA,
+  vcolors = DALEX::colors_breakdown_drwhy(),
+  digits = 3,
+  rounding_function = round,
+  add_contributions = TRUE,
+  shift_contributions = 0.05,
+  plot_distributions = FALSE
+)
 }
 \arguments{
 \item{x}{an explanation created with \code{\link{break_down}}}
@@ -119,5 +128,5 @@ plot(bd_rf, plot_distributions = TRUE)
 }
 }
 \references{
-Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
 }
