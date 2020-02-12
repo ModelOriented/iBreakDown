@@ -3,7 +3,10 @@
 #' Displays a waterfall break down plot for objects of `break_down` class.
 #'
 #' @param x an explanation created with \code{\link{break_down}}
-#' @param ... other parameters.
+#' @param ... other parameters, such as: \itemize{
+#' \item \code{title} - main title for the plot. Character vector of length 1. Default: "Break Down profile"
+#' \item \code{subtitle} - subtitles for various explanations. Lookup table or a function returning a character vector. Default: 'created for the `x$label` model'. See \code{\link[ggplot2]{labeller}} for more.
+#' }
 #' @param max_features maximal number of features to be included in the plot. default value is 4.
 #' @param min_max a range of OX axis. By default `NA`, therefore it will be extracted from the contributions of `x`. But it can be set to some constants, useful if these plots are to be used for comparisons.
 #' @param add_contributions if TRUE, variable contributions will be added to the plot
@@ -111,12 +114,37 @@ plot.break_down <- function(x, ...,
                             add_contributions = TRUE, shift_contributions = 0.05,
                             plot_distributions = FALSE) {
   position <- cummulative <- prev <- pretty_text <- right_side <- contribution <- NULL
+  other_parameters <- list(...)
+
+  # Check main title argument (or set it to default value):
+  if("title" %in% names(other_parameters)){
+    if(!(is.character(other_parameters[["title"]]) && length(other_parameters[["title"]]) == 1))
+      stop("title must be character vector of length 1")
+    else
+      main_title <- other_parameters[["title"]]
+  } else
+      main_title <- "Break Down profile"
+
+  # Check subtitle argument (or set it to default value):
+  if("subtitle" %in% names(other_parameters)){
+    if(is.function(other_parameters[["subtitle"]])){
+      res <- other_parameters[["subtitle"]](attr(x$label, "levels"))
+      if(!(is.character(res) && length(res) == length(attr(x$label, "levels"))))
+        stop("subtitle function not working properly")
+    } else if(!(is.character(other_parameters[["subtitle"]]) &&
+              length(setdiff(attr(x$label, "levels"), names(other_parameters[["subtitle"]]))) == 0))
+      stop("subtitle, if vector, must be a named character containing x$label")
+    facet_labeller <- labeller(label = other_parameters[["subtitle"]])
+  } else {
+    facet_labeller <- labeller(label = function(label) paste0("created for the ",label," model"))
+  }
 
   if (plot_distributions) {
     df <- attr(x, "yhats_distribution")
     if (is.null(df))
       stop("You need to use keep_distributions=TRUE in the break_down() ")
-    pl <- plot_break_down_distributions(df)
+
+    pl <- plot_break_down_distributions(df, facet_labeller)
   } else {
     # how many features shall we plot
     x <- select_only_k_features(x, max_features)
@@ -124,7 +152,6 @@ plot.break_down <- function(x, ...,
     tmp <- prepare_data_for_break_down_plot(x, baseline, rounding_function, digits)
     broken_baseline <- tmp$broken_baseline
     x <- tmp$x
-
     # base plot
     pl <- ggplot(x, aes(x = position + 0.5,
                                   y = pmax(cummulative, prev),
@@ -141,7 +168,7 @@ plot.break_down <- function(x, ...,
                      color = "#371ea3") +
       geom_rect(alpha = 0.9) +
       geom_hline(data = broken_baseline, aes(yintercept = contribution), lty = 3, alpha = 0.5, color = "#371ea3") +
-      facet_wrap(~label, scales = "free_y", ncol = 1)
+       facet_wrap(~label, scales = "free_y", ncol = 1, labeller = facet_labeller)
 
     # add addnotations
     if (add_contributions) {
@@ -161,20 +188,21 @@ plot.break_down <- function(x, ...,
       scale_fill_manual(values = vcolors)
   }
 
+  pl <- pl + labs(title = main_title)
   # add theme
    pl + coord_flip() + theme_drwhy_vertical() +
      theme(legend.position = "none")
 }
 
 # break down plot with distributions
-plot_break_down_distributions <- function(df) {
+plot_break_down_distributions <- function(df, labeller="label_value") {
   variable  <- prediction <- id <- NULL
   ggplot(df, aes(variable, prediction, group = factor(variable))) +
     geom_line(aes(group = id), alpha = 0.01) +
     geom_violin(scale = "width", adjust = 3) +
     stat_summary(fun.y = "mean", colour = "red", size = 4, geom = "point") +
     xlab("") + ylab("") +
-    facet_wrap(~label, scales = "free_y", ncol = 1)
+    facet_wrap(~label, scales = "free_y", ncol = 1, labeller = labeller)
 }
 
 # prepare data for plot
