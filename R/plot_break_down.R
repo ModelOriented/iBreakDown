@@ -5,7 +5,7 @@
 #' @param x an explanation created with \code{\link{break_down}}
 #' @param ... other parameters, such as: \itemize{
 #' \item \code{title} - main title for the plot. Character vector of length 1. Default: "Break Down profile"
-#' \item \code{subtitle} - subtitles for various explanations. Lookup table or a function returning a character vector. Default: 'created for the `x$label` model'. See \code{\link[ggplot2]{labeller}} for more.
+#' \item \code{subtitle} - subtitles for various explanations. Lookup table or a function returning a character vector. Default: 'created for the \code{x$label} model'. See \code{\link[ggplot2]{labeller}} for more.
 #' }
 #' @param max_features maximal number of features to be included in the plot. default value is 4.
 #' @param min_max a range of OX axis. By default `NA`, therefore it will be extracted from the contributions of `x`. But it can be set to some constants, useful if these plots are to be used for comparisons.
