@@ -3,21 +3,21 @@
 #' This function implements decomposition of model predictions with identification
 #' of interactions.
 #' The complexity of this function is O(2*p) for additive models and O(2*p^2) for interactions.
-#' This function works in a similar way to step-up and step-down greedy approximations in function `breakDown::break_down()`.
+#' This function works in a similar way to step-up and step-down greedy approximations in function \code{break_down()}.
 #' The main difference is that in the first step the order of variables and interactions is determined.
 #' And in the second step the impact is calculated.
 #'
 #' @param x an explainer created with function \code{\link[DALEX]{explain}} or a model.
-#' @param data validation dataset, will be extracted from `x` if it's an explainer.
-#' @param predict_function predict function, will be extracted from `x` if it's an explainer.
+#' @param data validation dataset, will be extracted from \code{x} if it's an explainer.
+#' @param predict_function predict function, will be extracted from \code{x} if it's an explainer.
 #' @param ... other parameters.
 #' @param interaction_preference an integer specifying which interactions will be present in an explanation. The larger the integer, the more frequently interactions will be presented.
 #' @param new_observation a new observation with columns that correspond to variables used in the model.
-#' @param keep_distributions if `TRUE`, then the distribution of partial predictions is stored in addition to the average.
-#' @param order if not `NULL`, then it will be a fixed order of variables. It can be a numeric vector or vector with names of variables/interactions.
+#' @param keep_distributions if \code{TRUE}, then the distribution of partial predictions is stored in addition to the average.
+#' @param order if not \code{NULL}, then it will be a fixed order of variables. It can be a numeric vector or vector with names of variables/interactions.
 #' @param label character - the name of the model. By default it's extracted from the 'class' attribute of the model.
 #'
-#' @return an object of the `break_down` class.
+#' @return an object of the \code{break_down} class.
 #'
 #' @seealso \code{\link{break_down}}, \code{\link{local_attributions}}
 #'
@@ -184,7 +184,7 @@ local_interactions.default <- function(x, data, predict_function = predict,
     variable_value <- tmp$variable_value
     variable <- tmp$variable
     yhats <- tmp$yhats
-    cummulative <- tmp$cummulative
+    cumulative <- tmp$cumulative
 
 
     nlabel <- ifelse(length(unlist(target_yhat_all)) > 1,
@@ -195,7 +195,7 @@ local_interactions.default <- function(x, data, predict_function = predict,
                          contribution = contribution,
                          variable_name = variable_name,
                          variable_value = variable_value,
-                         cummulative = cummulative,
+                         cumulative = cumulative,
                          sign = factor(c(as.character(sign(contribution)[-length(contribution)]), "X"), levels = c("-1", "0", "1", "X")),
                          position = length(variable):1,
                          label = nlabel)
@@ -275,15 +275,15 @@ calculate_contributions_along_path_2d <- function(x, data, new_observation, feat
   variable       <- c("intercept",
                       paste(rownames(selected), "=",  selected_values) ,
                       "prediction")
-  cummulative <- c(baseline_yhat, yhats_mean, target_yhat)
-  contribution <- c(0, diff(cummulative))
-  contribution[1] <- cummulative[1]
-  contribution[length(contribution)] <- cummulative[length(contribution)]
+  cumulative <- c(baseline_yhat, yhats_mean, target_yhat)
+  contribution <- c(0, diff(cumulative))
+  contribution[1] <- cumulative[1]
+  contribution[length(contribution)] <- cumulative[length(contribution)]
 
   list(variable_name = variable_name,
        variable_value = variable_value,
        variable = variable,
-       cummulative = cummulative,
+       cumulative = cumulative,
        contribution = contribution,
        yhats = yhats)
 }

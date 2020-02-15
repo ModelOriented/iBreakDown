@@ -1,21 +1,21 @@
 #' Explanation Level Uncertainty of Sequential Variable Attribution
 #'
-#' Function `break_down_uncertainty()` calls `B` times the break down algorithm for random orderings.
-#' Then it calculated distribution of attributions for these different orderings.
-#' Note that the `shap()` function is just a simplified interface to the `break_down_uncertainty()` function
-#' with a default value set to `B=25`.
+#' This function calculates the break down algorithm for \code{B} random orderings.
+#' Then it calculates the distribution of attributions for these different orderings.
+#' Note that the \code{shap()} function is just a simplified interface to the \code{break_down_uncertainty()} function
+#' with a default value set to \code{B=25}.
 #'
 #' @param x an explainer created with function \code{\link[DALEX]{explain}} or a model.
-#' @param data validation dataset, will be extracted from `x` if it is an explainer.
-#' @param predict_function predict function, will be extracted from `x` if it is an explainer.
+#' @param data validation dataset, will be extracted from \code{x} if it is an explainer.
+#' @param predict_function predict function, will be extracted from \code{x} if it is an explainer.
 #' @param new_observation a new observation with columns that correspond to variables used in the model.
 #' @param ... other parameters.
 #' @param B number of random paths
-#' @param keep_distributions if TRUE then we will keep distribution for predicted values. It's needed by the describe function.
-#' @param path if specified, then this path will be highlighed on the plot. Use `average` in order to show an average effect
+#' @param keep_distributions if \code{TRUE} then we will keep distribution for predicted values. It's needed by the describe function.
+#' @param path if specified, then this path will be highlighed on the plot. Use \code{average} in order to show an average effect
 #' @param label name of the model. By default it's extracted from the 'class' attribute of the model.
 #'
-#' @return an object of the `break_down_uncertainty` class.
+#' @return an object of the \code{break_down_uncertainty} class.
 #' @importFrom utils head
 #'
 #' @seealso \code{\link{break_down}}, \code{\link{local_attributions}}

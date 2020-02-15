@@ -1,24 +1,24 @@
 #' Plot Generic for Break Down Objects
 #'
-#' Displays a waterfall break down plot for objects of `break_down` class.
+#' Displays a waterfall break down plot for objects of \code{break_down} class.
 #'
 #' @param x an explanation created with \code{\link{break_down}}
 #' @param ... other parameters.
-#' @param max_features maximal number of features to be included in the plot. default value is 4.
-#' @param min_max a range of OX axis. By default `NA`, therefore it will be extracted from the contributions of `x`. But it can be set to some constants, useful if these plots are to be used for comparisons.
-#' @param add_contributions if TRUE, variable contributions will be added to the plot
-#' @param shift_contributions number describing how much labels should be shifted to the right, as a fraction of range. By default equal to 0.05.
-#' @param vcolors named vector with colors.
+#' @param max_features maximal number of features to be included in the plot. default value is \code{10}.
+#' @param min_max a range of OX axis. By default \code{NA}, therefore it will be extracted from the contributions of \code{x}. But it can be set to some constants, useful if these plots are to be used for comparisons.
+#' @param add_contributions if \code{TRUE}, variable contributions will be added to the plot
+#' @param shift_contributions number describing how much labels should be shifted to the right, as a fraction of range. By default equal to \code{0.05}.
+#' @param vcolors If \code{NA} (default), DrWhy colors are used.
 #' @param vnames a character vector, if specified then will be used as labels on OY axis. By default NULL
-#' @param digits number of decimal places (`round`) or significant digits (`signif`) to be used.
+#' @param digits number of decimal places (\code{\link{round}}) or significant digits (\code{\link{signif}}) to be used.
 #' See the \code{rounding_function} argument.
 #' @param rounding_function a function to be used for rounding numbers.
 #' This should be \code{\link{signif}} which keeps a specified number of significant digits or \code{\link{round}} (which is default) to have the same precision for all components.
-#' @param plot_distributions if `TRUE` then distributions of conditional propotions will be plotted. This requires \code{keep_distributions=TRUE} in the
+#' @param plot_distributions if \code{TRUE} then distributions of conditional propotions will be plotted. This requires \code{keep_distributions=TRUE} in the
 #' \code{\link{break_down}}, \code{\link{local_attributions}}, or \code{\link{local_interactions}}.
-#' @param baseline if numeric then veritical line starts in `baseline`.
+#' @param baseline if numeric then veritical line starts in \code{baseline}.
 #'
-#' @return a `ggplot2` object.
+#' @return a \code{ggplot2} object.
 #'
 #' @import ggplot2
 #' @importFrom DALEX theme_drwhy theme_drwhy_vertical colors_breakdown_drwhy
@@ -41,7 +41,8 @@
 #' bd_rf <- break_down(explain_titanic_glm, titanic_small[1, ])
 #' bd_rf
 #' plot(bd_rf, max_features = 3)
-#' plot(bd_rf, max_features = 3, vnames = c("average","+ male","+ young","+ cheap ticket", "+ other factors", "final"))
+#' plot(bd_rf, max_features = 3,
+#'      vnames = c("average","+ male","+ young","+ cheap ticket", "+ other factors", "final"))
 #'
 #' \donttest{
 #' ## Not run:
@@ -113,7 +114,7 @@ plot.break_down <- function(x, ...,
                             add_contributions = TRUE, shift_contributions = 0.05,
                             plot_distributions = FALSE,
                             vnames = NULL) {
-  position <- cummulative <- prev <- pretty_text <- right_side <- contribution <- NULL
+  position <- cumulative <- prev <- pretty_text <- right_side <- contribution <- NULL
 
   if (plot_distributions) {
     df <- attr(x, "yhats_distribution")
@@ -130,9 +131,9 @@ plot.break_down <- function(x, ...,
 
     # base plot
     pl <- ggplot(x, aes(x = position + 0.5,
-                                  y = pmax(cummulative, prev),
+                                  y = pmax(cumulative, prev),
                                   xmin = position + 0.15, xmax = position + 0.85,
-                                  ymin = cummulative, ymax = prev,
+                                  ymin = cumulative, ymax = prev,
                                   fill = sign,
                                   label = pretty_text))
     # add rectangles and hline
@@ -140,7 +141,7 @@ plot.break_down <- function(x, ...,
       geom_errorbarh(data = x[x$variable_name != "", ],
                      aes(xmax = position - 0.85,
                          xmin = position + 0.85,
-                         y = cummulative), height = 0,
+                         y = cumulative), height = 0,
                      color = "#371ea3") +
       geom_rect(alpha = 0.9) +
       geom_hline(data = broken_baseline, aes(yintercept = contribution), lty = 3, alpha = 0.5, color = "#371ea3") +
@@ -148,7 +149,7 @@ plot.break_down <- function(x, ...,
 
     # add addnotations
     if (add_contributions) {
-      drange <- diff(range(x$cummulative))
+      drange <- diff(range(x$cumulative))
       pl <- pl + geom_text(aes(y = right_side), vjust = 0.5, nudge_y = drange*shift_contributions, hjust = 0, color = "#371ea3")
     }
 
@@ -185,7 +186,7 @@ plot_break_down_distributions <- function(df) {
 # prepare data for plot
 prepare_data_for_break_down_plot <- function(x, baseline, rounding_function, digits) {
   x$sign[x$variable_name == ""] <- "X"
-  x$prev <- x$cummulative - x$contribution
+  x$prev <- x$cumulative - x$contribution
   broken_baseline <- x[x$variable_name == "intercept",]
   x$text <- x$prev
   if (is.na(baseline)) {
@@ -201,8 +202,8 @@ prepare_data_for_break_down_plot <- function(x, baseline, rounding_function, dig
     x[x$variable == "intercept", "prev"] <- baseline
   }
 
-  x$trans_contribution <- x$cummulative - x$text
-  x$right_side <- pmax(x$cummulative,  x$cummulative - x$contribution)
+  x$trans_contribution <- x$cumulative - x$text
+  x$right_side <- pmax(x$cumulative,  x$cumulative - x$contribution)
 
   pretty_trans_contribution <- as.character(rounding_function(x$trans_contribution, digits))
   x$pretty_text <-
@@ -227,13 +228,13 @@ select_only_k_features <- function(x, k = 10) {
     x_prediction <- x[x$variable == "prediction",]
     row.names(x_prediction) <- x_prediction$label
     remainings <- tapply(x_remove$contribution, x_remove$label, sum, na.rm=TRUE)
-    # fix position and cummulative in x_keep
+    # fix position and cumulative in x_keep
     x_keep$position <- as.numeric(as.factor(x_keep$position)) + 2
     for (i in 1:nrow(x_keep)) {
       if (x_keep[i,"variable_name"] == "intercept") {
-        x_keep[i,"cummulative"] <- x_keep[i,"contribution"]
+        x_keep[i,"cumulative"] <- x_keep[i,"contribution"]
       } else {
-        x_keep[i,"cummulative"] <- x_keep[i - 1,"cummulative"] + x_keep[i,"contribution"]
+        x_keep[i,"cumulative"] <- x_keep[i - 1,"cumulative"] + x_keep[i,"contribution"]
       }
     }
     # for each model we shall calculate the others statistic
@@ -241,7 +242,7 @@ select_only_k_features <- function(x, k = 10) {
                contribution = remainings,
                variable_name = "+ all other factors",
                variable_value = "",
-               cummulative = x_prediction[names(remainings),"cummulative"],
+               cumulative = x_prediction[names(remainings),"cumulative"],
                sign = sign(remainings),
                position = 2,
                label = names(remainings))

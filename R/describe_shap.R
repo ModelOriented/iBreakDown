@@ -72,12 +72,12 @@ convert_explanation.break_down_uncertainty <- function(x) {
   df <- rbind(df_intercept, df, df_prediction)
   position <- c(1:nrow(df))
   df['position'] <- position
-  df['cummulative'] <- cumsum(df$contribution)
+  df['cumulative'] <- cumsum(df$contribution)
   df_break_down <- data.frame(variable = df['variable'],
                               contribution = df['contribution'],
                               variable_name = df['variable_name'],
                               variable_value = df["variable_value"],
-                              cummulative = df['cummulative'],
+                              cumulative = df['cumulative'],
                               sign = df["sign"],
                               position = df["position"],
                               label = df["label"])

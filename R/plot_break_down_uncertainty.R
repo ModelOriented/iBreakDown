@@ -2,10 +2,10 @@
 #'
 #' @param x an explanation created with \code{\link{break_down_uncertainty}}
 #' @param ... other parameters.
-#' @param show_boxplots logical if `TRUE` (default) boxplot will be plotted to show uncertanity of attributions
-#' @param vcolors named vector with colors.
+#' @param show_boxplots logical if \code{TRUE} (default) boxplot will be plotted to show uncertanity of attributions
+#' @param vcolors If \code{NA} (default), DrWhy colors are used.
 #'
-#' @return a `ggplot2` object.
+#' @return a \code{ggplot2} object.
 #' @importFrom stats reorder
 #'
 #' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}

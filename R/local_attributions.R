@@ -8,15 +8,15 @@
 #' And in the second step the impact is calculated.
 #'
 #' @param x an explainer created with function \code{\link[DALEX]{explain}} or a model.
-#' @param data validation dataset, will be extracted from `x` if it is an explainer.
-#' @param predict_function predict function, will be extracted from `x` if it is an explainer.
+#' @param data validation dataset, will be extracted from \code{x} if it is an explainer.
+#' @param predict_function predict function, will be extracted from \code{x} if it is an explainer.
 #' @param new_observation a new observation with columns that correspond to variables used in the model.
-#' @param keep_distributions if `TRUE`, then distribution of partial predictions is stored and can be plotted with the generic `plot()`.
-#' @param order if not `NULL`, then it will be a fixed order of variables. It can be a numeric vector or vector with names of variables.
+#' @param keep_distributions if \code{TRUE}, then distribution of partial predictions is stored and can be plotted with the generic \code{plot()}.
+#' @param order if not \code{NULL}, then it will be a fixed order of variables. It can be a numeric vector or vector with names of variables.
 #' @param ... other parameters.
 #' @param label name of the model. By default it's extracted from the 'class' attribute of the model.
 #'
-#' @return an object of the `break_down` class.
+#' @return an object of the \code{break_down} class.
 #'
 #' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
 #'
@@ -139,7 +139,7 @@ local_attributions.default <- function(x, data, predict_function = predict,
   variable_value <- tmp$variable_value
   variable <- tmp$variable
   yhats <- tmp$yhats
-  cummulative <- tmp$cummulative
+  cumulative <- tmp$cumulative
 
   # setup labels
   label_class <- label
@@ -153,7 +153,7 @@ local_attributions.default <- function(x, data, predict_function = predict,
                        contribution = c(contribution),
                        variable_name = variable_name,
                        variable_value = variable_value,
-                       cummulative = c(cummulative),
+                       cumulative = c(cumulative),
                        sign = factor(c(as.character(sign(contribution)[-length(contribution)]), "X"), levels = c("-1", "0", "1", "X")),
                        position = length(variable):1,
                        label = label_class)
@@ -249,15 +249,15 @@ calculate_contributions_along_path <- function(x,
   variable       <- c("intercept",
                       paste0(colnames(current_data)[selected$ind1], " = ",  selected_values) ,
                       "prediction")
-  cummulative <- do.call(rbind, c(list(baseline_yhat), yhats_mean, list(target_yhat)))
-  contribution <- rbind(0,apply(cummulative, 2, diff))
-  contribution[1,] <- cummulative[1,]
-  contribution[nrow(contribution),] <- cummulative[nrow(contribution),]
+  cumulative <- do.call(rbind, c(list(baseline_yhat), yhats_mean, list(target_yhat)))
+  contribution <- rbind(0,apply(cumulative, 2, diff))
+  contribution[1,] <- cumulative[1,]
+  contribution[nrow(contribution),] <- cumulative[nrow(contribution),]
 
   list(variable_name = variable_name,
        variable_value = variable_value,
        variable = variable,
-       cummulative = cummulative,
+       cumulative = cumulative,
        contribution = contribution,
        yhats = yhats)
 }
