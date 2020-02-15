@@ -1,3 +1,7 @@
+iBreakDown 1.0
+----------------------------------------------------------------
+* Argument `vnames` added to `plot.break_down` to change freely labels 
+
 iBreakDown 0.9.9
 ----------------------------------------------------------------
 * Description of break_down explainer added

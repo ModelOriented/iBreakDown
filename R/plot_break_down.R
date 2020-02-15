@@ -9,6 +9,7 @@
 #' @param add_contributions if TRUE, variable contributions will be added to the plot
 #' @param shift_contributions number describing how much labels should be shifted to the right, as a fraction of range. By default equal to 0.05.
 #' @param vcolors named vector with colors.
+#' @param vnames a character vector, if specified then will be used as labels on OY axis. By default NULL
 #' @param digits number of decimal places (`round`) or significant digits (`signif`) to be used.
 #' See the \code{rounding_function} argument.
 #' @param rounding_function a function to be used for rounding numbers.
@@ -40,6 +41,7 @@
 #' bd_rf <- break_down(explain_titanic_glm, titanic_small[1, ])
 #' bd_rf
 #' plot(bd_rf, max_features = 3)
+#' plot(bd_rf, max_features = 3, vnames = c("average","+ male","+ young","+ cheap ticket", "+ other factors", "final"))
 #'
 #' \donttest{
 #' ## Not run:
@@ -109,7 +111,8 @@ plot.break_down <- function(x, ...,
                             vcolors = DALEX::colors_breakdown_drwhy(),
                             digits = 3, rounding_function = round,
                             add_contributions = TRUE, shift_contributions = 0.05,
-                            plot_distributions = FALSE) {
+                            plot_distributions = FALSE,
+                            vnames = NULL) {
   position <- cummulative <- prev <- pretty_text <- right_side <- contribution <- NULL
 
   if (plot_distributions) {
@@ -156,8 +159,10 @@ plot.break_down <- function(x, ...,
       x_limits <- scale_y_continuous(expand = c(0.05,0.15), name = "", limits = min_max)
     }
 
+    if (is.null(vnames)) vnames <- x$variable
+
     pl <- pl + x_limits +
-      scale_x_continuous(labels = x$variable, breaks = x$position + 0.5, name = "") +
+      scale_x_continuous(labels = vnames, breaks = x$position + 0.5, name = "") +
       scale_fill_manual(values = vcolors)
   }
 

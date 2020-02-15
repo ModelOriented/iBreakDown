@@ -15,7 +15,8 @@
   rounding_function = round,
   add_contributions = TRUE,
   shift_contributions = 0.05,
-  plot_distributions = FALSE
+  plot_distributions = FALSE,
+  vnames = NULL
 )
 }
 \arguments{
@@ -43,6 +44,8 @@ This should be \code{\link{signif}} which keeps a specified number of significan
 
 \item{plot_distributions}{if `TRUE` then distributions of conditional propotions will be plotted. This requires \code{keep_distributions=TRUE} in the
 \code{\link{break_down}}, \code{\link{local_attributions}}, or \code{\link{local_interactions}}.}
+
+\item{vnames}{a character vector, if specified then will be used as labels on OY axis. By default NULL}
 }
 \value{
 a `ggplot2` object.
@@ -65,6 +68,7 @@ explain_titanic_glm <- explain(model_titanic_glm,
 bd_rf <- break_down(explain_titanic_glm, titanic_small[1, ])
 bd_rf
 plot(bd_rf, max_features = 3)
+plot(bd_rf, max_features = 3, vlabels = c("","male","young","cheap ticket", "+ other factors", "final"))
 
 \donttest{
 ## Not run:
