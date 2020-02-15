@@ -184,7 +184,7 @@ local_interactions.default <- function(x, data, predict_function = predict,
     variable_value <- tmp$variable_value
     variable <- tmp$variable
     yhats <- tmp$yhats
-    cummulative <- tmp$cummulative
+    cumulative <- tmp$cumulative
 
 
     nlabel <- ifelse(length(unlist(target_yhat_all)) > 1,
@@ -195,7 +195,7 @@ local_interactions.default <- function(x, data, predict_function = predict,
                          contribution = contribution,
                          variable_name = variable_name,
                          variable_value = variable_value,
-                         cummulative = cummulative,
+                         cumulative = cumulative,
                          sign = factor(c(as.character(sign(contribution)[-length(contribution)]), "X"), levels = c("-1", "0", "1", "X")),
                          position = length(variable):1,
                          label = nlabel)
@@ -275,15 +275,15 @@ calculate_contributions_along_path_2d <- function(x, data, new_observation, feat
   variable       <- c("intercept",
                       paste(rownames(selected), "=",  selected_values) ,
                       "prediction")
-  cummulative <- c(baseline_yhat, yhats_mean, target_yhat)
-  contribution <- c(0, diff(cummulative))
-  contribution[1] <- cummulative[1]
-  contribution[length(contribution)] <- cummulative[length(contribution)]
+  cumulative <- c(baseline_yhat, yhats_mean, target_yhat)
+  contribution <- c(0, diff(cumulative))
+  contribution[1] <- cumulative[1]
+  contribution[length(contribution)] <- cumulative[length(contribution)]
 
   list(variable_name = variable_name,
        variable_value = variable_value,
        variable = variable,
-       cummulative = cummulative,
+       cumulative = cumulative,
        contribution = contribution,
        yhats = yhats)
 }

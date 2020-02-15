@@ -68,7 +68,8 @@ explain_titanic_glm <- explain(model_titanic_glm,
 bd_rf <- break_down(explain_titanic_glm, titanic_small[1, ])
 bd_rf
 plot(bd_rf, max_features = 3)
-plot(bd_rf, max_features = 3, vlabels = c("","male","young","cheap ticket", "+ other factors", "final"))
+plot(bd_rf, max_features = 3,
+     vnames = c("average","+ male","+ young","+ cheap ticket", "+ other factors", "final"))
 
 \donttest{
 ## Not run:

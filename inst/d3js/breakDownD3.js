@@ -157,7 +157,6 @@ function singlePlot(modelName, bData, i) {
         .append("g");
 
   bars.append("rect")
-        .attr("class", modelName.replace(/\s/g,''))
         .attr("fill", function(d) {
           switch (d.sign) {
             case "-1":
@@ -205,7 +204,7 @@ function singlePlot(modelName, bData, i) {
           switch (d.variable) {
             case "intercept":
             case "prediction":
-              return d.cummulative;
+              return d.cumulative;
             default:
               return d.sign === "-1" ? d.contribution : "+"+d.contribution;
           }

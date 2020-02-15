@@ -139,7 +139,7 @@ local_attributions.default <- function(x, data, predict_function = predict,
   variable_value <- tmp$variable_value
   variable <- tmp$variable
   yhats <- tmp$yhats
-  cummulative <- tmp$cummulative
+  cumulative <- tmp$cumulative
 
   # setup labels
   label_class <- label
@@ -153,7 +153,7 @@ local_attributions.default <- function(x, data, predict_function = predict,
                        contribution = c(contribution),
                        variable_name = variable_name,
                        variable_value = variable_value,
-                       cummulative = c(cummulative),
+                       cumulative = c(cumulative),
                        sign = factor(c(as.character(sign(contribution)[-length(contribution)]), "X"), levels = c("-1", "0", "1", "X")),
                        position = length(variable):1,
                        label = label_class)
@@ -249,15 +249,15 @@ calculate_contributions_along_path <- function(x,
   variable       <- c("intercept",
                       paste0(colnames(current_data)[selected$ind1], " = ",  selected_values) ,
                       "prediction")
-  cummulative <- do.call(rbind, c(list(baseline_yhat), yhats_mean, list(target_yhat)))
-  contribution <- rbind(0,apply(cummulative, 2, diff))
-  contribution[1,] <- cummulative[1,]
-  contribution[nrow(contribution),] <- cummulative[nrow(contribution),]
+  cumulative <- do.call(rbind, c(list(baseline_yhat), yhats_mean, list(target_yhat)))
+  contribution <- rbind(0,apply(cumulative, 2, diff))
+  contribution[1,] <- cumulative[1,]
+  contribution[nrow(contribution),] <- cumulative[nrow(contribution),]
 
   list(variable_name = variable_name,
        variable_value = variable_value,
        variable = variable,
-       cummulative = cummulative,
+       cumulative = cumulative,
        contribution = contribution,
        yhats = yhats)
 }
