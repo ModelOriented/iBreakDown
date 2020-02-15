@@ -28,36 +28,36 @@ plotD3(x, ...)
 
 \item{...}{other parameters.}
 
-\item{baseline}{if numeric then veritical line will start in baseline.}
+\item{baseline}{if numeric then veritical line will start in \code{baseline}.}
 
-\item{max_features}{maximal number of features to be included in the plot. Default value is 10.}
+\item{max_features}{maximal number of features to be included in the plot. By default it's \code{10}.}
 
-\item{digits}{number of decimal places (round) or significant digits (signif) to be used.
+\item{digits}{number of decimal places (\code{\link{round}}) or significant digits (\code{\link{signif}}) to be used.
 See the \code{rounding_function} argument.}
 
 \item{rounding_function}{a function to be used for rounding numbers.
 This should be \code{\link{signif}} which keeps a specified number of significant digits or \code{\link{round}} (which is default) to have the same precision for all components.}
 
-\item{bar_width}{width of bars in px. By default 12px}
+\item{bar_width}{width of bars in px. By default it's 12px}
 
 \item{margin}{extend x axis domain range to adjust the plot. Usually value between 0.1 and 0.3, by default it's 0.2}
 
-\item{scale_height}{if TRUE, the height of the plot scales with window size}
+\item{scale_height}{if \code{TRUE}, the height of the plot scales with window size}
 
-\item{min_max}{a range of OX axis. By deafult `NA` therefore will be extracted from the contributions of `x`.
+\item{min_max}{a range of OX axis. By deafult \code{NA} therefore will be extracted from the contributions of \code{x}.
 But can be set to some constants, usefull if these plots are used for comparisons.}
 
-\item{vcolors}{If NA (default), DrWhy colors are used.}
+\item{vcolors}{If \code{NA} (default), DrWhy colors are used.}
 
 \item{chart_title}{a character. Set custom title}
 
-\item{time}{in ms. Set animation length}
+\item{time}{in ms. Set the animation length}
 }
 \value{
-a `r2d3` object.
+a \code{r2d3} object.
 }
 \description{
-Plots waterfall break down for objects of the `break_down` class.
+Plots waterfall break down for objects of the \code{break_down} class.
 }
 \examples{
 library("DALEX")

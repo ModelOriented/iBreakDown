@@ -5,22 +5,22 @@
 #'
 #' @param x an explanation created with \code{\link{shap}}
 #' @param ... other parameters.
-#' @param baseline if numeric then veritical line will start in baseline.
-#' @param max_features maximal number of features to be included in the plot. Default is 10.
-#' @param digits number of decimal places (round) or significant digits (signif) to be used.
+#' @param baseline if numeric then veritical line will start in \code{baseline}.
+#' @param max_features maximal number of features to be included in the plot. By default it's \code{10}.
+#' @param digits number of decimal places (\code{\link{round}}) or significant digits (\code{\link{signif}}) to be used.
 #' See the \code{rounding_function} argument.
 #' @param rounding_function a function to be used for rounding numbers.
 #' This should be \code{\link{signif}} which keeps a specified number of significant digits or \code{\link{round}} (which is default) to have the same precision for all components.
-#' @param bar_width width of bars in px. Default is 12px
+#' @param bar_width width of bars in px. By default it's 12px
 #' @param margin extend x axis domain range to adjust the plot. Usually value between 0.1 and 0.3, by default it's 0.2
-#' @param scale_height if TRUE, the height of the plot scales with window size.
-#' @param min_max a range of OX axis. By deafult `NA` therefore will be extracted from the contributions of `x`.
+#' @param scale_height if \code{TRUE}, the height of the plot scales with window size.
+#' @param min_max a range of OX axis. By deafult \code{NA} therefore will be extracted from the contributions of \code{x}.
 #' But can be set to some constants, usefull if these plots are used for comparisons.
-#' @param vcolors If NA (default), DrWhy colors are used.
+#' @param vcolors If \code{NA} (default), DrWhy colors are used.
 #' @param chart_title a character. Set custom title
-#' @param time in ms. Set animation length
+#' @param time in ms. Set the animation length
 #'
-#' @return a `r2d3` object.
+#' @return a \code{r2d3} object.
 #'
 #' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
 #'

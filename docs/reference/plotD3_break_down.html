@@ -36,10 +36,11 @@
 
 
 <meta property="og:title" content="Plot Break Down Objects in D3 with r2d3 package. — plotD3" />
-<meta property="og:description" content="Plots waterfall break down for objects of the `break_down` class." />
+
+<meta property="og:description" content="Plots waterfall break down for objects of the break_down class." />
+
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -145,7 +146,9 @@
     </div>
 
     <div class="ref-description">
-    <p>Plots waterfall break down for objects of the `break_down` class.</p>
+    
+    <p>Plots waterfall break down for objects of the <code>break_down</code> class.</p>
+    
     </div>
 
     <pre class="usage"><span class='fu'>plotD3</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -166,7 +169,7 @@
   <span class='kw'>chart_title</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
   <span class='kw'>time</span> <span class='kw'>=</span> <span class='fl'>0</span>
 )</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -180,15 +183,15 @@
     </tr>
     <tr>
       <th>baseline</th>
-      <td><p>if numeric then veritical line will start in baseline.</p></td>
+      <td><p>if numeric then veritical line will start in <code>baseline</code>.</p></td>
     </tr>
     <tr>
       <th>max_features</th>
-      <td><p>maximal number of features to be included in the plot. Default value is 10.</p></td>
+      <td><p>maximal number of features to be included in the plot. By default it's <code>10</code>.</p></td>
     </tr>
     <tr>
       <th>digits</th>
-      <td><p>number of decimal places (round) or significant digits (signif) to be used.
+      <td><p>number of decimal places (<code><a href='https://rdrr.io/r/base/Round.html'>round</a></code>) or significant digits (<code><a href='https://rdrr.io/r/base/Round.html'>signif</a></code>) to be used.
 See the <code>rounding_function</code> argument.</p></td>
     </tr>
     <tr>
@@ -198,7 +201,7 @@ This should be <code><a href='https://rdrr.io/r/base/Round.html'>signif</a></cod
     </tr>
     <tr>
       <th>bar_width</th>
-      <td><p>width of bars in px. By default 12px</p></td>
+      <td><p>width of bars in px. By default it's 12px</p></td>
     </tr>
     <tr>
       <th>margin</th>
@@ -206,16 +209,16 @@ This should be <code><a href='https://rdrr.io/r/base/Round.html'>signif</a></cod
     </tr>
     <tr>
       <th>scale_height</th>
-      <td><p>if TRUE, the height of the plot scales with window size</p></td>
+      <td><p>if <code>TRUE</code>, the height of the plot scales with window size</p></td>
     </tr>
     <tr>
       <th>min_max</th>
-      <td><p>a range of OX axis. By deafult `NA` therefore will be extracted from the contributions of `x`.
+      <td><p>a range of OX axis. By deafult <code>NA</code> therefore will be extracted from the contributions of <code>x</code>.
 But can be set to some constants, usefull if these plots are used for comparisons.</p></td>
     </tr>
     <tr>
       <th>vcolors</th>
-      <td><p>If NA (default), DrWhy colors are used.</p></td>
+      <td><p>If <code>NA</code> (default), DrWhy colors are used.</p></td>
     </tr>
     <tr>
       <th>chart_title</th>
@@ -223,16 +226,18 @@ But can be set to some constants, usefull if these plots are used for comparison
     </tr>
     <tr>
       <th>time</th>
-      <td><p>in ms. Set animation length</p></td>
+      <td><p>in ms. Set the animation length</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a `r2d3` object.</p>
+    <p>a <code>r2d3</code> object.</p>
+    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. <a href='https://pbiecek.github.io/ema'>https://pbiecek.github.io/ema</a></p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
@@ -250,11 +255,11 @@ But can be set to some constants, usefull if these plots are used for comparison
 #&gt;   -&gt; model label       :  glm 
 #&gt;   -&gt; data              :  500  rows  4  cols 
 #&gt;   -&gt; target variable   :  500  values 
-#&gt;   -&gt; model_info        :  package stats , ver. 3.6.1 , task regression ( <span style='color: #BBBB00;'> default </span><span> ) 
+#&gt;   -&gt; model_info        :  package stats , ver. 3.6.0 , task regression ( <span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;   -&gt; predict function  :  yhat.glm  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; predicted values  :  numerical, min =  0.111212 , mean =  0.298 , max =  0.9430377  
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; residuals         :  numerical, min =  -0.789032 , mean =  1.799189e-14 , max =  0.8594593  
+#&gt;   -&gt; residuals         :  numerical, min =  -0.789032 , mean =  1.818369e-14 , max =  0.8594593  
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'><span class='no'>bd_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_attributions.html'>local_attributions</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_small</span>[<span class='fl'>1</span>, ])
 <span class='no'>bd_glm</span></div><div class='output co'>#&gt;                    contribution
 #&gt; glm: intercept            0.298
@@ -307,8 +312,11 @@ But can be set to some constants, usefull if these plots are used for comparison
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+
       <li><a href="#references">References</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

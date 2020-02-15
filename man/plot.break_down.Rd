@@ -24,34 +24,34 @@
 
 \item{...}{other parameters.}
 
-\item{baseline}{if numeric then veritical line starts in `baseline`.}
+\item{baseline}{if numeric then veritical line starts in \code{baseline}.}
 
-\item{max_features}{maximal number of features to be included in the plot. default value is 4.}
+\item{max_features}{maximal number of features to be included in the plot. default value is \code{10}.}
 
-\item{min_max}{a range of OX axis. By default `NA`, therefore it will be extracted from the contributions of `x`. But it can be set to some constants, useful if these plots are to be used for comparisons.}
+\item{min_max}{a range of OX axis. By default \code{NA}, therefore it will be extracted from the contributions of \code{x}. But it can be set to some constants, useful if these plots are to be used for comparisons.}
 
-\item{vcolors}{named vector with colors.}
+\item{vcolors}{If \code{NA} (default), DrWhy colors are used.}
 
-\item{digits}{number of decimal places (`round`) or significant digits (`signif`) to be used.
+\item{digits}{number of decimal places (\code{\link{round}}) or significant digits (\code{\link{signif}}) to be used.
 See the \code{rounding_function} argument.}
 
 \item{rounding_function}{a function to be used for rounding numbers.
 This should be \code{\link{signif}} which keeps a specified number of significant digits or \code{\link{round}} (which is default) to have the same precision for all components.}
 
-\item{add_contributions}{if TRUE, variable contributions will be added to the plot}
+\item{add_contributions}{if \code{TRUE}, variable contributions will be added to the plot}
 
-\item{shift_contributions}{number describing how much labels should be shifted to the right, as a fraction of range. By default equal to 0.05.}
+\item{shift_contributions}{number describing how much labels should be shifted to the right, as a fraction of range. By default equal to \code{0.05}.}
 
-\item{plot_distributions}{if `TRUE` then distributions of conditional propotions will be plotted. This requires \code{keep_distributions=TRUE} in the
+\item{plot_distributions}{if \code{TRUE} then distributions of conditional propotions will be plotted. This requires \code{keep_distributions=TRUE} in the
 \code{\link{break_down}}, \code{\link{local_attributions}}, or \code{\link{local_interactions}}.}
 
 \item{vnames}{a character vector, if specified then will be used as labels on OY axis. By default NULL}
 }
 \value{
-a `ggplot2` object.
+a \code{ggplot2} object.
 }
 \description{
-Displays a waterfall break down plot for objects of `break_down` class.
+Displays a waterfall break down plot for objects of \code{break_down} class.
 }
 \examples{
 library("DALEX")

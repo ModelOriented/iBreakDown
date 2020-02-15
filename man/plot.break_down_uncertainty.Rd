@@ -11,12 +11,12 @@
 
 \item{...}{other parameters.}
 
-\item{vcolors}{named vector with colors.}
+\item{vcolors}{If \code{NA} (default), DrWhy colors are used.}
 
-\item{show_boxplots}{logical if `TRUE` (default) boxplot will be plotted to show uncertanity of attributions}
+\item{show_boxplots}{logical if \code{TRUE} (default) boxplot will be plotted to show uncertanity of attributions}
 }
 \value{
-a `ggplot2` object.
+a \code{ggplot2} object.
 }
 \description{
 Plot Generic for Break Down Uncertainty Objects

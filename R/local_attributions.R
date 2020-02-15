@@ -8,15 +8,15 @@
 #' And in the second step the impact is calculated.
 #'
 #' @param x an explainer created with function \code{\link[DALEX]{explain}} or a model.
-#' @param data validation dataset, will be extracted from `x` if it is an explainer.
-#' @param predict_function predict function, will be extracted from `x` if it is an explainer.
+#' @param data validation dataset, will be extracted from \code{x} if it is an explainer.
+#' @param predict_function predict function, will be extracted from \code{x} if it is an explainer.
 #' @param new_observation a new observation with columns that correspond to variables used in the model.
-#' @param keep_distributions if `TRUE`, then distribution of partial predictions is stored and can be plotted with the generic `plot()`.
-#' @param order if not `NULL`, then it will be a fixed order of variables. It can be a numeric vector or vector with names of variables.
+#' @param keep_distributions if \code{TRUE}, then distribution of partial predictions is stored and can be plotted with the generic \code{plot()}.
+#' @param order if not \code{NULL}, then it will be a fixed order of variables. It can be a numeric vector or vector with names of variables.
 #' @param ... other parameters.
 #' @param label name of the model. By default it's extracted from the 'class' attribute of the model.
 #'
-#' @return an object of the `break_down` class.
+#' @return an object of the \code{break_down} class.
 #'
 #' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
 #'
