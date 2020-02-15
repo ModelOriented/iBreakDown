@@ -123,7 +123,7 @@ local_attributions.default <- function(x, data, predict_function = predict,
   # how the average would change if single variable is changed
   average_yhats <- calculate_1d_changes(x, new_observation, data, predict_function)
   diffs_1d <- sapply(seq_along(average_yhats), function(i) {
-    mean((average_yhats[[i]] - baseline_yhat)^2)
+    sqrt(mean((average_yhats[[i]] - baseline_yhat)^2))
   })
 
   # impact summary for 1d variables
