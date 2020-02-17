@@ -41,7 +41,9 @@
 #' bd_glm
 #' plotD3(bd_glm)
 #'
-#' library(randomForest)
+#' \donttest{
+#' ## Not run:
+#' library("randomForest")
 #'
 #' m_rf <- randomForest(status ~ . , data = HR[2:2000,])
 #' new_observation <- HR_test[1,]
@@ -56,6 +58,7 @@
 #'
 #' bd_rf
 #' plotD3(bd_rf)
+#' }
 #'
 #' @export
 #' @rdname plotD3_break_down

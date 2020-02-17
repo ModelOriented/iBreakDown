@@ -76,7 +76,9 @@ bd_glm <- local_attributions(explain_titanic_glm, titanic_small[1, ])
 bd_glm
 plotD3(bd_glm)
 
-library(randomForest)
+\donttest{
+## Not run:
+library("randomForest")
 
 m_rf <- randomForest(status ~ . , data = HR[2:2000,])
 new_observation <- HR_test[1,]
@@ -91,6 +93,7 @@ bd_rf <- local_attributions(m_rf,
 
 bd_rf
 plotD3(bd_rf)
+}
 
 }
 \references{

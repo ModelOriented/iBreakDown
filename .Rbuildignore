@@ -9,6 +9,7 @@
 ^jupyter-notebooks.*$
 ^docs.*$
 ^.*README.*$
+^LICENSE$
 ^_pkgdown\.yml$
 ^pkgdown$
 ^doc$
