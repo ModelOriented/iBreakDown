@@ -148,7 +148,7 @@ plotD3.shap <- function(x, ...,
                   n = n, m = m, barWidth = bar_width,
                   scaleHeight = scale_height, time = time,
                   vcolors = ifelse(is.na(vcolors), "default", vcolors),
-                  chartTitle = ifelse(is.na(chart_title), "Shapley values", chart_title))
+                  chartTitle = ifelse(is.na(chart_title), "SHAP values", chart_title))
 
   temp <- jsonlite::toJSON(list(dl, label_list))
 
