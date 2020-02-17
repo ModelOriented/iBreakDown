@@ -2,6 +2,7 @@ iBreakDown 1.0
 ----------------------------------------------------------------
 * Argument `vnames` added to `plot.break_down` to change freely labels 
 * change `cummulative` to `cumulative` [#72](https://github.com/ModelOriented/iBreakDown/issues/72)
+* add `max_features` to `plot.break_down_uncertainty()`
 
 iBreakDown 0.9.9
 ----------------------------------------------------------------
