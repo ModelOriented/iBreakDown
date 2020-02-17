@@ -148,12 +148,12 @@ break_down_uncertainty.default <- function(x, data, predict_function = predict,
       result_average <- result_average[order(result_average$label, result_average$variable),]
       result_average$contribution <- rowMeans(extracted_contributions)
       result_average$B <- 0
-      result <- c(result, list(result_average))
+      result <- c(list(result_average), result)
     } else {
       # path is a selected ordering
       tmp <- get_single_random_path(x, data, predict_function, new_observation, label, path)
       tmp$B <- 0
-      result <- c(result, list(tmp))
+      result <- c(list(tmp), result)
     }
   }
 

@@ -4,7 +4,13 @@
 \alias{plot.break_down_uncertainty}
 \title{Plot Generic for Break Down Uncertainty Objects}
 \usage{
-\method{plot}{break_down_uncertainty}(x, ..., vcolors = DALEX::colors_breakdown_drwhy(), show_boxplots = TRUE)
+\method{plot}{break_down_uncertainty}(
+  x,
+  ...,
+  vcolors = DALEX::colors_breakdown_drwhy(),
+  show_boxplots = TRUE,
+  max_features = 10
+)
 }
 \arguments{
 \item{x}{an explanation created with \code{\link{break_down_uncertainty}}}
@@ -14,6 +20,8 @@
 \item{vcolors}{If \code{NA} (default), DrWhy colors are used.}
 
 \item{show_boxplots}{logical if \code{TRUE} (default) boxplot will be plotted to show uncertanity of attributions}
+
+\item{max_features}{maximal number of features to be included in the plot. By default it's \code{10}.}
 }
 \value{
 a \code{ggplot2} object.
@@ -24,18 +32,21 @@ Plot Generic for Break Down Uncertainty Objects
 \examples{
 library("DALEX")
 library("iBreakDown")
-# Toy examples, because CRAN angels ask for them
-titanic <- na.omit(titanic)
+
 set.seed(1313)
-titanic_small <- titanic[sample(1:nrow(titanic), 500), c(1,2,6,9)]
-model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
-                       data = titanic_small, family = "binomial")
+titanic_small <- titanic_imputed[sample(1:nrow(titanic),500), c(1,2,5,8)]
+
+model_titanic_glm <- glm(survived ~ gender + age + fare,
+                         data = titanic_small, family = "binomial")
+
 explain_titanic_glm <- explain(model_titanic_glm,
-                           data = titanic_small[,-9],
-                           y = titanic_small$survived == "yes")
-bd_rf <- shap(explain_titanic_glm, titanic_small[1, ])
-bd_rf
-plot(bd_rf)
+                               data = titanic_small[, -4],
+                               y = titanic_small[, 4])
+
+sh_rf <- shap(explain_titanic_glm, titanic_small[1, ])
+
+sh_rf
+plot(sh_rf)
 
 \donttest{
 ## Not run:
@@ -51,9 +62,10 @@ explainer_rf <- explain(model,
 
 bd_rf <- break_down_uncertainty(explainer_rf,
                            new_observation,
-                           path = c(3,2,4,1,5))
+                           path = c(3,2,4,1,5),
+                           show_boxplots = FALSE)
 bd_rf
-plot(bd_rf)
+plot(bd_rf, max_features = 3)
 
 # example for regression - apartment prices
 # here we do not have intreactions

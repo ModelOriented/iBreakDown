@@ -4,6 +4,7 @@
 #' @param ... other parameters.
 #' @param show_boxplots logical if \code{TRUE} (default) boxplot will be plotted to show uncertanity of attributions
 #' @param vcolors If \code{NA} (default), DrWhy colors are used.
+#' @param max_features maximal number of features to be included in the plot. By default it's \code{10}.
 #'
 #' @return a \code{ggplot2} object.
 #' @importFrom stats reorder
@@ -13,18 +14,21 @@
 #' @examples
 #' library("DALEX")
 #' library("iBreakDown")
-#' # Toy examples, because CRAN angels ask for them
-#' titanic <- na.omit(titanic)
+#'
 #' set.seed(1313)
-#' titanic_small <- titanic[sample(1:nrow(titanic), 500), c(1,2,6,9)]
-#' model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
-#'                        data = titanic_small, family = "binomial")
+#' titanic_small <- titanic_imputed[sample(1:nrow(titanic),500), c(1,2,5,8)]
+#'
+#' model_titanic_glm <- glm(survived ~ gender + age + fare,
+#'                          data = titanic_small, family = "binomial")
+#'
 #' explain_titanic_glm <- explain(model_titanic_glm,
-#'                            data = titanic_small[,-9],
-#'                            y = titanic_small$survived == "yes")
-#' bd_rf <- shap(explain_titanic_glm, titanic_small[1, ])
-#' bd_rf
-#' plot(bd_rf)
+#'                                data = titanic_small[, -4],
+#'                                y = titanic_small[, 4])
+#'
+#' sh_rf <- shap(explain_titanic_glm, titanic_small[1, ])
+#'
+#' sh_rf
+#' plot(sh_rf)
 #'
 #' \donttest{
 #' ## Not run:
@@ -40,9 +44,10 @@
 #'
 #' bd_rf <- break_down_uncertainty(explainer_rf,
 #'                            new_observation,
-#'                            path = c(3,2,4,1,5))
+#'                            path = c(3,2,4,1,5),
+#'                            show_boxplots = FALSE)
 #' bd_rf
-#' plot(bd_rf)
+#' plot(bd_rf, max_features = 3)
 #'
 #' # example for regression - apartment prices
 #' # here we do not have intreactions
@@ -67,15 +72,21 @@
 #' @export
 plot.break_down_uncertainty <- function(x, ...,
                   vcolors = DALEX::colors_breakdown_drwhy(),
-                  show_boxplots = TRUE) {
+                  show_boxplots = TRUE,
+                  max_features = 10) {
 
   variable <- contribution <- NULL
-  x$variable <- reorder(x$variable, x$contribution, function(x)abs(mean(x)))
+  df <- as.data.frame(x)
+
+  df$variable <- reorder(df$variable, df$contribution, function(x) mean(abs(x)))
+
+  vnames <- tail(levels(df$variable), max_features)
+  df <- df[df$variable %in% vnames, ]
 
   # base plot
-  pl <- ggplot(x, aes(x = variable, y = contribution))
-  if (any(x$B == 0)) {
-    x_bars <- x[x$B == 0,]
+  pl <- ggplot(df, aes(x = variable, y = contribution))
+  if (any(df$B == 0)) {
+    x_bars <- df[df$B == 0,]
     pl <- pl +
       geom_col(data = x_bars, aes(x = variable, y = contribution, fill = factor(sign(contribution)))) +
       scale_fill_manual(values = vcolors)
