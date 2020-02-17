@@ -44,7 +44,8 @@
 #'
 #' bd_rf <- break_down_uncertainty(explainer_rf,
 #'                            new_observation,
-#'                            path = c(3,2,4,1,5))
+#'                            path = c(3,2,4,1,5),
+#'                            show_boxplots = FALSE)
 #' bd_rf
 #' plot(bd_rf, max_features = 3)
 #'
