@@ -12,20 +12,18 @@
   min_max = NA,
   vcolors = DALEX::colors_breakdown_drwhy(),
   digits = 3,
+  title = "Break Down profile",
+  subtitle = function(label) paste0("created for the ", label, " model"),
   rounding_function = round,
   add_contributions = TRUE,
   shift_contributions = 0.05,
-  plot_distributions = FALSE,
-  vnames = NULL
+  plot_distributions = FALSE
 )
 }
 \arguments{
 \item{x}{an explanation created with \code{\link{break_down}}}
 
-\item{...}{other parameters, such as: \itemize{
-\item \code{title} - main title for the plot. Character vector of length 1. Default: "Break Down profile"
-\item \code{subtitle} - subtitles for various explanations. Lookup table or a function returning a character vector. Default: 'created for the \code{x$label} model'. See \code{\link[ggplot2]{labeller}} for more.
-}}
+\item{...}{other parameters.}
 
 \item{baseline}{if numeric then veritical line starts in \code{baseline}.}
 
@@ -35,7 +33,11 @@
 
 \item{vcolors}{If \code{NA} (default), DrWhy colors are used.}
 
-\item{digits}{number of decimal places (\code{\link{round}}) or significant digits (\code{\link{signif}}) to be used.
+\item{digits}{number of decimal places (\code{\link{round}}) or significant digits (\code{\link{signif}}) to be used.}
+
+\item{title}{main title for the plot. Character vector of length 1. Default: "Break Down profile"}
+
+\item{subtitle}{subtitles for various explanations. Lookup table or a function returning a character vector. Default: 'created for the \code{x$label} model'. See \code{\link[ggplot2]{labeller}} for more.
 See the \code{rounding_function} argument.}
 
 \item{rounding_function}{a function to be used for rounding numbers.

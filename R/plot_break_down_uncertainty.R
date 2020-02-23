@@ -1,19 +1,12 @@
 #' Plot Generic for Break Down Uncertainty Objects
 #'
 #' @param x an explanation created with \code{\link{break_down_uncertainty}}
-<<<<<<< HEAD
-#' @param ... other parameters, such as: \itemize{
-#' \item \code{title} - main title for the plot. Character vector of length 1. Default: "Break Down profile"
-#' \item \code{subtitle} - subtitles for various explanations. Lookup table or a function returning a character vector. Default: 'created for the \code{x$label} model'. See \code{\link[ggplot2]{labeller}} for more.
-#' }
-#' @param show_boxplots logical if `TRUE` (default) boxplot will be plotted to show uncertanity of attributions
-#' @param vcolors named vector with colors.
-=======
 #' @param ... other parameters.
 #' @param show_boxplots logical if \code{TRUE} (default) boxplot will be plotted to show uncertanity of attributions
 #' @param vcolors If \code{NA} (default), DrWhy colors are used.
+#' @param title main title for the plot. Character vector of length 1. Default: "Break Down profile"
+#' @param subtitle subtitles for various explanations. Lookup table or a function returning a character vector. Default: 'created for the \code{x$label} model'. See \code{\link[ggplot2]{labeller}} for more.
 #' @param max_features maximal number of features to be included in the plot. By default it's \code{10}.
->>>>>>> upstream/master
 #'
 #' @return a \code{ggplot2} object.
 #' @importFrom stats reorder
@@ -82,32 +75,23 @@
 plot.break_down_uncertainty <- function(x, ...,
                   vcolors = DALEX::colors_breakdown_drwhy(),
                   show_boxplots = TRUE,
+                  title = "Break Down profile",
+                  subtitle = function(label) paste0("created for the ",label," model"),
                   max_features = 10) {
 
-  other_parameters <- list(...)
+  # Check main title argument:
+  if(!(is.character(title) && length(title == 1)))
+    stop("title must be character vector of length 1")
 
-  # Check main title argument (or set it to default value):
-  if("title" %in% names(other_parameters)){
-    if(!(is.character(other_parameters[["title"]]) && length(other_parameters[["title"]] == 1)))
-      stop("title must be character vector of length 1")
-    else
-      main_title <- other_parameters[["title"]]
-  } else
-    main_title <- "Break Down profile"
-
-  # Check subtitle argument (or set it to default value):
-  if("subtitle" %in% names(other_parameters)){
-    if(is.function(other_parameters[["subtitle"]])){
-      res <- other_parameters[["subtitle"]](attr(x$label, "levels"))
-      if(!(is.character(res) && length(res) == length(attr(x$label, "levels"))))
-        stop("subtitle function not working properly")
-    } else if(!(is.character(other_parameters[["subtitle"]]) &&
-                length(setdiff(attr(x$label, "levels"), names(other_parameters[["subtitle"]]))) == 0))
-      stop("subtitle, if vector, must be a named character containing x$label")
-    facet_labeller <- labeller(label = other_parameters[["subtitle"]])
-  } else {
-    facet_labeller <- labeller(label = function(label) paste0("created for the ",label," model"))
-  }
+  # Check subtitle argument:
+  if(is.function(subtitle)){
+    res <- subtitle(attr(x$label, "levels"))
+    if(!(is.character(res) && length(res) == length(attr(x$label, "levels"))))
+      stop("subtitle function not working properly")
+  } else if(!(is.character(subtitle) &&
+              length(setdiff(attr(x$label, "levels"), names(subtitle))) == 0))
+    stop("subtitle, if vector, must be a named character containing x$label")
+  facet_labeller <- labeller(label = subtitle)
 
   variable <- contribution <- NULL
   df <- as.data.frame(x)
@@ -132,7 +116,7 @@ plot.break_down_uncertainty <- function(x, ...,
   }
 
   pl +
-    labs(title = main_title) +
+    labs(title = title) +
     facet_wrap(~label, ncol = 1, labeller = facet_labeller) +
     coord_flip() + theme_drwhy_vertical() +
     theme(legend.position = "none") + xlab("")

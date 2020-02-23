@@ -9,20 +9,23 @@
   ...,
   vcolors = DALEX::colors_breakdown_drwhy(),
   show_boxplots = TRUE,
+  title = "Break Down profile",
+  subtitle = function(label) paste0("created for the ", label, " model"),
   max_features = 10
 )
 }
 \arguments{
 \item{x}{an explanation created with \code{\link{break_down_uncertainty}}}
 
-\item{...}{other parameters, such as: \itemize{
-\item \code{title} - main title for the plot. Character vector of length 1. Default: "Break Down profile"
-\item \code{subtitle} - subtitles for various explanations. Lookup table or a function returning a character vector. Default: 'created for the \code{x$label} model'. See \code{\link[ggplot2]{labeller}} for more.
-}}
+\item{...}{other parameters.}
 
 \item{vcolors}{If \code{NA} (default), DrWhy colors are used.}
 
 \item{show_boxplots}{logical if \code{TRUE} (default) boxplot will be plotted to show uncertanity of attributions}
+
+\item{title}{main title for the plot. Character vector of length 1. Default: "Break Down profile"}
+
+\item{subtitle}{subtitles for various explanations. Lookup table or a function returning a character vector. Default: 'created for the \code{x$label} model'. See \code{\link[ggplot2]{labeller}} for more.}
 
 \item{max_features}{maximal number of features to be included in the plot. By default it's \code{10}.}
 }

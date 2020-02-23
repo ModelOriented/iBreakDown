@@ -3,18 +3,6 @@
 #' Displays a waterfall break down plot for objects of \code{break_down} class.
 #'
 #' @param x an explanation created with \code{\link{break_down}}
-<<<<<<< HEAD
-#' @param ... other parameters, such as: \itemize{
-#' \item \code{title} - main title for the plot. Character vector of length 1. Default: "Break Down profile"
-#' \item \code{subtitle} - subtitles for various explanations. Lookup table or a function returning a character vector. Default: 'created for the \code{x$label} model'. See \code{\link[ggplot2]{labeller}} for more.
-#' }
-#' @param max_features maximal number of features to be included in the plot. default value is 4.
-#' @param min_max a range of OX axis. By default `NA`, therefore it will be extracted from the contributions of `x`. But it can be set to some constants, useful if these plots are to be used for comparisons.
-#' @param add_contributions if TRUE, variable contributions will be added to the plot
-#' @param shift_contributions number describing how much labels should be shifted to the right, as a fraction of range. By default equal to 0.05.
-#' @param vcolors named vector with colors.
-#' @param digits number of decimal places (`round`) or significant digits (`signif`) to be used.
-=======
 #' @param ... other parameters.
 #' @param max_features maximal number of features to be included in the plot. default value is \code{10}.
 #' @param min_max a range of OX axis. By default \code{NA}, therefore it will be extracted from the contributions of \code{x}. But it can be set to some constants, useful if these plots are to be used for comparisons.
@@ -23,8 +11,9 @@
 #' @param vcolors If \code{NA} (default), DrWhy colors are used.
 #' @param vnames a character vector, if specified then will be used as labels on OY axis. By default NULL
 #' @param digits number of decimal places (\code{\link{round}}) or significant digits (\code{\link{signif}}) to be used.
->>>>>>> upstream/master
 #' See the \code{rounding_function} argument.
+#' @param title main title for the plot. Character vector of length 1. Default: "Break Down profile"
+#' @param subtitle subtitles for various explanations. Lookup table or a function returning a character vector. Default: 'created for the \code{x$label} model'. See \code{\link[ggplot2]{labeller}} for more.
 #' @param rounding_function a function to be used for rounding numbers.
 #' This should be \code{\link{signif}} which keeps a specified number of significant digits or \code{\link{round}} (which is default) to have the same precision for all components.
 #' @param plot_distributions if \code{TRUE} then distributions of conditional propotions will be plotted. This requires \code{keep_distributions=TRUE} in the
@@ -123,41 +112,30 @@ plot.break_down <- function(x, ...,
                             max_features = 10,
                             min_max = NA,
                             vcolors = DALEX::colors_breakdown_drwhy(),
-                            digits = 3, rounding_function = round,
+                            digits = 3,
+                            title = "Break Down profile",
+                            subtitle = function(label) paste0("created for the ",label," model"),
+                            rounding_function = round,
                             add_contributions = TRUE, shift_contributions = 0.05,
-<<<<<<< HEAD
-                            plot_distributions = FALSE) {
-  position <- cummulative <- prev <- pretty_text <- right_side <- contribution <- NULL
-  other_parameters <- list(...)
-
-  # Check main title argument (or set it to default value):
-  if("title" %in% names(other_parameters)){
-    if(!(is.character(other_parameters[["title"]]) && length(other_parameters[["title"]]) == 1))
-      stop("title must be character vector of length 1")
-    else
-      main_title <- other_parameters[["title"]]
-  } else
-      main_title <- "Break Down profile"
-
-  # Check subtitle argument (or set it to default value):
-  if("subtitle" %in% names(other_parameters)){
-    if(is.function(other_parameters[["subtitle"]])){
-      res <- other_parameters[["subtitle"]](attr(x$label, "levels"))
-      if(!(is.character(res) && length(res) == length(attr(x$label, "levels"))))
-        stop("subtitle function not working properly")
-    } else if(!(is.character(other_parameters[["subtitle"]]) &&
-              length(setdiff(attr(x$label, "levels"), names(other_parameters[["subtitle"]]))) == 0))
-      stop("subtitle, if vector, must be a named character containing x$label")
-    facet_labeller <- labeller(label = other_parameters[["subtitle"]])
-  } else {
-    facet_labeller <- labeller(label = function(label) paste0("created for the ",label," model"))
-  }
-=======
                             plot_distributions = FALSE,
                             vnames = NULL) {
-  position <- cumulative <- prev <- pretty_text <- right_side <- contribution <- NULL
->>>>>>> upstream/master
+  position <- cummulative <- prev <- pretty_text <- right_side <- contribution <- NULL
 
+  # Check main title argument:
+  if(!(is.character(title) && length(title) == 1))
+    stop("title must be character vector of length 1")
+  else
+    title <- title
+
+  # Check subtitle argument:
+  if(is.function(subtitle)){
+    res <- subtitle(attr(x$label, "levels"))
+    if(!(is.character(res) && length(res) == length(attr(x$label, "levels"))))
+      stop("subtitle function not working properly")
+  } else if(!(is.character(subtitle) &&
+            length(setdiff(attr(x$label, "levels"), names(subtitle))) == 0))
+    stop("subtitle, if vector, must be a named character containing x$label")
+  facet_labeller <- labeller(label = subtitle)
   if (plot_distributions) {
     df <- attr(x, "yhats_distribution")
     if (is.null(df))
@@ -209,7 +187,7 @@ plot.break_down <- function(x, ...,
       scale_fill_manual(values = vcolors)
   }
 
-  pl <- pl + labs(title = main_title)
+  pl <- pl + labs(title = title)
   # add theme
    pl + coord_flip() + theme_drwhy_vertical() +
      theme(legend.position = "none")
