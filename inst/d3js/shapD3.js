@@ -139,7 +139,6 @@ function singlePlot(modelName, bData, i) {
         .append("g");
 
   bars.append("rect")
-        .attr("class", modelName.replace(/\s/g,''))
         .attr("fill", function(d) {
           switch (d.sign) {
             case "-1":

@@ -1,9 +1,11 @@
 #' Print Generic for Break Down Objects
 #'
-#' @param x a description of `break_down_description` class.
+#' @param x a description of \code{break_down_description} class.
 #' @param ... other parameters.
 #'
-#' @return a string
+#' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
+#'
+#' @return a character
 #'
 #' @export
 

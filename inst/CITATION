@@ -1,11 +1,11 @@
 bibentry(bibtype = "misc",
-  title = "iBreakDown: Uncertainty of Model Explanations for Non-additive Predictive Models",
+  title = "Do Not Trust Additive Explanations",
   author = c(person(given = "Alicja",
                    family = "Gosiewska"),
              person(given = "Przemyslaw",
                    family = "Biecek")),
   year = "2019",
   eprint = "arXiv:1903.11420",
-  url = "https://arxiv.org/abs/1903.11420v1",
+  url = "https://arxiv.org/abs/1903.11420",
   header = "To cite iBreakDown in publications use:"
 )

@@ -85,7 +85,7 @@ And in the second step the impact is calculated." />
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.9.9</span>
+          <span class="version version-default">1.0</span>
         </div>
       </div>
     </div>
@@ -159,13 +159,19 @@ And in the second step the impact is calculated.</p>
     <pre class="usage"><span class='fu'>local_attributions</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for explainer</span>
-<span class='fu'>local_attributions</span>(<span class='no'>x</span>, <span class='no'>new_observation</span>,
-  <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'>local_attributions</span>(<span class='no'>x</span>, <span class='no'>new_observation</span>, <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>local_attributions</span>(<span class='no'>x</span>, <span class='no'>data</span>, <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict</span>,
-  <span class='no'>new_observation</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>x</span>)[<span class='fl'>1</span>], <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>order</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>local_attributions</span>(
+  <span class='no'>x</span>,
+  <span class='no'>data</span>,
+  <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict</span>,
+  <span class='no'>new_observation</span>,
+  <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>x</span>)[<span class='fl'>1</span>],
+  <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>order</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -184,15 +190,15 @@ And in the second step the impact is calculated.</p>
     </tr>
     <tr>
       <th>keep_distributions</th>
-      <td><p>if `TRUE`, then distribution of partial predictions is stored and can be plotted with the generic `plot()`.</p></td>
+      <td><p>if <code>TRUE</code>, then distribution of partial predictions is stored and can be plotted with the generic <code><a href='https://rdrr.io/r/graphics/plot.html'>plot()</a></code>.</p></td>
     </tr>
     <tr>
       <th>data</th>
-      <td><p>validation dataset, will be extracted from `x` if it is an explainer.</p></td>
+      <td><p>validation dataset, will be extracted from <code>x</code> if it is an explainer.</p></td>
     </tr>
     <tr>
       <th>predict_function</th>
-      <td><p>predict function, will be extracted from `x` if it is an explainer.</p></td>
+      <td><p>predict function, will be extracted from <code>x</code> if it is an explainer.</p></td>
     </tr>
     <tr>
       <th>label</th>
@@ -200,16 +206,16 @@ And in the second step the impact is calculated.</p>
     </tr>
     <tr>
       <th>order</th>
-      <td><p>if not `NULL`, then it will be a fixed order of variables. It can be a numeric vector or vector with names of variables.</p></td>
+      <td><p>if not <code>NULL</code>, then it will be a fixed order of variables. It can be a numeric vector or vector with names of variables.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>an object of the `break_down` class.</p>
+    <p>an object of the <code>break_down</code> class.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Predictive Models: Visual Exploration, Explanation and Debugging <a href='https://pbiecek.github.io/PM_VEE'>https://pbiecek.github.io/PM_VEE</a></p>
+    <p>Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. <a href='https://pbiecek.github.io/ema'>https://pbiecek.github.io/ema</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='break_down.html'>break_down</a></code>, <code><a href='local_interactions.html'>local_interactions</a></code></p></div>
@@ -229,18 +235,19 @@ And in the second step the impact is calculated.</p>
 #&gt;   -&gt; model label       :  lm  ( <span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; data              :  500  rows  4  cols 
 #&gt;   -&gt; target variable   :  500  values 
+#&gt;   -&gt; model_info        :  package stats , ver. 3.6.1 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;   -&gt; predict function  :  yhat.glm  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; predicted values  :  numerical, min =  0.1483104 , mean =  0.3090879 , max =  0.9340042  
+#&gt;   -&gt; predicted values  :  numerical, min =  0.1483104 , mean =  0.315637 , max =  0.9822194  
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; residuals         :  numerical, min =  -0.8840083 , mean =  -0.001087871 , max =  0.8299477  
+#&gt;   -&gt; residuals         :  numerical, min =  -0.7976411 , mean =  -0.01763704 , max =  0.8334961  
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'><span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>local_attributions</span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_small</span>[<span class='fl'>1</span>, ])
-<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                     contribution
-#&gt; lm: intercept              0.309
-#&gt; lm: gender = female        0.395
-#&gt; lm: fare = 0              -0.024
-#&gt; lm: age = 36              -0.008
-#&gt; lm: survived = yes         0.000
-#&gt; lm: prediction             0.672</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>, <span class='kw'>max_features</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='img'><img src='local_attributions-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                   contribution
+#&gt; lm: intercept            0.316
+#&gt; lm: gender = male       -0.099
+#&gt; lm: age = 50            -0.026
+#&gt; lm: fare = 13           -0.009
+#&gt; lm: survived = no        0.000
+#&gt; lm: prediction           0.182</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>, <span class='kw'>max_features</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='img'><img src='local_attributions-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># \donttest{</span>
 <span class='co'>## Not run:</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
@@ -259,31 +266,33 @@ And in the second step the impact is calculated.</p>
 #&gt;   -&gt; target variable   :  Please note that 'y' is a factor.  ( </span><span style='color: #BB0000;'> WARNING </span><span> )
 #&gt;   -&gt; target variable   :  Consider changing the 'y' to a logical or numerical vector.
 #&gt;   -&gt; target variable   :  Otherwise I will not be able to calculate residuals or loss function.
-#&gt;   -&gt; predict function  :  yhat.randomForest  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )</div><div class='output co'>#&gt; <span class='warning'>Warning: the condition has length &gt; 1 and only the first element will be used</span></div><div class='output co'>#&gt;   -&gt; predicted values  :  numerical, min =  0 , mean =  0.3333333 , max =  1  
+#&gt;   -&gt; model_info        :  package randomForest , ver. 4.6.14 , task classification ( </span><span style='color: #BBBB00;'> default </span><span> ) 
+#&gt;   -&gt; predict function  :  yhat.randomForest  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
+#&gt;   -&gt; predicted values  :  predict function returns multiple columns:  3  ( </span><span style='color: #BB0000;'> WARNING </span><span> ) some of functionalities may not work 
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )</div><div class='output co'>#&gt; <span class='warning'>Warning: ‘-’ not meaningful for factors</span></div><div class='output co'>#&gt;   -&gt; residuals         :  numerical, min =  NA , mean =  NA , max =  NA  
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>local_attributions</span>(<span class='no'>explainer_rf</span>,
                            <span class='no'>new_observation</span>)
 <span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                       contribution
 #&gt; randomForest.fired: intercept                0.386
-#&gt; randomForest.fired: hours = 42               0.231
+#&gt; randomForest.fired: hours = 42.32            0.231
 #&gt; randomForest.fired: evaluation = 2           0.062
 #&gt; randomForest.fired: salary = 2              -0.272
-#&gt; randomForest.fired: age = 58                 0.092
+#&gt; randomForest.fired: age = 57.73              0.092
 #&gt; randomForest.fired: gender = male            0.281
 #&gt; randomForest.fired: prediction               0.778
 #&gt; randomForest.ok: intercept                   0.278
-#&gt; randomForest.ok: hours = 42                 -0.053
+#&gt; randomForest.ok: hours = 42.32              -0.053
 #&gt; randomForest.ok: evaluation = 2              0.091
 #&gt; randomForest.ok: salary = 2                  0.271
-#&gt; randomForest.ok: age = 58                   -0.086
+#&gt; randomForest.ok: age = 57.73                -0.086
 #&gt; randomForest.ok: gender = male              -0.283
 #&gt; randomForest.ok: prediction                  0.218
 #&gt; randomForest.promoted: intercept             0.336
-#&gt; randomForest.promoted: hours = 42           -0.178
+#&gt; randomForest.promoted: hours = 42.32        -0.178
 #&gt; randomForest.promoted: evaluation = 2       -0.152
 #&gt; randomForest.promoted: salary = 2            0.001
-#&gt; randomForest.promoted: age = 58             -0.006
+#&gt; randomForest.promoted: age = 57.73          -0.006
 #&gt; randomForest.promoted: gender = male         0.002
 #&gt; randomForest.promoted: prediction            0.004</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='local_attributions-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>, <span class='kw'>baseline</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='img'><img src='local_attributions-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># example for regression - apartment prices</span>
@@ -295,6 +304,7 @@ And in the second step the impact is calculated.</p>
 #&gt;   -&gt; model label       :  randomForest  ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; data              :  1000  rows  5  cols 
 #&gt;   -&gt; target variable   :  1000  values 
+#&gt;   -&gt; model_info        :  package randomForest , ver. 4.6.14 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;   -&gt; predict function  :  yhat.randomForest  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; predicted values  :  numerical, min =  2043.066 , mean =  3487.722 , max =  5773.976  
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
@@ -305,10 +315,10 @@ And in the second step the impact is calculated.</p>
 <span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                        contribution
 #&gt; randomForest: intercept                    3487.722
 #&gt; randomForest: district = Srodmiescie       1034.737
-#&gt; randomForest: surface = 130                -315.991
+#&gt; randomForest: surface = 131                -315.991
 #&gt; randomForest: no.rooms = 5                 -163.113
 #&gt; randomForest: floor = 3                     150.529
-#&gt; randomForest: construction.year = 2000      -24.021
+#&gt; randomForest: construction.year = 1976      -24.021
 #&gt; randomForest: prediction                   4169.863</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='img'><img src='local_attributions-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>local_attributions</span>(<span class='no'>explainer_rf</span>,
                            <span class='no'>apartments_test</span>[<span class='fl'>1</span>,],

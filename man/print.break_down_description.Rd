@@ -7,13 +7,16 @@
 \method{print}{break_down_description}(x, ...)
 }
 \arguments{
-\item{x}{a description of `break_down_description` class.}
+\item{x}{a description of \code{break_down_description} class.}
 
 \item{...}{other parameters.}
 }
 \value{
-a string
+a character
 }
 \description{
 Print Generic for Break Down Objects
+}
+\references{
+Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
 }

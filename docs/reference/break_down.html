@@ -83,7 +83,7 @@ or local_interactions for attributions with interactions." />
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.9.9</span>
+          <span class="version version-default">1.0</span>
         </div>
       </div>
     </div>
@@ -155,13 +155,20 @@ or <code><a href='local_interactions.html'>local_interactions</a></code> for att
     <pre class="usage"><span class='fu'>break_down</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>interactions</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S3 method for explainer</span>
-<span class='fu'>break_down</span>(<span class='no'>x</span>, <span class='no'>new_observation</span>, <span class='no'>...</span>,
-  <span class='kw'>interactions</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>break_down</span>(<span class='no'>x</span>, <span class='no'>new_observation</span>, <span class='no'>...</span>, <span class='kw'>interactions</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>break_down</span>(<span class='no'>x</span>, <span class='no'>data</span>, <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict</span>,
-  <span class='no'>new_observation</span>, <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>order</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>x</span>)[<span class='fl'>1</span>], <span class='no'>...</span>, <span class='kw'>interactions</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+<span class='fu'>break_down</span>(
+  <span class='no'>x</span>,
+  <span class='no'>data</span>,
+  <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict</span>,
+  <span class='no'>new_observation</span>,
+  <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>order</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>x</span>)[<span class='fl'>1</span>],
+  <span class='no'>...</span>,
+  <span class='kw'>interactions</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -172,7 +179,7 @@ or <code><a href='local_interactions.html'>local_interactions</a></code> for att
     </tr>
     <tr>
       <th>...</th>
-      <td><p>parameters passed to `local_*` functions.</p></td>
+      <td><p>parameters passed to <code>local_*</code> functions.</p></td>
     </tr>
     <tr>
       <th>interactions</th>
@@ -184,19 +191,19 @@ or <code><a href='local_interactions.html'>local_interactions</a></code> for att
     </tr>
     <tr>
       <th>data</th>
-      <td><p>validation dataset, will be extracted from `x` if it is an explainer.</p></td>
+      <td><p>validation dataset, will be extracted from <code>x</code> if it is an explainer.</p></td>
     </tr>
     <tr>
       <th>predict_function</th>
-      <td><p>predict function, will be extracted from `x` if it's an explainer.</p></td>
+      <td><p>predict function, will be extracted from <code>x</code> if it's an explainer.</p></td>
     </tr>
     <tr>
       <th>keep_distributions</th>
-      <td><p>if `TRUE`, then distribution of partial predictions is stored and can be plotted with the generic `plot()`.</p></td>
+      <td><p>if <code>TRUE</code>, then distribution of partial predictions is stored and can be plotted with the generic <code><a href='https://rdrr.io/r/graphics/plot.html'>plot()</a></code>.</p></td>
     </tr>
     <tr>
       <th>order</th>
-      <td><p>if not `NULL`, then it will be a fixed order of variables. It can be a numeric vector or vector with names of variables.</p></td>
+      <td><p>if not <code>NULL</code>, then it will be a fixed order of variables. It can be a numeric vector or vector with names of variables.</p></td>
     </tr>
     <tr>
       <th>label</th>
@@ -206,17 +213,17 @@ or <code><a href='local_interactions.html'>local_interactions</a></code> for att
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>an object of the `break_down` class.</p>
+    <p>an object of the <code>break_down</code> class.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Predictive Models: Visual Exploration, Explanation and Debugging <a href='https://pbiecek.github.io/PM_VEE'>https://pbiecek.github.io/PM_VEE</a></p>
+    <p>Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. <a href='https://pbiecek.github.io/ema'>https://pbiecek.github.io/ema</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='local_attributions.html'>local_attributions</a></code>, <code><a href='local_interactions.html'>local_interactions</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)</div><div class='output co'>#&gt; <span class='message'>Welcome to DALEX (version: 0.4.8).</span>
-#&gt; <span class='message'>Find examples and detailed introduction at: https://pbiecek.github.io/PM_VEE/</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"iBreakDown"</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)</div><div class='output co'>#&gt; <span class='message'>Welcome to DALEX (version: 0.9.8).</span>
+#&gt; <span class='message'>Find examples and detailed introduction at: https://pbiecek.github.io/ema/</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"iBreakDown"</span>)
 <span class='co'># Toy examples, because CRAN angels ask for them</span>
 <span class='no'>titanic</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/na.fail.html'>na.omit</a></span>(<span class='no'>titanic</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1313</span>)
@@ -229,18 +236,19 @@ or <code><a href='local_interactions.html'>local_interactions</a></code> for att
 #&gt;   -&gt; model label       :  lm  ( <span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; data              :  500  rows  4  cols 
 #&gt;   -&gt; target variable   :  500  values 
+#&gt;   -&gt; model_info        :  package stats , ver. 3.6.1 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;   -&gt; predict function  :  yhat.glm  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; predicted values  :  numerical, min =  0.1140608 , mean =  0.308 , max =  0.9600515  
+#&gt;   -&gt; predicted values  :  numerical, min =  0.111212 , mean =  0.298 , max =  0.9430377  
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; residuals         :  numerical, min =  -0.9238299 , mean =  1.839445e-13 , max =  0.8527178  
+#&gt;   -&gt; residuals         :  numerical, min =  -0.789032 , mean =  1.799189e-14 , max =  0.8594593  
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'><span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>break_down</span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_small</span>[<span class='fl'>1</span>, ])
-<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                     contribution
-#&gt; lm: intercept              0.308
-#&gt; lm: gender = female        0.417
-#&gt; lm: fare = 0              -0.028
-#&gt; lm: age = 36              -0.013
-#&gt; lm: survived = yes         0.000
-#&gt; lm: prediction             0.685</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>, <span class='kw'>max_features</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='img'><img src='break_down-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                   contribution
+#&gt; lm: intercept            0.298
+#&gt; lm: gender = male       -0.103
+#&gt; lm: age = 50            -0.038
+#&gt; lm: fare = 13           -0.005
+#&gt; lm: survived = no        0.000
+#&gt; lm: prediction           0.152</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>, <span class='kw'>max_features</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='img'><img src='break_down-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># \donttest{</span>
 <span class='co'>## Not run:</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)</div><div class='output co'>#&gt; <span class='message'>randomForest 4.6-14</span></div><div class='output co'>#&gt; <span class='message'>Type rfNews() to see new features/changes/bug fixes.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1313</span>)
@@ -258,31 +266,33 @@ or <code><a href='local_interactions.html'>local_interactions</a></code> for att
 #&gt;   -&gt; target variable   :  Please note that 'y' is a factor.  ( </span><span style='color: #BB0000;'> WARNING </span><span> )
 #&gt;   -&gt; target variable   :  Consider changing the 'y' to a logical or numerical vector.
 #&gt;   -&gt; target variable   :  Otherwise I will not be able to calculate residuals or loss function.
-#&gt;   -&gt; predict function  :  yhat.randomForest  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )</div><div class='output co'>#&gt; <span class='warning'>Warning: the condition has length &gt; 1 and only the first element will be used</span></div><div class='output co'>#&gt;   -&gt; predicted values  :  numerical, min =  0 , mean =  0.3333333 , max =  1  
+#&gt;   -&gt; model_info        :  package randomForest , ver. 4.6.14 , task classification ( </span><span style='color: #BBBB00;'> default </span><span> ) 
+#&gt;   -&gt; predict function  :  yhat.randomForest  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
+#&gt;   -&gt; predicted values  :  predict function returns multiple columns:  3  ( </span><span style='color: #BB0000;'> WARNING </span><span> ) some of functionalities may not work 
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )</div><div class='output co'>#&gt; <span class='warning'>Warning: ‘-’ not meaningful for factors</span></div><div class='output co'>#&gt;   -&gt; residuals         :  numerical, min =  NA , mean =  NA , max =  NA  
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>break_down</span>(<span class='no'>explainer_rf</span>,
                            <span class='no'>new_observation</span>)
 <span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                       contribution
 #&gt; randomForest.fired: intercept                0.386
-#&gt; randomForest.fired: hours = 42               0.231
+#&gt; randomForest.fired: hours = 42.32            0.231
 #&gt; randomForest.fired: evaluation = 2           0.062
 #&gt; randomForest.fired: salary = 2              -0.272
-#&gt; randomForest.fired: age = 58                 0.092
+#&gt; randomForest.fired: age = 57.73              0.092
 #&gt; randomForest.fired: gender = male            0.281
 #&gt; randomForest.fired: prediction               0.778
 #&gt; randomForest.ok: intercept                   0.278
-#&gt; randomForest.ok: hours = 42                 -0.053
+#&gt; randomForest.ok: hours = 42.32              -0.053
 #&gt; randomForest.ok: evaluation = 2              0.091
 #&gt; randomForest.ok: salary = 2                  0.271
-#&gt; randomForest.ok: age = 58                   -0.086
+#&gt; randomForest.ok: age = 57.73                -0.086
 #&gt; randomForest.ok: gender = male              -0.283
 #&gt; randomForest.ok: prediction                  0.218
 #&gt; randomForest.promoted: intercept             0.336
-#&gt; randomForest.promoted: hours = 42           -0.178
+#&gt; randomForest.promoted: hours = 42.32        -0.178
 #&gt; randomForest.promoted: evaluation = 2       -0.152
 #&gt; randomForest.promoted: salary = 2            0.001
-#&gt; randomForest.promoted: age = 58             -0.006
+#&gt; randomForest.promoted: age = 57.73          -0.006
 #&gt; randomForest.promoted: gender = male         0.002
 #&gt; randomForest.promoted: prediction            0.004</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='break_down-2.png' alt='' width='700' height='433' /></div><div class='input'># }
 </div></span></pre>

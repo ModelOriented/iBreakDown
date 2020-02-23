@@ -36,7 +36,7 @@
 
 
 <meta property="og:title" content="Plot Break Down Objects in D3 with r2d3 package. — plotD3" />
-<meta property="og:description" content="Plots waterfall break down for objects of the `break_down` class." />
+<meta property="og:description" content="Plots waterfall break down for objects of the break_down class." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -81,7 +81,7 @@
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.9.9</span>
+          <span class="version version-default">1.0</span>
         </div>
       </div>
     </div>
@@ -145,16 +145,27 @@
     </div>
 
     <div class="ref-description">
-    <p>Plots waterfall break down for objects of the `break_down` class.</p>
+    <p>Plots waterfall break down for objects of the <code>break_down</code> class.</p>
     </div>
 
     <pre class="usage"><span class='fu'>plotD3</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for break_down</span>
-<span class='fu'>plotD3</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>baseline</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>max_features</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>rounding_function</span> <span class='kw'>=</span> <span class='no'>round</span>, <span class='kw'>bar_width</span> <span class='kw'>=</span> <span class='fl'>12</span>,
-  <span class='kw'>margin</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>scale_height</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>min_max</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>vcolors</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>chart_title</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>time</span> <span class='kw'>=</span> <span class='fl'>0</span>)</pre>
+<span class='fu'>plotD3</span>(
+  <span class='no'>x</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>baseline</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>max_features</span> <span class='kw'>=</span> <span class='fl'>10</span>,
+  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+  <span class='kw'>rounding_function</span> <span class='kw'>=</span> <span class='no'>round</span>,
+  <span class='kw'>bar_width</span> <span class='kw'>=</span> <span class='fl'>12</span>,
+  <span class='kw'>margin</span> <span class='kw'>=</span> <span class='fl'>0.2</span>,
+  <span class='kw'>scale_height</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>min_max</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>vcolors</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>chart_title</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>time</span> <span class='kw'>=</span> <span class='fl'>0</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -169,15 +180,15 @@
     </tr>
     <tr>
       <th>baseline</th>
-      <td><p>if numeric then veritical line will start in baseline.</p></td>
+      <td><p>if numeric then veritical line will start in <code>baseline</code>.</p></td>
     </tr>
     <tr>
       <th>max_features</th>
-      <td><p>maximal number of features to be included in the plot. Default value is 10.</p></td>
+      <td><p>maximal number of features to be included in the plot. By default it's <code>10</code>.</p></td>
     </tr>
     <tr>
       <th>digits</th>
-      <td><p>number of decimal places (round) or significant digits (signif) to be used.
+      <td><p>number of decimal places (<code><a href='https://rdrr.io/r/base/Round.html'>round</a></code>) or significant digits (<code><a href='https://rdrr.io/r/base/Round.html'>signif</a></code>) to be used.
 See the <code>rounding_function</code> argument.</p></td>
     </tr>
     <tr>
@@ -187,7 +198,7 @@ This should be <code><a href='https://rdrr.io/r/base/Round.html'>signif</a></cod
     </tr>
     <tr>
       <th>bar_width</th>
-      <td><p>width of bars in px. By default 12px</p></td>
+      <td><p>width of bars in px. By default it's 12px</p></td>
     </tr>
     <tr>
       <th>margin</th>
@@ -195,16 +206,16 @@ This should be <code><a href='https://rdrr.io/r/base/Round.html'>signif</a></cod
     </tr>
     <tr>
       <th>scale_height</th>
-      <td><p>if TRUE, the height of the plot scales with window size</p></td>
+      <td><p>if <code>TRUE</code>, the height of the plot scales with window size</p></td>
     </tr>
     <tr>
       <th>min_max</th>
-      <td><p>a range of OX axis. By deafult `NA` therefore will be extracted from the contributions of `x`.
+      <td><p>a range of OX axis. By deafult <code>NA</code> therefore will be extracted from the contributions of <code>x</code>.
 But can be set to some constants, usefull if these plots are used for comparisons.</p></td>
     </tr>
     <tr>
       <th>vcolors</th>
-      <td><p>If NA (default), DrWhy colors are used.</p></td>
+      <td><p>If <code>NA</code> (default), DrWhy colors are used.</p></td>
     </tr>
     <tr>
       <th>chart_title</th>
@@ -212,16 +223,16 @@ But can be set to some constants, usefull if these plots are used for comparison
     </tr>
     <tr>
       <th>time</th>
-      <td><p>in ms. Set animation length</p></td>
+      <td><p>in ms. Set the animation length</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a `r2d3` object.</p>
+    <p>a <code>r2d3</code> object.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Predictive Models: Visual Exploration, Explanation and Debugging <a href='https://pbiecek.github.io/PM_VEE'>https://pbiecek.github.io/PM_VEE</a></p>
+    <p>Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. <a href='https://pbiecek.github.io/ema'>https://pbiecek.github.io/ema</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
@@ -239,20 +250,23 @@ But can be set to some constants, usefull if these plots are used for comparison
 #&gt;   -&gt; model label       :  glm 
 #&gt;   -&gt; data              :  500  rows  4  cols 
 #&gt;   -&gt; target variable   :  500  values 
-#&gt;   -&gt; predict function  :  yhat.glm  will be used ( <span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; predicted values  :  numerical, min =  0.1140608 , mean =  0.308 , max =  0.9600515  
+#&gt;   -&gt; model_info        :  package stats , ver. 3.6.1 , task regression ( <span style='color: #BBBB00;'> default </span><span> ) 
+#&gt;   -&gt; predict function  :  yhat.glm  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
+#&gt;   -&gt; predicted values  :  numerical, min =  0.111212 , mean =  0.298 , max =  0.9430377  
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; residuals         :  numerical, min =  -0.9238299 , mean =  1.839445e-13 , max =  0.8527178  
+#&gt;   -&gt; residuals         :  numerical, min =  -0.789032 , mean =  1.799189e-14 , max =  0.8594593  
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'><span class='no'>bd_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_attributions.html'>local_attributions</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_small</span>[<span class='fl'>1</span>, ])
-<span class='no'>bd_glm</span></div><div class='output co'>#&gt;                      contribution
-#&gt; glm: intercept              0.308
-#&gt; glm: gender = female        0.417
-#&gt; glm: fare = 0              -0.028
-#&gt; glm: age = 36              -0.013
-#&gt; glm: survived = yes         0.000
-#&gt; glm: prediction             0.685</div><div class='input'><span class='fu'>plotD3</span>(<span class='no'>bd_glm</span>)
+<span class='no'>bd_glm</span></div><div class='output co'>#&gt;                    contribution
+#&gt; glm: intercept            0.298
+#&gt; glm: gender = male       -0.103
+#&gt; glm: age = 50            -0.038
+#&gt; glm: fare = 13           -0.005
+#&gt; glm: survived = no        0.000
+#&gt; glm: prediction           0.152</div><div class='input'><span class='fu'>plotD3</span>(<span class='no'>bd_glm</span>)
 
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>randomForest</span>)
+<span class='co'># \donttest{</span>
+<span class='co'>## Not run:</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
 
 <span class='no'>m_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span>(<span class='no'>status</span> ~ <span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>[<span class='fl'>2</span>:<span class='fl'>2000</span>,])
 <span class='no'>new_observation</span> <span class='kw'>&lt;-</span> <span class='no'>HR_test</span>[<span class='fl'>1</span>,]
@@ -266,30 +280,31 @@ But can be set to some constants, usefull if these plots are used for comparison
                            <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>p_fun</span>)
 
 <span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                               contribution
-#&gt; randomForest.formula.fired: intercept                0.377
-#&gt; randomForest.formula.fired: hours = 42               0.217
-#&gt; randomForest.formula.fired: evaluation = 2           0.060
-#&gt; randomForest.formula.fired: salary = 2              -0.169
-#&gt; randomForest.formula.fired: age = 58                 0.223
-#&gt; randomForest.formula.fired: gender = male            0.153
+#&gt; randomForest.formula.fired: intercept                0.378
+#&gt; randomForest.formula.fired: hours = 42.32            0.215
+#&gt; randomForest.formula.fired: evaluation = 2           0.061
+#&gt; randomForest.formula.fired: salary = 2              -0.163
+#&gt; randomForest.formula.fired: age = 57.73              0.223
+#&gt; randomForest.formula.fired: gender = male            0.165
 #&gt; randomForest.formula.fired: status = fired           0.000
-#&gt; randomForest.formula.fired: prediction               0.860
+#&gt; randomForest.formula.fired: prediction               0.878
 #&gt; randomForest.formula.ok: intercept                   0.281
-#&gt; randomForest.formula.ok: hours = 42                 -0.029
-#&gt; randomForest.formula.ok: evaluation = 2              0.086
-#&gt; randomForest.formula.ok: salary = 2                  0.171
-#&gt; randomForest.formula.ok: age = 58                   -0.225
-#&gt; randomForest.formula.ok: gender = male              -0.154
+#&gt; randomForest.formula.ok: hours = 42.32              -0.031
+#&gt; randomForest.formula.ok: evaluation = 2              0.087
+#&gt; randomForest.formula.ok: salary = 2                  0.165
+#&gt; randomForest.formula.ok: age = 57.73                -0.230
+#&gt; randomForest.formula.ok: gender = male              -0.163
 #&gt; randomForest.formula.ok: status = fired              0.000
-#&gt; randomForest.formula.ok: prediction                  0.130
+#&gt; randomForest.formula.ok: prediction                  0.110
 #&gt; randomForest.formula.promoted: intercept             0.341
-#&gt; randomForest.formula.promoted: hours = 42           -0.187
-#&gt; randomForest.formula.promoted: evaluation = 2       -0.145
+#&gt; randomForest.formula.promoted: hours = 42.32        -0.184
+#&gt; randomForest.formula.promoted: evaluation = 2       -0.149
 #&gt; randomForest.formula.promoted: salary = 2           -0.002
-#&gt; randomForest.formula.promoted: age = 58              0.002
-#&gt; randomForest.formula.promoted: gender = male         0.001
+#&gt; randomForest.formula.promoted: age = 57.73           0.007
+#&gt; randomForest.formula.promoted: gender = male        -0.002
 #&gt; randomForest.formula.promoted: status = fired        0.000
-#&gt; randomForest.formula.promoted: prediction            0.010</div><div class='input'><span class='fu'>plotD3</span>(<span class='no'>bd_rf</span>)</div></span></pre>
+#&gt; randomForest.formula.promoted: prediction            0.012</div><div class='input'><span class='fu'>plotD3</span>(<span class='no'>bd_rf</span>)
+<span class='co'># }</span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

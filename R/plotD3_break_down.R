@@ -1,26 +1,26 @@
 #' @title Plot Break Down Objects in D3 with r2d3 package.
 #'
 #' @description
-#' Plots waterfall break down for objects of the `break_down` class.
+#' Plots waterfall break down for objects of the \code{break_down} class.
 #'
 #' @param x an explanation created with \code{\link{break_down}}
 #' @param ... other parameters.
-#' @param baseline if numeric then veritical line will start in baseline.
-#' @param max_features maximal number of features to be included in the plot. Default value is 10.
-#' @param digits number of decimal places (round) or significant digits (signif) to be used.
+#' @param baseline if numeric then veritical line will start in \code{baseline}.
+#' @param max_features maximal number of features to be included in the plot. By default it's \code{10}.
+#' @param digits number of decimal places (\code{\link{round}}) or significant digits (\code{\link{signif}}) to be used.
 #' See the \code{rounding_function} argument.
 #' @param rounding_function a function to be used for rounding numbers.
 #' This should be \code{\link{signif}} which keeps a specified number of significant digits or \code{\link{round}} (which is default) to have the same precision for all components.
-#' @param bar_width width of bars in px. By default 12px
+#' @param bar_width width of bars in px. By default it's 12px
 #' @param margin extend x axis domain range to adjust the plot. Usually value between 0.1 and 0.3, by default it's 0.2
-#' @param scale_height if TRUE, the height of the plot scales with window size
-#' @param min_max a range of OX axis. By deafult `NA` therefore will be extracted from the contributions of `x`.
+#' @param scale_height if \code{TRUE}, the height of the plot scales with window size
+#' @param min_max a range of OX axis. By deafult \code{NA} therefore will be extracted from the contributions of \code{x}.
 #' But can be set to some constants, usefull if these plots are used for comparisons.
-#' @param vcolors If NA (default), DrWhy colors are used.
+#' @param vcolors If \code{NA} (default), DrWhy colors are used.
 #' @param chart_title a character. Set custom title
-#' @param time in ms. Set animation length
+#' @param time in ms. Set the animation length
 #'
-#' @return a `r2d3` object.
+#' @return a \code{r2d3} object.
 #'
 #' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
 #'
@@ -41,7 +41,9 @@
 #' bd_glm
 #' plotD3(bd_glm)
 #'
-#' library(randomForest)
+#' \donttest{
+#' ## Not run:
+#' library("randomForest")
 #'
 #' m_rf <- randomForest(status ~ . , data = HR[2:2000,])
 #' new_observation <- HR_test[1,]
@@ -56,6 +58,7 @@
 #'
 #' bd_rf
 #' plotD3(bd_rf)
+#' }
 #'
 #' @export
 #' @rdname plotD3_break_down
@@ -133,9 +136,9 @@ plotD3.break_down <- function(x, ...,
 
   if (any(is.na(min_max))) {
     if (is.na(baseline)) {
-      min_max <- range(df[,'cummulative'])
+      min_max <- range(df[,'cumulative'])
     } else {
-      min_max <- range(df[,'cummulative'], baseline)
+      min_max <- range(df[,'cumulative'], baseline)
     }
   }
 
@@ -184,7 +187,7 @@ prepare_data_for_break_down_plotD3 <- function(x, baseline, max_features = 10, r
     new_x <- x[1:last_row,]
     new_x[last_row,'variable'] <- "+ all other factors"
     new_x[last_row,'contribution'] <- sum(x[last_row:nrow(x),'contribution'])
-    new_x[last_row,'cummulative'] <- x[nrow(x),'cummulative']
+    new_x[last_row,'cumulative'] <- x[nrow(x),'cumulative']
     new_x[last_row,'sign'] <- ifelse(new_x[last_row,'contribution'] > 0,1,-1)
 
     x <- new_x
@@ -193,7 +196,7 @@ prepare_data_for_break_down_plotD3 <- function(x, baseline, max_features = 10, r
   x <- rbind(temp[1,], x, temp[2,])
 
   if (is.na(baseline)) {
-    baseline <- x[1,"cummulative"]
+    baseline <- x[1,"cumulative"]
   }
 
   # fix contribution and sign
@@ -202,19 +205,19 @@ prepare_data_for_break_down_plotD3 <- function(x, baseline, max_features = 10, r
   x[c(1,nrow(x)),"sign"] <- ifelse(x[c(1,nrow(x)),"contribution"] > 0,1,ifelse(x[c(1,nrow(x)),"contribution"] < 0,-1,0))
 
   # use for bars
-  x[,'barStart'] <- ifelse(x[,'sign'] == "1", x[,'cummulative'] - x[,'contribution'], x[,'cummulative'])
-  x[,'barSupport'] <- ifelse(x[,'sign'] == "1", x[,'cummulative'], x[,'cummulative'] - x[,'contribution'])
+  x[,'barStart'] <- ifelse(x[,'sign'] == "1", x[,'cumulative'] - x[,'contribution'], x[,'cumulative'])
+  x[,'barSupport'] <- ifelse(x[,'sign'] == "1", x[,'cumulative'], x[,'cumulative'] - x[,'contribution'])
 
   # use for text label and tooltip
   x[,'contribution'] <- rounding_function(x['contribution'], digits)
-  x[,'cummulative'] <- rounding_function(x['cummulative'], digits)
+  x[,'cumulative'] <- rounding_function(x['cumulative'], digits)
 
   # use for color
   x[c(1,nrow(x)),"sign"] <- "X"
 
-  x[,'tooltipText'] <- ifelse(x[,'sign'] == "X", paste0("Average response: ",x[1,'cummulative'],
+  x[,'tooltipText'] <- ifelse(x[,'sign'] == "X", paste0("Average response: ",x[1,'cumulative'],
                                                         "<br>", "Prediction: ",
-                                                        x[nrow(x),'cummulative']),
+                                                        x[nrow(x),'cumulative']),
                               paste0(substr(x[,'variable'], 1, 25),
                                      "<br>", ifelse(x[,'contribution'] > 0, "increases", "decreases"),
                                      " average response <br>by ", abs(x[,'contribution'])))
