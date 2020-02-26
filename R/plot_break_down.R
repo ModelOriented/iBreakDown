@@ -112,14 +112,14 @@ plot.break_down <- function(x, ...,
                             max_features = 10,
                             min_max = NA,
                             vcolors = DALEX::colors_breakdown_drwhy(),
+                            vnames = NULL,
                             digits = 3,
                             title = "Break Down profile",
                             subtitle = function(label) paste0("created for the ",label," model"),
                             rounding_function = round,
                             add_contributions = TRUE, shift_contributions = 0.05,
-                            plot_distributions = FALSE,
-                            vnames = NULL) {
-  position <- cummulative <- prev <- pretty_text <- right_side <- contribution <- NULL
+                            plot_distributions = FALSE) {
+  position <- cumulative <- prev <- pretty_text <- right_side <- contribution <- NULL
 
   # Check main title argument:
   if(!(is.character(title) && length(title) == 1))
