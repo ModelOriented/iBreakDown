@@ -11,6 +11,7 @@
   max_features = 10,
   min_max = NA,
   vcolors = DALEX::colors_breakdown_drwhy(),
+  vnames = NULL,
   digits = 3,
   title = "Break Down profile",
   subtitle = function(label) paste0("created for the ", label, " model"),
@@ -33,12 +34,14 @@
 
 \item{vcolors}{If \code{NA} (default), DrWhy colors are used.}
 
-\item{digits}{number of decimal places (\code{\link{round}}) or significant digits (\code{\link{signif}}) to be used.}
+\item{vnames}{a character vector, if specified then will be used as labels on OY axis. By default NULL}
+
+\item{digits}{number of decimal places (\code{\link{round}}) or significant digits (\code{\link{signif}}) to be used.
+See the \code{rounding_function} argument.}
 
 \item{title}{main title for the plot. Character vector of length 1. Default: "Break Down profile"}
 
-\item{subtitle}{subtitles for various explanations. Lookup table or a function returning a character vector. Default: 'created for the \code{x$label} model'. See \code{\link[ggplot2]{labeller}} for more.
-See the \code{rounding_function} argument.}
+\item{subtitle}{subtitles for various explanations. Lookup table or a function returning a character vector. Default: 'created for the \code{x$label} model'. See \code{\link[ggplot2]{labeller}} for more.}
 
 \item{rounding_function}{a function to be used for rounding numbers.
 This should be \code{\link{signif}} which keeps a specified number of significant digits or \code{\link{round}} (which is default) to have the same precision for all components.}
@@ -49,8 +52,6 @@ This should be \code{\link{signif}} which keeps a specified number of significan
 
 \item{plot_distributions}{if \code{TRUE} then distributions of conditional propotions will be plotted. This requires \code{keep_distributions=TRUE} in the
 \code{\link{break_down}}, \code{\link{local_attributions}}, or \code{\link{local_interactions}}.}
-
-\item{vnames}{a character vector, if specified then will be used as labels on OY axis. By default NULL}
 }
 \value{
 a \code{ggplot2} object.
