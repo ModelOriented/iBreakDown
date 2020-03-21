@@ -33,17 +33,14 @@ Plot Generic for Break Down Uncertainty Objects
 library("DALEX")
 library("iBreakDown")
 
-set.seed(1313)
-titanic_small <- titanic_imputed[sample(1:nrow(titanic),500), c(1,2,5,8)]
-
 model_titanic_glm <- glm(survived ~ gender + age + fare,
-                         data = titanic_small, family = "binomial")
-
+                       data = titanic_imputed, family = "binomial")
 explain_titanic_glm <- explain(model_titanic_glm,
-                               data = titanic_small[, -4],
-                               y = titanic_small[, 4])
+                           data = titanic_imputed,
+                           y = titanic_imputed$survived,
+                           label = "glm")
 
-sh_rf <- shap(explain_titanic_glm, titanic_small[1, ])
+sh_rf <- shap(explain_titanic_glm, titanic_imputed[1, ])
 
 sh_rf
 plot(sh_rf)
@@ -57,8 +54,7 @@ model <- randomForest(status ~ . , data = HR)
 new_observation <- HR_test[1,]
 
 explainer_rf <- explain(model,
-                        data = HR[1:1000,1:5],
-                        y = HR$status[1:1000])
+                        data = HR[1:1000,1:5])
 
 bd_rf <- break_down_uncertainty(explainer_rf,
                            new_observation,

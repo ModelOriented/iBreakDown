@@ -36,10 +36,11 @@
 
 
 <meta property="og:title" content="Plot Break Down Objects in D3 with r2d3 package. — plotD3" />
+
 <meta property="og:description" content="Plots waterfall break down for objects of the break_down class." />
+
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -81,7 +82,7 @@
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">1.0</span>
+          <span class="version version-default">1.1</span>
         </div>
       </div>
     </div>
@@ -145,7 +146,9 @@
     </div>
 
     <div class="ref-description">
+    
     <p>Plots waterfall break down for objects of the <code>break_down</code> class.</p>
+    
     </div>
 
     <pre class="usage"><span class='fu'>plotD3</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -166,7 +169,7 @@
   <span class='kw'>chart_title</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
   <span class='kw'>time</span> <span class='kw'>=</span> <span class='fl'>0</span>
 )</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -226,43 +229,49 @@ But can be set to some constants, usefull if these plots are used for comparison
       <td><p>in ms. Set the animation length</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>a <code>r2d3</code> object.</p>
+    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. <a href='https://pbiecek.github.io/ema'>https://pbiecek.github.io/ema</a></p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"iBreakDown"</span>)
 
-<span class='no'>titanic</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/na.fail.html'>na.omit</a></span>(<span class='no'>titanic</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1313</span>)
-<span class='no'>titanic_small</span> <span class='kw'>&lt;-</span> <span class='no'>titanic</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>1</span>:<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>titanic</span>), <span class='fl'>500</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>6</span>,<span class='fl'>9</span>)]
-<span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>fare</span>,
-                       <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
+<span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>survived</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>fare</span>,
+                       <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
 <span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
-                           <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>[,-<span class='fl'>9</span>],
-                           <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>,
+                           <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>,
+                           <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>$<span class='no'>survived</span>,
                            <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"glm"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
 #&gt;   -&gt; model label       :  glm 
-#&gt;   -&gt; data              :  500  rows  4  cols 
-#&gt;   -&gt; target variable   :  500  values 
-#&gt;   -&gt; model_info        :  package stats , ver. 3.6.1 , task regression ( <span style='color: #BBBB00;'> default </span><span> ) 
+#&gt;   -&gt; data              :  2207  rows  8  cols 
+#&gt;   -&gt; target variable   :  2207  values 
+#&gt;   -&gt; data              :  A column identical to the target variable `y` has been found in the `data`.  ( <span style='color: #BB0000;'> WARNING </span><span> )
+#&gt;   -&gt; data              :  It is highly recommended to pass `data` without the target variable column
+#&gt;   -&gt; model_info        :  package stats , ver. 3.6.0 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;   -&gt; predict function  :  yhat.glm  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; predicted values  :  numerical, min =  0.111212 , mean =  0.298 , max =  0.9430377  
+#&gt;   -&gt; predicted values  :  numerical, min =  0.1490412 , mean =  0.3221568 , max =  0.9878987  
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; residuals         :  numerical, min =  -0.789032 , mean =  1.799189e-14 , max =  0.8594593  
-#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'><span class='no'>bd_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_attributions.html'>local_attributions</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_small</span>[<span class='fl'>1</span>, ])
-<span class='no'>bd_glm</span></div><div class='output co'>#&gt;                    contribution
-#&gt; glm: intercept            0.298
-#&gt; glm: gender = male       -0.103
-#&gt; glm: age = 50            -0.038
-#&gt; glm: fare = 13           -0.005
-#&gt; glm: survived = no        0.000
-#&gt; glm: prediction           0.152</div><div class='input'><span class='fu'>plotD3</span>(<span class='no'>bd_glm</span>)
+#&gt;   -&gt; residuals         :  numerical, min =  -0.8898433 , mean =  4.198219e-13 , max =  0.8448637  
+#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
+<span class='no'>bd_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_attributions.html'>local_attributions</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_imputed</span>[<span class='fl'>1</span>, ])
+<span class='no'>bd_glm</span></div><div class='output co'>#&gt;                             contribution
+#&gt; glm: intercept                     0.322
+#&gt; glm: gender = male                -0.107
+#&gt; glm: fare = 7.11                  -0.018
+#&gt; glm: age = 42                     -0.014
+#&gt; glm: class = 3rd                   0.000
+#&gt; glm: embarked = Southampton        0.000
+#&gt; glm: sibsp = 0                     0.000
+#&gt; glm: parch = 0                     0.000
+#&gt; glm: survived = 0                  0.000
+#&gt; glm: prediction                    0.183</div><div class='input'><span class='fu'>plotD3</span>(<span class='no'>bd_glm</span>)
 
 <span class='co'># \donttest{</span>
 <span class='co'>## Not run:</span>
@@ -281,37 +290,40 @@ But can be set to some constants, usefull if these plots are used for comparison
 
 <span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                               contribution
 #&gt; randomForest.formula.fired: intercept                0.378
-#&gt; randomForest.formula.fired: hours = 42.32            0.215
-#&gt; randomForest.formula.fired: evaluation = 2           0.061
-#&gt; randomForest.formula.fired: salary = 2              -0.163
-#&gt; randomForest.formula.fired: age = 57.73              0.223
-#&gt; randomForest.formula.fired: gender = male            0.165
+#&gt; randomForest.formula.fired: hours = 42.32            0.220
+#&gt; randomForest.formula.fired: evaluation = 2           0.056
+#&gt; randomForest.formula.fired: salary = 2              -0.166
+#&gt; randomForest.formula.fired: age = 57.73              0.229
+#&gt; randomForest.formula.fired: gender = male            0.133
 #&gt; randomForest.formula.fired: status = fired           0.000
-#&gt; randomForest.formula.fired: prediction               0.878
+#&gt; randomForest.formula.fired: prediction               0.850
 #&gt; randomForest.formula.ok: intercept                   0.281
 #&gt; randomForest.formula.ok: hours = 42.32              -0.031
-#&gt; randomForest.formula.ok: evaluation = 2              0.087
-#&gt; randomForest.formula.ok: salary = 2                  0.165
+#&gt; randomForest.formula.ok: evaluation = 2              0.089
+#&gt; randomForest.formula.ok: salary = 2                  0.168
 #&gt; randomForest.formula.ok: age = 57.73                -0.230
-#&gt; randomForest.formula.ok: gender = male              -0.163
+#&gt; randomForest.formula.ok: gender = male              -0.133
 #&gt; randomForest.formula.ok: status = fired              0.000
-#&gt; randomForest.formula.ok: prediction                  0.110
+#&gt; randomForest.formula.ok: prediction                  0.144
 #&gt; randomForest.formula.promoted: intercept             0.341
-#&gt; randomForest.formula.promoted: hours = 42.32        -0.184
-#&gt; randomForest.formula.promoted: evaluation = 2       -0.149
+#&gt; randomForest.formula.promoted: hours = 42.32        -0.188
+#&gt; randomForest.formula.promoted: evaluation = 2       -0.145
 #&gt; randomForest.formula.promoted: salary = 2           -0.002
-#&gt; randomForest.formula.promoted: age = 57.73           0.007
-#&gt; randomForest.formula.promoted: gender = male        -0.002
+#&gt; randomForest.formula.promoted: age = 57.73           0.000
+#&gt; randomForest.formula.promoted: gender = male         0.000
 #&gt; randomForest.formula.promoted: status = fired        0.000
-#&gt; randomForest.formula.promoted: prediction            0.012</div><div class='input'><span class='fu'>plotD3</span>(<span class='no'>bd_rf</span>)
+#&gt; randomForest.formula.promoted: prediction            0.006</div><div class='input'><span class='fu'>plotD3</span>(<span class='no'>bd_rf</span>)
 <span class='co'># }</span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+
       <li><a href="#references">References</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

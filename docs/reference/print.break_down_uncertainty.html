@@ -36,10 +36,11 @@
 
 
 <meta property="og:title" content="Print Generic for Break Down Uncertainty Objects — print.break_down_uncertainty" />
+
 <meta property="og:description" content="Print Generic for Break Down Uncertainty Objects" />
+
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -81,7 +82,7 @@
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">1.0</span>
+          <span class="version version-default">1.1</span>
         </div>
       </div>
     </div>
@@ -145,12 +146,14 @@
     </div>
 
     <div class="ref-description">
+    
     <p>Print Generic for Break Down Uncertainty Objects</p>
+    
     </div>
 
     <pre class="usage"><span class='co'># S3 method for break_down_uncertainty</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -163,45 +166,56 @@
       <td><p>other parameters.</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>a data frame.</p>
+    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. <a href='https://pbiecek.github.io/ema'>https://pbiecek.github.io/ema</a></p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"iBreakDown"</span>)
-<span class='co'># Toy examples, because CRAN angels ask for them</span>
-<span class='no'>titanic</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/na.fail.html'>na.omit</a></span>(<span class='no'>titanic</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1313</span>)
-<span class='no'>titanic_small</span> <span class='kw'>&lt;-</span> <span class='no'>titanic</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>1</span>:<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>titanic</span>), <span class='fl'>500</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>6</span>,<span class='fl'>9</span>)]
-<span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>fare</span>,
-                       <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
+
+<span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>survived</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>fare</span>,
+                       <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
 <span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
-                           <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>[,-<span class='fl'>9</span>],
-                           <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  lm  ( <span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; data              :  500  rows  4  cols 
-#&gt;   -&gt; target variable   :  500  values 
-#&gt;   -&gt; model_info        :  package stats , ver. 3.6.1 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
+                           <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>,
+                           <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>$<span class='no'>survived</span>,
+                           <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"glm"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
+#&gt;   -&gt; model label       :  glm 
+#&gt;   -&gt; data              :  2207  rows  8  cols 
+#&gt;   -&gt; target variable   :  2207  values 
+#&gt;   -&gt; data              :  A column identical to the target variable `y` has been found in the `data`.  ( <span style='color: #BB0000;'> WARNING </span><span> )
+#&gt;   -&gt; data              :  It is highly recommended to pass `data` without the target variable column
+#&gt;   -&gt; model_info        :  package stats , ver. 3.6.0 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;   -&gt; predict function  :  yhat.glm  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; predicted values  :  numerical, min =  0.111212 , mean =  0.298 , max =  0.9430377  
+#&gt;   -&gt; predicted values  :  numerical, min =  0.1490412 , mean =  0.3221568 , max =  0.9878987  
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; residuals         :  numerical, min =  -0.789032 , mean =  1.799189e-14 , max =  0.8594593  
-#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'><span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='break_down_uncertainty.html'>break_down_uncertainty</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_small</span>[<span class='fl'>1</span>, ])
-<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                            min          q1       median         mean
-#&gt; lm: age = 50      -0.041452499 -0.04145250 -0.038439639 -0.039633973
-#&gt; lm: fare = 13     -0.005977352 -0.00537534 -0.005339308 -0.005413922
-#&gt; lm: gender = male -0.102615297 -0.10261530 -0.102615297 -0.101346348
-#&gt; lm: survived = no  0.000000000  0.00000000  0.000000000  0.000000000
-#&gt;                             q3          max
-#&gt; lm: age = 50      -0.038412614 -0.038403606
-#&gt; lm: fare = 13     -0.005339308 -0.005339308
-#&gt; lm: gender = male -0.099602437 -0.098964393
-#&gt; lm: survived = no  0.000000000  0.000000000</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='print.break_down_uncertainty-1.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt;   -&gt; residuals         :  numerical, min =  -0.8898433 , mean =  4.198219e-13 , max =  0.8448637  
+#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
+<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='break_down_uncertainty.html'>break_down_uncertainty</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_imputed</span>[<span class='fl'>1</span>, ])
+<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                     min          q1      median        mean
+#&gt; glm: age = 42               -0.01514903 -0.01492541 -0.01463593 -0.01456606
+#&gt; glm: class = 3rd             0.00000000  0.00000000  0.00000000  0.00000000
+#&gt; glm: embarked = Southampton  0.00000000  0.00000000  0.00000000  0.00000000
+#&gt; glm: fare = 7.11            -0.01823177 -0.01813627 -0.01784977 -0.01768950
+#&gt; glm: gender = male          -0.10725651 -0.10725651 -0.10725472 -0.10719718
+#&gt; glm: parch = 0               0.00000000  0.00000000  0.00000000  0.00000000
+#&gt; glm: sibsp = 0               0.00000000  0.00000000  0.00000000  0.00000000
+#&gt; glm: survived = 0            0.00000000  0.00000000  0.00000000  0.00000000
+#&gt;                                      q3         max
+#&gt; glm: age = 42               -0.01405996 -0.01396446
+#&gt; glm: class = 3rd             0.00000000  0.00000000
+#&gt; glm: embarked = Southampton  0.00000000  0.00000000
+#&gt; glm: fare = 7.11            -0.01727439 -0.01705077
+#&gt; glm: gender = male          -0.10725293 -0.10667755
+#&gt; glm: parch = 0               0.00000000  0.00000000
+#&gt; glm: sibsp = 0               0.00000000  0.00000000
+#&gt; glm: survived = 0            0.00000000  0.00000000</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='print.break_down_uncertainty-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># \donttest{</span>
 <span class='co'>## Not run:</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
@@ -211,18 +225,8 @@
 
 <span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model</span>,
                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>,<span class='fl'>1</span>:<span class='fl'>5</span>],
-                        <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>])</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  randomForest  ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; data              :  1000  rows  5  cols 
-#&gt;   -&gt; target variable   :  1000  values 
-#&gt;   -&gt; target variable   :  Please note that 'y' is a factor.  ( </span><span style='color: #BB0000;'> WARNING </span><span> )
-#&gt;   -&gt; target variable   :  Consider changing the 'y' to a logical or numerical vector.
-#&gt;   -&gt; target variable   :  Otherwise I will not be able to calculate residuals or loss function.
-#&gt;   -&gt; model_info        :  package randomForest , ver. 4.6.14 , task classification ( </span><span style='color: #BBBB00;'> default </span><span> ) 
-#&gt;   -&gt; predict function  :  yhat.randomForest  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; predicted values  :  predict function returns multiple columns:  3  ( </span><span style='color: #BB0000;'> WARNING </span><span> ) some of functionalities may not work 
-#&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )</div><div class='output co'>#&gt; <span class='warning'>Warning: ‘-’ not meaningful for factors</span></div><div class='output co'>#&gt;   -&gt; residuals         :  numerical, min =  NA , mean =  NA , max =  NA  
-#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
+                        <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>],
+                        <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: '-' nie ma sensu dla czynników</span></div><div class='input'>
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='break_down_uncertainty.html'>break_down_uncertainty</a></span>(<span class='no'>explainer_rf</span>,
                            <span class='no'>new_observation</span>)
 <span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                             min         q1    median       mean
@@ -291,8 +295,11 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+
       <li><a href="#references">References</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

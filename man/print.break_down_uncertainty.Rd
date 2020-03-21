@@ -20,16 +20,15 @@ Print Generic for Break Down Uncertainty Objects
 \examples{
 library("DALEX")
 library("iBreakDown")
-# Toy examples, because CRAN angels ask for them
-titanic <- na.omit(titanic)
-set.seed(1313)
-titanic_small <- titanic[sample(1:nrow(titanic), 500), c(1,2,6,9)]
-model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
-                       data = titanic_small, family = "binomial")
+
+model_titanic_glm <- glm(survived ~ gender + age + fare,
+                       data = titanic_imputed, family = "binomial")
 explain_titanic_glm <- explain(model_titanic_glm,
-                           data = titanic_small[,-9],
-                           y = titanic_small$survived == "yes")
-bd_rf <- break_down_uncertainty(explain_titanic_glm, titanic_small[1, ])
+                           data = titanic_imputed,
+                           y = titanic_imputed$survived,
+                           label = "glm")
+
+bd_rf <- break_down_uncertainty(explain_titanic_glm, titanic_imputed[1, ])
 bd_rf
 plot(bd_rf)
 
@@ -42,7 +41,8 @@ new_observation <- HR_test[1,]
 
 explainer_rf <- explain(model,
                         data = HR[1:1000,1:5],
-                        y = HR$status[1:1000])
+                        y = HR$status[1:1000],
+                        verbose = FALSE)
 
 bd_rf <- break_down_uncertainty(explainer_rf,
                            new_observation)
