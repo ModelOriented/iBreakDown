@@ -12,6 +12,8 @@
 #' @param vnames a character vector, if specified then will be used as labels on OY axis. By default NULL
 #' @param digits number of decimal places (\code{\link{round}}) or significant digits (\code{\link{signif}}) to be used.
 #' See the \code{rounding_function} argument.
+#' @param title main title for the plot. Character vector of length 1. Default: "Break Down profile"
+#' @param subtitle subtitles for various explanations. Lookup table or a function returning a character vector. Default: 'created for the \code{x$label} model'. See \code{\link[ggplot2]{labeller}} for more.
 #' @param rounding_function a function to be used for rounding numbers.
 #' This should be \code{\link{signif}} which keeps a specified number of significant digits or \code{\link{round}} (which is default) to have the same precision for all components.
 #' @param plot_distributions if \code{TRUE} then distributions of conditional propotions will be plotted. This requires \code{keep_distributions=TRUE} in the
@@ -110,19 +112,38 @@ plot.break_down <- function(x, ...,
                             max_features = 10,
                             min_max = NA,
                             vcolors = DALEX::colors_breakdown_drwhy(),
-                            digits = 3, rounding_function = round,
+                            vnames = NULL,
+                            digits = 3,
+                            title = "Break Down profile",
+                            subtitle = function(label) paste0("created for the ",label," model"),
+                            rounding_function = round,
                             add_contributions = TRUE, shift_contributions = 0.05,
-                            plot_distributions = FALSE,
-                            vnames = NULL) {
+                            plot_distributions = FALSE) {
   position <- cumulative <- prev <- pretty_text <- right_side <- contribution <- NULL
   # fix for https://github.com/ModelOriented/iBreakDown/issues/77
   colnames(x) <- gsub(colnames(x), pattern = "cummulative", replacement = "cumulative")
 
+  # Check main title argument:
+  if(!(is.character(title) && length(title) == 1))
+    stop("title must be character vector of length 1")
+  else
+    title <- title
+
+  # Check subtitle argument:
+  if(is.function(subtitle)){
+    res <- subtitle(attr(x$label, "levels"))
+    if(!(is.character(res) && length(res) == length(attr(x$label, "levels"))))
+      stop("subtitle function not working properly")
+  } else if(!(is.character(subtitle) &&
+            length(setdiff(attr(x$label, "levels"), names(subtitle))) == 0))
+    stop("subtitle, if vector, must be a named character containing x$label")
+  facet_labeller <- labeller(label = subtitle)
   if (plot_distributions) {
     df <- attr(x, "yhats_distribution")
     if (is.null(df))
       stop("You need to use keep_distributions=TRUE in the break_down() ")
-    pl <- plot_break_down_distributions(df)
+
+    pl <- plot_break_down_distributions(df, facet_labeller)
   } else {
     # how many features shall we plot
     x <- select_only_k_features(x, max_features)
@@ -130,7 +151,6 @@ plot.break_down <- function(x, ...,
     tmp <- prepare_data_for_break_down_plot(x, baseline, rounding_function, digits)
     broken_baseline <- tmp$broken_baseline
     x <- tmp$x
-
     # base plot
     pl <- ggplot(x, aes(x = position + 0.5,
                                   y = pmax(cumulative, prev),
@@ -147,7 +167,7 @@ plot.break_down <- function(x, ...,
                      color = "#371ea3") +
       geom_rect(alpha = 0.9) +
       geom_hline(data = broken_baseline, aes(yintercept = contribution), lty = 3, alpha = 0.5, color = "#371ea3") +
-      facet_wrap(~label, scales = "free_y", ncol = 1)
+       facet_wrap(~label, scales = "free_y", ncol = 1, labeller = facet_labeller)
 
     # add addnotations
     if (add_contributions) {
@@ -169,20 +189,21 @@ plot.break_down <- function(x, ...,
       scale_fill_manual(values = vcolors)
   }
 
+  pl <- pl + labs(title = title)
   # add theme
    pl + coord_flip() + theme_drwhy_vertical() +
      theme(legend.position = "none")
 }
 
 # break down plot with distributions
-plot_break_down_distributions <- function(df) {
+plot_break_down_distributions <- function(df, labeller="label_value") {
   variable  <- prediction <- id <- NULL
   ggplot(df, aes(variable, prediction, group = factor(variable))) +
     geom_line(aes(group = id), alpha = 0.01) +
     geom_violin(scale = "width", adjust = 3) +
     stat_summary(fun.y = "mean", colour = "red", size = 4, geom = "point") +
     xlab("") + ylab("") +
-    facet_wrap(~label, scales = "free_y", ncol = 1)
+    facet_wrap(~label, scales = "free_y", ncol = 1, labeller = labeller)
 }
 
 # prepare data for plot
