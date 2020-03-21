@@ -1,7 +1,8 @@
-iBreakDown 1.0.1
+iBreakDown 1.1.0
 ----------------------------------------------------------------
 * `plot` and `plotD3` work now   [#77](https://github.com/ModelOriented/iBreakDown/issues/77)
 * fix `xgboost` variable values in `break_down_uncertainty()` [#76](https://github.com/ModelOriented/iBreakDown/issues/76)
+* depend on `R v3.5` to comply with `DALEX`
 
 iBreakDown 1.0
 ----------------------------------------------------------------

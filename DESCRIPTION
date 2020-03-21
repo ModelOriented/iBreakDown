@@ -1,9 +1,12 @@
 Package: iBreakDown
 Title: Model Agnostic Instance Level Variable Attributions
-Version: 1.0.1
-Authors@R: c(person("Przemyslaw", "Biecek", email = "przemyslaw.biecek@gmail.com", role = c("aut", "cre")),
-    person("Alicja", "Gosiewska", role = "aut"),
-    person("Hubert", "Baniecki", role = "aut"),
+Version: 1.1.0
+Authors@R: c(person("Przemyslaw", "Biecek", email = "przemyslaw.biecek@gmail.com", role = c("aut", "cre"), 
+             comment = c(ORCID = "0000-0001-8423-1823")),
+    person("Alicja", "Gosiewska", role = "aut",
+             comment = c(ORCID = "0000-0001-6563-5742")),
+    person("Hubert", "Baniecki", role = "aut",
+             comment = c(ORCID = "0000-0001-6661-5364")),
     person("Adam", "Izdebski", role = "aut"),
     person("Dariusz", "Komosinski", role = "ctb"))
 Description: Model agnostic tool for decomposition of predictions from black boxes.
@@ -16,9 +19,8 @@ Description: Model agnostic tool for decomposition of predictions from black box
     It supports interactions in explanations and has interactive visuals (implemented with 'D3.js' library). 
     The methodology behind is described in the 'iBreakDown' article (Gosiewska and Biecek 2019) <arXiv:1903.11420>
     This package is a part of the 'DrWhy.AI' universe (Biecek 2018) <arXiv:1806.08915>.
-Depends: R (>= 3.0)
-Date: 2020-02-14
-License: GPL-2
+Depends: R (>= 3.5)
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.0.2

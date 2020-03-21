@@ -36,10 +36,11 @@
 
 
 <meta property="og:title" content="Plot Shap (Break Down Uncertainty) Objects in D3 with r2d3 package. — plotD3.shap" />
+
 <meta property="og:description" content="Plots shapley values." />
+
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -81,7 +82,7 @@
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">1.0</span>
+          <span class="version version-default">1.1.0</span>
         </div>
       </div>
     </div>
@@ -145,7 +146,9 @@
     </div>
 
     <div class="ref-description">
+    
     <p>Plots shapley values.</p>
+    
     </div>
 
     <pre class="usage"><span class='co'># S3 method for shap</span>
@@ -164,7 +167,7 @@
   <span class='kw'>chart_title</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
   <span class='kw'>time</span> <span class='kw'>=</span> <span class='fl'>0</span>
 )</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -224,55 +227,56 @@ But can be set to some constants, usefull if these plots are used for comparison
       <td><p>in ms. Set the animation length</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>a <code>r2d3</code> object.</p>
+    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. <a href='https://pbiecek.github.io/ema'>https://pbiecek.github.io/ema</a></p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"iBreakDown"</span>)
-
-<span class='no'>titanic</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/na.fail.html'>na.omit</a></span>(<span class='no'>titanic</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1313</span>)
-<span class='no'>titanic_small</span> <span class='kw'>&lt;-</span> <span class='no'>titanic</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>1</span>:<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>titanic</span>), <span class='fl'>500</span>),]
-<span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>fare</span> + <span class='no'>class</span> +
-                           <span class='no'>embarked</span> + <span class='no'>country</span> + <span class='no'>sibsp</span> + <span class='no'>parch</span>,
-                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
+<span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>survived</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>fare</span>,
+                       <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
 <span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
-                               <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>[,-<span class='fl'>9</span>],
-                               <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>,
-                               <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"glm"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
+                           <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>,
+                           <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>$<span class='no'>survived</span>,
+                           <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"glm"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
 #&gt;   -&gt; model label       :  glm 
-#&gt;   -&gt; data              :  500  rows  8  cols 
-#&gt;   -&gt; target variable   :  500  values 
-#&gt;   -&gt; model_info        :  package stats , ver. 3.6.1 , task regression ( <span style='color: #BBBB00;'> default </span><span> ) 
+#&gt;   -&gt; data              :  2207  rows  8  cols 
+#&gt;   -&gt; target variable   :  2207  values 
+#&gt;   -&gt; data              :  A column identical to the target variable `y` has been found in the `data`.  ( <span style='color: #BB0000;'> WARNING </span><span> )
+#&gt;   -&gt; data              :  It is highly recommended to pass `data` without the target variable column
+#&gt;   -&gt; model_info        :  package stats , ver. 3.6.0 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;   -&gt; predict function  :  yhat.glm  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; predicted values  :  numerical, min =  7.022097e-10 , mean =  0.298 , max =  1  
+#&gt;   -&gt; predicted values  :  numerical, min =  0.1490412 , mean =  0.3221568 , max =  0.9878987  
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; residuals         :  numerical, min =  -0.9336566 , mean =  -1.160845e-09 , max =  0.9752572  
-#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'><span class='no'>s_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='break_down_uncertainty.html'>shap</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_small</span>[<span class='fl'>1</span>, ])
-<span class='no'>s_glm</span></div><div class='output co'>#&gt;                                       min            q1       median
-#&gt; glm: age = 50               -1.198449e-01 -0.1106659660 -0.095308733
-#&gt; glm: class = 2nd            -5.298315e-02 -0.0489164568 -0.043860368
-#&gt; glm: country = England      -1.659964e-02 -0.0155494537 -0.009284810
-#&gt; glm: embarked = Southampton -1.779786e-02 -0.0134423905 -0.013146172
-#&gt; glm: fare = 13               9.257581e-05  0.0005037324  0.001682814
-#&gt; glm: gender = male          -1.209775e-01 -0.1094698969 -0.101361558
-#&gt; glm: parch = 0              -5.518703e-03 -0.0042501528 -0.003879446
-#&gt; glm: sibsp = 0               4.007248e-03  0.0047186704  0.010359019
-#&gt;                                     mean           q3           max
-#&gt; glm: age = 50               -0.100731328 -0.092665631 -0.0827366764
-#&gt; glm: class = 2nd            -0.043962169 -0.039051289 -0.0354949542
-#&gt; glm: country = England      -0.008667403 -0.002271641 -0.0017944816
-#&gt; glm: embarked = Southampton -0.011409841 -0.007864790 -0.0053594363
-#&gt; glm: fare = 13               0.001465891  0.002146564  0.0028319087
-#&gt; glm: gender = male          -0.099395950 -0.095731684 -0.0762848374
-#&gt; glm: parch = 0              -0.003409139 -0.002030032 -0.0009953965
-#&gt; glm: sibsp = 0               0.012242720  0.020295607  0.0239373088</div><div class='input'><span class='fu'><a href='plotD3_break_down.html'>plotD3</a></span>(<span class='no'>s_glm</span>)
+#&gt;   -&gt; residuals         :  numerical, min =  -0.8898433 , mean =  4.198219e-13 , max =  0.8448637  
+#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
+<span class='no'>s_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='break_down_uncertainty.html'>shap</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_imputed</span>[<span class='fl'>1</span>, ])
+<span class='no'>s_glm</span></div><div class='output co'>#&gt;                                     min          q1      median        mean
+#&gt; glm: age = 42               -0.01514903 -0.01492541 -0.01434645 -0.01447369
+#&gt; glm: class = 3rd             0.00000000  0.00000000  0.00000000  0.00000000
+#&gt; glm: embarked = Southampton  0.00000000  0.00000000  0.00000000  0.00000000
+#&gt; glm: fare = 7.11            -0.01823177 -0.01784977 -0.01784977 -0.01772034
+#&gt; glm: gender = male          -0.10843751 -0.10725651 -0.10725651 -0.10725871
+#&gt; glm: parch = 0               0.00000000  0.00000000  0.00000000  0.00000000
+#&gt; glm: sibsp = 0               0.00000000  0.00000000  0.00000000  0.00000000
+#&gt; glm: survived = 0            0.00000000  0.00000000  0.00000000  0.00000000
+#&gt;                                      q3         max
+#&gt; glm: age = 42               -0.01396446 -0.01396446
+#&gt; glm: class = 3rd             0.00000000  0.00000000
+#&gt; glm: embarked = Southampton  0.00000000  0.00000000
+#&gt; glm: fare = 7.11            -0.01738588 -0.01705077
+#&gt; glm: gender = male          -0.10725293 -0.10667755
+#&gt; glm: parch = 0               0.00000000  0.00000000
+#&gt; glm: sibsp = 0               0.00000000  0.00000000
+#&gt; glm: survived = 0            0.00000000  0.00000000</div><div class='input'><span class='fu'><a href='plotD3_break_down.html'>plotD3</a></span>(<span class='no'>s_glm</span>)
 
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>randomForest</span>)
 
@@ -294,8 +298,11 @@ But can be set to some constants, usefull if these plots are used for comparison
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+
       <li><a href="#references">References</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

@@ -36,12 +36,13 @@
 
 
 <meta property="og:title" content="Model Agnostic Sequential Variable Attributions — break_down" />
+
 <meta property="og:description" content="This function finds Variable Attributions via Sequential Variable Conditioning.
 It calls either local_attributions for additive attributions
 or local_interactions for attributions with interactions." />
+
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -83,7 +84,7 @@ or local_interactions for attributions with interactions." />
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">1.0</span>
+          <span class="version version-default">1.1.0</span>
         </div>
       </div>
     </div>
@@ -147,9 +148,11 @@ or local_interactions for attributions with interactions." />
     </div>
 
     <div class="ref-description">
+    
     <p>This function finds Variable Attributions via Sequential Variable Conditioning.
 It calls either <code><a href='local_attributions.html'>local_attributions</a></code> for additive attributions
 or <code><a href='local_interactions.html'>local_interactions</a></code> for attributions with interactions.</p>
+    
     </div>
 
     <pre class="usage"><span class='fu'>break_down</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>interactions</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
@@ -169,7 +172,7 @@ or <code><a href='local_interactions.html'>local_interactions</a></code> for att
   <span class='no'>...</span>,
   <span class='kw'>interactions</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
 )</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -210,45 +213,53 @@ or <code><a href='local_interactions.html'>local_interactions</a></code> for att
       <td><p>name of the model. By default it is extracted from the 'class' attribute of the model.</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>an object of the <code>break_down</code> class.</p>
+    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. <a href='https://pbiecek.github.io/ema'>https://pbiecek.github.io/ema</a></p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='local_attributions.html'>local_attributions</a></code>, <code><a href='local_interactions.html'>local_interactions</a></code></p></div>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)</div><div class='output co'>#&gt; <span class='message'>Welcome to DALEX (version: 0.9.8).</span>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)</div><div class='output co'>#&gt; <span class='message'>Welcome to DALEX (version: 1.0).</span>
 #&gt; <span class='message'>Find examples and detailed introduction at: https://pbiecek.github.io/ema/</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"iBreakDown"</span>)
-<span class='co'># Toy examples, because CRAN angels ask for them</span>
-<span class='no'>titanic</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/na.fail.html'>na.omit</a></span>(<span class='no'>titanic</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1313</span>)
-<span class='no'>titanic_small</span> <span class='kw'>&lt;-</span> <span class='no'>titanic</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>1</span>:<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>titanic</span>), <span class='fl'>500</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>6</span>,<span class='fl'>9</span>)]
-<span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>fare</span>,
-                       <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
+<span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>survived</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>fare</span>,
+                       <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
 <span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
-                           <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>[,-<span class='fl'>9</span>],
-                           <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  lm  ( <span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; data              :  500  rows  4  cols 
-#&gt;   -&gt; target variable   :  500  values 
-#&gt;   -&gt; model_info        :  package stats , ver. 3.6.1 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
+                           <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>,
+                           <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>$<span class='no'>survived</span>,
+                           <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"glm"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
+#&gt;   -&gt; model label       :  glm 
+#&gt;   -&gt; data              :  2207  rows  8  cols 
+#&gt;   -&gt; target variable   :  2207  values 
+#&gt;   -&gt; data              :  A column identical to the target variable `y` has been found in the `data`.  ( <span style='color: #BB0000;'> WARNING </span><span> )
+#&gt;   -&gt; data              :  It is highly recommended to pass `data` without the target variable column
+#&gt;   -&gt; model_info        :  package stats , ver. 3.6.0 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;   -&gt; predict function  :  yhat.glm  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; predicted values  :  numerical, min =  0.111212 , mean =  0.298 , max =  0.9430377  
+#&gt;   -&gt; predicted values  :  numerical, min =  0.1490412 , mean =  0.3221568 , max =  0.9878987  
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; residuals         :  numerical, min =  -0.789032 , mean =  1.799189e-14 , max =  0.8594593  
-#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'><span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>break_down</span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_small</span>[<span class='fl'>1</span>, ])
-<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                   contribution
-#&gt; lm: intercept            0.298
-#&gt; lm: gender = male       -0.103
-#&gt; lm: age = 50            -0.038
-#&gt; lm: fare = 13           -0.005
-#&gt; lm: survived = no        0.000
-#&gt; lm: prediction           0.152</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>, <span class='kw'>max_features</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='img'><img src='break_down-1.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt;   -&gt; residuals         :  numerical, min =  -0.8898433 , mean =  4.198219e-13 , max =  0.8448637  
+#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
+<span class='no'>bd_glm</span> <span class='kw'>&lt;-</span> <span class='fu'>break_down</span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_imputed</span>[<span class='fl'>1</span>, ])
+<span class='no'>bd_glm</span></div><div class='output co'>#&gt;                             contribution
+#&gt; glm: intercept                     0.322
+#&gt; glm: gender = male                -0.107
+#&gt; glm: fare = 7.11                  -0.018
+#&gt; glm: age = 42                     -0.014
+#&gt; glm: class = 3rd                   0.000
+#&gt; glm: embarked = Southampton        0.000
+#&gt; glm: sibsp = 0                     0.000
+#&gt; glm: parch = 0                     0.000
+#&gt; glm: survived = 0                  0.000
+#&gt; glm: prediction                    0.183</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_glm</span>, <span class='kw'>max_features</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='img'><img src='break_down-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># \donttest{</span>
 <span class='co'>## Not run:</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)</div><div class='output co'>#&gt; <span class='message'>randomForest 4.6-14</span></div><div class='output co'>#&gt; <span class='message'>Type rfNews() to see new features/changes/bug fixes.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1313</span>)
@@ -258,52 +269,56 @@ or <code><a href='local_interactions.html'>local_interactions</a></code> for att
 <span class='no'>new_observation</span> <span class='kw'>&lt;-</span> <span class='no'>HR_test</span>[<span class='fl'>1</span>,]
 
 <span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model</span>,
-                        <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>,<span class='fl'>1</span>:<span class='fl'>5</span>],
-                        <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>])</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
+                        <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>,<span class='fl'>1</span>:<span class='fl'>5</span>])</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
 #&gt;   -&gt; model label       :  randomForest  ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; data              :  1000  rows  5  cols 
-#&gt;   -&gt; target variable   :  1000  values 
-#&gt;   -&gt; target variable   :  Please note that 'y' is a factor.  ( </span><span style='color: #BB0000;'> WARNING </span><span> )
-#&gt;   -&gt; target variable   :  Consider changing the 'y' to a logical or numerical vector.
-#&gt;   -&gt; target variable   :  Otherwise I will not be able to calculate residuals or loss function.
+#&gt;   -&gt; target variable   :  not specified! ( </span><span style='color: #BB0000;'> WARNING </span><span> )
 #&gt;   -&gt; model_info        :  package randomForest , ver. 4.6.14 , task classification ( </span><span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;   -&gt; predict function  :  yhat.randomForest  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; predicted values  :  predict function returns multiple columns:  3  ( </span><span style='color: #BB0000;'> WARNING </span><span> ) some of functionalities may not work 
-#&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )</div><div class='output co'>#&gt; <span class='warning'>Warning: ‘-’ not meaningful for factors</span></div><div class='output co'>#&gt;   -&gt; residuals         :  numerical, min =  NA , mean =  NA , max =  NA  
+#&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>break_down</span>(<span class='no'>explainer_rf</span>,
                            <span class='no'>new_observation</span>)
-<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                       contribution
-#&gt; randomForest.fired: intercept                0.386
-#&gt; randomForest.fired: hours = 42.32            0.231
-#&gt; randomForest.fired: evaluation = 2           0.062
-#&gt; randomForest.fired: salary = 2              -0.272
-#&gt; randomForest.fired: age = 57.73              0.092
-#&gt; randomForest.fired: gender = male            0.281
-#&gt; randomForest.fired: prediction               0.778
-#&gt; randomForest.ok: intercept                   0.278
-#&gt; randomForest.ok: hours = 42.32              -0.053
-#&gt; randomForest.ok: evaluation = 2              0.091
-#&gt; randomForest.ok: salary = 2                  0.271
-#&gt; randomForest.ok: age = 57.73                -0.086
-#&gt; randomForest.ok: gender = male              -0.283
-#&gt; randomForest.ok: prediction                  0.218
-#&gt; randomForest.promoted: intercept             0.336
-#&gt; randomForest.promoted: hours = 42.32        -0.178
-#&gt; randomForest.promoted: evaluation = 2       -0.152
-#&gt; randomForest.promoted: salary = 2            0.001
-#&gt; randomForest.promoted: age = 57.73          -0.006
-#&gt; randomForest.promoted: gender = male         0.002
-#&gt; randomForest.promoted: prediction            0.004</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='break_down-2.png' alt='' width='700' height='433' /></div><div class='input'># }
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>bd_rf</span>)</div><div class='output co'>#&gt;                                    contribution
+#&gt; randomForest.fired: intercept             0.386
+#&gt; randomForest.fired: hours = 42.32         0.231
+#&gt; randomForest.fired: evaluation = 2        0.062
+#&gt; randomForest.fired: salary = 2           -0.272
+#&gt; randomForest.fired: age = 57.73           0.092
+#&gt; randomForest.fired: gender = male         0.281</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='break_down-2.png' alt='' width='700' height='433' /></div><div class='input'>
+
+<span class='co'>#xgboost example</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"xgboost"</span>)
+<span class='no'>model_matrix</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/model.matrix.html'>model.matrix</a></span>(<span class='no'>status</span> <span class='kw'>==</span> <span class='st'>"fired"</span> ~ <span class='no'>.</span> -<span class='fl'>1</span>, <span class='no'>HR</span>)
+<span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/xgboost/man/xgb.DMatrix.html'>xgb.DMatrix</a></span>(<span class='no'>model_matrix</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span> <span class='kw'>==</span> <span class='st'>"fired"</span>)
+
+<span class='no'>params</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>max_depth</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>eta</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>silent</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>nthread</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+               <span class='kw'>objective</span> <span class='kw'>=</span> <span class='st'>"binary:logistic"</span>, <span class='kw'>eval_metric</span> <span class='kw'>=</span> <span class='st'>"auc"</span>)
+
+<span class='no'>model_HR</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/xgboost/man/xgb.train.html'>xgb.train</a></span>(<span class='no'>params</span>, <span class='no'>data</span>, <span class='kw'>nrounds</span> <span class='kw'>=</span> <span class='fl'>50</span>)
+
+<span class='no'>explainer_HR</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model_HR</span>,
+                        <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>model_matrix</span>,
+                        <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span> <span class='kw'>==</span> <span class='st'>"fired"</span>,
+                        <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='no'>bd</span> <span class='kw'>&lt;-</span> <span class='fu'>break_down</span>(<span class='no'>explainer_HR</span>, <span class='no'>model_matrix</span>[<span class='fl'>1</span>,,<span class='kw'>drop</span><span class='kw'>=</span><span class='fl'>FALSE</span>])
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd</span>)</div><div class='img'><img src='break_down-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='no'>s</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='break_down_uncertainty.html'>shap</a></span>(<span class='no'>explainer_HR</span>, <span class='no'>model_matrix</span>[<span class='fl'>1</span>,,<span class='kw'>drop</span><span class='kw'>=</span><span class='fl'>FALSE</span>])
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>s</span>)</div><div class='img'><img src='break_down-4.png' alt='' width='700' height='433' /></div><div class='input'># }
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+
       <li><a href="#references">References</a></li>
+
       <li><a href="#see-also">See also</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

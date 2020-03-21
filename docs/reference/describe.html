@@ -36,11 +36,12 @@
 
 
 <meta property="og:title" content="Generates Textual Explanations for Predictive Models — describe" />
+
 <meta property="og:description" content="Generic function describe generates natural language explanations based on
 break_down and shap explanations, what enhances their interpretability." />
+
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -82,7 +83,7 @@ break_down and shap explanations, what enhances their interpretability." />
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">1.0</span>
+          <span class="version version-default">1.1.0</span>
         </div>
       </div>
     </div>
@@ -146,8 +147,10 @@ break_down and shap explanations, what enhances their interpretability." />
     </div>
 
     <div class="ref-description">
+    
     <p>Generic function <code>describe</code> generates natural language explanations based on
 <code><a href='break_down.html'>break_down</a></code> and <code><a href='break_down_uncertainty.html'>shap</a></code> explanations, what enhances their interpretability.</p>
+    
     </div>
 
     <pre class="usage"><span class='fu'>describe</span>(<span class='no'>x</span>, <span class='kw'>nonsignificance_treshold</span> <span class='kw'>=</span> <span class='fl'>0.15</span>, <span class='no'>...</span>)
@@ -177,7 +180,7 @@ break_down and shap explanations, what enhances their interpretability." />
   <span class='kw'>display_distribution_details</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>display_shap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
 )</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -218,10 +221,11 @@ break_down and shap explanations, what enhances their interpretability." />
       <td><p>a boolean, adds information about variables' average contribution. Use only with <code><a href='break_down_uncertainty.html'>shap</a></code> explanation.</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A character string of textual explanation</p>
+    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Function <code>describe</code> generates a textual explanations by extracting information from
@@ -237,6 +241,7 @@ structure, as recomended for the World Universities Debating style.</p>
 variables counteracting with each other
 4. Model's prediction is close to it's average prediction and all the variables are rather nonsignificant.
 Then an explanation due to the chosen scenario is generated.</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
@@ -255,9 +260,9 @@ Then an explanation due to the chosen scenario is generated.</p>
 #&gt;   -&gt; target variable   :  2099  values 
 #&gt;   -&gt; model_info        :  package randomForest , ver. 4.6.14 , task regression ( <span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;   -&gt; predict function  :  yhat.randomForest  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; predicted values  :  numerical, min =  0.009336143 , mean =  0.3241657 , max =  0.9938348  
+#&gt;   -&gt; predicted values  :  numerical, min =  0.008677914 , mean =  0.3242044 , max =  0.9937084  
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; residuals         :  numerical, min =  -0.7984406 , mean =  0.0002744759 , max =  0.8964633  
+#&gt;   -&gt; residuals         :  numerical, min =  -0.794415 , mean =  0.00023579 , max =  0.8943592  
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='no'>bd_explanation</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='break_down.html'>break_down</a></span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>titanic</span>[<span class='fl'>1</span>, ], <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_explanation</span>)</div><div class='img'><img src='describe-1.png' alt='' width='700' height='433' /></div><div class='input'>
@@ -268,13 +273,13 @@ Then an explanation due to the chosen scenario is generated.</p>
                         <span class='kw'>display_numbers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
                         <span class='kw'>display_distribution_details</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='no'>description</span></div><div class='output co'>#&gt; Random Forest v7 predicts, that the passanger will survive with probability 0.091 which is lower than the average model prediction 0.324. For the selected instance model's prediction is lower, than for 89% of all observations.
+<span class='no'>description</span></div><div class='output co'>#&gt; Random Forest v7 predicts, that the passanger will survive with probability 0.082 which is lower than the average model prediction 0.324. For the selected instance model's prediction is lower, than for 92% of all observations.
 #&gt; 
-#&gt; The most important variable is gender (= male). It decreases the prediction by 0.104.
-#&gt; The second most important variable is age (= 42). It decreases the prediction by 0.049.
-#&gt; The third most important variable is class (= 3rd). It decreases the prediction by 0.041.
+#&gt; The most important variable is gender (= male). It decreases the prediction by 0.103.
+#&gt; The second most important variable is age (= 42). It decreases the prediction by 0.05.
+#&gt; The third most important variable is fare (= 7.11). It decreases the prediction by 0.04.
 #&gt; 
-#&gt; Other variables are with less importance. The contribution of all other variables is -0.039. </div><div class='input'>
+#&gt; Other variables are with less importance. The contribution of all other variables is -0.048. </div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"iBreakDown"</span>)
 <span class='no'>titanic</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/na.fail.html'>na.omit</a></span>(<span class='no'>titanic</span>)
@@ -287,11 +292,11 @@ Then an explanation due to the chosen scenario is generated.</p>
 #&gt;   -&gt; model label       :  glm 
 #&gt;   -&gt; data              :  2099  rows  8  cols 
 #&gt;   -&gt; target variable   :  2099  values 
-#&gt;   -&gt; model_info        :  package stats , ver. 3.6.1 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
+#&gt;   -&gt; model_info        :  package stats , ver. 3.6.0 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;   -&gt; predict function  :  yhat.glm  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; predicted values  :  numerical, min =  0.009479803 , mean =  0.3244402 , max =  0.9742069  
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; residuals         :  numerical, min =  -0.9742069 , mean =  -2.864556e-10 , max =  0.9662286  
+#&gt;   -&gt; residuals         :  numerical, min =  -0.9742069 , mean =  -2.864554e-10 , max =  0.9662286  
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'><span class='no'>passanger</span> <span class='kw'>&lt;-</span> <span class='no'>titanic</span>[<span class='fl'>1</span>, -<span class='fl'>9</span>]
 <span class='no'>shap_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='break_down_uncertainty.html'>shap</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>passanger</span>)
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>shap_glm</span>)</div><div class='img'><img src='describe-2.png' alt='' width='700' height='433' /></div><div class='input'>
@@ -300,20 +305,23 @@ Then an explanation due to the chosen scenario is generated.</p>
          <span class='kw'>display_shap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
          <span class='kw'>display_numbers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Glm predicts, that the selected passanger survives with probability 0.058 which is lower than the average model prediction 0.324. For the selected instance model's prediction is lower, than for 94% of all observations.
 #&gt; 
-#&gt; The most important variable is class. It decreases the prediction by 0.122.
-#&gt; The second most important variable is gender. It decreases the prediction by 0.105.
-#&gt; The third most important variable is age. It decreases the prediction by 0.049.
+#&gt; The most important variable is class. It decreases the prediction by 0.123.
+#&gt; The second most important variable is gender. It decreases the prediction by 0.101.
+#&gt; The third most important variable is age. It decreases the prediction by 0.053.
 #&gt; The average contribution of all the above variables is significant.
 #&gt; 
-#&gt; Other variables are with less importance. The contribution of all other variables is 0.01. </div><div class='input'>
+#&gt; Other variables are with less importance. The contribution of all other variables is 0.012. </div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+
       <li><a href="#details">Details</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
