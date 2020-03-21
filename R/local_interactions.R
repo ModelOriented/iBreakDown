@@ -43,7 +43,7 @@
 #' plot(bd_rf, max_features = 2)
 #'
 #' \donttest{
-#' library("DALEX")
+#' library("randomForest")
 #' # example with interaction
 #' # classification for HR data
 #' model <- randomForest(status ~ . , data = HR)

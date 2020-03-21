@@ -75,11 +75,25 @@
 #'                                          "construction.year", "surface"))
 #' plot(bd_rf)
 #'
-#' bd_rf <- shap(explainer_rf,
-#'               apartments_test[1,])
-#' bd_rf
-#' plot(bd_rf)
-#' plot(bd_rf, show_boxplots = FALSE)
+#' #xgboost example
+#' library("xgboost")
+#' model_matrix <- model.matrix(status == "fired" ~ . -1, HR)
+#' data <- xgb.DMatrix(model_matrix, label = HR$status == "fired")
+#'
+#' params <- list(max_depth = 2, eta = 1, silent = 1, nthread = 2,
+#'                objective = "binary:logistic", eval_metric = "auc")
+#'
+#' model_HR <- xgb.train(params, data, nrounds = 50)
+#'
+#' explainer_HR <- explain(model_HR,
+#'                         data = model_matrix,
+#'                         y = HR$status == "fired",
+#'                         verbose = FALSE)
+#'
+#' bd <- break_down(explainer_HR, model_matrix[1,,drop=FALSE])
+#' plot(bd)
+#' s <- shap(explainer_HR, model_matrix[1,,drop=FALSE])
+#' plot(s)
 #' }
 #' @export
 #' @rdname break_down_uncertainty
@@ -206,17 +220,18 @@ get_single_random_path <- function(x, data, predict_function, new_observation, l
 
   diffs <- apply(do.call(rbind, yhats), 2, diff)
 
-  new_observation <- sapply(new_observation, nice_format) # same as in BD
+  #76
+  new_observation_vec <- sapply(as.data.frame(new_observation), nice_format) # same as in BD
 
   single_cols <- lapply(1:ncol(diffs), function(col) {
 
     variable_names <- vnames[random_path]
     data.frame(
       variable = paste0(variable_names, " = ",
-                       sapply(new_observation[variable_names], as.character)),
+                       sapply(new_observation_vec[variable_names], as.character)),
       contribution = diffs[,col],
       variable_name = variable_names,
-      variable_value = sapply(new_observation[variable_names], as.character),
+      variable_value = sapply(new_observation_vec[variable_names], as.character),
       sign = sign(diffs[,col]),
       label = ifelse(ncol(diffs) == 1, label, paste(label,colnames(diffs)[col], sep = "."))
     )
