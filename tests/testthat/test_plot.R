@@ -52,17 +52,6 @@ test_that("Error when no distribution before provided", {
   expect_error(plot(bd_rf_reg, plot_distributions = TRUE))
 })
 
-test_that("Error when title argument is invalid", {
-  expect_error(plot(bd_rf_class, title = 123))
-  expect_error(plot(bd_rf_class, title = c("Title A", "Title B")))
-})
-
-test_that("Error when subtitle argument is invalid", {
-  expect_error(plot(bd_rf_class, subtitle = 123))
-  expect_error(plot(bd_rf_class, subtitle = function(x) character(0)))
-  expect_error(plot(bd_rf_class, subtitle = setNames(LETTERS[1:3], letters[1:3])))
-})
-
 test_that("Test plotD3_break_down", {
   expect_is(plotD3(bd_rf_class), "r2d3")
   expect_is(plotD3(bd_rf_class, max_features = 10), "r2d3")

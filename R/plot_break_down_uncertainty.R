@@ -4,8 +4,6 @@
 #' @param ... other parameters.
 #' @param show_boxplots logical if \code{TRUE} (default) boxplot will be plotted to show uncertanity of attributions
 #' @param vcolors If \code{NA} (default), DrWhy colors are used.
-#' @param title main title for the plot. Character vector of length 1. Default: "Break Down profile"
-#' @param subtitle subtitles for various explanations. Lookup table or a function returning a character vector. Default: 'created for the \code{x$label} model'. See \code{\link[ggplot2]{labeller}} for more.
 #' @param max_features maximal number of features to be included in the plot. By default it's \code{10}.
 #'
 #' @return a \code{ggplot2} object.
@@ -75,23 +73,7 @@
 plot.break_down_uncertainty <- function(x, ...,
                   vcolors = DALEX::colors_breakdown_drwhy(),
                   show_boxplots = TRUE,
-                  title = "Break Down profile",
-                  subtitle = function(label) paste0("created for the ",label," model"),
                   max_features = 10) {
-
-  # Check main title argument:
-  if(!(is.character(title) && length(title == 1)))
-    stop("title must be character vector of length 1")
-
-  # Check subtitle argument:
-  if(is.function(subtitle)){
-    res <- subtitle(attr(x$label, "levels"))
-    if(!(is.character(res) && length(res) == length(attr(x$label, "levels"))))
-      stop("subtitle function not working properly")
-  } else if(!(is.character(subtitle) &&
-              length(setdiff(attr(x$label, "levels"), names(subtitle))) == 0))
-    stop("subtitle, if vector, must be a named character containing x$label")
-  facet_labeller <- labeller(label = subtitle)
 
   variable <- contribution <- NULL
   df <- as.data.frame(x)
@@ -116,8 +98,7 @@ plot.break_down_uncertainty <- function(x, ...,
   }
 
   pl +
-    labs(title = title) +
-    facet_wrap(~label, ncol = 1, labeller = facet_labeller) +
+    facet_wrap(~label, ncol = 1) +
     coord_flip() + theme_drwhy_vertical() +
     theme(legend.position = "none") + xlab("")
 }
