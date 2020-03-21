@@ -25,7 +25,7 @@
 #' @examples
 #' library("DALEX")
 #' library("iBreakDown")
-#'
+#' set.seed(1313)
 #' model_titanic_glm <- glm(survived ~ gender + age + fare,
 #'                        data = titanic_imputed, family = "binomial")
 #' explain_titanic_glm <- explain(model_titanic_glm,
@@ -34,9 +34,9 @@
 #'                            label = "glm")
 #'
 #' # there is no explanation level uncertanity linked with additive models
-#' bd_rf <- break_down_uncertainty(explain_titanic_glm, titanic_imputed[1, ])
-#' bd_rf
-#' plot(bd_rf)
+#' bd_glm <- break_down_uncertainty(explain_titanic_glm, titanic_imputed[1, ])
+#' bd_glm
+#' plot(bd_glm)
 #'
 #' \donttest{
 #' ## Not run:

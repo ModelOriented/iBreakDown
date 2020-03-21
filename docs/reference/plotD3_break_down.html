@@ -82,7 +82,7 @@
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">1.1</span>
+          <span class="version version-default">1.1.0</span>
         </div>
       </div>
     </div>
@@ -242,7 +242,7 @@ But can be set to some constants, usefull if these plots are used for comparison
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"iBreakDown"</span>)
-
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1313</span>)
 <span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>survived</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>fare</span>,
                        <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
 <span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
@@ -289,30 +289,30 @@ But can be set to some constants, usefull if these plots are used for comparison
                            <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>p_fun</span>)
 
 <span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                               contribution
-#&gt; randomForest.formula.fired: intercept                0.378
+#&gt; randomForest.formula.fired: intercept                0.379
 #&gt; randomForest.formula.fired: hours = 42.32            0.220
-#&gt; randomForest.formula.fired: evaluation = 2           0.056
-#&gt; randomForest.formula.fired: salary = 2              -0.166
-#&gt; randomForest.formula.fired: age = 57.73              0.229
-#&gt; randomForest.formula.fired: gender = male            0.133
+#&gt; randomForest.formula.fired: evaluation = 2           0.054
+#&gt; randomForest.formula.fired: salary = 2              -0.152
+#&gt; randomForest.formula.fired: age = 57.73              0.204
+#&gt; randomForest.formula.fired: gender = male            0.164
 #&gt; randomForest.formula.fired: status = fired           0.000
-#&gt; randomForest.formula.fired: prediction               0.850
-#&gt; randomForest.formula.ok: intercept                   0.281
-#&gt; randomForest.formula.ok: hours = 42.32              -0.031
+#&gt; randomForest.formula.fired: prediction               0.868
+#&gt; randomForest.formula.ok: intercept                   0.280
+#&gt; randomForest.formula.ok: hours = 42.32              -0.030
 #&gt; randomForest.formula.ok: evaluation = 2              0.089
-#&gt; randomForest.formula.ok: salary = 2                  0.168
-#&gt; randomForest.formula.ok: age = 57.73                -0.230
-#&gt; randomForest.formula.ok: gender = male              -0.133
+#&gt; randomForest.formula.ok: salary = 2                  0.154
+#&gt; randomForest.formula.ok: age = 57.73                -0.206
+#&gt; randomForest.formula.ok: gender = male              -0.160
 #&gt; randomForest.formula.ok: status = fired              0.000
-#&gt; randomForest.formula.ok: prediction                  0.144
+#&gt; randomForest.formula.ok: prediction                  0.128
 #&gt; randomForest.formula.promoted: intercept             0.341
-#&gt; randomForest.formula.promoted: hours = 42.32        -0.188
-#&gt; randomForest.formula.promoted: evaluation = 2       -0.145
+#&gt; randomForest.formula.promoted: hours = 42.32        -0.189
+#&gt; randomForest.formula.promoted: evaluation = 2       -0.144
 #&gt; randomForest.formula.promoted: salary = 2           -0.002
-#&gt; randomForest.formula.promoted: age = 57.73           0.000
-#&gt; randomForest.formula.promoted: gender = male         0.000
+#&gt; randomForest.formula.promoted: age = 57.73           0.002
+#&gt; randomForest.formula.promoted: gender = male        -0.004
 #&gt; randomForest.formula.promoted: status = fired        0.000
-#&gt; randomForest.formula.promoted: prediction            0.006</div><div class='input'><span class='fu'>plotD3</span>(<span class='no'>bd_rf</span>)
+#&gt; randomForest.formula.promoted: prediction            0.004</div><div class='input'><span class='fu'>plotD3</span>(<span class='no'>bd_rf</span>)
 <span class='co'># }</span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

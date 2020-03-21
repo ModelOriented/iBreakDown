@@ -42,7 +42,7 @@
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">1.1</span>
+          <span class="version version-default">1.1.0</span>
         </div>
       </div>
     </div>
@@ -186,12 +186,12 @@
 <a class="sourceLine" id="cb12-8" title="8"></a>
 <a class="sourceLine" id="cb12-9" title="9"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(bd_rf)</a></code></pre></div>
 <pre><code>#&gt;                                                 contribution
-#&gt; randomForest.formula: intercept                     1417.043
-#&gt; randomForest.formula: scars = 4                     -209.731
-#&gt; randomForest.formula: number_of_lost_teeth = 30      181.585
-#&gt; randomForest.formula: weight = 10.02                  -0.311
-#&gt; randomForest.formula: year_of_birth = -938             9.864
-#&gt; randomForest.formula: colour = black                   3.810</code></pre>
+#&gt; randomForest.formula: intercept                     1417.750
+#&gt; randomForest.formula: scars = 4                     -211.752
+#&gt; randomForest.formula: number_of_lost_teeth = 30      191.488
+#&gt; randomForest.formula: weight = 10.02                   2.024
+#&gt; randomForest.formula: year_of_birth = -938            15.415
+#&gt; randomForest.formula: colour = black                  12.082</code></pre>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(bd_rf)</a></code></pre></div>
 <p><img src="vignette_iBreakDown_regression_files/figure-html/unnamed-chunk-8-1.png" width="576"></p>
 </div>
@@ -235,18 +235,18 @@
 <a class="sourceLine" id="cb17-5" title="5">normalizing_factor &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/Round.html">round</a></span>(x, <span class="op">-</span>digits)</a>
 <a class="sourceLine" id="cb17-6" title="6">m_nnet &lt;-<span class="st"> </span><span class="kw">nnet</span>(life_length<span class="op">/</span>normalizing_factor <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> dragons, <span class="dt">size =</span> <span class="dv">10</span>, <span class="dt">linout =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>#&gt; # weights:  111
-#&gt; initial  value 792.452539 
-#&gt; iter  10 value 33.249003
-#&gt; iter  20 value 27.533834
-#&gt; iter  30 value 27.414737
-#&gt; iter  40 value 26.982013
-#&gt; iter  50 value 26.499661
-#&gt; iter  60 value 23.239957
-#&gt; iter  70 value 16.146633
-#&gt; iter  80 value 9.477458
-#&gt; iter  90 value 7.864370
-#&gt; iter 100 value 2.600769
-#&gt; final  value 2.600769 
+#&gt; initial  value 562.613474 
+#&gt; iter  10 value 253.586437
+#&gt; iter  20 value 38.679320
+#&gt; iter  30 value 27.471827
+#&gt; iter  40 value 27.370420
+#&gt; iter  50 value 27.211304
+#&gt; iter  60 value 26.967022
+#&gt; iter  70 value 26.867738
+#&gt; iter  80 value 26.823521
+#&gt; iter  90 value 26.434314
+#&gt; iter 100 value 21.326266
+#&gt; final  value 21.326266 
 #&gt; stopped after 100 iterations</code></pre>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1">p_fun &lt;-<span class="st"> </span><span class="cf">function</span>(model, new_observation){</a>
 <a class="sourceLine" id="cb19-2" title="2">  <span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(model, <span class="dt">newdata =</span> new_observation)<span class="op">*</span>normalizing_factor</a>

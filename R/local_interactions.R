@@ -28,7 +28,7 @@
 #' @examples
 #' library("DALEX")
 #' library("iBreakDown")
-#'
+#' set.seed(1313)
 #' model_titanic_glm <- glm(survived ~ gender + age + fare,
 #'                        data = titanic_imputed, family = "binomial")
 #' explain_titanic_glm <- explain(model_titanic_glm,
@@ -36,9 +36,9 @@
 #'                            y = titanic_imputed$survived,
 #'                            label = "glm")
 #'
-#' bd_rf <- local_interactions(explain_titanic_glm, titanic_imputed[1, ], interaction_preference = 500)
-#' bd_rf
-#' plot(bd_rf, max_features = 2)
+#' bd_glm <- local_interactions(explain_titanic_glm, titanic_imputed[1, ], interaction_preference = 500)
+#' bd_glm
+#' plot(bd_glm, max_features = 2)
 #'
 #' \donttest{
 #' library("randomForest")

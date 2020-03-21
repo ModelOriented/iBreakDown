@@ -85,7 +85,7 @@ with a default value set to B=25." />
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">1.1</span>
+          <span class="version version-default">1.1.0</span>
         </div>
       </div>
     </div>
@@ -240,7 +240,7 @@ with a default value set to <code>B=25</code>.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"iBreakDown"</span>)
-
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1313</span>)
 <span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>survived</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>fare</span>,
                        <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
 <span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
@@ -259,25 +259,25 @@ with a default value set to <code>B=25</code>.</p>
 #&gt;   -&gt; residuals         :  numerical, min =  -0.8898433 , mean =  4.198219e-13 , max =  0.8448637  
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='co'># there is no explanation level uncertanity linked with additive models</span>
-<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>break_down_uncertainty</span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_imputed</span>[<span class='fl'>1</span>, ])
-<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                     min          q1      median        mean
-#&gt; glm: age = 42               -0.01514903 -0.01492541 -0.01396446 -0.01437120
+<span class='no'>bd_glm</span> <span class='kw'>&lt;-</span> <span class='fu'>break_down_uncertainty</span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_imputed</span>[<span class='fl'>1</span>, ])
+<span class='no'>bd_glm</span></div><div class='output co'>#&gt;                                     min          q1      median        mean
+#&gt; glm: age = 42               -0.01492541 -0.01492541 -0.01434645 -0.01446344
 #&gt; glm: class = 3rd             0.00000000  0.00000000  0.00000000  0.00000000
 #&gt; glm: embarked = Southampton  0.00000000  0.00000000  0.00000000  0.00000000
-#&gt; glm: fare = 7.11            -0.01823177 -0.01823177 -0.01804077 -0.01776589
-#&gt; glm: gender = male          -0.10843751 -0.10725651 -0.10725651 -0.10731564
+#&gt; glm: fare = 7.11            -0.01823177 -0.01784977 -0.01784977 -0.01773120
+#&gt; glm: gender = male          -0.10843751 -0.10725651 -0.10725651 -0.10725810
 #&gt; glm: parch = 0               0.00000000  0.00000000  0.00000000  0.00000000
 #&gt; glm: sibsp = 0               0.00000000  0.00000000  0.00000000  0.00000000
 #&gt; glm: survived = 0            0.00000000  0.00000000  0.00000000  0.00000000
 #&gt;                                      q3         max
-#&gt; glm: age = 42               -0.01396446 -0.01396446
+#&gt; glm: age = 42               -0.01405996 -0.01396446
 #&gt; glm: class = 3rd             0.00000000  0.00000000
 #&gt; glm: embarked = Southampton  0.00000000  0.00000000
-#&gt; glm: fare = 7.11            -0.01727439 -0.01705077
+#&gt; glm: fare = 7.11            -0.01741824 -0.01705077
 #&gt; glm: gender = male          -0.10725293 -0.10667755
 #&gt; glm: parch = 0               0.00000000  0.00000000
 #&gt; glm: sibsp = 0               0.00000000  0.00000000
-#&gt; glm: survived = 0            0.00000000  0.00000000</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='break_down_uncertainty-1.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; glm: survived = 0            0.00000000  0.00000000</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_glm</span>)</div><div class='img'><img src='break_down_uncertainty-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># \donttest{</span>
 <span class='co'>## Not run:</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
@@ -364,20 +364,24 @@ with a default value set to <code>B=25</code>.</p>
                                      <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"floor"</span>, <span class='st'>"no.rooms"</span>, <span class='st'>"district"</span>,
                                          <span class='st'>"construction.year"</span>, <span class='st'>"surface"</span>))
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='break_down_uncertainty-5.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>shap</span>(<span class='no'>explainer_rf</span>,
-              <span class='no'>apartments_test</span>[<span class='fl'>1</span>,])
-<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                              min        q1    median       mean
-#&gt; randomForest: construction.year = 1976 -128.5908 -127.7759 -116.5361  -97.94983
-#&gt; randomForest: district = Srodmiescie    981.8193 1054.7908 1074.7538 1078.05046
-#&gt; randomForest: floor = 3                 159.4690  172.8786  187.2105  190.61682
-#&gt; randomForest: no.rooms = 5             -233.0194 -209.3096 -204.8655 -183.54147
-#&gt; randomForest: surface = 131            -343.0658 -284.8054 -273.9106 -276.84173
-#&gt;                                                q3        max
-#&gt; randomForest: construction.year = 1976  -69.15964  -47.64365
-#&gt; randomForest: district = Srodmiescie   1100.63043 1139.28110
-#&gt; randomForest: floor = 3                 206.40993  215.52532
-#&gt; randomForest: no.rooms = 5             -135.54778 -130.21186
-#&gt; randomForest: surface = 131            -255.12184 -229.21426</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='break_down_uncertainty-6.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>, <span class='kw'>show_boxplots</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='break_down_uncertainty-7.png' alt='' width='700' height='433' /></div><div class='input'># }
+<span class='co'>#xgboost example</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"xgboost"</span>)
+<span class='no'>model_matrix</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/model.matrix.html'>model.matrix</a></span>(<span class='no'>status</span> <span class='kw'>==</span> <span class='st'>"fired"</span> ~ <span class='no'>.</span> -<span class='fl'>1</span>, <span class='no'>HR</span>)
+<span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/xgboost/man/xgb.DMatrix.html'>xgb.DMatrix</a></span>(<span class='no'>model_matrix</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span> <span class='kw'>==</span> <span class='st'>"fired"</span>)
+
+<span class='no'>params</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>max_depth</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>eta</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>silent</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>nthread</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+               <span class='kw'>objective</span> <span class='kw'>=</span> <span class='st'>"binary:logistic"</span>, <span class='kw'>eval_metric</span> <span class='kw'>=</span> <span class='st'>"auc"</span>)
+
+<span class='no'>model_HR</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/xgboost/man/xgb.train.html'>xgb.train</a></span>(<span class='no'>params</span>, <span class='no'>data</span>, <span class='kw'>nrounds</span> <span class='kw'>=</span> <span class='fl'>50</span>)
+
+<span class='no'>explainer_HR</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model_HR</span>,
+                        <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>model_matrix</span>,
+                        <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span> <span class='kw'>==</span> <span class='st'>"fired"</span>,
+                        <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='no'>bd</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='break_down.html'>break_down</a></span>(<span class='no'>explainer_HR</span>, <span class='no'>model_matrix</span>[<span class='fl'>1</span>,,<span class='kw'>drop</span><span class='kw'>=</span><span class='fl'>FALSE</span>])
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd</span>)</div><div class='img'><img src='break_down_uncertainty-6.png' alt='' width='700' height='433' /></div><div class='input'><span class='no'>s</span> <span class='kw'>&lt;-</span> <span class='fu'>shap</span>(<span class='no'>explainer_HR</span>, <span class='no'>model_matrix</span>[<span class='fl'>1</span>,,<span class='kw'>drop</span><span class='kw'>=</span><span class='fl'>FALSE</span>])
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>s</span>)</div><div class='img'><img src='break_down_uncertainty-7.png' alt='' width='700' height='433' /></div><div class='input'># }
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

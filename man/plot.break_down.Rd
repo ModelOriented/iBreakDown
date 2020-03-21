@@ -56,7 +56,7 @@ Displays a waterfall break down plot for objects of \code{break_down} class.
 \examples{
 library("DALEX")
 library("iBreakDown")
-
+set.seed(1313)
 model_titanic_glm <- glm(survived ~ gender + age + fare,
                        data = titanic_imputed, family = "binomial")
 explain_titanic_glm <- explain(model_titanic_glm,
@@ -64,10 +64,10 @@ explain_titanic_glm <- explain(model_titanic_glm,
                            y = titanic_imputed$survived,
                            label = "glm")
 
-bd_rf <- break_down(explain_titanic_glm, titanic_imputed[1, ])
-bd_rf
-plot(bd_rf, max_features = 3)
-plot(bd_rf, max_features = 3,
+bd_glm <- break_down(explain_titanic_glm, titanic_imputed[1, ])
+bd_glm
+plot(bd_glm, max_features = 3)
+plot(bd_glm, max_features = 3,
      vnames = c("average","+ male","+ young","+ cheap ticket", "+ other factors", "final"))
 
 \donttest{

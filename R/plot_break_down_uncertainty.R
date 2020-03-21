@@ -14,7 +14,7 @@
 #' @examples
 #' library("DALEX")
 #' library("iBreakDown")
-#'
+#' set.seed(1313)
 #' model_titanic_glm <- glm(survived ~ gender + age + fare,
 #'                        data = titanic_imputed, family = "binomial")
 #' explain_titanic_glm <- explain(model_titanic_glm,
@@ -22,10 +22,10 @@
 #'                            y = titanic_imputed$survived,
 #'                            label = "glm")
 #'
-#' sh_rf <- shap(explain_titanic_glm, titanic_imputed[1, ])
+#' sh_glm <- shap(explain_titanic_glm, titanic_imputed[1, ])
 #'
-#' sh_rf
-#' plot(sh_rf)
+#' sh_glm
+#' plot(sh_glm)
 #'
 #' \donttest{
 #' ## Not run:

@@ -87,7 +87,7 @@ And in the second step the impact is calculated." />
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">1.1</span>
+          <span class="version version-default">1.1.0</span>
         </div>
       </div>
     </div>
@@ -236,7 +236,7 @@ And in the second step the impact is calculated.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"iBreakDown"</span>)
-
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1313</span>)
 <span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>survived</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>fare</span>,
                        <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
 <span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
@@ -254,8 +254,8 @@ And in the second step the impact is calculated.</p>
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; residuals         :  numerical, min =  -0.8898433 , mean =  4.198219e-13 , max =  0.8448637  
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
-<span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>local_interactions</span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_imputed</span>[<span class='fl'>1</span>, ], <span class='kw'>interaction_preference</span> <span class='kw'>=</span> <span class='fl'>500</span>)
-<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                              contribution
+<span class='no'>bd_glm</span> <span class='kw'>&lt;-</span> <span class='fu'>local_interactions</span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_imputed</span>[<span class='fl'>1</span>, ], <span class='kw'>interaction_preference</span> <span class='kw'>=</span> <span class='fl'>500</span>)
+<span class='no'>bd_glm</span></div><div class='output co'>#&gt;                              contribution
 #&gt; glm: intercept                      0.322
 #&gt; glm: fare:gender = 7.11:male       -0.125
 #&gt; glm: age = 42                      -0.014
@@ -264,7 +264,7 @@ And in the second step the impact is calculated.</p>
 #&gt; glm: sibsp = 0                      0.000
 #&gt; glm: parch = 0                      0.000
 #&gt; glm: survived = 0                   0.000
-#&gt; glm: prediction                     0.183</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>, <span class='kw'>max_features</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='img'><img src='local_interactions-1.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; glm: prediction                     0.183</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_glm</span>, <span class='kw'>max_features</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='img'><img src='local_interactions-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># \donttest{</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
 <span class='co'># example with interaction</span>
@@ -285,27 +285,27 @@ And in the second step the impact is calculated.</p>
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>local_interactions</span>(<span class='no'>explainer_rf</span>,
                  <span class='no'>new_observation</span>)
 
-<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                                contribution
-#&gt; randomForest.fired: intercept                         0.820
-#&gt; randomForest.fired: salary = 2                       -0.292
-#&gt; randomForest.fired: age = 57.73                       0.344
-#&gt; randomForest.fired: evaluation = 2                   -0.068
-#&gt; randomForest.fired: hours = 42.32                    -0.042
-#&gt; randomForest.fired: gender = male                     0.000
-#&gt; randomForest.fired: prediction                        0.762
-#&gt; randomForest.ok: intercept                            0.996
-#&gt; randomForest.ok: salary = 2                          -0.668
-#&gt; randomForest.ok: age = 57.73                         -0.024
-#&gt; randomForest.ok: hours = 42.32                       -0.050
-#&gt; randomForest.ok: gender = male                        0.508
-#&gt; randomForest.ok: evaluation = 2                       0.000
-#&gt; randomForest.ok: prediction                           0.236
-#&gt; randomForest.promoted: intercept                      0.992
-#&gt; randomForest.promoted: salary = 2                    -0.554
-#&gt; randomForest.promoted: evaluation = 2                -0.336
-#&gt; randomForest.promoted: hours:age = 42.32:57.73        0.660
-#&gt; randomForest.promoted: gender = male                  0.000
-#&gt; randomForest.promoted: prediction                     0.002</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='local_interactions-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                          contribution
+#&gt; randomForest.fired: intercept                   0.846
+#&gt; randomForest.fired: salary = 2                 -0.352
+#&gt; randomForest.fired: age = 57.73                 0.396
+#&gt; randomForest.fired: evaluation = 2             -0.084
+#&gt; randomForest.fired: hours = 42.32              -0.028
+#&gt; randomForest.fired: gender = male               0.000
+#&gt; randomForest.fired: prediction                  0.778
+#&gt; randomForest.ok: intercept                      0.990
+#&gt; randomForest.ok: salary = 2                    -0.632
+#&gt; randomForest.ok: hours:age = 42.32:57.73       -0.154
+#&gt; randomForest.ok: gender = male                  0.574
+#&gt; randomForest.ok: evaluation = 2                 0.000
+#&gt; randomForest.ok: prediction                     0.218
+#&gt; randomForest.promoted: intercept                0.990
+#&gt; randomForest.promoted: salary = 2              -0.588
+#&gt; randomForest.promoted: evaluation = 2          -0.304
+#&gt; randomForest.promoted: age = 57.73              0.802
+#&gt; randomForest.promoted: hours = 42.32           -0.122
+#&gt; randomForest.promoted: gender = male            0.000
+#&gt; randomForest.promoted: prediction               0.004</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='local_interactions-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># example for regression - apartment prices</span>
 <span class='co'># here we do not have intreactions</span>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
@@ -317,9 +317,9 @@ And in the second step the impact is calculated.</p>
 #&gt;   -&gt; target variable   :  1000  values 
 #&gt;   -&gt; model_info        :  package randomForest , ver. 4.6.14 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;   -&gt; predict function  :  yhat.randomForest  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; predicted values  :  numerical, min =  2071.208 , mean =  3490.735 , max =  5749.387  
+#&gt;   -&gt; predicted values  :  numerical, min =  2043.066 , mean =  3487.722 , max =  5773.976  
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; residuals         :  numerical, min =  -621.9212 , mean =  -1.955477 , max =  1298.75  
+#&gt;   -&gt; residuals         :  numerical, min =  -630.6766 , mean =  1.057813 , max =  1256.239  
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='no'>new_observation</span> <span class='kw'>&lt;-</span> <span class='no'>apartments_test</span>[<span class='fl'>1</span>,]
 
@@ -328,13 +328,13 @@ And in the second step the impact is calculated.</p>
                  <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                        contribution
-#&gt; randomForest: intercept                    3490.735
-#&gt; randomForest: district = Srodmiescie       1066.958
-#&gt; randomForest: surface = 131                -334.007
-#&gt; randomForest: no.rooms = 5                 -155.340
-#&gt; randomForest: floor = 3                     160.071
-#&gt; randomForest: construction.year = 1976      -30.780
-#&gt; randomForest: prediction                   4197.637</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='local_interactions-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: `fun.y` is deprecated. Use `fun` instead.</span></div><div class='img'><img src='local_interactions-4.png' alt='' width='700' height='433' /></div><div class='input'># }
+#&gt; randomForest: intercept                    3487.722
+#&gt; randomForest: district = Srodmiescie       1034.737
+#&gt; randomForest: surface = 131                -315.991
+#&gt; randomForest: no.rooms = 5                 -163.113
+#&gt; randomForest: floor = 3                     150.529
+#&gt; randomForest: construction.year = 1976      -24.021
+#&gt; randomForest: prediction                   4169.863</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>)</div><div class='img'><img src='local_interactions-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: `fun.y` is deprecated. Use `fun` instead.</span></div><div class='img'><img src='local_interactions-4.png' alt='' width='700' height='433' /></div><div class='input'># }
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

@@ -59,7 +59,7 @@ Plots shapley values.
 \examples{
 library("DALEX")
 library("iBreakDown")
-
+set.seed(1313)
 model_titanic_glm <- glm(survived ~ gender + age + fare,
                        data = titanic_imputed, family = "binomial")
 explain_titanic_glm <- explain(model_titanic_glm,
