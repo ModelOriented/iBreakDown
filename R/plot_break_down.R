@@ -115,6 +115,8 @@ plot.break_down <- function(x, ...,
                             plot_distributions = FALSE,
                             vnames = NULL) {
   position <- cumulative <- prev <- pretty_text <- right_side <- contribution <- NULL
+  # fix for https://github.com/ModelOriented/iBreakDown/issues/77
+  colnames(x) <- gsub(colnames(x), pattern = "cummulative", replacement = "cumulative")
 
   if (plot_distributions) {
     df <- attr(x, "yhats_distribution")

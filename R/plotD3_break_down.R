@@ -78,6 +78,8 @@ plotD3.break_down <- function(x, ...,
                         vcolors = NA,
                         chart_title = NA,
                         time = 0) {
+  # fix for https://github.com/ModelOriented/iBreakDown/issues/77
+  colnames(x) <- gsub(colnames(x), pattern = "cummulative", replacement = "cumulative")
 
   n <- length(list(...)) + 1
   m <- c()

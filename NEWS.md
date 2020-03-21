@@ -1,3 +1,7 @@
+iBreakDown 1.0.1
+----------------------------------------------------------------
+* `plot` and `plotD3` work now   [#77](https://github.com/ModelOriented/iBreakDown/issues/77)
+
 iBreakDown 1.0
 ----------------------------------------------------------------
 * Argument `vnames` added to `plot.break_down` to change freely labels 

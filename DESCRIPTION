@@ -1,6 +1,6 @@
 Package: iBreakDown
 Title: Model Agnostic Instance Level Variable Attributions
-Version: 1.0
+Version: 1.0.1
 Authors@R: c(person("Przemyslaw", "Biecek", email = "przemyslaw.biecek@gmail.com", role = c("aut", "cre")),
     person("Alicja", "Gosiewska", role = "aut"),
     person("Hubert", "Baniecki", role = "aut"),
