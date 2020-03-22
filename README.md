@@ -33,7 +33,7 @@ devtools::install_github("ModelOriented/iBreakDown")
 
 Find lots of R examples at `iBreakDown` website: https://ModelOriented.github.io/iBreakDown/
 
-Methodology behind the **iBreakDown** package is described in the [arxiv paper](https://arxiv.org/abs/1903.11420) and [VEEDD book](https://pbiecek.github.io/PM_VEE/breakDown.html).
+Methodology behind the **iBreakDown** package is described in the [arxiv paper](https://arxiv.org/abs/1903.11420) and [Explanatory Model Analysis](https://pbiecek.github.io/ema/breakDown.html) book.
 
 This version also works with **D3**! 
 [see an example](https://modeloriented.github.io/iBreakDown/prototypeDemo.html) and [demo](https://modeloriented.github.io/iBreakDown/articles/vignette_iBreakDown_titanic.html#plot-attributions-with-d3)
