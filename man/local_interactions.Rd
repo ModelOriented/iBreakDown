@@ -63,7 +63,8 @@ explain_titanic_glm <- explain(model_titanic_glm,
                            y = titanic_imputed$survived,
                            label = "glm")
 
-bd_glm <- local_interactions(explain_titanic_glm, titanic_imputed[1, ], interaction_preference = 500)
+bd_glm <- local_interactions(explain_titanic_glm, titanic_imputed[1, ],
+       interaction_preference = 500)
 bd_glm
 plot(bd_glm, max_features = 2)
 

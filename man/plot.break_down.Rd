@@ -16,7 +16,9 @@
   add_contributions = TRUE,
   shift_contributions = 0.05,
   plot_distributions = FALSE,
-  vnames = NULL
+  vnames = NULL,
+  title = "Break Down profile",
+  subtitle = NULL
 )
 }
 \arguments{
@@ -46,6 +48,11 @@ This should be \code{\link{signif}} which keeps a specified number of significan
 \code{\link{break_down}}, \code{\link{local_attributions}}, or \code{\link{local_interactions}}.}
 
 \item{vnames}{a character vector, if specified then will be used as labels on OY axis. By default NULL}
+
+\item{title}{a character. Plot title. By default "Break Down profile".}
+
+\item{subtitle}{a character. Plot subtitle. By default \code{NULL} - then subtitle is set to "created for the XXX, YYY model",
+where XXX, YYY are labels of given explainers.}
 }
 \value{
 a \code{ggplot2} object.
