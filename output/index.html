@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1"
+    crossorigin="anonymous">
+
+  <link rel="stylesheet" type="text/css" href="./mi2template.css">
+  <link rel="stylesheet" type="text/css" href="./style.css">
+
+  <script>
+    function makeHelpPanel(help_link, docs_link) {
+      return '\
+            <div class="help-panel">\
+              <div class="title"><i class="fa fa-question" aria-hidden="true"></i> Helpful resources</div>\
+              <a href="' + docs_link + '" target="_blank">Technical documentation</a>\
+              <a href="' + help_link + '" target="_blank">Business description</a>\
+            </div>\
+            ';
+    };
+
+    function renderHelpPanels() {
+      var panel = document.getElementsByTagName("help-panel")[0];
+
+      while(panel) {
+        var docs_url = panel.attributes["docs-url"].value; 
+        var help_url = panel.attributes["help-url"].value;
+        
+        var html = makeHelpPanel(help_url, docs_url);
+        panel.outerHTML = html;
+
+        panel = document.getElementsByTagName("help-panel")[0]; 
+        // Not iterating the result because it changes after each iteration
+      }
+    }
+
+    $(document).ready(function(){
+      renderHelpPanels();
+    });
+  </script>
+</head>
+
+<body>
+
+  <div class="container template-home">
+
+    <header>
+      <div class="navbar navbar-default navbar-fixed-top navbar-mi2" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            </a>
+            <a class="navbar-brand navbar-mi2" href="./index.html">modelDown</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-mi2 nav navbar-nav">
+              <li>
+                <a href="./index.html">
+                  <span class="fa fa-home fa-lg"></span>
+
+                </a>
+              </li>
+
+              <li>
+                  <a href="./model_performance/index.html">Model Performance</a>
+              </li>
+              <li>
+                  <a href="./variable_importance/index.html">Variable Importance</a>
+              </li>
+              <li>
+                  <a href="./variable_response/index.html">Variable Response</a>
+              </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right"></ul>
+          </div>
+          <!--/.nav-collapse -->
+        </div>
+        <!--/.container -->
+      </div>
+      <!--/.navbar -->
+    </header>
+
+    <div class="row" style="position: relative; margin-bottom:60px;">
+      <header class="intro-header">
+  <div class="container text-center">
+    <h1>modelDown</h1>
+    <p class="lead">Explore your model!</p>
+  </div>
+</header>
+
+
+<br>
+<br>
+
+<div class="row">
+  <div class="col-md-8">
+    <h3 class="my-3">Basic data information</h3>
+    <ul>
+      <li>2207 observations</li>
+      <li>8 columns</li>
+    </ul>
+  </div>
+  <div class="col-md-4" >
+    <h3 class="my-3">Explainers</h3>
+      <ul><li>Regression Forest for Titanic <a href='explainers/Regression Forest for Titanic.rda'>(download)</a></li><li>Logistic regression for Titanic <a href='explainers/Logistic regression for Titanic.rda'>(download)</a></li></ul>
+  </div>
+</div>
+
+<hr>
+
+
+<div class="text-center">
+  <h3 class="my-3">Summaries for numerical variables</h3>
+  <br>
+  <table class="table table-responsive table-bordered table-hover" style="margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> vars </th>
+   <th style="text-align:right;"> n </th>
+   <th style="text-align:right;"> mean </th>
+   <th style="text-align:right;"> sd </th>
+   <th style="text-align:right;"> median </th>
+   <th style="text-align:right;"> trimmed </th>
+   <th style="text-align:right;"> mad </th>
+   <th style="text-align:right;"> min </th>
+   <th style="text-align:right;"> max </th>
+   <th style="text-align:right;"> range </th>
+   <th style="text-align:right;"> skew </th>
+   <th style="text-align:right;"> kurtosis </th>
+   <th style="text-align:right;"> se </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> age </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 2207 </td>
+   <td style="text-align:right;"> 30.4363389 </td>
+   <td style="text-align:right;"> 12.1541707 </td>
+   <td style="text-align:right;"> 29.0000 </td>
+   <td style="text-align:right;"> 29.9275608 </td>
+   <td style="text-align:right;"> 10.37820 </td>
+   <td style="text-align:right;"> 0.1666667 </td>
+   <td style="text-align:right;"> 74.0000 </td>
+   <td style="text-align:right;"> 73.83333 </td>
+   <td style="text-align:right;"> 0.3782730 </td>
+   <td style="text-align:right;"> 0.4787712 </td>
+   <td style="text-align:right;"> 0.2587165 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> fare </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 2207 </td>
+   <td style="text-align:right;"> 19.9916383 </td>
+   <td style="text-align:right;"> 43.3228047 </td>
+   <td style="text-align:right;"> 7.1506 </td>
+   <td style="text-align:right;"> 10.1406824 </td>
+   <td style="text-align:right;"> 10.60148 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:right;"> 512.0607 </td>
+   <td style="text-align:right;"> 512.06070 </td>
+   <td style="text-align:right;"> 5.2269054 </td>
+   <td style="text-align:right;"> 39.3747608 </td>
+   <td style="text-align:right;"> 0.9221794 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> sibsp </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 2207 </td>
+   <td style="text-align:right;"> 0.2958768 </td>
+   <td style="text-align:right;"> 0.8387143 </td>
+   <td style="text-align:right;"> 0.0000 </td>
+   <td style="text-align:right;"> 0.1120543 </td>
+   <td style="text-align:right;"> 0.00000 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:right;"> 8.0000 </td>
+   <td style="text-align:right;"> 8.00000 </td>
+   <td style="text-align:right;"> 5.0122214 </td>
+   <td style="text-align:right;"> 33.9025616 </td>
+   <td style="text-align:right;"> 0.0178531 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> parch </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 2207 </td>
+   <td style="text-align:right;"> 0.2283643 </td>
+   <td style="text-align:right;"> 0.6928283 </td>
+   <td style="text-align:right;"> 0.0000 </td>
+   <td style="text-align:right;"> 0.0492360 </td>
+   <td style="text-align:right;"> 0.00000 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:right;"> 9.0000 </td>
+   <td style="text-align:right;"> 9.00000 </td>
+   <td style="text-align:right;"> 4.8534152 </td>
+   <td style="text-align:right;"> 36.3983203 </td>
+   <td style="text-align:right;"> 0.0147477 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> survived </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 2207 </td>
+   <td style="text-align:right;"> 0.3221568 </td>
+   <td style="text-align:right;"> 0.4674086 </td>
+   <td style="text-align:right;"> 0.0000 </td>
+   <td style="text-align:right;"> 0.2778721 </td>
+   <td style="text-align:right;"> 0.00000 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:right;"> 1.0000 </td>
+   <td style="text-align:right;"> 1.00000 </td>
+   <td style="text-align:right;"> 0.7606307 </td>
+   <td style="text-align:right;"> -1.4220847 </td>
+   <td style="text-align:right;"> 0.0099494 </td>
+  </tr>
+</tbody>
+</table>
+  <hr>
+    <h3 class="my-3">Summaries for categorical variables</h3>
+    <br><table class="table table-responsive table-bordered table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> gender </th>
+   <th style="text-align:right;"> Frequency </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> female </td>
+   <td style="text-align:right;"> 489 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> male </td>
+   <td style="text-align:right;"> 1718 </td>
+  </tr>
+</tbody>
+</table><br><table class="table table-responsive table-bordered table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> class </th>
+   <th style="text-align:right;"> Frequency </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> 1st </td>
+   <td style="text-align:right;"> 324 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2nd </td>
+   <td style="text-align:right;"> 284 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 3rd </td>
+   <td style="text-align:right;"> 709 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> deck crew </td>
+   <td style="text-align:right;"> 66 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> engineering crew </td>
+   <td style="text-align:right;"> 324 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> restaurant staff </td>
+   <td style="text-align:right;"> 69 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> victualling crew </td>
+   <td style="text-align:right;"> 431 </td>
+  </tr>
+</tbody>
+</table><br><table class="table table-responsive table-bordered table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> embarked </th>
+   <th style="text-align:right;"> Frequency </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Belfast </td>
+   <td style="text-align:right;"> 197 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Cherbourg </td>
+   <td style="text-align:right;"> 271 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Queenstown </td>
+   <td style="text-align:right;"> 123 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Southampton </td>
+   <td style="text-align:right;"> 1616 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+
+<br>
+<br>
+    </div>
+
+
+  <footer>
+    <div class="footer">
+      <div class="text-center">Site built with <a href="https://github.com/MI2DataLab/modelDown">modelDown</a>.</div>
+      <div class="text-center" style="margin: 0px 0px 5px;">Last updated: 2020-03-22 01:26:52 (session_info: <a href="session_info/session_info.txt">.txt</a>, <a href="session_info/session_info.rda">.rda</a>)</div>
+    </div>
+  </footer>
+
+  </div>
+
+</body>
+</html>

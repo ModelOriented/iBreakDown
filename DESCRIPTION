@@ -27,7 +27,8 @@ RoxygenNote: 7.0.2
 Imports: 
     ggplot2,
     DALEX
-Suggests: knitr,
+Suggests: 
+    knitr,
     rmarkdown,
     randomForest,
     e1071,
@@ -37,7 +38,8 @@ Suggests: knitr,
     testthat,
     r2d3,
     jsonlite,
-    caret
+    caret,
+    covr
 VignetteBuilder: knitr
 URL: https://ModelOriented.github.io/iBreakDown/, https://github.com/ModelOriented/iBreakDown
 BugReports: https://github.com/ModelOriented/iBreakDown/issues

@@ -1,9 +1,0 @@
-pandoc: '2.6'
-pkgdown: 1.4.1
-pkgdown_sha: ~
-articles:
-  vignette_iBreakDown_classification: vignette_iBreakDown_classification.html
-  vignette_iBreakDown_description: vignette_iBreakDown_description.html
-  vignette_iBreakDown_regression: vignette_iBreakDown_regression.html
-  vignette_iBreakDown_titanic: vignette_iBreakDown_titanic.html
-

@@ -1,6 +1,6 @@
 # Model Agnostic Local Attributions  <img src="man/figures/logo.png" align="right" width="150"/>
 
-[![Build Status](https://api.travis-ci.org/ModelOriented/iBreakDown.png)](https://travis-ci.org/ModelOriented/iBreakDown)
+[![R build status](https://github.com/ModelOriented/iBreakDown/workflows/R-CMD-check/badge.svg)](https://github.com/ModelOriented/iBreakDown/actions?query=workflow%3AR-CMD-check)
 [![Coverage
 Status](https://img.shields.io/codecov/c/github/ModelOriented/iBreakDown/master.svg)](https://codecov.io/github/ModelOriented/iBreakDown?branch=master)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/iBreakDown)](https://cran.r-project.org/package=iBreakDown)
@@ -37,7 +37,7 @@ Methodology behind the **iBreakDown** package is described in the [arxiv paper](
 
 This version also works with **D3**! 
 [see an example](https://modeloriented.github.io/iBreakDown/prototypeDemo.html) and [demo](https://modeloriented.github.io/iBreakDown/articles/vignette_iBreakDown_titanic.html#plot-attributions-with-d3)
-![plotD3](images/plotD3.png)
+![plotD3](man/figures/plotD3.png)
 
 ## Acknowledgments
 
