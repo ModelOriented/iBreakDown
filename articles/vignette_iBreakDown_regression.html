@@ -188,12 +188,12 @@
 <span id="cb12-8"><a href="#cb12-8"></a></span>
 <span id="cb12-9"><a href="#cb12-9"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(bd_rf)</span></code></pre></div>
 <pre><code>#&gt;                                                 contribution
-#&gt; randomForest.formula: intercept                     1415.566
-#&gt; randomForest.formula: scars = 4                     -211.111
-#&gt; randomForest.formula: number_of_lost_teeth = 30      199.079
-#&gt; randomForest.formula: weight = 10.02                  -8.345
-#&gt; randomForest.formula: year_of_birth = -938            16.385
-#&gt; randomForest.formula: colour = black                  11.006</code></pre>
+#&gt; randomForest.formula: intercept                     1422.083
+#&gt; randomForest.formula: scars = 4                     -208.756
+#&gt; randomForest.formula: number_of_lost_teeth = 30      193.668
+#&gt; randomForest.formula: weight = 10.02                  -8.013
+#&gt; randomForest.formula: colour = black                   4.713
+#&gt; randomForest.formula: year_of_birth = -938            16.277</code></pre>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(bd_rf)</span></code></pre></div>
 <p><img src="vignette_iBreakDown_regression_files/figure-html/unnamed-chunk-8-1.png" width="576"></p>
 </div>
@@ -237,18 +237,18 @@
 <span id="cb17-5"><a href="#cb17-5"></a>normalizing_factor &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/Round.html">round</a></span>(x, <span class="op">-</span>digits)</span>
 <span id="cb17-6"><a href="#cb17-6"></a>m_nnet &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/nnet/man/nnet.html">nnet</a></span>(life_length<span class="op">/</span>normalizing_factor <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> dragons, <span class="dt">size =</span> <span class="dv">10</span>, <span class="dt">linout =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <pre><code>#&gt; # weights:  111
-#&gt; initial  value 1234.889453 
-#&gt; iter  10 value 28.222763
-#&gt; iter  20 value 27.320110
-#&gt; iter  30 value 26.342759
-#&gt; iter  40 value 11.724756
-#&gt; iter  50 value 9.874749
-#&gt; iter  60 value 9.550341
-#&gt; iter  70 value 6.304201
-#&gt; iter  80 value 1.480809
-#&gt; iter  90 value 0.521402
-#&gt; iter 100 value 0.284543
-#&gt; final  value 0.284543 
+#&gt; initial  value 535.507345 
+#&gt; iter  10 value 32.463440
+#&gt; iter  20 value 28.383219
+#&gt; iter  30 value 24.858769
+#&gt; iter  40 value 16.804820
+#&gt; iter  50 value 9.105795
+#&gt; iter  60 value 8.144871
+#&gt; iter  70 value 4.716759
+#&gt; iter  80 value 1.294682
+#&gt; iter  90 value 0.467591
+#&gt; iter 100 value 0.230188
+#&gt; final  value 0.230188 
 #&gt; stopped after 100 iterations</code></pre>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>p_fun &lt;-<span class="st"> </span><span class="cf">function</span>(model, new_observation){</span>
 <span id="cb19-2"><a href="#cb19-2"></a>  <span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(model, <span class="dt">newdata =</span> new_observation)<span class="op">*</span>normalizing_factor</span>
