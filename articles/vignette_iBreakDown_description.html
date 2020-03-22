@@ -44,7 +44,7 @@
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">1.1.0</span>
+          <span class="version version-default">1.1.0.1</span>
         </div>
       </div>
     </div>
@@ -143,14 +143,14 @@
 #&gt;   -&gt; target variable   :  2099  values 
 #&gt;   -&gt; model_info        :  package randomForest , ver. 4.6.14 , task regression ( [33m default [39m ) 
 #&gt;   -&gt; predict function  :  yhat.randomForest  will be used ( [33m default [39m )
-#&gt;   -&gt; predicted values  :  numerical, min =  0.007326206 , mean =  0.3235284 , max =  0.9936448  
+#&gt;   -&gt; predicted values  :  numerical, min =  0.008310337 , mean =  0.3235926 , max =  0.9922069  
 #&gt;   -&gt; residual function :  difference between y and yhat ( [33m default [39m )
-#&gt;   -&gt; residuals         :  numerical, min =  -0.798099 , mean =  0.0009117939 , max =  0.9008941  
+#&gt;   -&gt; residuals         :  numerical, min =  -0.817291 , mean =  0.0008476318 , max =  0.8965101  
 #&gt;  [32m A new explainer has been created! [39m</code></pre>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>passanger &lt;-<span class="st"> </span>titanic[<span class="kw"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(titanic), <span class="dv">1</span>) ,<span class="op">-</span><span class="dv">9</span>]</span>
 <span id="cb3-2"><a href="#cb3-2"></a>passanger</span></code></pre></div>
-<pre><code>#&gt;    gender age class  embarked country   fare sibsp parch
-#&gt; 73 female  15   3rd Cherbourg Lebanon 7.0407     0     0</code></pre>
+<pre><code>#&gt;     gender age class    embarked country fare sibsp parch
+#&gt; 445   male  47   2nd Southampton England 10.1     0     0</code></pre>
 <p>Now we are ready for generating <code><a href="../reference/break_down_uncertainty.html">shap()</a></code> and <code>iBreakDown()</code> explanations.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>bd_rf &lt;-<span class="st"> </span><span class="kw"><a href="../reference/break_down.html">break_down</a></span>(explain_titanic_rf,</span>
 <span id="cb5-2"><a href="#cb5-2"></a>                    passanger,</span>
@@ -168,17 +168,17 @@
 <a href="#describing-an-explanation" class="anchor"></a>Describing an explanation</h2>
 <p>The displayed explanations despite their visual clarity may not be interpretable for someone not familiar with iBreakDown or shap explanation. Therefore, we generate a simple natural language description for both explainers.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw"><a href="../reference/describe.html">describe</a></span>(bd_rf)</span></code></pre></div>
-<pre><code>#&gt; Random Forest predicts, that the prediction for the selected instance is 0.866 which is higher than the average model prediction.For the selected instance model's prediction is higher, than for 90% of all observations.
+<pre><code>#&gt; Random Forest predicts, that the prediction for the selected instance is 0.103 which is lower than the average model prediction. For the selected instance model's prediction is lower, than for 84% of all observations.
 #&gt; 
-#&gt; The most important variable that increase the prediction is gender.
+#&gt; The most important variable that decrease the prediction is gender.
 #&gt; 
-#&gt; Other variables are with less importance. The contribution of all other variables is 0.176.</code></pre>
+#&gt; Other variables are with less importance. The contribution of all other variables is -0.037.</code></pre>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw"><a href="../reference/describe.html">describe</a></span>(shap_rf)</span></code></pre></div>
-<pre><code>#&gt; Random Forest predicts, that the prediction for the selected instance is 0.866 which is higher than the average model prediction.For the selected instance model's prediction is higher, than for 90% of all observations.
+<pre><code>#&gt; Random Forest predicts, that the prediction for the selected instance is 0.103 which is lower than the average model prediction. For the selected instance model's prediction is lower, than for 84% of all observations.
 #&gt; 
-#&gt; The most important variable that increase the prediction is gender.
+#&gt; The most important variable that decrease the prediction is gender.
 #&gt; 
-#&gt; Other variables are with less importance. The contribution of all other variables is 0.029.</code></pre>
+#&gt; Other variables are with less importance. The contribution of all other variables is -0.017.</code></pre>
 </div>
 <div id="parameters-of-describe-function" class="section level2">
 <h2 class="hasAnchor">
@@ -189,11 +189,11 @@
 <a href="#adjusting-nonsignificance-treshold" class="anchor"></a>Adjusting nonsignificance treshold</h4>
 <p>The nonsignificance treshold controls which predictions are close to the average prediction. By setting a higher value, more predictions will be described as close to the average model prediction and more variables will be described as nonsignificant.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw"><a href="../reference/describe.html">describe</a></span>(bd_rf, <span class="dt">nonsignificance_treshold =</span> <span class="dv">1</span>)</span></code></pre></div>
-<pre><code>#&gt; Random Forest predicts, that the prediction for the selected instance is 0.866 which is higher than the average model prediction.For the selected instance model's prediction is higher, than for 90% of all observations.
+<pre><code>#&gt; Random Forest predicts, that the prediction for the selected instance is 0.103 which is close to the average model prediction. For the selected instance model's prediction is lower, than for 84% of all observations.
 #&gt; 
-#&gt; The most important variable that increase the prediction is gender.
+#&gt; The most important variable that decrease the prediction is gender.
 #&gt; 
-#&gt; Other variables are with less importance. The contribution of all other variables is 0.176.</code></pre>
+#&gt; Other variables are with less importance. The contribution of all other variables is -0.037.</code></pre>
 </div>
 <div id="adjusting-label-of-the-explanation" class="section level4">
 <h4 class="hasAnchor">
@@ -201,65 +201,65 @@
 <p>Label of the prediction could be changed, to display more specific descriptions.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw"><a href="../reference/describe.html">describe</a></span>(bd_rf, </span>
 <span id="cb13-2"><a href="#cb13-2"></a>         <span class="dt">label =</span> <span class="st">"the passanger survived with probability"</span>)</span></code></pre></div>
-<pre><code>#&gt; Random Forest predicts, that the passanger survived with probability 0.866 which is higher than the average model prediction.For the selected instance model's prediction is higher, than for 90% of all observations.
+<pre><code>#&gt; Random Forest predicts, that the passanger survived with probability 0.103 which is lower than the average model prediction. For the selected instance model's prediction is lower, than for 84% of all observations.
 #&gt; 
-#&gt; The most important variable that increase the prediction is gender.
+#&gt; The most important variable that decrease the prediction is gender.
 #&gt; 
-#&gt; Other variables are with less importance. The contribution of all other variables is 0.176.</code></pre>
+#&gt; Other variables are with less importance. The contribution of all other variables is -0.037.</code></pre>
 </div>
 <div id="short-descriptions" class="section level4">
 <h4 class="hasAnchor">
 <a href="#short-descriptions" class="anchor"></a>Short descriptions</h4>
 <p>Generating short descriptions can be useful, as they can make nice plot subtitles.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw"><a href="../reference/describe.html">describe</a></span>(bd_rf, <span class="dt">short_description =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
-<pre><code>#&gt; Random Forest predicts, that the prediction for the selected instance is 0.866. The most important variable, which increases model's prediction, is gender.</code></pre>
+<pre><code>#&gt; Random Forest predicts, that the prediction for the selected instance is 0.103. The most important variable, which decreases model's prediction, is gender.</code></pre>
 </div>
 <div id="displaying-values" class="section level4">
 <h4 class="hasAnchor">
 <a href="#displaying-values" class="anchor"></a>Displaying values</h4>
 <p>Displaying variable values can easily make the description more informative.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="kw"><a href="../reference/describe.html">describe</a></span>(bd_rf, <span class="dt">display_values =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
-<pre><code>#&gt; Random Forest predicts, that the prediction for the selected instance is 0.866 which is higher than the average model prediction.For the selected instance model's prediction is higher, than for 90% of all observations.
+<pre><code>#&gt; Random Forest predicts, that the prediction for the selected instance is 0.103 which is lower than the average model prediction. For the selected instance model's prediction is lower, than for 84% of all observations.
 #&gt; 
-#&gt; The most important variable that increase the prediction is gender (= female).
+#&gt; The most important variable that decrease the prediction is gender (= male).
 #&gt; 
-#&gt; Other variables are with less importance. The contribution of all other variables is 0.176.</code></pre>
+#&gt; Other variables are with less importance. The contribution of all other variables is -0.037.</code></pre>
 </div>
 <div id="displaying-numbers" class="section level4">
 <h4 class="hasAnchor">
 <a href="#displaying-numbers" class="anchor"></a>Displaying numbers</h4>
 <p>Displaying numbers changes the whole argumentation style making the description longer.</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="kw"><a href="../reference/describe.html">describe</a></span>(bd_rf, <span class="dt">display_numbers =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
-<pre><code>#&gt; Random Forest predicts, that the prediction for the selected instance is 0.866 which is higher than the average model prediction 0.324.For the selected instance model's prediction is higher, than for 90% of all observations.
+<pre><code>#&gt; Random Forest predicts, that the prediction for the selected instance is 0.103 which is lower than the average model prediction 0.324. For the selected instance model's prediction is lower, than for 84% of all observations.
 #&gt; 
-#&gt; The most important variable is gender. It increases the prediction by 0.362.
-#&gt; The second most important variable is country. It increases the prediction by 0.13.
-#&gt; The third most important variable is class. It decreases the prediction by 0.125.
+#&gt; The most important variable is gender. It decreases the prediction by 0.099.
+#&gt; The second most important variable is age. It decreases the prediction by 0.046.
+#&gt; The third most important variable is class. It decreases the prediction by 0.038.
 #&gt; 
-#&gt; Other variables are with less importance. The contribution of all other variables is 0.176.</code></pre>
+#&gt; Other variables are with less importance. The contribution of all other variables is -0.037.</code></pre>
 </div>
 <div id="distribution-details" class="section level4">
 <h4 class="hasAnchor">
 <a href="#distribution-details" class="anchor"></a>Distribution details</h4>
 <p>Describing distribution details is useful if we want to have a big picture about other instance’s behaviour.</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="kw"><a href="../reference/describe.html">describe</a></span>(bd_rf, <span class="dt">display_distribution_details =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
-<pre><code>#&gt; Random Forest predicts, that the prediction for the selected instance is 0.866 which is higher than the average model prediction.Model predictions range from 0.007 to 0.994. The distribution of Random Forest's predictions is right-skewed with average equal to 0.324 and median equal to 0.214. The standard deviation is 0.281. Model's prediction for the selected instance is in the fourth quartile.
+<pre><code>#&gt; Random Forest predicts, that the prediction for the selected instance is 0.103 which is lower than the average model prediction.Model predictions range from 0.008 to 0.992. The distribution of Random Forest's predictions is right-skewed with average equal to 0.324 and median equal to 0.209. The standard deviation is 0.28. Model's prediction for the selected instance is in the first quartile.
 #&gt; 
-#&gt; The most important variable that increase the prediction is gender.
+#&gt; The most important variable that decrease the prediction is gender.
 #&gt; 
-#&gt; Other variables are with less importance. The contribution of all other variables is 0.176.</code></pre>
+#&gt; Other variables are with less importance. The contribution of all other variables is -0.037.</code></pre>
 </div>
 <div id="shap" class="section level4">
 <h4 class="hasAnchor">
 <a href="#shap" class="anchor"></a>SHAP</h4>
 <p>Explanations generated by <code><a href="../reference/break_down_uncertainty.html">shap()</a></code> functions have the same arguments expect from <code>display_shap</code> what add an addition information, wheter the calculated variable’s contributions have high or low variability.</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="kw"><a href="../reference/describe.html">describe</a></span>(shap_rf, <span class="dt">display_shap =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
-<pre><code>#&gt; Random Forest predicts, that the prediction for the selected instance is 0.866 which is higher than the average model prediction.For the selected instance model's prediction is higher, than for 90% of all observations.
+<pre><code>#&gt; Random Forest predicts, that the prediction for the selected instance is 0.103 which is lower than the average model prediction. For the selected instance model's prediction is lower, than for 84% of all observations.
 #&gt; 
-#&gt; The most important variable that increase the prediction is gender.
+#&gt; The most important variable that decrease the prediction is gender.
 #&gt; The average contribution of all the above variables is significant.
 #&gt; 
-#&gt; Other variables are with less importance. The contribution of all other variables is 0.029.</code></pre>
+#&gt; Other variables are with less importance. The contribution of all other variables is -0.017.</code></pre>
 </div>
 <div id="combibning-all-the-parameters" class="section level4">
 <h4 class="hasAnchor">
@@ -270,14 +270,14 @@
 <span id="cb25-3"><a href="#cb25-3"></a>         <span class="dt">display_values =</span> <span class="ot">TRUE</span>,</span>
 <span id="cb25-4"><a href="#cb25-4"></a>         <span class="dt">display_numbers =</span> <span class="ot">TRUE</span>,</span>
 <span id="cb25-5"><a href="#cb25-5"></a>         <span class="dt">display_shap =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
-<pre><code>#&gt; Random Forest predicts, that the passanger survived with probability 0.866 which is higher than the average model prediction 0.324.For the selected instance model's prediction is higher, than for 90% of all observations.
+<pre><code>#&gt; Random Forest predicts, that the passanger survived with probability 0.103 which is lower than the average model prediction 0.324. For the selected instance model's prediction is lower, than for 84% of all observations.
 #&gt; 
-#&gt; The most important variable is gender (= female). It increases the prediction by 0.363.
-#&gt; The second most important variable is embarked (= Cherbourg). It increases the prediction by 0.104.
-#&gt; The third most important variable is age (= 15). It increases the prediction by 0.048.
+#&gt; The most important variable is gender (= male). It decreases the prediction by 0.13.
+#&gt; The second most important variable is age (= 47). It decreases the prediction by 0.045.
+#&gt; The third most important variable is fare (= 10.1). It decreases the prediction by 0.029.
 #&gt; The average contribution of all the above variables is significant.
 #&gt; 
-#&gt; Other variables are with less importance. The contribution of all other variables is 0.029.</code></pre>
+#&gt; Other variables are with less importance. The contribution of all other variables is -0.017.</code></pre>
 </div>
 </div>
   </div>
