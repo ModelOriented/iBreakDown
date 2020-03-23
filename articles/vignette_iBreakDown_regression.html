@@ -105,7 +105,7 @@
       <h1 data-toc-skip>iBreakDown plots for regression models</h1>
                         <h4 class="author">Dariusz Komosinski</h4>
             
-            <h4 class="date">2020-03-22</h4>
+            <h4 class="date">2020-03-23</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ModelOriented/iBreakDown/blob/master/vignettes/vignette_iBreakDown_regression.Rmd"><code>vignettes/vignette_iBreakDown_regression.Rmd</code></a></small>
       <div class="hidden name"><code>vignette_iBreakDown_regression.Rmd</code></div>
@@ -115,11 +115,11 @@
     
     
 <p>Here we will use the <code>dragons</code> data from <a href="https://github.com/pbiecek/DALEX"><code>DALEX</code></a> package to present the <code>iBreakDown</code> for regression models.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># devtools::install_github("pbiecek/DALEX")</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(DALEX)</span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(iBreakDown)</span>
-<span id="cb1-4"><a href="#cb1-4"></a></span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(dragons)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="co"># devtools::install_github("pbiecek/DALEX")</span>
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">DALEX</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">iBreakDown</span>)
+
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">dragons</span>)</pre></body></html></div>
 <pre><code>#&gt;   year_of_birth   height   weight scars colour year_of_discovery
 #&gt; 1         -1291 59.40365 15.32391     7    red              1700
 #&gt; 2          1589 46.21374 11.80819     5    red              1700
@@ -134,8 +134,8 @@
 #&gt; 4                   33   1434.4222
 #&gt; 5                   18    985.4905
 #&gt; 6                   20    969.5682</code></pre>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>new_observation &lt;-<span class="st"> </span>dragons_test[<span class="dv">1</span>,]</span>
-<span id="cb3-2"><a href="#cb3-2"></a>new_observation</span></code></pre></div>
+<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">new_observation</span> <span class="kw">&lt;-</span> <span class="no">dragons_test</span>[<span class="fl">1</span>,]
+<span class="no">new_observation</span></pre></body></html></div>
 <pre><code>#&gt;   year_of_birth   height   weight scars colour year_of_discovery
 #&gt; 1          -938 39.18619 10.02391     4  black              1800
 #&gt;   number_of_lost_teeth life_length
@@ -144,15 +144,15 @@
 <h2 class="hasAnchor">
 <a href="#linear-regression" class="anchor"></a>Linear regression</h2>
 <p>First, we fit a model.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>m_lm &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(life_length <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> dragons)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">m_lm</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="no">life_length</span> ~ <span class="no">.</span> , <span class="kw">data</span> <span class="kw">=</span> <span class="no">dragons</span>)</pre></body></html></div>
 <p>To understand the factors that drive predictions for a single observation we use the <code>iBreakDown</code> package.</p>
 <p>Now, we create an object of the <code>break_down</code> class. If we want to plot distributions of partial predictions, set <code>keep_distributions = TRUE</code>.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>bd_lm &lt;-<span class="st"> </span><span class="kw"><a href="../reference/local_attributions.html">local_attributions</a></span>(m_lm,</span>
-<span id="cb6-2"><a href="#cb6-2"></a>                            <span class="dt">data =</span> dragons_test,</span>
-<span id="cb6-3"><a href="#cb6-3"></a>                            <span class="dt">new_observation =</span>  new_observation,</span>
-<span id="cb6-4"><a href="#cb6-4"></a>                            <span class="dt">keep_distributions =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">bd_lm</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/local_attributions.html">local_attributions</a></span>(<span class="no">m_lm</span>,
+                            <span class="kw">data</span> <span class="kw">=</span> <span class="no">dragons_test</span>,
+                            <span class="kw">new_observation</span> <span class="kw">=</span>  <span class="no">new_observation</span>,
+                            <span class="kw">keep_distributions</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
 <p>We can simply print the result.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>bd_lm</span></code></pre></div>
+<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">bd_lm</span></pre></body></html></div>
 <pre><code>#&gt;                               contribution
 #&gt; lm: intercept                     1356.562
 #&gt; lm: scars = 4                     -235.221
@@ -165,64 +165,64 @@
 #&gt; lm: life_length = 1375               0.000
 #&gt; lm: prediction                    1366.174</code></pre>
 <p>Or plot the result which is more clear.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(bd_lm)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">bd_lm</span>)</pre></body></html></div>
 <p><img src="vignette_iBreakDown_regression_files/figure-html/unnamed-chunk-5-1.png" width="576"></p>
 <p>Use the <code>baseline</code> parameter to set the origin of plots.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(bd_lm, <span class="dt">baseline =</span> <span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">bd_lm</span>, <span class="kw">baseline</span> <span class="kw">=</span> <span class="fl">0</span>)</pre></body></html></div>
 <p><img src="vignette_iBreakDown_regression_files/figure-html/unnamed-chunk-6-1.png" width="576"></p>
 <p>Use the <code>plot_distributions</code> parameter to see distributions of partial predictions.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(bd_lm, <span class="dt">plot_distributions =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">bd_lm</span>, <span class="kw">plot_distributions</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
 <p><img src="vignette_iBreakDown_regression_files/figure-html/unnamed-chunk-7-1.png" width="576"></p>
 <p>For another types of models we proceed analogously. However, sometimes we need to create custom predict function (see <code>nnet</code> example).</p>
 </div>
 <div id="randomforest" class="section level2">
 <h2 class="hasAnchor">
 <a href="#randomforest" class="anchor"></a>randomForest</h2>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(randomForest)</span>
-<span id="cb12-2"><a href="#cb12-2"></a></span>
-<span id="cb12-3"><a href="#cb12-3"></a>m_rf &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/randomForest/man/randomForest.html">randomForest</a></span>(life_length <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> dragons)</span>
-<span id="cb12-4"><a href="#cb12-4"></a></span>
-<span id="cb12-5"><a href="#cb12-5"></a>bd_rf &lt;-<span class="st"> </span><span class="kw"><a href="../reference/local_attributions.html">local_attributions</a></span>(m_rf,</span>
-<span id="cb12-6"><a href="#cb12-6"></a>                            <span class="dt">data =</span> dragons_test,</span>
-<span id="cb12-7"><a href="#cb12-7"></a>                            <span class="dt">new_observation =</span>  new_observation)</span>
-<span id="cb12-8"><a href="#cb12-8"></a></span>
-<span id="cb12-9"><a href="#cb12-9"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(bd_rf)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">randomForest</span>)
+
+<span class="no">m_rf</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/randomForest/man/randomForest.html">randomForest</a></span>(<span class="no">life_length</span> ~ <span class="no">.</span> , <span class="kw">data</span> <span class="kw">=</span> <span class="no">dragons</span>)
+
+<span class="no">bd_rf</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/local_attributions.html">local_attributions</a></span>(<span class="no">m_rf</span>,
+                            <span class="kw">data</span> <span class="kw">=</span> <span class="no">dragons_test</span>,
+                            <span class="kw">new_observation</span> <span class="kw">=</span>  <span class="no">new_observation</span>)
+
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">bd_rf</span>)</pre></body></html></div>
 <pre><code>#&gt;                                                 contribution
-#&gt; randomForest.formula: intercept                     1422.083
-#&gt; randomForest.formula: scars = 4                     -208.756
-#&gt; randomForest.formula: number_of_lost_teeth = 30      193.668
-#&gt; randomForest.formula: weight = 10.02                  -8.013
-#&gt; randomForest.formula: colour = black                   4.713
-#&gt; randomForest.formula: year_of_birth = -938            16.277</code></pre>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(bd_rf)</span></code></pre></div>
+#&gt; randomForest.formula: intercept                     1409.378
+#&gt; randomForest.formula: scars = 4                     -212.132
+#&gt; randomForest.formula: number_of_lost_teeth = 30      184.775
+#&gt; randomForest.formula: year_of_birth = -938             7.217
+#&gt; randomForest.formula: weight = 10.02                  -8.364
+#&gt; randomForest.formula: height = 39.19                  -0.950</code></pre>
+<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">bd_rf</span>)</pre></body></html></div>
 <p><img src="vignette_iBreakDown_regression_files/figure-html/unnamed-chunk-8-1.png" width="576"></p>
 </div>
 <div id="svm" class="section level2">
 <h2 class="hasAnchor">
 <a href="#svm" class="anchor"></a>SVM</h2>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(e1071)</span>
-<span id="cb15-2"><a href="#cb15-2"></a></span>
-<span id="cb15-3"><a href="#cb15-3"></a>m_svm &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/e1071/man/svm.html">svm</a></span>(life_length <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> dragons)</span>
-<span id="cb15-4"><a href="#cb15-4"></a></span>
-<span id="cb15-5"><a href="#cb15-5"></a>bd_svm &lt;-<span class="st"> </span><span class="kw"><a href="../reference/local_attributions.html">local_attributions</a></span>(m_svm,</span>
-<span id="cb15-6"><a href="#cb15-6"></a>                            <span class="dt">data =</span> dragons_test,</span>
-<span id="cb15-7"><a href="#cb15-7"></a>                            <span class="dt">new_observation =</span>  new_observation)</span>
-<span id="cb15-8"><a href="#cb15-8"></a></span>
-<span id="cb15-9"><a href="#cb15-9"></a><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(bd_svm)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">e1071</span>)
+
+<span class="no">m_svm</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/e1071/man/svm.html">svm</a></span>(<span class="no">life_length</span> ~ <span class="no">.</span> , <span class="kw">data</span> <span class="kw">=</span> <span class="no">dragons</span>)
+
+<span class="no">bd_svm</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/local_attributions.html">local_attributions</a></span>(<span class="no">m_svm</span>,
+                            <span class="kw">data</span> <span class="kw">=</span> <span class="no">dragons_test</span>,
+                            <span class="kw">new_observation</span> <span class="kw">=</span>  <span class="no">new_observation</span>)
+
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">bd_svm</span>)</pre></body></html></div>
 <p><img src="vignette_iBreakDown_regression_files/figure-html/unnamed-chunk-9-1.png" width="576"></p>
 </div>
 <div id="knn" class="section level2">
 <h2 class="hasAnchor">
 <a href="#knn" class="anchor"></a>knn</h2>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(caret)</span>
-<span id="cb16-2"><a href="#cb16-2"></a></span>
-<span id="cb16-3"><a href="#cb16-3"></a>m_knn &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/caret/man/knnreg.html">knnreg</a></span>(life_length <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> dragons)</span>
-<span id="cb16-4"><a href="#cb16-4"></a></span>
-<span id="cb16-5"><a href="#cb16-5"></a>bd_knn &lt;-<span class="st"> </span><span class="kw"><a href="../reference/local_attributions.html">local_attributions</a></span>(m_knn,</span>
-<span id="cb16-6"><a href="#cb16-6"></a>                            <span class="dt">data =</span> dragons_test,</span>
-<span id="cb16-7"><a href="#cb16-7"></a>                            <span class="dt">new_observation =</span>  new_observation)</span>
-<span id="cb16-8"><a href="#cb16-8"></a></span>
-<span id="cb16-9"><a href="#cb16-9"></a><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(bd_knn)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">caret</span>)
+
+<span class="no">m_knn</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/knnreg.html">knnreg</a></span>(<span class="no">life_length</span> ~ <span class="no">.</span> , <span class="kw">data</span> <span class="kw">=</span> <span class="no">dragons</span>)
+
+<span class="no">bd_knn</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/local_attributions.html">local_attributions</a></span>(<span class="no">m_knn</span>,
+                            <span class="kw">data</span> <span class="kw">=</span> <span class="no">dragons_test</span>,
+                            <span class="kw">new_observation</span> <span class="kw">=</span>  <span class="no">new_observation</span>)
+
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">bd_knn</span>)</pre></body></html></div>
 <p><img src="vignette_iBreakDown_regression_files/figure-html/unnamed-chunk-10-1.png" width="576"></p>
 </div>
 <div id="nnet" class="section level2">
@@ -230,36 +230,36 @@
 <a href="#nnet" class="anchor"></a>nnet</h2>
 <p>When you use <code>nnet</code> package for regression, remember to normalize the resposne variable, in such a way that it is from interval <span class="math inline">\((0,1)\)</span>.</p>
 <p>In this case, creating custom predict function is also needed.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(nnet)</span>
-<span id="cb17-2"><a href="#cb17-2"></a></span>
-<span id="cb17-3"><a href="#cb17-3"></a>x &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span>(dragons<span class="op">$</span>life_length))</span>
-<span id="cb17-4"><a href="#cb17-4"></a>digits &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/Round.html">floor</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/Log.html">log10</a></span>(x))</span>
-<span id="cb17-5"><a href="#cb17-5"></a>normalizing_factor &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/Round.html">round</a></span>(x, <span class="op">-</span>digits)</span>
-<span id="cb17-6"><a href="#cb17-6"></a>m_nnet &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/nnet/man/nnet.html">nnet</a></span>(life_length<span class="op">/</span>normalizing_factor <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> dragons, <span class="dt">size =</span> <span class="dv">10</span>, <span class="dt">linout =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">nnet</span>)
+
+<span class="no">x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span>(<span class="no">dragons</span>$<span class="no">life_length</span>))
+<span class="no">digits</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">floor</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span>(<span class="no">x</span>))
+<span class="no">normalizing_factor</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span>(<span class="no">x</span>, -<span class="no">digits</span>)
+<span class="no">m_nnet</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/nnet/man/nnet.html">nnet</a></span>(<span class="no">life_length</span>/<span class="no">normalizing_factor</span> ~ <span class="no">.</span> , <span class="kw">data</span> <span class="kw">=</span> <span class="no">dragons</span>, <span class="kw">size</span> <span class="kw">=</span> <span class="fl">10</span>, <span class="kw">linout</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
 <pre><code>#&gt; # weights:  111
-#&gt; initial  value 535.507345 
-#&gt; iter  10 value 32.463440
-#&gt; iter  20 value 28.383219
-#&gt; iter  30 value 24.858769
-#&gt; iter  40 value 16.804820
-#&gt; iter  50 value 9.105795
-#&gt; iter  60 value 8.144871
-#&gt; iter  70 value 4.716759
-#&gt; iter  80 value 1.294682
-#&gt; iter  90 value 0.467591
-#&gt; iter 100 value 0.230188
-#&gt; final  value 0.230188 
+#&gt; initial  value 714.500712 
+#&gt; iter  10 value 64.321016
+#&gt; iter  20 value 30.542999
+#&gt; iter  30 value 27.409543
+#&gt; iter  40 value 27.359068
+#&gt; iter  50 value 27.334898
+#&gt; iter  60 value 26.381178
+#&gt; iter  70 value 25.143266
+#&gt; iter  80 value 17.910707
+#&gt; iter  90 value 9.330428
+#&gt; iter 100 value 6.501787
+#&gt; final  value 6.501787 
 #&gt; stopped after 100 iterations</code></pre>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>p_fun &lt;-<span class="st"> </span><span class="cf">function</span>(model, new_observation){</span>
-<span id="cb19-2"><a href="#cb19-2"></a>  <span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(model, <span class="dt">newdata =</span> new_observation)<span class="op">*</span>normalizing_factor</span>
-<span id="cb19-3"><a href="#cb19-3"></a>}</span>
-<span id="cb19-4"><a href="#cb19-4"></a></span>
-<span id="cb19-5"><a href="#cb19-5"></a>bd_nnet &lt;-<span class="st"> </span><span class="kw"><a href="../reference/local_attributions.html">local_attributions</a></span>(m_nnet,</span>
-<span id="cb19-6"><a href="#cb19-6"></a>                            <span class="dt">data =</span> dragons_test,</span>
-<span id="cb19-7"><a href="#cb19-7"></a>                            <span class="dt">new_observation =</span>  new_observation,</span>
-<span id="cb19-8"><a href="#cb19-8"></a>                            <span class="dt">predict_function =</span> p_fun)</span>
-<span id="cb19-9"><a href="#cb19-9"></a></span>
-<span id="cb19-10"><a href="#cb19-10"></a><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(bd_nnet)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="no">p_fun</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">model</span>, <span class="no">new_observation</span>){
+  <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="no">model</span>, <span class="kw">newdata</span> <span class="kw">=</span> <span class="no">new_observation</span>)*<span class="no">normalizing_factor</span>
+}
+
+<span class="no">bd_nnet</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/local_attributions.html">local_attributions</a></span>(<span class="no">m_nnet</span>,
+                            <span class="kw">data</span> <span class="kw">=</span> <span class="no">dragons_test</span>,
+                            <span class="kw">new_observation</span> <span class="kw">=</span>  <span class="no">new_observation</span>,
+                            <span class="kw">predict_function</span> <span class="kw">=</span> <span class="no">p_fun</span>)
+
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">bd_nnet</span>)</pre></body></html></div>
 <p><img src="vignette_iBreakDown_regression_files/figure-html/unnamed-chunk-11-1.png" width="576"></p>
 </div>
   </div>
