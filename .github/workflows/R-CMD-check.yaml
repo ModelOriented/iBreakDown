@@ -67,8 +67,10 @@ jobs:
 
       - name: Install dependencies
         run: |
+          remotes::install_cran('recipes')
           remotes::install_deps(dependencies = TRUE)
-          remotes::install_cran("rcmdcheck")
+          remotes::install_cran('rcmdcheck')
+          Sys.setenv('_R_CHECK_DOC_SIZES_'=FALSE)
         shell: Rscript {0}
 
       - name: Check
