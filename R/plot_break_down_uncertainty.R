@@ -27,7 +27,7 @@
 #' sh_glm
 #' plot(sh_glm)
 #'
-#' \donttest{
+#' \dontrun{
 #' ## Not run:
 #' library("randomForest")
 #' set.seed(1313)

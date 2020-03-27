@@ -32,7 +32,7 @@ bd_glm <- break_down_uncertainty(explain_titanic_glm, titanic_imputed[1, ])
 bd_glm
 plot(bd_glm)
 
-\donttest{
+\dontrun{
 ## Not run:
 library("randomForest")
 set.seed(1313)

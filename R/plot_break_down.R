@@ -46,7 +46,7 @@
 #' plot(bd_glm, max_features = 3,
 #'      vnames = c("average","+ male","+ young","+ cheap ticket", "+ other factors", "final"))
 #'
-#' \donttest{
+#' \dontrun{
 #' ## Not run:
 #' library("randomForest")
 #' set.seed(1313)

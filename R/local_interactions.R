@@ -41,7 +41,7 @@
 #' bd_glm
 #' plot(bd_glm, max_features = 2)
 #'
-#' \donttest{
+#' \dontrun{
 #' library("randomForest")
 #' # example with interaction
 #' # classification for HR data

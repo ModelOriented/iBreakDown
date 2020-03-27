@@ -54,7 +54,7 @@ But can be set to some constants, usefull if these plots are used for comparison
 a \code{r2d3} object.
 }
 \description{
-Plots shapley values.
+Plots Shapley values.
 }
 \examples{
 library("DALEX")
@@ -71,7 +71,9 @@ s_glm <- shap(explain_titanic_glm, titanic_imputed[1, ])
 s_glm
 plotD3(s_glm)
 
-library(randomForest)
+\dontrun{
+## Not run:
+library("randomForest")
 
 HR_small <- HR[2:500,]
 m_rf <- randomForest(status ~. , data = HR_small)
@@ -86,7 +88,7 @@ s_rf <- shap(m_rf,
              predict_function = p_fun)
 
 plotD3(s_rf, time = 500)
-
+}
 }
 \references{
 Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}

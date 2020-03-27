@@ -68,7 +68,7 @@ bd_glm <- local_interactions(explain_titanic_glm, titanic_imputed[1, ],
 bd_glm
 plot(bd_glm, max_features = 2)
 
-\donttest{
+\dontrun{
 library("randomForest")
 # example with interaction
 # classification for HR data

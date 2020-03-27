@@ -64,7 +64,7 @@ bd_glm <- break_down(explain_titanic_glm, titanic_imputed[1, ])
 bd_glm
 plot(bd_glm, max_features = 3)
 
-\donttest{
+\dontrun{
 ## Not run:
 library("randomForest")
 set.seed(1313)

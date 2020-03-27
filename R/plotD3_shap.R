@@ -1,7 +1,7 @@
 #' @title Plot Shap (Break Down Uncertainty) Objects in D3 with r2d3 package.
 #'
 #' @description
-#' Plots shapley values.
+#' Plots Shapley values.
 #'
 #' @param x an explanation created with \code{\link{shap}}
 #' @param ... other parameters.
@@ -39,7 +39,9 @@
 #' s_glm
 #' plotD3(s_glm)
 #'
-#' library(randomForest)
+#' \dontrun{
+#' ## Not run:
+#' library("randomForest")
 #'
 #' HR_small <- HR[2:500,]
 #' m_rf <- randomForest(status ~. , data = HR_small)
@@ -54,7 +56,7 @@
 #'              predict_function = p_fun)
 #'
 #' plotD3(s_rf, time = 500)
-#'
+#'}
 #' @export
 #' @rdname plotD3_shap
 plotD3.shap <- function(x, ...,

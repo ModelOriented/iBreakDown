@@ -1,4 +1,3 @@
-
 #' Model Agnostic Sequential Variable attributions
 #'
 #' This function finds Variable attributions via Sequential Variable Conditioning.
@@ -37,7 +36,7 @@
 #' bd_glm
 #' plot(bd_glm, max_features = 3)
 #'
-#' \donttest{
+#' \dontrun{
 #' ## Not run:
 #' library("randomForest")
 #' set.seed(1313)

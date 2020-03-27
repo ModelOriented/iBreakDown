@@ -35,7 +35,7 @@
 #' bd_glm
 #' plot(bd_glm, max_features = 3)
 #'
-#' \donttest{
+#' \dontrun{
 #' ## Not run:
 #' library("randomForest")
 #' set.seed(1313)

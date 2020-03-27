@@ -45,7 +45,7 @@ sh_glm <- shap(explain_titanic_glm, titanic_imputed[1, ])
 sh_glm
 plot(sh_glm)
 
-\donttest{
+\dontrun{
 ## Not run:
 library("randomForest")
 set.seed(1313)

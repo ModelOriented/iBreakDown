@@ -74,7 +74,7 @@ bd_glm <- local_attributions(explain_titanic_glm, titanic_imputed[1, ])
 bd_glm
 plotD3(bd_glm)
 
-\donttest{
+\dontrun{
 ## Not run:
 library("randomForest")
 

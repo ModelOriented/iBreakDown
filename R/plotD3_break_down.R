@@ -39,7 +39,7 @@
 #' bd_glm
 #' plotD3(bd_glm)
 #'
-#' \donttest{
+#' \dontrun{
 #' ## Not run:
 #' library("randomForest")
 #'
