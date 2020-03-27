@@ -86,7 +86,7 @@ break_down and shap explanations, what enhances their interpretability." />
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">1.1.0.1</span>
+          <span class="version version-default">1.1.1</span>
         </div>
       </div>
     </div>
@@ -244,8 +244,7 @@ Then an explanation due to the chosen scenario is generated.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"iBreakDown"</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)</div><div class='output co'>#&gt; <span class='message'>randomForest 4.6-14</span></div><div class='output co'>#&gt; <span class='message'>Type rfNews() to see new features/changes/bug fixes.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"iBreakDown"</span>)
 
 <span class='no'>titanic</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/na.fail.html'>na.omit</a></span>(<span class='no'>titanic</span>)
 <span class='no'>model_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>class</span> + <span class='no'>embarked</span> +
@@ -259,9 +258,9 @@ Then an explanation due to the chosen scenario is generated.</p>
 #&gt;   -&gt; target variable   :  2099  values 
 #&gt;   -&gt; model_info        :  package randomForest , ver. 4.6.14 , task regression ( <span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;   -&gt; predict function  :  yhat.randomForest  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; predicted values  :  numerical, min =  0.01030509 , mean =  0.3250366 , max =  0.9911191  
+#&gt;   -&gt; predicted values  :  numerical, min =  0.009527628 , mean =  0.3242121 , max =  0.9923461  
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; residuals         :  numerical, min =  -0.7866788 , mean =  -0.0005964265 , max =  0.913759  
+#&gt;   -&gt; residuals         :  numerical, min =  -0.793011 , mean =  0.0002281398 , max =  0.9031877  
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='no'>bd_explanation</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='break_down.html'>break_down</a></span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>titanic</span>[<span class='fl'>1</span>, ], <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_explanation</span>)</div><div class='img'><img src='describe-1.png' alt='' width='700' height='433' /></div><div class='input'>
@@ -272,11 +271,11 @@ Then an explanation due to the chosen scenario is generated.</p>
                         <span class='kw'>display_numbers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
                         <span class='kw'>display_distribution_details</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='no'>description</span></div><div class='output co'>#&gt; Random Forest v7 predicts, that the passanger will survive with probability 0.085 which is lower than the average model prediction 0.325. For the selected instance model's prediction is lower, than for 91% of all observations.
+<span class='no'>description</span></div><div class='output co'>#&gt; Random Forest v7 predicts, that the passanger will survive with probability 0.086 which is lower than the average model prediction 0.324. For the selected instance model's prediction is lower, than for 91% of all observations.
 #&gt; 
 #&gt; The most important variable is gender (= male). It decreases the prediction by 0.102.
-#&gt; The second most important variable is age (= 42). It decreases the prediction by 0.054.
-#&gt; The third most important variable is class (= 3rd). It decreases the prediction by 0.038.
+#&gt; The second most important variable is class (= 3rd). It decreases the prediction by 0.047.
+#&gt; The third most important variable is age (= 42). It decreases the prediction by 0.044.
 #&gt; 
 #&gt; Other variables are with less importance. The contribution of all other variables is -0.045. </div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
@@ -305,11 +304,11 @@ Then an explanation due to the chosen scenario is generated.</p>
          <span class='kw'>display_numbers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Glm predicts, that the selected passanger survives with probability 0.058 which is lower than the average model prediction 0.324. For the selected instance model's prediction is lower, than for 94% of all observations.
 #&gt; 
 #&gt; The most important variable is class. It decreases the prediction by 0.119.
-#&gt; The second most important variable is gender. It decreases the prediction by 0.106.
-#&gt; The third most important variable is age. It decreases the prediction by 0.053.
+#&gt; The second most important variable is gender. It decreases the prediction by 0.102.
+#&gt; The third most important variable is age. It decreases the prediction by 0.055.
 #&gt; The average contribution of all the above variables is significant.
 #&gt; 
-#&gt; Other variables are with less importance. The contribution of all other variables is 0.012. </div><div class='input'>
+#&gt; Other variables are with less importance. The contribution of all other variables is 0.01. </div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
