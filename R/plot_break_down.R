@@ -165,7 +165,7 @@ plot.break_down <- function(x, ...,
     }
 
     # set limits for contributions
-    if (is.na(min_max)) {
+    if (any(is.na(min_max))) {
       x_limits <- scale_y_continuous(expand = c(0.05,0.15), name = "")
     } else {
       x_limits <- scale_y_continuous(expand = c(0.05,0.15), name = "", limits = min_max)
