@@ -4,6 +4,7 @@ iBreakDown 1.1.0
 * fix `xgboost` variable values in `break_down_uncertainty()` [#76](https://github.com/ModelOriented/iBreakDown/issues/76)
 * depend on `R v3.5` to comply with `DALEX`
 * `plot` has now `title` and `subtitle` arguments   [#67](https://github.com/ModelOriented/iBreakDown/issues/67)
+* fix `shap` sign column [#82](https://github.com/ModelOriented/iBreakDown/issues/82)
 
 iBreakDown 1.0
 ----------------------------------------------------------------
