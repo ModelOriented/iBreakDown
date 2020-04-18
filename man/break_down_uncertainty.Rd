@@ -110,24 +110,12 @@ bd_rf <- break_down_uncertainty(explainer_rf,
                                          "construction.year", "surface"))
 plot(bd_rf)
 
-#xgboost example
-library("xgboost")
-model_matrix <- model.matrix(status == "fired" ~ . -1, HR)
-data <- xgb.DMatrix(model_matrix, label = HR$status == "fired")
-
-params <- list(max_depth = 2, eta = 1, silent = 1, nthread = 2,
-               objective = "binary:logistic", eval_metric = "auc")
-
-model_HR <- xgb.train(params, data, nrounds = 50)
-
-explainer_HR <- explain(model_HR,
-                        data = model_matrix,
-                        y = HR$status == "fired",
-                        verbose = FALSE)
-
-bd <- break_down(explainer_HR, model_matrix[1,,drop=FALSE])
+bd <- break_down(explainer_rf,
+                    apartments_test[1,])
 plot(bd)
-s <- shap(explainer_HR, model_matrix[1,,drop=FALSE])
+
+s <- shap(explainer_rf,
+                   apartments_test[1,])
 plot(s)
 }
 }
