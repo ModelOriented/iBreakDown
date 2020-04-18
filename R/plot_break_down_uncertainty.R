@@ -95,7 +95,7 @@ plot.break_down_uncertainty <- function(x, ...,
 
   pl +
     facet_wrap(~label, ncol = 1) +
-    coord_flip() + theme_drwhy_vertical() +
+    coord_flip() + DALEX::theme_drwhy_vertical() +
     theme(legend.position = "none") + xlab("")
 }
 

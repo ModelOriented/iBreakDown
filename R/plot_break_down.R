@@ -24,7 +24,6 @@
 #' @return a \code{ggplot2} object.
 #'
 #' @import ggplot2
-#' @importFrom DALEX theme_drwhy theme_drwhy_vertical colors_breakdown_drwhy
 #' @importFrom utils tail
 #'
 #' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
@@ -179,7 +178,7 @@ plot.break_down <- function(x, ...,
   }
 
   # add theme
-   pl + coord_flip() + theme_drwhy_vertical() +
+   pl + coord_flip() + DALEX::theme_drwhy_vertical() +
      theme(legend.position = "none") +
      labs(title = title, subtitle = subtitle)
 }

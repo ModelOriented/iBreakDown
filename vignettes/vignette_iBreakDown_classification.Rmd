@@ -132,27 +132,3 @@ plot(bd_svm)
 plotD3(bd_svm)
 ```
 
-## xgboost
-
-```{r}
-library("xgboost")
-
-model_matrix <- model.matrix(status == "fired" ~ . -1, HR)
-data <- xgb.DMatrix(model_matrix, label = HR$status == "fired")
-
-params <- list(max_depth = 2, eta = 1, silent = 1, nthread = 2,
-                objective = "binary:logistic", eval_metric = "auc")
-
-m_xgboost <- xgb.train(params, data, nrounds = 50)
-
-test_matrix <- model.matrix(status == "fired" ~ . -1, HR_test)
-observation_matrix <- test_matrix[1,,drop=FALSE]
-
-bd_xgboost <- local_attributions(m_xgboost,
-                                 data = test_matrix,
-                                 new_observation =  observation_matrix)
-
-plot(bd_xgboost)
-plotD3(bd_xgboost)
-```
-
