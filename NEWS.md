@@ -1,3 +1,11 @@
+iBreakDown 1.1.2
+---------------------------------------------------------------
+* fix `shap` sign column [#82](https://github.com/ModelOriented/iBreakDown/issues/82)
+
+iBreakDown 1.1.1
+---------------------------------------------------------------
+* doc fix for `CRAN`
+
 iBreakDown 1.1.0
 ----------------------------------------------------------------
 * `plot` and `plotD3` work now   [#77](https://github.com/ModelOriented/iBreakDown/issues/77)

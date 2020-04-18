@@ -160,6 +160,7 @@ break_down_uncertainty.default <- function(x, data, predict_function = predict,
       result_average <- result_average[order(result_average$label, result_average$variable),]
       result_average$contribution <- rowMeans(extracted_contributions)
       result_average$B <- 0
+      result_average$sign <- sign(result_average$contribution)
       result <- c(list(result_average), result)
     } else {
       # path is a selected ordering
