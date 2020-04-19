@@ -80,10 +80,6 @@ bd_rf <- break_down(explainer_rf,
                            new_observation)
 head(bd_rf)
 plot(bd_rf)
-
-s <- shap(explainer_rf,
-                   apartments_test[1,])
-plot(s)
 }
 }
 \references{

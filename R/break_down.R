@@ -51,10 +51,6 @@
 #'                            new_observation)
 #' head(bd_rf)
 #' plot(bd_rf)
-#'
-#' s <- shap(explainer_rf,
-#'                    apartments_test[1,])
-#' plot(s)
 #' }
 #' @export
 #' @rdname break_down
