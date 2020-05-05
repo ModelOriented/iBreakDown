@@ -1,10 +1,12 @@
-iBreakDown 1.1.2
+iBreakDown (development)
 ---------------------------------------------------------------
-* `DALEX` is moved to Suggests as in  [#84](https://github.com/ModelOriented/iBreakDown/issues/84)
+* ...
 
-iBreakDown 1.1.2
+
+iBreakDown 1.2.0
 ---------------------------------------------------------------
 * fix `shap` sign column [#82](https://github.com/ModelOriented/iBreakDown/issues/82)
+* `DALEX` is moved to Suggests as in  [#84](https://github.com/ModelOriented/iBreakDown/issues/84)
 
 iBreakDown 1.1.1
 ---------------------------------------------------------------
