@@ -99,7 +99,7 @@ break_down and shap explanations, what enhances their interpretability." />
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">1.2.0</span>
+          <span class="version version-default">1.2.0.9000</span>
         </div>
       </div>
     </div>
@@ -256,27 +256,22 @@ variables counteracting with each other
 Then an explanation due to the chosen scenario is generated.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)</div><div class='output co'>#&gt; <span class='message'>randomForest 4.6-14</span></div><div class='output co'>#&gt; <span class='message'>Type rfNews() to see new features/changes/bug fixes.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"iBreakDown"</span>)
+    <pre class="examples"><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"iBreakDown"</span>)
 
 <span class='no'>titanic</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/na.fail.html'>na.omit</a></span>(<span class='no'>titanic</span>)
 <span class='no'>model_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>class</span> + <span class='no'>embarked</span> +
-                                  <span class='no'>fare</span> + <span class='no'>sibsp</span> + <span class='no'>parch</span>,  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The response has five or fewer unique values.  Are you sure you want to do regression?</span></div><div class='input'>
+                                  <span class='no'>fare</span> + <span class='no'>sibsp</span> + <span class='no'>parch</span>,  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>)
+
 <span class='no'>explain_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model_titanic_rf</span>,
                               <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>[ ,-<span class='fl'>9</span>],
                               <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>,
-                              <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Random Forest v7"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  Random Forest v7 
-#&gt;   -&gt; data              :  2099  rows  8  cols 
-#&gt;   -&gt; target variable   :  2099  values 
-#&gt;   -&gt; model_info        :  package randomForest , ver. 4.6.14 , task regression ( <span style='color: #BBBB00;'> default </span><span> ) 
-#&gt;   -&gt; predict function  :  yhat.randomForest  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; predicted values  :  numerical, min =  0.009527628 , mean =  0.3242121 , max =  0.9923461  
-#&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; residuals         :  numerical, min =  -0.793011 , mean =  0.0002281398 , max =  0.9031877  
-#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
+                              <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Random Forest v7"</span>)
+
 <span class='no'>bd_explanation</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='break_down.html'>break_down</a></span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>titanic</span>[<span class='fl'>1</span>, ], <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_explanation</span>)</div><div class='img'><img src='describe-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>bd_explanation</span>)
+
 <span class='no'>description</span> <span class='kw'>&lt;-</span> <span class='fu'>describe</span>(<span class='no'>bd_explanation</span>,
                         <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"the passanger will survive with probability"</span>,
                         <span class='kw'>short_description</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
@@ -284,13 +279,8 @@ Then an explanation due to the chosen scenario is generated.</p>
                         <span class='kw'>display_numbers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
                         <span class='kw'>display_distribution_details</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='no'>description</span></div><div class='output co'>#&gt; Random Forest v7 predicts, that the passanger will survive with probability 0.086 which is lower than the average model prediction 0.324. For the selected instance model's prediction is lower, than for 91% of all observations.
-#&gt; 
-#&gt; The most important variable is gender (= male). It decreases the prediction by 0.102.
-#&gt; The second most important variable is class (= 3rd). It decreases the prediction by 0.047.
-#&gt; The third most important variable is age (= 42). It decreases the prediction by 0.044.
-#&gt; 
-#&gt; Other variables are with less importance. The contribution of all other variables is -0.045. </div><div class='input'>
+<span class='no'>description</span>
+
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"iBreakDown"</span>)
 <span class='no'>titanic</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/na.fail.html'>na.omit</a></span>(<span class='no'>titanic</span>)
@@ -299,30 +289,15 @@ Then an explanation due to the chosen scenario is generated.</p>
 <span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
                               <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>[,-<span class='fl'>9</span>],
                               <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>,
-                              <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"glm"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  glm 
-#&gt;   -&gt; data              :  2099  rows  8  cols 
-#&gt;   -&gt; target variable   :  2099  values 
-#&gt;   -&gt; model_info        :  package stats , ver. 3.6.3 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
-#&gt;   -&gt; predict function  :  yhat.glm  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; predicted values  :  numerical, min =  0.009479803 , mean =  0.3244402 , max =  0.9742069  
-#&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; residuals         :  numerical, min =  -0.9742069 , mean =  -2.864556e-10 , max =  0.9662286  
-#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'><span class='no'>passanger</span> <span class='kw'>&lt;-</span> <span class='no'>titanic</span>[<span class='fl'>1</span>, -<span class='fl'>9</span>]
+                              <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"glm"</span>)
+<span class='no'>passanger</span> <span class='kw'>&lt;-</span> <span class='no'>titanic</span>[<span class='fl'>1</span>, -<span class='fl'>9</span>]
 <span class='no'>shap_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='break_down_uncertainty.html'>shap</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>passanger</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>shap_glm</span>)</div><div class='img'><img src='describe-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>shap_glm</span>)
+
 <span class='fu'>describe</span>(<span class='no'>shap_glm</span>,
          <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"the selected passanger survives with probability"</span>,
          <span class='kw'>display_shap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-         <span class='kw'>display_numbers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Glm predicts, that the selected passanger survives with probability 0.058 which is lower than the average model prediction 0.324. For the selected instance model's prediction is lower, than for 94% of all observations.
-#&gt; 
-#&gt; The most important variable is class. It decreases the prediction by 0.119.
-#&gt; The second most important variable is gender. It decreases the prediction by 0.102.
-#&gt; The third most important variable is age. It decreases the prediction by 0.055.
-#&gt; The average contribution of all the above variables is significant.
-#&gt; 
-#&gt; Other variables are with less importance. The contribution of all other variables is 0.01. </div><div class='input'>
-</div></span></pre>
+         <span class='kw'>display_numbers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

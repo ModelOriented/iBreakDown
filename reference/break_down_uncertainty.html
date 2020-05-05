@@ -101,7 +101,7 @@ with a default value set to B=25." />
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">1.2.0</span>
+          <span class="version version-default">1.2.0.9000</span>
         </div>
       </div>
     </div>
@@ -249,7 +249,7 @@ with a default value set to <code>B=25</code>.</p>
     <div class='dont-index'><p><code><a href='break_down.html'>break_down</a></code>, <code><a href='local_attributions.html'>local_attributions</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
+    <pre class="examples"><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"iBreakDown"</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1313</span>)
 <span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>survived</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>fare</span>,
@@ -257,38 +257,13 @@ with a default value set to <code>B=25</code>.</p>
 <span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
                                <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>,
                                <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>$<span class='no'>survived</span>,
-                           <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"glm"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  glm 
-#&gt;   -&gt; data              :  2207  rows  8  cols 
-#&gt;   -&gt; target variable   :  2207  values 
-#&gt;   -&gt; data              :  A column identical to the target variable `y` has been found in the `data`.  ( <span style='color: #BB0000;'> WARNING </span><span> )
-#&gt;   -&gt; data              :  It is highly recommended to pass `data` without the target variable column
-#&gt;   -&gt; model_info        :  package stats , ver. 3.6.3 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
-#&gt;   -&gt; predict function  :  yhat.glm  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; predicted values  :  numerical, min =  0.1490412 , mean =  0.3221568 , max =  0.9878987  
-#&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; residuals         :  numerical, min =  -0.8898433 , mean =  4.198546e-13 , max =  0.8448637  
-#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
+                           <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"glm"</span>)
+
 <span class='co'># there is no explanation level uncertanity linked with additive models</span>
 <span class='no'>bd_glm</span> <span class='kw'>&lt;-</span> <span class='fu'>break_down_uncertainty</span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_imputed</span>[<span class='fl'>1</span>, ])
-<span class='no'>bd_glm</span></div><div class='output co'>#&gt;                                     min          q1      median        mean
-#&gt; glm: age = 42               -0.01492541 -0.01492541 -0.01434645 -0.01446344
-#&gt; glm: class = 3rd             0.00000000  0.00000000  0.00000000  0.00000000
-#&gt; glm: embarked = Southampton  0.00000000  0.00000000  0.00000000  0.00000000
-#&gt; glm: fare = 7.11            -0.01823177 -0.01784977 -0.01784977 -0.01773120
-#&gt; glm: gender = male          -0.10843751 -0.10725651 -0.10725651 -0.10725810
-#&gt; glm: parch = 0               0.00000000  0.00000000  0.00000000  0.00000000
-#&gt; glm: sibsp = 0               0.00000000  0.00000000  0.00000000  0.00000000
-#&gt; glm: survived = 0            0.00000000  0.00000000  0.00000000  0.00000000
-#&gt;                                      q3         max
-#&gt; glm: age = 42               -0.01405996 -0.01396446
-#&gt; glm: class = 3rd             0.00000000  0.00000000
-#&gt; glm: embarked = Southampton  0.00000000  0.00000000
-#&gt; glm: fare = 7.11            -0.01741824 -0.01705077
-#&gt; glm: gender = male          -0.10725293 -0.10667755
-#&gt; glm: parch = 0               0.00000000  0.00000000
-#&gt; glm: sibsp = 0               0.00000000  0.00000000
-#&gt; glm: survived = 0            0.00000000  0.00000000</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_glm</span>)</div><div class='img'><img src='break_down_uncertainty-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>bd_glm</span>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>bd_glm</span>)
+
 <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'>## Not run:</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
@@ -302,7 +277,7 @@ with a default value set to <code>B=25</code>.</p>
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>break_down_uncertainty</span>(<span class='no'>explainer_rf</span>,
                            <span class='no'>new_observation</span>)
 <span class='no'>bd_rf</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>)
 
 <span class='co'># example for regression - apartment prices</span>
 <span class='co'># here we do not have intreactions</span>
@@ -313,25 +288,25 @@ with a default value set to <code>B=25</code>.</p>
 
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>break_down_uncertainty</span>(<span class='no'>explainer_rf</span>, <span class='no'>apartments_test</span>[<span class='fl'>1</span>,])
 <span class='no'>bd_rf</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>)
 
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>break_down_uncertainty</span>(<span class='no'>explainer_rf</span>, <span class='no'>apartments_test</span>[<span class='fl'>1</span>,], <span class='kw'>path</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>5</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>)
 
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>break_down_uncertainty</span>(<span class='no'>explainer_rf</span>,
                                      <span class='no'>apartments_test</span>[<span class='fl'>1</span>,],
                                      <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"floor"</span>, <span class='st'>"no.rooms"</span>, <span class='st'>"district"</span>,
                                          <span class='st'>"construction.year"</span>, <span class='st'>"surface"</span>))
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>bd_rf</span>)
 
 <span class='no'>bd</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='break_down.html'>break_down</a></span>(<span class='no'>explainer_rf</span>,
                     <span class='no'>apartments_test</span>[<span class='fl'>1</span>,])
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>bd</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>bd</span>)
 
 <span class='no'>s</span> <span class='kw'>&lt;-</span> <span class='fu'>shap</span>(<span class='no'>explainer_rf</span>,
                    <span class='no'>apartments_test</span>[<span class='fl'>1</span>,])
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>s</span>)
-}</div></span></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>s</span>)
+}</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

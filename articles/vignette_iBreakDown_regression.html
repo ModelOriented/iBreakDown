@@ -51,7 +51,7 @@
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">1.2.0</span>
+          <span class="version version-default">1.2.0.9000</span>
         </div>
       </div>
     </div>
@@ -112,7 +112,7 @@
       <h1 data-toc-skip>iBreakDown plots for regression models</h1>
                         <h4 class="author">Dariusz Komosinski</h4>
             
-            <h4 class="date">2020-04-19</h4>
+            <h4 class="date">2020-05-05</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ModelOriented/iBreakDown/blob/master/vignettes/vignette_iBreakDown_regression.Rmd"><code>vignettes/vignette_iBreakDown_regression.Rmd</code></a></small>
       <div class="hidden name"><code>vignette_iBreakDown_regression.Rmd</code></div>
@@ -172,13 +172,13 @@
 #&gt; lm: life_length = 1375               0.000
 #&gt; lm: prediction                    1366.174</code></pre>
 <p>Or plot the result which is more clear.</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">bd_lm</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">bd_lm</span>)</pre></body></html></div>
 <p><img src="vignette_iBreakDown_regression_files/figure-html/unnamed-chunk-5-1.png" width="576"></p>
 <p>Use the <code>baseline</code> parameter to set the origin of plots.</p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">bd_lm</span>, <span class="kw">baseline</span> <span class="kw">=</span> <span class="fl">0</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">bd_lm</span>, <span class="kw">baseline</span> <span class="kw">=</span> <span class="fl">0</span>)</pre></body></html></div>
 <p><img src="vignette_iBreakDown_regression_files/figure-html/unnamed-chunk-6-1.png" width="576"></p>
 <p>Use the <code>plot_distributions</code> parameter to see distributions of partial predictions.</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">bd_lm</span>, <span class="kw">plot_distributions</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">bd_lm</span>, <span class="kw">plot_distributions</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
 <p><img src="vignette_iBreakDown_regression_files/figure-html/unnamed-chunk-7-1.png" width="576"></p>
 <p>For another types of models we proceed analogously. However, sometimes we need to create custom predict function (see <code>nnet</code> example).</p>
 </div>
@@ -195,13 +195,13 @@
 
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">bd_rf</span>)</pre></body></html></div>
 <pre><code>#&gt;                                                 contribution
-#&gt; randomForest.formula: intercept                     1406.393
-#&gt; randomForest.formula: scars = 4                     -214.111
-#&gt; randomForest.formula: number_of_lost_teeth = 30      191.355
-#&gt; randomForest.formula: year_of_birth = -938            11.350
-#&gt; randomForest.formula: weight = 10.02                  -8.490
-#&gt; randomForest.formula: colour = black                   5.519</code></pre>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">bd_rf</span>)</pre></body></html></div>
+#&gt; randomForest.formula: intercept                     1415.632
+#&gt; randomForest.formula: scars = 4                     -209.658
+#&gt; randomForest.formula: number_of_lost_teeth = 30      198.105
+#&gt; randomForest.formula: weight = 10.02                  -4.919
+#&gt; randomForest.formula: colour = black                   9.604
+#&gt; randomForest.formula: year_of_birth = -938            14.682</code></pre>
+<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">bd_rf</span>)</pre></body></html></div>
 <p><img src="vignette_iBreakDown_regression_files/figure-html/unnamed-chunk-8-1.png" width="576"></p>
 </div>
 <div id="svm" class="section level2">
@@ -215,7 +215,7 @@
                             <span class="kw">data</span> <span class="kw">=</span> <span class="no">dragons_test</span>,
                             <span class="kw">new_observation</span> <span class="kw">=</span>  <span class="no">new_observation</span>)
 
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">bd_svm</span>)</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">bd_svm</span>)</pre></body></html></div>
 <p><img src="vignette_iBreakDown_regression_files/figure-html/unnamed-chunk-9-1.png" width="576"></p>
 </div>
 <div id="nnet" class="section level2">
@@ -230,12 +230,19 @@
 <span class="no">normalizing_factor</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span>(<span class="no">x</span>, -<span class="no">digits</span>)
 <span class="no">m_nnet</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/nnet/man/nnet.html">nnet</a></span>(<span class="no">life_length</span>/<span class="no">normalizing_factor</span> ~ <span class="no">.</span> , <span class="kw">data</span> <span class="kw">=</span> <span class="no">dragons</span>, <span class="kw">size</span> <span class="kw">=</span> <span class="fl">10</span>, <span class="kw">linout</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
 <pre><code>#&gt; # weights:  111
-#&gt; initial  value 2229.471028 
-#&gt; iter  10 value 27.498102
-#&gt; iter  10 value 27.498102
-#&gt; iter  10 value 27.498102
-#&gt; final  value 27.498102 
-#&gt; converged</code></pre>
+#&gt; initial  value 324.426871 
+#&gt; iter  10 value 27.427758
+#&gt; iter  20 value 27.422471
+#&gt; iter  30 value 27.419673
+#&gt; iter  40 value 27.399867
+#&gt; iter  50 value 27.393981
+#&gt; iter  60 value 27.392362
+#&gt; iter  70 value 27.387886
+#&gt; iter  80 value 27.375260
+#&gt; iter  90 value 27.362265
+#&gt; iter 100 value 19.115147
+#&gt; final  value 19.115147 
+#&gt; stopped after 100 iterations</code></pre>
 <div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="no">p_fun</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">model</span>, <span class="no">new_observation</span>){
   <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="no">model</span>, <span class="kw">newdata</span> <span class="kw">=</span> <span class="no">new_observation</span>)*<span class="no">normalizing_factor</span>
 }
@@ -245,7 +252,7 @@
                             <span class="kw">new_observation</span> <span class="kw">=</span>  <span class="no">new_observation</span>,
                             <span class="kw">predict_function</span> <span class="kw">=</span> <span class="no">p_fun</span>)
 
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">bd_nnet</span>)</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">bd_nnet</span>)</pre></body></html></div>
 <p><img src="vignette_iBreakDown_regression_files/figure-html/unnamed-chunk-10-1.png" width="576"></p>
 </div>
   </div>
