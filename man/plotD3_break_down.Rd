@@ -40,7 +40,7 @@ This should be \code{\link{signif}} which keeps a specified number of significan
 
 \item{bar_width}{width of bars in px. By default it's 12px}
 
-\item{margin}{extend x axis domain range to adjust the plot. Usually value between 0.1 and 0.3, by default it's 0.2}
+\item{margin}{extend x axis domain range to adjust the plot. Usually value between 0.1 and 0.3, by default it's \code{0.2}}
 
 \item{scale_height}{if \code{TRUE}, the height of the plot scales with window size}
 
