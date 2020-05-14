@@ -112,7 +112,7 @@
       <h1 data-toc-skip>iBreakDown plots for regression models</h1>
                         <h4 class="author">Dariusz Komosinski</h4>
             
-            <h4 class="date">2020-05-05</h4>
+            <h4 class="date">2020-05-14</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ModelOriented/iBreakDown/blob/master/vignettes/vignette_iBreakDown_regression.Rmd"><code>vignettes/vignette_iBreakDown_regression.Rmd</code></a></small>
       <div class="hidden name"><code>vignette_iBreakDown_regression.Rmd</code></div>
@@ -195,12 +195,12 @@
 
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">bd_rf</span>)</pre></body></html></div>
 <pre><code>#&gt;                                                 contribution
-#&gt; randomForest.formula: intercept                     1404.352
-#&gt; randomForest.formula: scars = 4                     -215.009
-#&gt; randomForest.formula: number_of_lost_teeth = 30      193.463
-#&gt; randomForest.formula: weight = 10.02                   5.539
-#&gt; randomForest.formula: height = 39.19                  -4.042
-#&gt; randomForest.formula: colour = black                  10.092</code></pre>
+#&gt; randomForest.formula: intercept                     1406.845
+#&gt; randomForest.formula: scars = 4                     -212.325
+#&gt; randomForest.formula: number_of_lost_teeth = 30      182.609
+#&gt; randomForest.formula: weight = 10.02                  -5.208
+#&gt; randomForest.formula: year_of_birth = -938             7.676
+#&gt; randomForest.formula: colour = black                  12.575</code></pre>
 <div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">bd_rf</span>)</pre></body></html></div>
 <p><img src="vignette_iBreakDown_regression_files/figure-html/unnamed-chunk-8-1.png" width="576"></p>
 </div>
@@ -230,18 +230,18 @@
 <span class="no">normalizing_factor</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span>(<span class="no">x</span>, -<span class="no">digits</span>)
 <span class="no">m_nnet</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/nnet/man/nnet.html">nnet</a></span>(<span class="no">life_length</span>/<span class="no">normalizing_factor</span> ~ <span class="no">.</span> , <span class="kw">data</span> <span class="kw">=</span> <span class="no">dragons</span>, <span class="kw">size</span> <span class="kw">=</span> <span class="fl">10</span>, <span class="kw">linout</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
 <pre><code>#&gt; # weights:  111
-#&gt; initial  value 2680.650255 
-#&gt; iter  10 value 40.663509
-#&gt; iter  20 value 27.916211
-#&gt; iter  30 value 19.596402
-#&gt; iter  40 value 11.119035
-#&gt; iter  50 value 8.247570
-#&gt; iter  60 value 3.863293
-#&gt; iter  70 value 0.975870
-#&gt; iter  80 value 0.297974
-#&gt; iter  90 value 0.183333
-#&gt; iter 100 value 0.153793
-#&gt; final  value 0.153793 
+#&gt; initial  value 4147.798281 
+#&gt; iter  10 value 29.036045
+#&gt; iter  20 value 27.461871
+#&gt; iter  30 value 27.132498
+#&gt; iter  40 value 26.930339
+#&gt; iter  50 value 14.997037
+#&gt; iter  60 value 10.005219
+#&gt; iter  70 value 7.112012
+#&gt; iter  80 value 4.743899
+#&gt; iter  90 value 3.996840
+#&gt; iter 100 value 1.387425
+#&gt; final  value 1.387425 
 #&gt; stopped after 100 iterations</code></pre>
 <div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="no">p_fun</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">model</span>, <span class="no">new_observation</span>){
   <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="no">model</span>, <span class="kw">newdata</span> <span class="kw">=</span> <span class="no">new_observation</span>)*<span class="no">normalizing_factor</span>

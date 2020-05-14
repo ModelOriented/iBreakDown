@@ -219,7 +219,7 @@ This should be <code><a href='https://rdrr.io/r/base/Round.html'>signif</a></cod
     </tr>
     <tr>
       <th>margin</th>
-      <td><p>extend x axis domain range to adjust the plot. Usually value between 0.1 and 0.3, by default it's 0.2</p></td>
+      <td><p>extend x axis domain range to adjust the plot. Usually value between 0.1 and 0.3, by default it's <code>0.2</code></p></td>
     </tr>
     <tr>
       <th>scale_height</th>
@@ -283,14 +283,14 @@ But can be set to some constants, usefull if these plots are used for comparison
 #&gt; glm: survived = 0                  0.000
 #&gt; glm: prediction                    0.183</div><div class='input'><span class='fu'>plotD3</span>(<span class='no'>bd_glm</span>)
 
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># \dontrun{</span>
 <span class='co'>## Not run:</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
 
 <span class='no'>m_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span>(<span class='no'>status</span> ~ <span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>[<span class='fl'>2</span>:<span class='fl'>2000</span>,])
 <span class='no'>new_observation</span> <span class='kw'>&lt;-</span> <span class='no'>HR_test</span>[<span class='fl'>1</span>,]
-<span class='no'>new_observation</span>
-
+<span class='no'>new_observation</span></div><div class='output co'>#&gt;   gender      age    hours evaluation salary status
+#&gt; 1   male 57.72683 42.31527          2      2  fired</div><div class='input'>
 <span class='no'>p_fun</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>object</span>, <span class='no'>newdata</span>){<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>object</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>newdata</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"prob"</span>)}
 
 <span class='no'>bd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_attributions.html'>local_attributions</a></span>(<span class='no'>m_rf</span>,
@@ -298,9 +298,32 @@ But can be set to some constants, usefull if these plots are used for comparison
                            <span class='kw'>new_observation</span> <span class='kw'>=</span>  <span class='no'>new_observation</span>,
                            <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>p_fun</span>)
 
-<span class='no'>bd_rf</span>
-<span class='fu'>plotD3</span>(<span class='no'>bd_rf</span>)
-}</div></span></pre>
+<span class='no'>bd_rf</span></div><div class='output co'>#&gt;                                               contribution
+#&gt; randomForest.formula.fired: intercept                0.379
+#&gt; randomForest.formula.fired: hours = 42.32            0.220
+#&gt; randomForest.formula.fired: evaluation = 2           0.054
+#&gt; randomForest.formula.fired: salary = 2              -0.152
+#&gt; randomForest.formula.fired: age = 57.73              0.204
+#&gt; randomForest.formula.fired: gender = male            0.164
+#&gt; randomForest.formula.fired: status = fired           0.000
+#&gt; randomForest.formula.fired: prediction               0.868
+#&gt; randomForest.formula.ok: intercept                   0.280
+#&gt; randomForest.formula.ok: hours = 42.32              -0.030
+#&gt; randomForest.formula.ok: evaluation = 2              0.089
+#&gt; randomForest.formula.ok: salary = 2                  0.154
+#&gt; randomForest.formula.ok: age = 57.73                -0.206
+#&gt; randomForest.formula.ok: gender = male              -0.160
+#&gt; randomForest.formula.ok: status = fired              0.000
+#&gt; randomForest.formula.ok: prediction                  0.128
+#&gt; randomForest.formula.promoted: intercept             0.341
+#&gt; randomForest.formula.promoted: hours = 42.32        -0.189
+#&gt; randomForest.formula.promoted: evaluation = 2       -0.144
+#&gt; randomForest.formula.promoted: salary = 2           -0.002
+#&gt; randomForest.formula.promoted: age = 57.73           0.002
+#&gt; randomForest.formula.promoted: gender = male        -0.004
+#&gt; randomForest.formula.promoted: status = fired        0.000
+#&gt; randomForest.formula.promoted: prediction            0.004</div><div class='input'><span class='fu'>plotD3</span>(<span class='no'>bd_rf</span>)
+<span class='co'># }</span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
