@@ -19,6 +19,7 @@
 #' @param vcolors If \code{NA} (default), DrWhy colors are used.
 #' @param chart_title a character. Set custom title
 #' @param time in ms. Set the animation length
+#' @param max_vars alias for the \code{max_features} parameter.
 #'
 #' @return a \code{r2d3} object.
 #'
@@ -75,9 +76,16 @@ plotD3.break_down <- function(x, ...,
                         min_max = NA,
                         vcolors = NA,
                         chart_title = NA,
-                        time = 0) {
+                        time = 0,
+                        max_vars = NULL) {
   # fix for https://github.com/ModelOriented/iBreakDown/issues/77
   colnames(x) <- gsub(colnames(x), pattern = "cummulative", replacement = "cumulative")
+
+  # aliases
+  if (!is.null(max_vars)) {
+    max_features <- max_vars
+  }
+
 
   n <- length(list(...)) + 1
   m <- c()

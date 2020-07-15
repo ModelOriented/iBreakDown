@@ -20,6 +20,7 @@
 #' @param title a character. Plot title. By default "Break Down profile".
 #' @param subtitle a character. Plot subtitle. By default \code{NULL} - then subtitle is set to "created for the XXX, YYY model",
 #' where XXX, YYY are labels of given explainers.
+#' @param max_vars alias for the \code{max_features} parameter.
 #'
 #' @return a \code{ggplot2} object.
 #'
@@ -115,10 +116,16 @@ plot.break_down <- function(x, ...,
                             plot_distributions = FALSE,
                             vnames = NULL,
                             title = "Break Down profile",
-                            subtitle = NULL) {
+                            subtitle = NULL,
+                            max_vars = NULL) {
   position <- cumulative <- prev <- pretty_text <- right_side <- contribution <- NULL
   # fix for https://github.com/ModelOriented/iBreakDown/issues/77
   colnames(x) <- gsub(colnames(x), pattern = "cummulative", replacement = "cumulative")
+
+  # aliases
+  if (!is.null(max_vars)) {
+    max_features <- max_vars
+  }
 
   # extract labels to use in the default subtitle
   if (is.null(subtitle)) {
