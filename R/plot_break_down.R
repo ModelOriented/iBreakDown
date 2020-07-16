@@ -17,7 +17,7 @@
 #' @param plot_distributions if \code{TRUE} then distributions of conditional propotions will be plotted. This requires \code{keep_distributions=TRUE} in the
 #' \code{\link{break_down}}, \code{\link{local_attributions}}, or \code{\link{local_interactions}}.
 #' @param baseline if numeric then veritical line starts in \code{baseline}.
-#' @param title a character. Plot title. By default "Break Down profile".
+#' @param title a character. Plot title. By default \code{"Break Down profile"}.
 #' @param subtitle a character. Plot subtitle. By default \code{NULL} - then subtitle is set to "created for the XXX, YYY model",
 #' where XXX, YYY are labels of given explainers.
 #' @param max_vars alias for the \code{max_features} parameter.

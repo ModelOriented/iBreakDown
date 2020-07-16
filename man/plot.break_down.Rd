@@ -50,7 +50,7 @@ This should be \code{\link{signif}} which keeps a specified number of significan
 
 \item{vnames}{a character vector, if specified then will be used as labels on OY axis. By default NULL}
 
-\item{title}{a character. Plot title. By default "Break Down profile".}
+\item{title}{a character. Plot title. By default \code{"Break Down profile"}.}
 
 \item{subtitle}{a character. Plot subtitle. By default \code{NULL} - then subtitle is set to "created for the XXX, YYY model",
 where XXX, YYY are labels of given explainers.}
