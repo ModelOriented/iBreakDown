@@ -20,7 +20,8 @@ plotD3(x, ...)
   min_max = NA,
   vcolors = NA,
   chart_title = NA,
-  time = 0
+  time = 0,
+  max_vars = NULL
 )
 }
 \arguments{
@@ -52,6 +53,8 @@ But can be set to some constants, usefull if these plots are used for comparison
 \item{chart_title}{a character. Set custom title}
 
 \item{time}{in ms. Set the animation length}
+
+\item{max_vars}{alias for the \code{max_features} parameter.}
 }
 \value{
 a \code{r2d3} object.

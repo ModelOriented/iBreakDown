@@ -18,7 +18,8 @@
   plot_distributions = FALSE,
   vnames = NULL,
   title = "Break Down profile",
-  subtitle = NULL
+  subtitle = NULL,
+  max_vars = NULL
 )
 }
 \arguments{
@@ -53,6 +54,8 @@ This should be \code{\link{signif}} which keeps a specified number of significan
 
 \item{subtitle}{a character. Plot subtitle. By default \code{NULL} - then subtitle is set to "created for the XXX, YYY model",
 where XXX, YYY are labels of given explainers.}
+
+\item{max_vars}{alias for the \code{max_features} parameter.}
 }
 \value{
 a \code{ggplot2} object.

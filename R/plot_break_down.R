@@ -29,6 +29,7 @@
 #'
 #' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
 #'
+#'
 #' @examples
 #' library("DALEX")
 #' library("iBreakDown")
@@ -148,11 +149,11 @@ plot.break_down <- function(x, ...,
 
     # base plot
     pl <- ggplot(x, aes(x = position + 0.5,
-                                  y = pmax(cumulative, prev),
-                                  xmin = position + 0.15, xmax = position + 0.85,
-                                  ymin = cumulative, ymax = prev,
-                                  fill = sign,
-                                  label = pretty_text))
+                        y = pmax(cumulative, prev),
+                        xmin = position + 0.15, xmax = position + 0.85,
+                        ymin = cumulative, ymax = prev,
+                        fill = sign,
+                        label = pretty_text))
     # add rectangles and hline
     pl <- pl +
       geom_errorbarh(data = x[x$variable_name != "", ],
@@ -167,7 +168,11 @@ plot.break_down <- function(x, ...,
     # add addnotations
     if (add_contributions) {
       drange <- diff(range(x$cumulative))
-      pl <- pl + geom_text(aes(y = right_side), vjust = 0.5, nudge_y = drange*shift_contributions, hjust = 0, color = "#371ea3")
+      pl <- pl + geom_text(aes(y = right_side),
+                           vjust = 0.5,
+                           nudge_y = drange*shift_contributions,
+                           hjust = 0,
+                           color = "#371ea3")
     }
 
     # set limits for contributions
@@ -204,6 +209,7 @@ plot_break_down_distributions <- function(df) {
 # prepare data for plot
 prepare_data_for_break_down_plot <- function(x, baseline, rounding_function, digits) {
   x$sign[x$variable_name == ""] <- "X"
+  x$sign[x$variable == "intercept"] <- "X"
   x$prev <- x$cumulative - x$contribution
   broken_baseline <- x[x$variable_name == "intercept",]
   x$text <- x$prev
