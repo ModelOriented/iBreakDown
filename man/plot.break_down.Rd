@@ -18,7 +18,7 @@
   plot_distributions = FALSE,
   vnames = NULL,
   title = "Break Down profile",
-  subtitle = NULL
+  subtitle = ""
 )
 }
 \arguments{
@@ -51,8 +51,7 @@ This should be \code{\link{signif}} which keeps a specified number of significan
 
 \item{title}{a character. Plot title. By default "Break Down profile".}
 
-\item{subtitle}{a character. Plot subtitle. By default \code{NULL} - then subtitle is set to "created for the XXX, YYY model",
-where XXX, YYY are labels of given explainers.}
+\item{subtitle}{a character. Plot subtitle. By default \code{""}.}
 }
 \value{
 a \code{ggplot2} object.

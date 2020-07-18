@@ -18,8 +18,7 @@
 #' \code{\link{break_down}}, \code{\link{local_attributions}}, or \code{\link{local_interactions}}.
 #' @param baseline if numeric then veritical line starts in \code{baseline}.
 #' @param title a character. Plot title. By default "Break Down profile".
-#' @param subtitle a character. Plot subtitle. By default \code{NULL} - then subtitle is set to "created for the XXX, YYY model",
-#' where XXX, YYY are labels of given explainers.
+#' @param subtitle a character. Plot subtitle. By default \code{""}.
 #'
 #' @return a \code{ggplot2} object.
 #'
@@ -115,22 +114,17 @@ plot.break_down <- function(x, ...,
                             plot_distributions = FALSE,
                             vnames = NULL,
                             title = "Break Down profile",
-                            subtitle = NULL) {
+                            subtitle = "") {
   position <- cumulative <- prev <- pretty_text <- right_side <- contribution <- NULL
   # fix for https://github.com/ModelOriented/iBreakDown/issues/77
   colnames(x) <- gsub(colnames(x), pattern = "cummulative", replacement = "cumulative")
 
-  # extract labels to use in the default subtitle
-  if (is.null(subtitle)) {
-    labels <- paste0(unique(x$`_label_`), collapse = ", ")
-    subtitle <- paste0("created for the ", labels, " model")
-  }
-
   if (plot_distributions) {
+    vorder <- c(x$variable[order(x$position)], "all data")
     df <- attr(x, "yhats_distribution")
     if (is.null(df))
       stop("You need to use keep_distributions=TRUE in the break_down() ")
-    pl <- plot_break_down_distributions(df)
+    pl <- plot_break_down_distributions(df, vorder)
   } else {
     # how many features shall we plot
     x <- select_only_k_features(x, max_features)
@@ -184,8 +178,12 @@ plot.break_down <- function(x, ...,
 }
 
 # break down plot with distributions
-plot_break_down_distributions <- function(df) {
+plot_break_down_distributions <- function(df, vorder = NULL) {
   variable  <- prediction <- id <- NULL
+  if (!is.null(vorder)) {
+    df$variable <- factor(df$variable, levels = vorder)
+  }
+
   ggplot(df, aes(variable, prediction, group = factor(variable))) +
     geom_line(aes(group = id), alpha = 0.01) +
     geom_violin(scale = "width", adjust = 3) +
