@@ -18,7 +18,7 @@
   plot_distributions = FALSE,
   vnames = NULL,
   title = "Break Down profile",
-  subtitle = NULL,
+  subtitle = "",
   max_vars = NULL
 )
 }
@@ -52,8 +52,7 @@ This should be \code{\link{signif}} which keeps a specified number of significan
 
 \item{title}{a character. Plot title. By default \code{"Break Down profile"}.}
 
-\item{subtitle}{a character. Plot subtitle. By default \code{NULL} - then subtitle is set to "created for the XXX, YYY model",
-where XXX, YYY are labels of given explainers.}
+\item{subtitle}{a character. Plot subtitle. By default \code{""}.}
 
 \item{max_vars}{alias for the \code{max_features} parameter.}
 }
