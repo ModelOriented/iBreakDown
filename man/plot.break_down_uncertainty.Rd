@@ -9,7 +9,8 @@
   ...,
   vcolors = DALEX::colors_breakdown_drwhy(),
   show_boxplots = TRUE,
-  max_features = 10
+  max_features = 10,
+  max_vars = NULL
 )
 }
 \arguments{
@@ -22,6 +23,8 @@
 \item{show_boxplots}{logical if \code{TRUE} (default) boxplot will be plotted to show uncertanity of attributions}
 
 \item{max_features}{maximal number of features to be included in the plot. By default it's \code{10}.}
+
+\item{max_vars}{alias for the \code{max_features} parameter.}
 }
 \value{
 a \code{ggplot2} object.

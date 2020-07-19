@@ -1,7 +1,7 @@
-iBreakDown (development)
+iBreakDown 1.2.1
 ---------------------------------------------------------------
-* ...
-
+* fix the intercept bar color when `baseline` is used (now it's blue)
+* add `max_vars` alias to the plots (unification)
 
 iBreakDown 1.2.0
 ---------------------------------------------------------------

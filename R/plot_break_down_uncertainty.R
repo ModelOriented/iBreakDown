@@ -5,6 +5,7 @@
 #' @param show_boxplots logical if \code{TRUE} (default) boxplot will be plotted to show uncertanity of attributions
 #' @param vcolors If \code{NA} (default), DrWhy colors are used.
 #' @param max_features maximal number of features to be included in the plot. By default it's \code{10}.
+#' @param max_vars alias for the \code{max_features} parameter.
 #'
 #' @return a \code{ggplot2} object.
 #' @importFrom stats reorder
@@ -69,7 +70,13 @@
 plot.break_down_uncertainty <- function(x, ...,
                   vcolors = DALEX::colors_breakdown_drwhy(),
                   show_boxplots = TRUE,
-                  max_features = 10) {
+                  max_features = 10,
+                  max_vars = NULL) {
+
+  # aliases
+  if (!is.null(max_vars)) {
+    max_features <- max_vars
+  }
 
   variable <- contribution <- NULL
   df <- as.data.frame(x)

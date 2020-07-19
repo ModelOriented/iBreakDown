@@ -17,8 +17,9 @@
 #' @param plot_distributions if \code{TRUE} then distributions of conditional propotions will be plotted. This requires \code{keep_distributions=TRUE} in the
 #' \code{\link{break_down}}, \code{\link{local_attributions}}, or \code{\link{local_interactions}}.
 #' @param baseline if numeric then veritical line starts in \code{baseline}.
-#' @param title a character. Plot title. By default "Break Down profile".
+#' @param title a character. Plot title. By default \code{"Break Down profile"}.
 #' @param subtitle a character. Plot subtitle. By default \code{""}.
+#' @param max_vars alias for the \code{max_features} parameter.
 #'
 #' @return a \code{ggplot2} object.
 #'
@@ -26,6 +27,7 @@
 #' @importFrom utils tail
 #'
 #' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
+#'
 #'
 #' @examples
 #' library("DALEX")
@@ -114,10 +116,16 @@ plot.break_down <- function(x, ...,
                             plot_distributions = FALSE,
                             vnames = NULL,
                             title = "Break Down profile",
-                            subtitle = "") {
+                            subtitle = "",
+                            max_vars = NULL) {
   position <- cumulative <- prev <- pretty_text <- right_side <- contribution <- NULL
   # fix for https://github.com/ModelOriented/iBreakDown/issues/77
   colnames(x) <- gsub(colnames(x), pattern = "cummulative", replacement = "cumulative")
+
+  # aliases
+  if (!is.null(max_vars)) {
+    max_features <- max_vars
+  }
 
   if (plot_distributions) {
     vorder <- c(x$variable[order(x$position)], "all data")
@@ -135,11 +143,11 @@ plot.break_down <- function(x, ...,
 
     # base plot
     pl <- ggplot(x, aes(x = position + 0.5,
-                                  y = pmax(cumulative, prev),
-                                  xmin = position + 0.15, xmax = position + 0.85,
-                                  ymin = cumulative, ymax = prev,
-                                  fill = sign,
-                                  label = pretty_text))
+                        y = pmax(cumulative, prev),
+                        xmin = position + 0.15, xmax = position + 0.85,
+                        ymin = cumulative, ymax = prev,
+                        fill = sign,
+                        label = pretty_text))
     # add rectangles and hline
     pl <- pl +
       geom_errorbarh(data = x[x$variable_name != "", ],
@@ -154,7 +162,11 @@ plot.break_down <- function(x, ...,
     # add addnotations
     if (add_contributions) {
       drange <- diff(range(x$cumulative))
-      pl <- pl + geom_text(aes(y = right_side), vjust = 0.5, nudge_y = drange*shift_contributions, hjust = 0, color = "#371ea3")
+      pl <- pl + geom_text(aes(y = right_side),
+                           vjust = 0.5,
+                           nudge_y = drange*shift_contributions,
+                           hjust = 0,
+                           color = "#371ea3")
     }
 
     # set limits for contributions
@@ -195,6 +207,7 @@ plot_break_down_distributions <- function(df, vorder = NULL) {
 # prepare data for plot
 prepare_data_for_break_down_plot <- function(x, baseline, rounding_function, digits) {
   x$sign[x$variable_name == ""] <- "X"
+  x$sign[x$variable == "intercept"] <- "X"
   x$prev <- x$cumulative - x$contribution
   broken_baseline <- x[x$variable_name == "intercept",]
   x$text <- x$prev

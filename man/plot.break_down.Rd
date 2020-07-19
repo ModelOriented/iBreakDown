@@ -18,7 +18,8 @@
   plot_distributions = FALSE,
   vnames = NULL,
   title = "Break Down profile",
-  subtitle = ""
+  subtitle = "",
+  max_vars = NULL
 )
 }
 \arguments{
@@ -49,9 +50,11 @@ This should be \code{\link{signif}} which keeps a specified number of significan
 
 \item{vnames}{a character vector, if specified then will be used as labels on OY axis. By default NULL}
 
-\item{title}{a character. Plot title. By default "Break Down profile".}
+\item{title}{a character. Plot title. By default \code{"Break Down profile"}.}
 
 \item{subtitle}{a character. Plot subtitle. By default \code{""}.}
+
+\item{max_vars}{alias for the \code{max_features} parameter.}
 }
 \value{
 a \code{ggplot2} object.
