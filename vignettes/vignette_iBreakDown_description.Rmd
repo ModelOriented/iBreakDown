@@ -2,7 +2,7 @@
 title: "Explanations in natural language"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{vignette_iBreakDown_description}
+  %\VignetteIndexEntry{Explanations in natural language}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
