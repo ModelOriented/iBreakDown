@@ -193,7 +193,7 @@ plot.break_down <- function(x, ...,
 plot_break_down_distributions <- function(df, vorder = NULL) {
   variable  <- prediction <- id <- NULL
   if (!is.null(vorder)) {
-    df$variable <- factor(df$variable, levels = vorder)
+    df$variable <- factor(df$variable, levels = unique(vorder))
   }
 
   ggplot(df, aes(variable, prediction, group = factor(variable))) +
