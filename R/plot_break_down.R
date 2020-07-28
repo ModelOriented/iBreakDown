@@ -141,6 +141,14 @@ plot.break_down <- function(x, ...,
     broken_baseline <- tmp$broken_baseline
     x <- tmp$x
 
+    # fix for https://github.com/ModelOriented/iBreakDown/issues/85
+    # check if correction is needed
+    if (any(x[x$variable == "prediction", "right_side"] < broken_baseline$contribution)) {
+      # put there max val
+      x[x$variable == "prediction", "right_side"] <- pmax(x[x$variable == "prediction", "right_side"], broken_baseline$contribution)
+    }
+
+
     # base plot
     pl <- ggplot(x, aes(x = position + 0.5,
                         y = pmax(cumulative, prev),

@@ -1,3 +1,7 @@
+iBreakDown 1.3.1
+---------------------------------------------------------------
+* fix issue with text coliding with rectangle [#85](https://github.com/ModelOriented/iBreakDown/issues/85)
+
 iBreakDown 1.2.1
 ---------------------------------------------------------------
 * fix the intercept bar color when `baseline` is used (now it's blue)
