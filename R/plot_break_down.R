@@ -147,6 +147,10 @@ plot.break_down <- function(x, ...,
       # put there max val
       x[x$variable == "prediction", "right_side"] <- pmax(x[x$variable == "prediction", "right_side"], broken_baseline$contribution)
     }
+    if (any(x[x$variable == "intercept", "right_side"] < broken_baseline$contribution)) {
+      # put there max val
+      x[x$variable == "intercept", "right_side"] <- pmax(x[x$variable == "intercept", "right_side"], broken_baseline$contribution)
+    }
 
 
     # base plot
