@@ -14,9 +14,9 @@ Break Down Plot presents variable contributions in a concise graphical way.
 SHAP (Shapley Additive Attributions) values are calculated as average from random Break Down profiles.
 This package works for binary classifiers as well as regression models. 
 
-`iBreakDown` is a successor of the [breakDown](https://github.com/pbiecek/breakDown) package. It is faster (complexity O(p) instead of O(p^2)). It supports interactions and interactive explainers with D3.js plots.
+`iBreakDown` is a successor of the [breakDown](https://github.com/pbiecek/breakDown) package. It is faster (complexity `O(p)` instead of `O(p^2)`). It supports interactions and interactive explainers with D3.js plots. It is imported and used to compute model explanations in multiple packages e.g. [`DALEX`](https://github.com/ModelOriented/DALEX), [`modelStudio`](https://github.com/ModelOriented/modelStudio), [`arenar`](https://github.com/ModelOriented/ArenaR).
 
-It is a part of [DrWhy.AI](http://DrWhy.AI) collection of tools for XAI.
+It is a part of [DrWhy.AI](http://DrWhy.AI) universe. 
 
 ## Installation
 
@@ -31,9 +31,9 @@ devtools::install_github("ModelOriented/iBreakDown")
 
 ## Learn more
 
-Find lots of R examples at `iBreakDown` website: https://ModelOriented.github.io/iBreakDown/
+Find lots of examples at the website: https://ModelOriented.github.io/iBreakDown/
 
-Methodology behind the **iBreakDown** package is described in the [arxiv paper](https://arxiv.org/abs/1903.11420) and [Explanatory Model Analysis](https://pbiecek.github.io/ema/breakDown.html) book.
+Methodology behind the **iBreakDown** package is described in the [arxiv paper](https://arxiv.org/abs/1903.11420) and [Explanatory Model Analysis](https://pbiecek.github.io/ema/breakDown.html) book. 
 
 This version also works with **D3**! 
 [see an example](https://modeloriented.github.io/iBreakDown/prototypeDemo.html) and [demo](https://modeloriented.github.io/iBreakDown/articles/vignette_iBreakDown_titanic.html#plot-attributions-with-d3)
@@ -41,4 +41,4 @@ This version also works with **D3**!
 
 ## Acknowledgments
 
-Work on this package was financially supported by the 'NCN Opus grant 2016/21/B/ST6/02176'.
+Work on this package was financially supported by the `NCN Opus grant 2016/21/B/ST6/02176`.
