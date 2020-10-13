@@ -1,10 +1,10 @@
 pandoc: 2.7.3
-pkgdown: 1.5.1
+pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   vignette_iBreakDown_classification: vignette_iBreakDown_classification.html
   vignette_iBreakDown_description: vignette_iBreakDown_description.html
   vignette_iBreakDown_regression: vignette_iBreakDown_regression.html
   vignette_iBreakDown_titanic: vignette_iBreakDown_titanic.html
-last_built: 2020-08-04T07:14Z
+last_built: 2020-10-13T10:54Z
 

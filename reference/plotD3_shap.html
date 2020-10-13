@@ -166,22 +166,22 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for shap</span>
-<span class='fu'><a href='plotD3_break_down.html'>plotD3</a></span>(
-  <span class='no'>x</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>baseline</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>max_features</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>3</span>,
-  <span class='kw'>rounding_function</span> <span class='kw'>=</span> <span class='no'>round</span>,
-  <span class='kw'>bar_width</span> <span class='kw'>=</span> <span class='fl'>12</span>,
-  <span class='kw'>margin</span> <span class='kw'>=</span> <span class='fl'>0.2</span>,
-  <span class='kw'>scale_height</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>min_max</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>vcolors</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>chart_title</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>time</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>max_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
-)</pre>
+<span class='fu'><a href='plotD3.html'>plotD3</a></span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>...</span>,
+  baseline <span class='op'>=</span> <span class='cn'>NA</span>,
+  max_features <span class='op'>=</span> <span class='fl'>10</span>,
+  digits <span class='op'>=</span> <span class='fl'>3</span>,
+  rounding_function <span class='op'>=</span> <span class='va'>round</span>,
+  bar_width <span class='op'>=</span> <span class='fl'>12</span>,
+  margin <span class='op'>=</span> <span class='fl'>0.2</span>,
+  scale_height <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  min_max <span class='op'>=</span> <span class='cn'>NA</span>,
+  vcolors <span class='op'>=</span> <span class='cn'>NA</span>,
+  chart_title <span class='op'>=</span> <span class='cn'>NA</span>,
+  time <span class='op'>=</span> <span class='fl'>0</span>,
+  max_vars <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -255,15 +255,16 @@ But can be set to some constants, usefull if these plots are used for comparison
     <p>Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. <a href='https://pbiecek.github.io/ema'>https://pbiecek.github.io/ema</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"iBreakDown"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1313</span>)
-<span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>survived</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>fare</span>,
-                       <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
-<span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
-                           <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>,
-                           <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>$<span class='no'>survived</span>,
-                           <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"glm"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://ModelOriented.github.io/DALEX/'>"DALEX"</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://ModelOriented.github.io/iBreakDown/'>"iBreakDown"</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1313</span><span class='op'>)</span>
+<span class='va'>model_titanic_glm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>survived</span> <span class='op'>~</span> <span class='va'>gender</span> <span class='op'>+</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>fare</span>,
+                       data <span class='op'>=</span> <span class='va'>titanic_imputed</span>, family <span class='op'>=</span> <span class='st'>"binomial"</span><span class='op'>)</span>
+<span class='va'>explain_titanic_glm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ModelOriented.github.io/DALEX/reference/explain.html'>explain</a></span><span class='op'>(</span><span class='va'>model_titanic_glm</span>,
+                           data <span class='op'>=</span> <span class='va'>titanic_imputed</span>,
+                           y <span class='op'>=</span> <span class='va'>titanic_imputed</span><span class='op'>$</span><span class='va'>survived</span>,
+                           label <span class='op'>=</span> <span class='st'>"glm"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
 #&gt;   -&gt; model label       :  glm 
 #&gt;   -&gt; data              :  2207  rows  8  cols 
 #&gt;   -&gt; target variable   :  2207  values 
@@ -273,8 +274,9 @@ But can be set to some constants, usefull if these plots are used for comparison
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; residuals         :  numerical, min =  -0.8898433 , mean =  4.198546e-13 , max =  0.8448637  
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
-<span class='no'>s_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='break_down_uncertainty.html'>shap</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_imputed</span>[<span class='fl'>1</span>, ])
-<span class='no'>s_glm</span></div><div class='output co'>#&gt;                                     min          q1      median        mean
+<span class='va'>s_glm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='break_down_uncertainty.html'>shap</a></span><span class='op'>(</span><span class='va'>explain_titanic_glm</span>, <span class='va'>titanic_imputed</span><span class='op'>[</span><span class='fl'>1</span>, <span class='op'>]</span><span class='op'>)</span>
+<span class='va'>s_glm</span>
+</div><div class='output co'>#&gt;                                     min          q1      median        mean
 #&gt; glm: age = 42               -0.01514903 -0.01492541 -0.01434645 -0.01447369
 #&gt; glm: class = 3rd             0.00000000  0.00000000  0.00000000  0.00000000
 #&gt; glm: embarked = Southampton  0.00000000  0.00000000  0.00000000  0.00000000
@@ -291,26 +293,28 @@ But can be set to some constants, usefull if these plots are used for comparison
 #&gt; glm: gender = male          -0.10725293 -0.10667755
 #&gt; glm: parch = 0               0.00000000  0.00000000
 #&gt; glm: sibsp = 0               0.00000000  0.00000000
-#&gt; glm: survived = 0            0.00000000  0.00000000</div><div class='input'><span class='fu'><a href='plotD3_break_down.html'>plotD3</a></span>(<span class='no'>s_glm</span>)
+#&gt; glm: survived = 0            0.00000000  0.00000000</div><div class='input'><span class='fu'><a href='plotD3.html'>plotD3</a></span><span class='op'>(</span><span class='va'>s_glm</span><span class='op'>)</span>
 
 <span class='co'># \dontrun{</span>
 <span class='co'>## Not run:</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://www.stat.berkeley.edu/~breiman/RandomForests/'>"randomForest"</a></span><span class='op'>)</span>
 
-<span class='no'>HR_small</span> <span class='kw'>&lt;-</span> <span class='no'>HR</span>[<span class='fl'>2</span>:<span class='fl'>500</span>,]
-<span class='no'>m_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span>(<span class='no'>status</span> ~<span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR_small</span>)
-<span class='no'>new_observation</span> <span class='kw'>&lt;-</span> <span class='no'>HR_test</span>[<span class='fl'>1</span>,]
-<span class='no'>new_observation</span></div><div class='output co'>#&gt;   gender      age    hours evaluation salary status
+<span class='va'>HR_small</span> <span class='op'>&lt;-</span> <span class='va'>HR</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>:</span><span class='fl'>500</span>,<span class='op'>]</span>
+<span class='va'>m_rf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span><span class='op'>(</span><span class='va'>status</span> <span class='op'>~</span><span class='va'>.</span> , data <span class='op'>=</span> <span class='va'>HR_small</span><span class='op'>)</span>
+<span class='va'>new_observation</span> <span class='op'>&lt;-</span> <span class='va'>HR_test</span><span class='op'>[</span><span class='fl'>1</span>,<span class='op'>]</span>
+<span class='va'>new_observation</span>
+</div><div class='output co'>#&gt;   gender      age    hours evaluation salary status
 #&gt; 1   male 57.72683 42.31527          2      2  fired</div><div class='input'>
-<span class='no'>p_fun</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>object</span>, <span class='no'>newdata</span>){<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>object</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>newdata</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"prob"</span>)}
+<span class='va'>p_fun</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>newdata</span><span class='op'>)</span><span class='op'>{</span><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>object</span>, newdata<span class='op'>=</span><span class='va'>newdata</span>, type <span class='op'>=</span> <span class='st'>"prob"</span><span class='op'>)</span><span class='op'>}</span>
 
-<span class='no'>s_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='break_down_uncertainty.html'>shap</a></span>(<span class='no'>m_rf</span>,
-             <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR_small</span>[,-<span class='fl'>6</span>],
-             <span class='kw'>new_observation</span> <span class='kw'>=</span>  <span class='no'>new_observation</span>,
-             <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>p_fun</span>)
+<span class='va'>s_rf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='break_down_uncertainty.html'>shap</a></span><span class='op'>(</span><span class='va'>m_rf</span>,
+             data <span class='op'>=</span> <span class='va'>HR_small</span><span class='op'>[</span>,<span class='op'>-</span><span class='fl'>6</span><span class='op'>]</span>,
+             new_observation <span class='op'>=</span>  <span class='va'>new_observation</span>,
+             predict_function <span class='op'>=</span> <span class='va'>p_fun</span><span class='op'>)</span>
 
-<span class='fu'><a href='plotD3_break_down.html'>plotD3</a></span>(<span class='no'>s_rf</span>, <span class='kw'>time</span> <span class='kw'>=</span> <span class='fl'>500</span>)
-<span class='co'># }</span></div></span></pre>
+<span class='fu'><a href='plotD3.html'>plotD3</a></span><span class='op'>(</span><span class='va'>s_rf</span>, time <span class='op'>=</span> <span class='fl'>500</span><span class='op'>)</span>
+<span class='co'># }</span>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

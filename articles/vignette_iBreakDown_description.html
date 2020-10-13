@@ -131,61 +131,71 @@
 <p>There are two methods used by <code>iBreakDown</code> package: <code><a href="../reference/break_down_uncertainty.html">shap()</a></code> and <code><a href="../reference/break_down.html">break_down()</a></code>.</p>
 <p>Function <code><a href="../reference/break_down_uncertainty.html">shap()</a></code> generates a SHAP explanation, that is the function assigns Shapley values to each variable. Function <code>break_down</code> uses break_down algorithm to generate an efficient approximation of the Shapley values. We show how to generate both explanations on an easy example using titanic data set and explainers from <code>DALEX</code> package.</p>
 <p>First, we load the data set and build a random forest model classifying, which of the passangers survived sinking of the titanic. Then, using <code>DALEX</code> package, we generate an explainer of the model. Lastly we select a random passanger, which prediction’s should be explained.</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"DALEX"</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"iBreakDown"</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"randomForest"</span>)
-<span class="no">titanic</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span>(<span class="no">titanic</span>)
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://ModelOriented.github.io/DALEX/">"DALEX"</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://ModelOriented.github.io/iBreakDown/">"iBreakDown"</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://www.stat.berkeley.edu/~breiman/RandomForests/">"randomForest"</a></span><span class="op">)</span>
+<span class="va">titanic</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">titanic</span><span class="op">)</span>
 
-<span class="no">model_titanic_rf</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/randomForest/man/randomForest.html">randomForest</a></span>(<span class="no">survived</span> <span class="kw">==</span> <span class="st">"yes"</span> ~ <span class="no">.</span>,
-                                 <span class="kw">data</span> <span class="kw">=</span> <span class="no">titanic</span>
-                                 )
+<span class="va">model_titanic_rf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/randomForest/man/randomForest.html">randomForest</a></span><span class="op">(</span><span class="va">survived</span> <span class="op">==</span> <span class="st">"yes"</span> <span class="op">~</span> <span class="va">.</span>,
+                                 data <span class="op">=</span> <span class="va">titanic</span> 
+                                 <span class="op">)</span>
 
-<span class="no">explain_titanic_rf</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/DALEX/man/explain.html">explain</a></span>(<span class="no">model_titanic_rf</span>,
-                            <span class="kw">data</span> <span class="kw">=</span> <span class="no">titanic</span>[,-<span class="fl">9</span>],
-                            <span class="kw">y</span> <span class="kw">=</span> <span class="no">titanic</span>$<span class="no">survived</span> <span class="kw">==</span> <span class="st">"yes"</span>,
-                            <span class="kw">label</span> <span class="kw">=</span> <span class="st">"Random Forest"</span>)</pre></body></html></div>
+<span class="va">explain_titanic_rf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ModelOriented.github.io/DALEX/reference/explain.html">explain</a></span><span class="op">(</span><span class="va">model_titanic_rf</span>,
+                            data <span class="op">=</span> <span class="va">titanic</span><span class="op">[</span>,<span class="op">-</span><span class="fl">9</span><span class="op">]</span>,
+                            y <span class="op">=</span> <span class="va">titanic</span><span class="op">$</span><span class="va">survived</span> <span class="op">==</span> <span class="st">"yes"</span>,
+                            label <span class="op">=</span> <span class="st">"Random Forest"</span><span class="op">)</span></pre></div>
 <pre><code>#&gt; Preparation of a new explainer is initiated
 #&gt;   -&gt; model label       :  Random Forest 
 #&gt;   -&gt; data              :  2099  rows  8  cols 
 #&gt;   -&gt; target variable   :  2099  values 
 #&gt;   -&gt; predict function  :  yhat.randomForest  will be used ( [33m default [39m )
-#&gt;   -&gt; predicted values  :  numerical, min =  0.009004441 , mean =  0.3231395 , max =  0.9937816  
+#&gt;   -&gt; predicted values  :  numerical, min =  0.007797028 , mean =  0.3239012 , max =  0.9946243  
 #&gt;   -&gt; model_info        :  package randomForest , ver. 4.6.14 , task regression ( [33m default [39m ) 
+#&gt;   -&gt; model_info        :  Model info detected regression task but 'y' is a logical .  ( [31m WARNING [39m )
+#&gt;   -&gt; model_info        :  By deafult regressions tasks supports only numercical 'y' parameter. 
+#&gt;   -&gt; model_info        :  Consider changing to numerical vector.
+#&gt;   -&gt; model_info        :  Otherwise I will not be able to calculate residuals or loss function.
 #&gt;   -&gt; residual function :  difference between y and yhat ( [33m default [39m )
-#&gt;   -&gt; residuals         :  numerical, min =  -0.7988386 , mean =  0.001300668 , max =  0.9036299  
+#&gt;   -&gt; residuals         :  numerical, min =  -0.8042673 , mean =  0.0005390566 , max =  0.8904973  
 #&gt;  [32m A new explainer has been created! [39m</code></pre>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">passanger</span> <span class="kw">&lt;-</span> <span class="no">titanic</span>[<span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="no">titanic</span>), <span class="fl">1</span>) ,-<span class="fl">9</span>]
-<span class="no">passanger</span></pre></body></html></div>
-<pre><code>#&gt;    gender age class  embarked country   fare sibsp parch
-#&gt; 28   male  19   3rd Cherbourg Lebanon 7.0407     0     0</code></pre>
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="va">passanger</span> <span class="op">&lt;-</span> <span class="va">titanic</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">titanic</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span> ,<span class="op">-</span><span class="fl">9</span><span class="op">]</span>
+<span class="va">passanger</span></pre></div>
+<pre><code>#&gt;      gender age            class    embarked country fare sibsp parch
+#&gt; 1520   male  26 engineering crew Southampton England    0     0     0</code></pre>
 <p>Now we are ready for generating <code><a href="../reference/break_down_uncertainty.html">shap()</a></code> and <code>iBreakDown()</code> explanations.</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">bd_rf</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/break_down.html">break_down</a></span>(<span class="no">explain_titanic_rf</span>,
-                    <span class="no">passanger</span>,
-                    <span class="kw">keep_distributions</span> <span class="kw">=</span> <span class="fl">TRUE</span>) <span class="co"># distributions should be kept</span>
-<span class="no">shap_rf</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/break_down_uncertainty.html">shap</a></span>(<span class="no">explain_titanic_rf</span>,
-                <span class="no">passanger</span>)
+<div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="va">bd_rf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/break_down.html">break_down</a></span><span class="op">(</span><span class="va">explain_titanic_rf</span>,
+                    <span class="va">passanger</span>,
+                    keep_distributions <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># distributions should be kept</span>
+<span class="va">shap_rf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/break_down_uncertainty.html">shap</a></span><span class="op">(</span><span class="va">explain_titanic_rf</span>,
+                <span class="va">passanger</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">bd_rf</span>)</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">bd_rf</span><span class="op">)</span></pre></div>
 <p><img src="vignette_iBreakDown_description_files/figure-html/unnamed-chunk-3-1.png" width="672"></p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">shap_rf</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">shap_rf</span><span class="op">)</span></pre></div>
 <p><img src="vignette_iBreakDown_description_files/figure-html/unnamed-chunk-3-2.png" width="672"></p>
 </div>
 <div id="describing-an-explanation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#describing-an-explanation" class="anchor"></a>Describing an explanation</h2>
 <p>The displayed explanations despite their visual clarity may not be interpretable for someone not familiar with iBreakDown or shap explanation. Therefore, we generate a simple natural language description for both explainers.</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="../reference/describe.html">describe</a></span>(<span class="no">bd_rf</span>)</pre></body></html></div>
-<pre><code>#&gt; Random Forest predicts, that the prediction for the selected instance is 0.143 which is lower than the average model prediction. For the selected instance model's prediction is lower, than for 73% of all observations.
+<div class="sourceCode" id="cb7"><pre class="downlit">
+<span class="fu"><a href="../reference/describe.html">describe</a></span><span class="op">(</span><span class="va">bd_rf</span><span class="op">)</span></pre></div>
+<pre><code>#&gt; Random Forest predicts, that the prediction for the selected instance is 0.222 which is lower than the average model prediction.For the selected instance model's prediction is higher, than for 53% of all observations.
 #&gt; 
 #&gt; The most important variable that decrease the prediction is gender.
 #&gt; 
-#&gt; Other variables are with less importance. The contribution of all other variables is -0.099.</code></pre>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="../reference/describe.html">describe</a></span>(<span class="no">shap_rf</span>)</pre></body></html></div>
-<pre><code>#&gt; Random Forest predicts, that the prediction for the selected instance is 0.143 which is lower than the average model prediction. For the selected instance model's prediction is lower, than for 73% of all observations.
+#&gt; Other variables are with less importance. The contribution of all other variables is -0.014.</code></pre>
+<div class="sourceCode" id="cb9"><pre class="downlit">
+<span class="fu"><a href="../reference/describe.html">describe</a></span><span class="op">(</span><span class="va">shap_rf</span><span class="op">)</span></pre></div>
+<pre><code>#&gt; Random Forest predicts, that the prediction for the selected instance is 0.222 which is lower than the average model prediction.For the selected instance model's prediction is higher, than for 53% of all observations.
 #&gt; 
 #&gt; The most important variable that decrease the prediction is gender.
 #&gt; 
-#&gt; Other variables are with less importance. The contribution of all other variables is 0.012.</code></pre>
+#&gt; Other variables are with less importance. The contribution of all other variables is -0.009.</code></pre>
 </div>
 <div id="parameters-of-describe-function" class="section level2">
 <h2 class="hasAnchor">
@@ -195,96 +205,104 @@
 <h4 class="hasAnchor">
 <a href="#adjusting-nonsignificance-treshold" class="anchor"></a>Adjusting nonsignificance treshold</h4>
 <p>The nonsignificance treshold controls which predictions are close to the average prediction. By setting a higher value, more predictions will be described as close to the average model prediction and more variables will be described as nonsignificant.</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="fu"><a href="../reference/describe.html">describe</a></span>(<span class="no">bd_rf</span>, <span class="kw">nonsignificance_treshold</span> <span class="kw">=</span> <span class="fl">1</span>)</pre></body></html></div>
-<pre><code>#&gt; Random Forest predicts, that the prediction for the selected instance is 0.143 which is close to the average model prediction. For the selected instance model's prediction is lower, than for 73% of all observations.
+<div class="sourceCode" id="cb11"><pre class="downlit">
+<span class="fu"><a href="../reference/describe.html">describe</a></span><span class="op">(</span><span class="va">bd_rf</span>, nonsignificance_treshold <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></pre></div>
+<pre><code>#&gt; Random Forest predicts, that the prediction for the selected instance is 0.222 which is close to the average model prediction.For the selected instance model's prediction is higher, than for 53% of all observations.
 #&gt; 
 #&gt; The most important variable that decrease the prediction is gender.
 #&gt; 
-#&gt; Other variables are with less importance. The contribution of all other variables is -0.099.</code></pre>
+#&gt; Other variables are with less importance. The contribution of all other variables is -0.014.</code></pre>
 </div>
 <div id="adjusting-label-of-the-explanation" class="section level4">
 <h4 class="hasAnchor">
 <a href="#adjusting-label-of-the-explanation" class="anchor"></a>Adjusting label of the explanation</h4>
 <p>Label of the prediction could be changed, to display more specific descriptions.</p>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="fu"><a href="../reference/describe.html">describe</a></span>(<span class="no">bd_rf</span>,
-         <span class="kw">label</span> <span class="kw">=</span> <span class="st">"the passanger survived with probability"</span>)</pre></body></html></div>
-<pre><code>#&gt; Random Forest predicts, that the passanger survived with probability 0.143 which is lower than the average model prediction. For the selected instance model's prediction is lower, than for 73% of all observations.
+<div class="sourceCode" id="cb13"><pre class="downlit">
+<span class="fu"><a href="../reference/describe.html">describe</a></span><span class="op">(</span><span class="va">bd_rf</span>, 
+         label <span class="op">=</span> <span class="st">"the passanger survived with probability"</span><span class="op">)</span></pre></div>
+<pre><code>#&gt; Random Forest predicts, that the passanger survived with probability 0.222 which is lower than the average model prediction.For the selected instance model's prediction is higher, than for 53% of all observations.
 #&gt; 
 #&gt; The most important variable that decrease the prediction is gender.
 #&gt; 
-#&gt; Other variables are with less importance. The contribution of all other variables is -0.099.</code></pre>
+#&gt; Other variables are with less importance. The contribution of all other variables is -0.014.</code></pre>
 </div>
 <div id="short-descriptions" class="section level4">
 <h4 class="hasAnchor">
 <a href="#short-descriptions" class="anchor"></a>Short descriptions</h4>
 <p>Generating short descriptions can be useful, as they can make nice plot subtitles.</p>
-<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="fu"><a href="../reference/describe.html">describe</a></span>(<span class="no">bd_rf</span>, <span class="kw">short_description</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
-<pre><code>#&gt; Random Forest predicts, that the prediction for the selected instance is 0.143. The most important variable, which decreases model's prediction, is gender.</code></pre>
+<div class="sourceCode" id="cb15"><pre class="downlit">
+<span class="fu"><a href="../reference/describe.html">describe</a></span><span class="op">(</span><span class="va">bd_rf</span>, short_description <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
+<pre><code>#&gt; Random Forest predicts, that the prediction for the selected instance is 0.222. The most important variable, which decreases model's prediction, is gender.</code></pre>
 </div>
 <div id="displaying-values" class="section level4">
 <h4 class="hasAnchor">
 <a href="#displaying-values" class="anchor"></a>Displaying values</h4>
 <p>Displaying variable values can easily make the description more informative.</p>
-<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="fu"><a href="../reference/describe.html">describe</a></span>(<span class="no">bd_rf</span>, <span class="kw">display_values</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
-<pre><code>#&gt; Random Forest predicts, that the prediction for the selected instance is 0.143 which is lower than the average model prediction. For the selected instance model's prediction is lower, than for 73% of all observations.
+<div class="sourceCode" id="cb17"><pre class="downlit">
+<span class="fu"><a href="../reference/describe.html">describe</a></span><span class="op">(</span><span class="va">bd_rf</span>, display_values <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
+<pre><code>#&gt; Random Forest predicts, that the prediction for the selected instance is 0.222 which is lower than the average model prediction.For the selected instance model's prediction is higher, than for 53% of all observations.
 #&gt; 
 #&gt; The most important variable that decrease the prediction is gender (= male).
 #&gt; 
-#&gt; Other variables are with less importance. The contribution of all other variables is -0.099.</code></pre>
+#&gt; Other variables are with less importance. The contribution of all other variables is -0.014.</code></pre>
 </div>
 <div id="displaying-numbers" class="section level4">
 <h4 class="hasAnchor">
 <a href="#displaying-numbers" class="anchor"></a>Displaying numbers</h4>
 <p>Displaying numbers changes the whole argumentation style making the description longer.</p>
-<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="fu"><a href="../reference/describe.html">describe</a></span>(<span class="no">bd_rf</span>, <span class="kw">display_numbers</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
-<pre><code>#&gt; Random Forest predicts, that the prediction for the selected instance is 0.143 which is lower than the average model prediction 0.323. For the selected instance model's prediction is lower, than for 73% of all observations.
+<div class="sourceCode" id="cb19"><pre class="downlit">
+<span class="fu"><a href="../reference/describe.html">describe</a></span><span class="op">(</span><span class="va">bd_rf</span>, display_numbers <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
+<pre><code>#&gt; Random Forest predicts, that the prediction for the selected instance is 0.222 which is lower than the average model prediction 0.324.For the selected instance model's prediction is higher, than for 53% of all observations.
 #&gt; 
-#&gt; The most important variable is gender. It decreases the prediction by 0.099.
-#&gt; The second most important variable is embarked. It increases the prediction by 0.063.
-#&gt; The third most important variable is country. It decreases the prediction by 0.046.
+#&gt; The most important variable is gender. It decreases the prediction by 0.1.
+#&gt; The second most important variable is fare. It increases the prediction by 0.03.
+#&gt; The third most important variable is country. It decreases the prediction by 0.019.
 #&gt; 
-#&gt; Other variables are with less importance. The contribution of all other variables is -0.099.</code></pre>
+#&gt; Other variables are with less importance. The contribution of all other variables is -0.014.</code></pre>
 </div>
 <div id="distribution-details" class="section level4">
 <h4 class="hasAnchor">
 <a href="#distribution-details" class="anchor"></a>Distribution details</h4>
 <p>Describing distribution details is useful if we want to have a big picture about other instance’s behaviour.</p>
-<div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="fu"><a href="../reference/describe.html">describe</a></span>(<span class="no">bd_rf</span>, <span class="kw">display_distribution_details</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
-<pre><code>#&gt; Random Forest predicts, that the prediction for the selected instance is 0.143 which is lower than the average model prediction.Model predictions range from 0.009 to 0.994. The distribution of Random Forest's predictions is right-skewed with average equal to 0.323 and median equal to 0.219. The standard deviation is 0.279. Model's prediction for the selected instance is in the second quartile.
+<div class="sourceCode" id="cb21"><pre class="downlit">
+<span class="fu"><a href="../reference/describe.html">describe</a></span><span class="op">(</span><span class="va">bd_rf</span>, display_distribution_details <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
+<pre><code>#&gt; Random Forest predicts, that the prediction for the selected instance is 0.222 which is lower than the average model prediction.Model predictions range from 0.008 to 0.995. The distribution of Random Forest's predictions is right-skewed with average equal to 0.324 and median equal to 0.215. The standard deviation is 0.28. Model's prediction for the selected instance is in the third quartile.
 #&gt; 
 #&gt; The most important variable that decrease the prediction is gender.
 #&gt; 
-#&gt; Other variables are with less importance. The contribution of all other variables is -0.099.</code></pre>
+#&gt; Other variables are with less importance. The contribution of all other variables is -0.014.</code></pre>
 </div>
 <div id="shap" class="section level4">
 <h4 class="hasAnchor">
 <a href="#shap" class="anchor"></a>SHAP</h4>
 <p>Explanations generated by <code><a href="../reference/break_down_uncertainty.html">shap()</a></code> functions have the same arguments expect from <code>display_shap</code> what add an addition information, wheter the calculated variable’s contributions have high or low variability.</p>
-<div class="sourceCode" id="cb23"><html><body><pre class="r"><span class="fu"><a href="../reference/describe.html">describe</a></span>(<span class="no">shap_rf</span>, <span class="kw">display_shap</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
-<pre><code>#&gt; Random Forest predicts, that the prediction for the selected instance is 0.143 which is lower than the average model prediction. For the selected instance model's prediction is lower, than for 73% of all observations.
+<div class="sourceCode" id="cb23"><pre class="downlit">
+<span class="fu"><a href="../reference/describe.html">describe</a></span><span class="op">(</span><span class="va">shap_rf</span>, display_shap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
+<pre><code>#&gt; Random Forest predicts, that the prediction for the selected instance is 0.222 which is lower than the average model prediction.For the selected instance model's prediction is higher, than for 53% of all observations.
 #&gt; 
 #&gt; The most important variable that decrease the prediction is gender.
 #&gt; The average contribution of all the above variables is significant.
 #&gt; 
-#&gt; Other variables are with less importance. The contribution of all other variables is 0.012.</code></pre>
+#&gt; Other variables are with less importance. The contribution of all other variables is -0.009.</code></pre>
 </div>
 <div id="combibning-all-the-parameters" class="section level4">
 <h4 class="hasAnchor">
 <a href="#combibning-all-the-parameters" class="anchor"></a>Combibning all the parameters</h4>
 <p>Of course all the arguments can be set according to preferences allowing for flexible natural language descriptions.</p>
-<div class="sourceCode" id="cb25"><html><body><pre class="r"><span class="fu"><a href="../reference/describe.html">describe</a></span>(<span class="no">shap_rf</span>,
-         <span class="kw">label</span> <span class="kw">=</span> <span class="st">"the passanger survived with probability"</span>,
-         <span class="kw">display_values</span> <span class="kw">=</span> <span class="fl">TRUE</span>,
-         <span class="kw">display_numbers</span> <span class="kw">=</span> <span class="fl">TRUE</span>,
-         <span class="kw">display_shap</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
-<pre><code>#&gt; Random Forest predicts, that the passanger survived with probability 0.143 which is lower than the average model prediction 0.323. For the selected instance model's prediction is lower, than for 73% of all observations.
+<div class="sourceCode" id="cb25"><pre class="downlit">
+<span class="fu"><a href="../reference/describe.html">describe</a></span><span class="op">(</span><span class="va">shap_rf</span>,
+         label <span class="op">=</span> <span class="st">"the passanger survived with probability"</span>,
+         display_values <span class="op">=</span> <span class="cn">TRUE</span>,
+         display_numbers <span class="op">=</span> <span class="cn">TRUE</span>,
+         display_shap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
+<pre><code>#&gt; Random Forest predicts, that the passanger survived with probability 0.222 which is lower than the average model prediction 0.324.For the selected instance model's prediction is higher, than for 53% of all observations.
 #&gt; 
-#&gt; The most important variable is gender (= male). It decreases the prediction by 0.108.
-#&gt; The second most important variable is class (= 3rd). It decreases the prediction by 0.05.
-#&gt; The third most important variable is fare (= 7.041). It decreases the prediction by 0.035.
+#&gt; The most important variable is gender (= male). It decreases the prediction by 0.098.
+#&gt; The second most important variable is fare (= 0). It increases the prediction by 0.022.
+#&gt; The third most important variable is class (= engineering crew). It decreases the prediction by 0.017.
 #&gt; The average contribution of all the above variables is significant.
 #&gt; 
-#&gt; Other variables are with less importance. The contribution of all other variables is 0.012.</code></pre>
+#&gt; Other variables are with less importance. The contribution of all other variables is -0.009.</code></pre>
 </div>
 </div>
   </div>
