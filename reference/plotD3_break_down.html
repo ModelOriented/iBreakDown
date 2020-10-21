@@ -182,7 +182,8 @@
   vcolors <span class='op'>=</span> <span class='cn'>NA</span>,
   chart_title <span class='op'>=</span> <span class='cn'>NA</span>,
   time <span class='op'>=</span> <span class='fl'>0</span>,
-  max_vars <span class='op'>=</span> <span class='cn'>NULL</span>
+  max_vars <span class='op'>=</span> <span class='cn'>NULL</span>,
+  reload <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -247,6 +248,10 @@ But can be set to some constants, usefull if these plots are used for comparison
       <th>max_vars</th>
       <td><p>alias for the <code>max_features</code> parameter.</p></td>
     </tr>
+    <tr>
+      <th>reload</th>
+      <td><p>Reload the plot on resize. By default it's <code>FALSE</code>.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -272,7 +277,7 @@ But can be set to some constants, usefull if these plots are used for comparison
 #&gt;   -&gt; target variable   :  2207  values 
 #&gt;   -&gt; predict function  :  yhat.glm  will be used ( <span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; predicted values  :  numerical, min =  0.1490412 , mean =  0.3221568 , max =  0.9878987  
-#&gt;   -&gt; model_info        :  package stats , ver. 4.0.2 , task classification ( </span><span style='color: #BBBB00;'> default </span><span> ) 
+#&gt;   -&gt; model_info        :  package stats , ver. 4.0.3 , task classification ( </span><span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; residuals         :  numerical, min =  -0.8898433 , mean =  4.198546e-13 , max =  0.8448637  
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
