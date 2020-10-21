@@ -20,6 +20,7 @@
 #' @param chart_title a character. Set custom title
 #' @param time in ms. Set the animation length
 #' @param max_vars alias for the \code{max_features} parameter.
+#' @param reload Reload the plot on resize. By default it's \code{FALSE}.
 #'
 #' @return a \code{r2d3} object.
 #'
@@ -77,7 +78,8 @@ plotD3.break_down <- function(x, ...,
                         vcolors = NA,
                         chart_title = NA,
                         time = 0,
-                        max_vars = NULL) {
+                        max_vars = NULL,
+                        reload = FALSE) {
   # fix for https://github.com/ModelOriented/iBreakDown/issues/77
   colnames(x) <- gsub(colnames(x), pattern = "cummulative", replacement = "cumulative")
 
@@ -160,7 +162,8 @@ plotD3.break_down <- function(x, ...,
                   n = n, m = m, barWidth = bar_width,
                   scaleHeight = scale_height, time = time,
                   vcolors = ifelse(is.na(vcolors), "default", vcolors),
-                  chartTitle = ifelse(is.na(chart_title), "Local attributions", chart_title))
+                  chartTitle = ifelse(is.na(chart_title), "Local attributions", chart_title),
+                  reload = reload)
 
   temp <- jsonlite::toJSON(list(dl, label_list))
 

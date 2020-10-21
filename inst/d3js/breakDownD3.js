@@ -8,9 +8,11 @@ var xMin = options.xmin,
 
 var time = options.time;
 /// prevent plot from reloading onResize
-r2d3.onResize(function() {
-  return;
-});
+if (!options.reload) {
+  r2d3.onResize(function() {
+    return;
+  });
+}
 
 var maxLength = calculateTextWidth(data[1])+15;
 

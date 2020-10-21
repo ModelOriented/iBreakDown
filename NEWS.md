@@ -1,3 +1,7 @@
+iBreakDown (development)
+---------------------------------------------------------------
+* add `reload` argument to `plotD3`, which by default is `FALSE` (behavior unchanged); `TRUE` reloads the plot on resize [#89](https://github.com/ModelOriented/iBreakDown/issues/89)
+
 iBreakDown 1.3.1
 ---------------------------------------------------------------
 * fix issue with text coliding with rectangle [#85](https://github.com/ModelOriented/iBreakDown/issues/85)
