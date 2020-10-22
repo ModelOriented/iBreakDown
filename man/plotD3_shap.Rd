@@ -18,7 +18,8 @@
   vcolors = NA,
   chart_title = NA,
   time = 0,
-  max_vars = NULL
+  max_vars = NULL,
+  reload = FALSE
 )
 }
 \arguments{
@@ -52,6 +53,8 @@ But can be set to some constants, usefull if these plots are used for comparison
 \item{time}{in ms. Set the animation length}
 
 \item{max_vars}{alias for the \code{max_features} parameter.}
+
+\item{reload}{Reload the plot on resize. By default it's \code{FALSE}.}
 }
 \value{
 a \code{r2d3} object.
