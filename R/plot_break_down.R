@@ -128,7 +128,7 @@ plot.break_down <- function(x, ...,
   }
 
   if (plot_distributions) {
-    vorder <- c(x$variable[order(x$position)], "all data")
+    vorder <- c(as.character(x$variable)[order(x$position)], "all data")
     df <- attr(x, "yhats_distribution")
     if (is.null(df))
       stop("You need to use keep_distributions=TRUE in the break_down() ")
