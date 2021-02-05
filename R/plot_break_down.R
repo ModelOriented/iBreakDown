@@ -26,7 +26,7 @@
 #' @import ggplot2
 #' @importFrom utils tail
 #'
-#' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
+#' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{http://ema.drwhy.ai}
 #'
 #'
 #' @examples

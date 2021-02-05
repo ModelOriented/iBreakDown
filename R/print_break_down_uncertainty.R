@@ -3,7 +3,7 @@
 #' @param x an explanation created with \code{\link{break_down_uncertainty}}
 #' @param ... other parameters.
 #'
-#' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
+#' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{http://ema.drwhy.ai}
 #'
 #' @return a data frame.
 #' @importFrom stats quantile median

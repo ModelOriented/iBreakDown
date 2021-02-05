@@ -100,7 +100,7 @@ plot(bd_rf, plot_distributions = TRUE)
 }
 }
 \references{
-Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
+Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{http://ema.drwhy.ai}
 }
 \seealso{
 \code{\link{break_down}}, \code{\link{local_interactions}}
