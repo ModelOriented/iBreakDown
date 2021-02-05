@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-Here we will use the `dragons` data from [`DALEX`](https://github.com/pbiecek/DALEX) package to present the `iBreakDown` for regression models.
+Here we will use the `dragons` data from [`DALEX`](https://github.com/ModelOriented/DALEX) package to present the `iBreakDown` for regression models.
 
 ```{r}
 # devtools::install_github("ModelOriented/DALEX")
