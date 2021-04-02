@@ -141,9 +141,9 @@ break_down_uncertainty.default <- function(x, data, predict_function = predict,
     # average or selected path
     if (head(path, 1) == "average") {
       # let's calculate an average attribution
-      extracted_contributions <- sapply(result, function(chunk) {
+      extracted_contributions <- do.call(cbind, lapply(result, function(chunk) {
         chunk[order(chunk$label, chunk$variable), "contribution"]
-      })
+      }))
       result_average <- result[[1]]
       result_average <- result_average[order(result_average$label, result_average$variable),]
       result_average$contribution <- rowMeans(extracted_contributions)
@@ -206,7 +206,9 @@ get_single_random_path <- function(x, data, predict_function, new_observation, l
   }
 
   diffs <- apply(do.call(rbind, yhats), 2, diff)
-
+  if (is.vector(diffs)) { #93
+    diffs <- t(diffs)
+  }
   #76
   new_observation_vec <- sapply(as.data.frame(new_observation), nice_format) # same as in BD
 

@@ -1,6 +1,7 @@
-iBreakDown (development)
+iBreakDown 2.0.1
 ---------------------------------------------------------------
 * add `reload` argument to `plotD3`, which by default is `FALSE` (behavior unchanged); `TRUE` reloads the plot on resize [#89](https://github.com/ModelOriented/iBreakDown/issues/89)
+* fixes explanations when data has one column [#93](https://github.com/ModelOriented/iBreakDown/issues/93)
 
 iBreakDown 1.3.1
 ---------------------------------------------------------------
