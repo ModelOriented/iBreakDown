@@ -7,7 +7,7 @@
 #' @param rounding_function a function to be used for rounding numbers.
 #' This should be \code{\link{signif}} which keeps a specified number of significant digits or \code{\link{round}} (which is default) to have the same precision for all components.
 #'
-#' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{http://ema.drwhy.ai}
+#' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://ema.drwhy.ai}
 #'
 #' @return a data frame
 #'

@@ -19,7 +19,7 @@
 #' Then an explanation due to the chosen scenario is generated.
 #'
 #' @param x an explanation created with \code{\link{break_down}} or \code{\link{shap}}
-#' @param nonsignificance_treshold a numeric specifying a treshold for variable importance
+#' @param nonsignificance_treshold a numeric specifying a threshold for variable importance
 #' @param ... other arguments
 #' @param label a character string describing model's prediction
 #' @param short_description a boolean, returns a short description

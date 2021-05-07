@@ -18,7 +18,7 @@
 #'
 #' @seealso \code{\link{local_attributions}}, \code{\link{local_interactions}}
 #'
-#' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{http://ema.drwhy.ai}
+#' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://ema.drwhy.ai}
 #'
 #' @examples
 #' library("DALEX")

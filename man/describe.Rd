@@ -35,7 +35,7 @@ describe(x, nonsignificance_treshold = 0.15, ...)
 \arguments{
 \item{x}{an explanation created with \code{\link{break_down}} or \code{\link{shap}}}
 
-\item{nonsignificance_treshold}{a numeric specifying a treshold for variable importance}
+\item{nonsignificance_treshold}{a numeric specifying a threshold for variable importance}
 
 \item{...}{other arguments}
 
