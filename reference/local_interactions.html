@@ -103,7 +103,7 @@ And in the second step the impact is calculated." />
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">2.0.1</span>
+          <span class="version version-default">2.0.1.9000</span>
         </div>
       </div>
     </div>
@@ -252,13 +252,13 @@ And in the second step the impact is calculated.</p>
 #&gt;   -&gt; model label       :  glm 
 #&gt;   -&gt; data              :  2207  rows  8  cols 
 #&gt;   -&gt; target variable   :  2207  values 
-#&gt;   -&gt; predict function  :  yhat.glm  will be used ( <span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; predicted values  :  No value for predict function target column. ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; model_info        :  package stats , ver. 4.0.5 , task classification ( </span><span style='color: #BBBB00;'> default </span><span> ) 
+#&gt;   -&gt; predict function  :  yhat.glm  will be used ( <span style='color: #BBBB00;'> default </span> )
+#&gt;   -&gt; predicted values  :  No value for predict function target column. ( <span style='color: #BBBB00;'> default </span> )
+#&gt;   -&gt; model_info        :  package stats , ver. 4.1.0 , task classification ( <span style='color: #BBBB00;'> default </span> ) 
 #&gt;   -&gt; predicted values  :  numerical, min =  0.1490412 , mean =  0.3221568 , max =  0.9878987  
-#&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
+#&gt;   -&gt; residual function :  difference between y and yhat ( <span style='color: #BBBB00;'> default </span> )
 #&gt;   -&gt; residuals         :  numerical, min =  -0.8898433 , mean =  4.198546e-13 , max =  0.8448637  
-#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
+#&gt;  <span style='color: #00BB00;'> A new explainer has been created! </span> </div><div class='input'>
 <span class='va'>bd_glm</span> <span class='op'>&lt;-</span> <span class='fu'>local_interactions</span><span class='op'>(</span><span class='va'>explain_titanic_glm</span>, <span class='va'>titanic_imputed</span><span class='op'>[</span><span class='fl'>1</span>, <span class='op'>]</span>,
        interaction_preference <span class='op'>=</span> <span class='fl'>500</span><span class='op'>)</span>
 <span class='va'>bd_glm</span>
@@ -283,19 +283,19 @@ And in the second step the impact is calculated.</p>
 <span class='va'>explainer_rf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://dalex.drwhy.ai/reference/explain.html'>explain</a></span><span class='op'>(</span><span class='va'>model</span>,
                  data <span class='op'>=</span> <span class='va'>HR</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>1000</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  randomForest  ( </span><span style='color: #BBBB00;'> default </span><span> )
+#&gt;   -&gt; model label       :  randomForest  ( <span style='color: #BBBB00;'> default </span> )
 #&gt;   -&gt; data              :  1000  rows  5  cols 
-#&gt;   -&gt; target variable   :  not specified! ( </span><span style='color: #BB0000;'> WARNING </span><span> )
-#&gt;   -&gt; predict function  :  yhat.randomForest  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; predicted values  :  No value for predict function target column. ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; model_info        :  package randomForest , ver. 4.6.14 , task multiclass ( </span><span style='color: #BBBB00;'> default </span><span> ) 
-#&gt;   -&gt; model_info        :  Model info detected multiclass task but 'y' is a NULL .  ( </span><span style='color: #BB0000;'> WARNING </span><span> )
-#&gt;   -&gt; model_info        :  By deafult classification tasks supports only factor 'y' parameter. 
+#&gt;   -&gt; target variable   :  not specified! ( <span style='color: #BB0000;'> WARNING </span> )
+#&gt;   -&gt; predict function  :  yhat.randomForest  will be used ( <span style='color: #BBBB00;'> default </span> )
+#&gt;   -&gt; predicted values  :  No value for predict function target column. ( <span style='color: #BBBB00;'> default </span> )
+#&gt;   -&gt; model_info        :  package randomForest , ver. 4.6.14 , task multiclass ( <span style='color: #BBBB00;'> default </span> ) 
+#&gt;   -&gt; model_info        :  Model info detected multiclass task but 'y' is a NULL .  ( <span style='color: #BB0000;'> WARNING </span> )
+#&gt;   -&gt; model_info        :  By deafult multiclass tasks supports only factor 'y' parameter. 
 #&gt;   -&gt; model_info        :  Consider changing to a factor vector with true class names.
 #&gt;   -&gt; model_info        :  Otherwise I will not be able to calculate residuals or loss function.
-#&gt;   -&gt; predicted values  :  predict function returns multiple columns:  3  ( </span><span style='color: #BBBB00;'> default </span><span> ) 
-#&gt;   -&gt; residual function :  difference between 1 and probability of true class ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
+#&gt;   -&gt; predicted values  :  predict function returns multiple columns:  3  ( <span style='color: #BBBB00;'> default </span> ) 
+#&gt;   -&gt; residual function :  difference between 1 and probability of true class ( <span style='color: #BBBB00;'> default </span> )
+#&gt;  <span style='color: #00BB00;'> A new explainer has been created! </span> </div><div class='input'>
 <span class='va'>bd_rf</span> <span class='op'>&lt;-</span> <span class='fu'>local_interactions</span><span class='op'>(</span><span class='va'>explainer_rf</span>,
                  <span class='va'>new_observation</span><span class='op'>)</span>
 
@@ -329,16 +329,16 @@ And in the second step the impact is calculated.</p>
          data <span class='op'>=</span> <span class='va'>apartments_test</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>1000</span>,<span class='fl'>2</span><span class='op'>:</span><span class='fl'>6</span><span class='op'>]</span>,
          y <span class='op'>=</span> <span class='va'>apartments_test</span><span class='op'>$</span><span class='va'>m2.price</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>1000</span><span class='op'>]</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  randomForest  ( </span><span style='color: #BBBB00;'> default </span><span> )
+#&gt;   -&gt; model label       :  randomForest  ( <span style='color: #BBBB00;'> default </span> )
 #&gt;   -&gt; data              :  1000  rows  5  cols 
 #&gt;   -&gt; target variable   :  1000  values 
-#&gt;   -&gt; predict function  :  yhat.randomForest  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; predicted values  :  No value for predict function target column. ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; model_info        :  package randomForest , ver. 4.6.14 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
+#&gt;   -&gt; predict function  :  yhat.randomForest  will be used ( <span style='color: #BBBB00;'> default </span> )
+#&gt;   -&gt; predicted values  :  No value for predict function target column. ( <span style='color: #BBBB00;'> default </span> )
+#&gt;   -&gt; model_info        :  package randomForest , ver. 4.6.14 , task regression ( <span style='color: #BBBB00;'> default </span> ) 
 #&gt;   -&gt; predicted values  :  numerical, min =  2043.066 , mean =  3487.722 , max =  5773.976  
-#&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
+#&gt;   -&gt; residual function :  difference between y and yhat ( <span style='color: #BBBB00;'> default </span> )
 #&gt;   -&gt; residuals         :  numerical, min =  -630.6766 , mean =  1.057813 , max =  1256.239  
-#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
+#&gt;  <span style='color: #00BB00;'> A new explainer has been created! </span> </div><div class='input'>
 <span class='va'>new_observation</span> <span class='op'>&lt;-</span> <span class='va'>apartments_test</span><span class='op'>[</span><span class='fl'>1</span>,<span class='op'>]</span>
 
 <span class='va'>bd_rf</span> <span class='op'>&lt;-</span> <span class='fu'>local_interactions</span><span class='op'>(</span><span class='va'>explainer_rf</span>,
@@ -356,7 +356,7 @@ And in the second step the impact is calculated.</p>
 #&gt; randomForest: prediction                   4169.863</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>bd_rf</span><span class='op'>)</span>
 </div><div class='img'><img src='local_interactions-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>bd_rf</span>, plot_distributions <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: `fun.y` is deprecated. Use `fun` instead.</span></div><div class='img'><img src='local_interactions-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
-</div></span></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
