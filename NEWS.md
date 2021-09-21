@@ -1,3 +1,7 @@
+iBreakDown 2.0.2
+---------------------------------------------------------------
+* fixed factor variabe values formatting when `new_observation` is of class `tbl` [#96](https://github.com/ModelOriented/iBreakDown/issues/96)
+
 iBreakDown 2.0.1
 ---------------------------------------------------------------
 * add `reload` argument to `plotD3`, which by default is `FALSE` (behavior unchanged); `TRUE` reloads the plot on resize [#89](https://github.com/ModelOriented/iBreakDown/issues/89)

@@ -305,6 +305,9 @@ create_ordered_path_2d <- function(feature_path, order, average_yhats_names) {
 nice_format <- function(x) {
   if (is.numeric(x)) {
     as.character(signif(x, 4))
+  } else if ("tbl" %in% class(x)) {
+    # https://github.com/ModelOriented/iBreakDown/issues/96
+    as.character(x[[1]])
   } else {
     as.character(x)
   }
