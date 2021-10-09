@@ -120,8 +120,8 @@
 <h2 class="hasAnchor">
 <a href="#overview" class="anchor"></a>Overview</h2>
 <p>The <code>iBreakDown</code> package is a model agnostic tool for explanation of predictions from black boxes ML models. Break Down Table shows contributions of every variable to a final prediction. Break Down Plot presents variable contributions in a concise graphical way. SHAP (Shapley Additive Attributions) values are calculated as average from random Break Down profiles. This package works for binary classifiers as well as regression models.</p>
-<p><code>iBreakDown</code> is a successor of the <a href="https://github.com/pbiecek/breakDown">breakDown</a> package. It is faster (complexity <code>O(p)</code> instead of <code>O(p^2)</code>). It supports interactions and interactive explainers with D3.js plots. It is imported and used to compute model explanations in multiple packages e.g. <a href="https://github.com/ModelOriented/DALEX"><code>DALEX</code></a>, <a href="https://github.com/ModelOriented/modelStudio"><code>modelStudio</code></a>, <a href="https://github.com/ModelOriented/ArenaR"><code>arenar</code></a>.</p>
-<p>It is a part of <a href="http://DrWhy.AI">DrWhy.AI</a> universe.</p>
+<p><code>iBreakDown</code> is a successor of the <a href="https://github.com/pbiecek/breakDown">breakDown</a> package. It is faster (complexity <code>O(p)</code> instead of <code>O(p^2)</code>). It supports variable interactions and interactive explanations with D3.js visualizations. It is imported and used to compute model explanations in multiple packages e.g. <a href="https://github.com/ModelOriented/DALEX"><code>DALEX</code></a>, <a href="https://github.com/ModelOriented/modelStudio"><code>modelStudio</code></a>, <a href="https://github.com/ModelOriented/ArenaR"><code>arenar</code></a>.</p>
+<p>Methodology behind the <strong>iBreakDown</strong> package is described in the <a href="https://arxiv.org/abs/1903.11420">arXiv paper</a> and <a href="https://ema.drwhy.ai/breakDown.html">Explanatory Model Analysis</a> book. It is a part of <a href="http://DrWhy.AI">DrWhy.AI</a> universe.</p>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
@@ -136,9 +136,9 @@ devtools::install_github("ModelOriented/iBreakDown")</a></code></pre>
 <div id="learn-more" class="section level2">
 <h2 class="hasAnchor">
 <a href="#learn-more" class="anchor"></a>Learn more</h2>
-<p>Find lots of examples at the website: <a href="https://ModelOriented.github.io/iBreakDown/" class="uri">https://ModelOriented.github.io/iBreakDown/</a></p>
-<p>Methodology behind the <strong>iBreakDown</strong> package is described in the <a href="https://arxiv.org/abs/1903.11420">arxiv paper</a> and <a href="https://pbiecek.github.io/ema/breakDown.html">Explanatory Model Analysis</a> book.</p>
-<p>This version also works with <strong>D3</strong>! <a href="https://modeloriented.github.io/iBreakDown/prototypeDemo.html">see an example</a> and <a href="https://modeloriented.github.io/iBreakDown/articles/vignette_iBreakDown_titanic.html#plot-attributions-with-d3">demo</a> <img src="reference/figures/plotD3.png" alt="plotD3"></p>
+<p>Find lots of examples at the website: <a href="https://ModelOriented.github.io/iBreakDown" class="uri">https://ModelOriented.github.io/iBreakDown</a>.</p>
+<p>This version also works with <strong>D3</strong>: <a href="https://modeloriented.github.io/iBreakDown/prototypeDemo.html">see an example</a> and <a href="https://modeloriented.github.io/iBreakDown/articles/vignette_iBreakDown_titanic.html#plot-attributions-with-d3">demo</a>.</p>
+<p><img src="reference/figures/plotD3.png" alt="plotD3"></p>
 </div>
 <div id="acknowledgments" class="section level2">
 <h2 class="hasAnchor">
