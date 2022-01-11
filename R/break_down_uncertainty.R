@@ -130,9 +130,20 @@ break_down_uncertainty.default <- function(x, data, predict_function = predict,
   # set variable indicators
   # start random path
   p <- ncol(data)
+  previous_paths <- list()
   result <- lapply(1:B, function(b) {
-    random_path <- sample(1:p)
-    tmp <- get_single_random_path(x, data, predict_function, new_observation, label, random_path)
+    # ensure each path was previously unused
+    needs_new_path <- TRUE
+    while (needs_new_path) {
+      random_path <- sample(1:p)
+      # was the path previously used?
+      needs_new_path <- any(
+        sapply(previous_paths, function(one_prev_path) {
+          identical(one_prev_path, random_path)}))
+    }
+    previous_paths <- c(previous_paths, list(random_path))
+    tmp <- get_single_random_path(x, data, predict_function,
+                                  new_observation, label, random_path)
     tmp$B <- b
     tmp
   })
