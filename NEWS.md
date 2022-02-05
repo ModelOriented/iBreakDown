@@ -1,3 +1,7 @@
+iBreakDown 2.1
+---------------------------------------------------------------
+*  ensure the path (variable sequence) within each B is unique (not oversampled) [#98](https://github.com/ModelOriented/iBreakDown/issues/98)
+
 iBreakDown 2.0.2
 ---------------------------------------------------------------
 * fixed factor variabe values formatting when `new_observation` is of class `tbl` [#96](https://github.com/ModelOriented/iBreakDown/issues/96)
