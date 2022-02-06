@@ -31,7 +31,7 @@ devtools::install_github("ModelOriented/iBreakDown")
 
 ## Learn more
 
-Find lots of examples at the website: https://ModelOriented.github.io/iBreakDown.
+Find more examples in the EMA book: https://ema.drwhy.ai/.
 
 This version also works with **D3**:
 [see an example](https://modeloriented.github.io/iBreakDown/prototypeDemo.html) and [demo](https://modeloriented.github.io/iBreakDown/articles/vignette_iBreakDown_titanic.html#plot-attributions-with-d3).
