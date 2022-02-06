@@ -58,20 +58,14 @@
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="index.html">iBreakDown</a>
         <div class="info">
-          <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
-           developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">2.0.2</span>
+          <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy" class="external-link">DrWhy.AI</a>
+           developed by the <a href="https://mi2.mini.pw.edu.pl/" class="external-link">MI^2 DataLab</a> </span>
+          <span class="version version-default">2.1</span>
         </div>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
@@ -94,7 +88,7 @@
   <a href="news/index.html">Changelog</a>
 </li>
         <li>
-  <a href="https://github.com/ModelOriented/iBreakDown/">
+  <a href="https://github.com/ModelOriented/iBreakDown/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -111,38 +105,39 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="model-agnostic-local-attributions-" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#model-agnostic-local-attributions-" class="anchor"></a>Model Agnostic Local Attributions <img src="reference/figures/logo.png" align="right" width="150">
+<div class="section level1">
+<div class="page-header"><h1 id="model-agnostic-local-attributions-">Model Agnostic Local Attributions <img src="reference/figures/logo.png" align="right" width="150"><a class="anchor" aria-label="anchor" href="#model-agnostic-local-attributions-"></a>
 </h1></div>
 
-<div id="overview" class="section level2">
-<h2 class="hasAnchor">
-<a href="#overview" class="anchor"></a>Overview</h2>
+<div class="section level2">
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h2>
 <p>The <code>iBreakDown</code> package is a model agnostic tool for explanation of predictions from black boxes ML models. Break Down Table shows contributions of every variable to a final prediction. Break Down Plot presents variable contributions in a concise graphical way. SHAP (Shapley Additive Attributions) values are calculated as average from random Break Down profiles. This package works for binary classifiers as well as regression models.</p>
-<p><code>iBreakDown</code> is a successor of the <a href="https://github.com/pbiecek/breakDown">breakDown</a> package. It is faster (complexity <code>O(p)</code> instead of <code>O(p^2)</code>). It supports variable interactions and interactive explanations with D3.js visualizations. It is imported and used to compute model explanations in multiple packages e.g. <a href="https://github.com/ModelOriented/DALEX"><code>DALEX</code></a>, <a href="https://github.com/ModelOriented/modelStudio"><code>modelStudio</code></a>, <a href="https://github.com/ModelOriented/ArenaR"><code>arenar</code></a>.</p>
-<p>Methodology behind the <strong>iBreakDown</strong> package is described in the <a href="https://arxiv.org/abs/1903.11420">arXiv paper</a> and <a href="https://ema.drwhy.ai/breakDown.html">Explanatory Model Analysis</a> book. It is a part of <a href="http://DrWhy.AI">DrWhy.AI</a> universe.</p>
+<p><code>iBreakDown</code> is a successor of the <a href="https://github.com/pbiecek/breakDown" class="external-link">breakDown</a> package. It is faster (complexity <code>O(p)</code> instead of <code>O(p^2)</code>). It supports variable interactions and interactive explanations with D3.js visualizations. It is imported and used to compute model explanations in multiple packages e.g. <a href="https://github.com/ModelOriented/DALEX" class="external-link"><code>DALEX</code></a>, <a href="https://github.com/ModelOriented/modelStudio" class="external-link"><code>modelStudio</code></a>, <a href="https://github.com/ModelOriented/ArenaR" class="external-link"><code>arenar</code></a>.</p>
+<p>Methodology behind the <strong>iBreakDown</strong> package is described in the <a href="https://arxiv.org/abs/1903.11420" class="external-link">arXiv paper</a> and <a href="https://ema.drwhy.ai/breakDown.html" class="external-link">Explanatory Model Analysis</a> book. It is a part of <a href="http://DrWhy.AI" class="external-link">DrWhy.AI</a> universe.</p>
 </div>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
-<pre class="{r}"><code><a href="https://rdrr.io/r/utils/install.packages.html"># the easiest way to get iBreakDown is to install it from CRAN:
-install.packages("iBreakDown")
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<pre class="{r}"><code><span class="co"># the easiest way to get iBreakDown is to install it from CRAN:</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"iBreakDown"</span><span class="op">)</span>
 
-# Or the the development version from GitHub:
-# install.packages("devtools")
-devtools::install_github("ModelOriented/iBreakDown")</a></code></pre>
+<span class="co"># Or the the development version from GitHub:</span>
+<span class="co"># install.packages("devtools")</span>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"ModelOriented/iBreakDown"</span><span class="op">)</span></code></pre>
 </div>
-<div id="learn-more" class="section level2">
-<h2 class="hasAnchor">
-<a href="#learn-more" class="anchor"></a>Learn more</h2>
-<p>Find lots of examples at the website: <a href="https://ModelOriented.github.io/iBreakDown" class="uri">https://ModelOriented.github.io/iBreakDown</a>.</p>
-<p>This version also works with <strong>D3</strong>: <a href="https://modeloriented.github.io/iBreakDown/prototypeDemo.html">see an example</a> and <a href="https://modeloriented.github.io/iBreakDown/articles/vignette_iBreakDown_titanic.html#plot-attributions-with-d3">demo</a>.</p>
-<p><img src="reference/figures/plotD3.png" alt="plotD3"></p>
+<div class="section level2">
+<h2 id="learn-more">Learn more<a class="anchor" aria-label="anchor" href="#learn-more"></a>
+</h2>
+<p>Find lots of examples at the website: <a href="https://ModelOriented.github.io/iBreakDown" class="external-link uri">https://ModelOriented.github.io/iBreakDown</a>.</p>
+<p>This version also works with <strong>D3</strong>: <a href="https://modeloriented.github.io/iBreakDown/prototypeDemo.html" class="external-link">see an example</a> and <a href="https://modeloriented.github.io/iBreakDown/articles/vignette_iBreakDown_titanic.html#plot-attributions-with-d3" class="external-link">demo</a>.</p>
+<div class="figure">
+<img src="reference/figures/plotD3.png" alt=""><p class="caption">plotD3</p>
 </div>
-<div id="acknowledgments" class="section level2">
-<h2 class="hasAnchor">
-<a href="#acknowledgments" class="anchor"></a>Acknowledgments</h2>
+</div>
+<div class="section level2">
+<h2 id="acknowledgments">Acknowledgments<a class="anchor" aria-label="anchor" href="#acknowledgments"></a>
+</h2>
 <p>Work on this package was financially supported by the <code>NCN Opus grant 2016/21/B/ST6/02176</code>.</p>
 </div>
 </div>
@@ -150,64 +145,66 @@ devtools::install_github("ModelOriented/iBreakDown")</a></code></pre>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=iBreakDown">https://​cloud.r-project.org/​package=iBreakDown</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/ModelOriented/iBreakDown/">https://​github.com/​ModelOriented/​iBreakDown/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/ModelOriented/iBreakDown/issues">https://​github.com/​ModelOriented/​iBreakDown/​issues</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=iBreakDown" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/ModelOriented/iBreakDown/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/ModelOriented/iBreakDown/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></li>
+<li><a href="https://www.r-project.org/Licenses/GPL-3" class="external-link">GPL-3</a></li>
 </ul>
 </div>
+
 <div class="community">
-<h2>Community</h2>
+<h2 data-toc-skip>Community</h2>
 <ul class="list-unstyled">
 <li><a href="CONTRIBUTING.html">Contributing guide</a></li>
 </ul>
 </div>
+
 <div class="citation">
-<h2>Citation</h2>
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li><a href="authors.html">Citing iBreakDown</a></li>
-</ul>
-</div>
-<div class="developers">
-<h2>Developers</h2>
-<ul class="list-unstyled">
-<li>Przemyslaw Biecek <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-8423-1823" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Alicja Gosiewska <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-6563-5742" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Hubert Baniecki <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-6661-5364" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Adam Izdebski <br><small class="roles"> Author </small>  </li>
-<li><a href="authors.html">All authors...</a></li>
+<li><a href="authors.html#citation">Citing iBreakDown</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/ModelOriented/iBreakDown/actions?query=workflow%3AR-CMD-check"><img src="https://github.com/ModelOriented/iBreakDown/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
-<li><a href="https://codecov.io/github/ModelOriented/iBreakDown?branch=master"><img src="https://img.shields.io/codecov/c/github/ModelOriented/iBreakDown/master.svg" alt="Coverage Status"></a></li>
-<li><a href="https://cran.r-project.org/package=iBreakDown"><img src="http://www.r-pkg.org/badges/version/iBreakDown" alt="CRAN_Status_Badge"></a></li>
-<li><a href="http://cranlogs.r-pkg.org/badges/grand-total/iBreakDown"><img src="http://cranlogs.r-pkg.org/badges/grand-total/iBreakDown?color=orange" alt="Total Downloads"></a></li>
+<li>Przemyslaw Biecek <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-8423-1823" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Alicja Gosiewska <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-6563-5742" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Hubert Baniecki <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-6661-5364" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Adam Izdebski <br><small class="roles"> Author </small>  </li>
+<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/ModelOriented/iBreakDown/actions?query=workflow%3AR-CMD-check" class="external-link"><img src="https://github.com/ModelOriented/iBreakDown/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+<li><a href="https://codecov.io/github/ModelOriented/iBreakDown?branch=master" class="external-link"><img src="https://img.shields.io/codecov/c/github/ModelOriented/iBreakDown/master.svg" alt="Coverage Status"></a></li>
+<li><a href="https://cran.r-project.org/package=iBreakDown" class="external-link"><img src="http://www.r-pkg.org/badges/version/iBreakDown" alt="CRAN_Status_Badge"></a></li>
+<li><a href="http://cranlogs.r-pkg.org/badges/grand-total/iBreakDown" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/grand-total/iBreakDown?color=orange" alt="Total Downloads"></a></li>
+</ul>
 </div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Przemyslaw Biecek, Alicja Gosiewska, Hubert Baniecki, Adam Izdebski.</p>
+  <p>Developed by .</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a>.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>.</p>
 </div>
 
       </footer>
