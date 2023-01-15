@@ -79,12 +79,12 @@ describe.break_down <- function(x,
                                 display_shap = FALSE
                                 ) {
   # Error handling
-  if (!( class(display_values) == 'logical' &
-         class(display_numbers) == 'logical' &
-         class(short_description) == 'logical' &
-         class(display_distribution_details) == 'logical' &
-         class(nonsignificance_treshold) == 'numeric' &
-         class(display_shap) == 'logical')) {
+  if (!( is.logical(display_values) &
+         is.logical(display_numbers) &
+         is.logical(short_description) &
+         is.logical(display_distribution_details) &
+         is.numeric(nonsignificance_treshold) &
+         is.logical(display_shap))) {
     stop("Arguments are not valid")
   }
 

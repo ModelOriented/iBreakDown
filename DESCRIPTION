@@ -22,7 +22,7 @@ Description: Model agnostic tool for decomposition of predictions from black box
 Depends: R (>= 3.5)
 License: GPL-3
 Encoding: UTF-8
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.2
 Imports: 
     ggplot2
 Suggests: 
