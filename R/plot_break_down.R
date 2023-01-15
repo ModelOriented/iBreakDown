@@ -195,7 +195,7 @@ plot.break_down <- function(x, ...,
   }
 
   # add theme
-   pl + coord_flip() + DALEX::theme_drwhy_vertical() +
+   pl + coord_flip() + DALEX::theme_vertical_default_dalex() +
      theme(legend.position = "none") +
      labs(title = title, subtitle = subtitle)
 }

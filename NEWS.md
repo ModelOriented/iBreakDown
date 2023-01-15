@@ -1,3 +1,7 @@
+iBreakDown 2.1.1
+---------------------------------------------------------------
+* consistent theme settings with [#541](https://github.com/ModelOriented/DALEX/issues/541)
+
 iBreakDown 2.1
 ---------------------------------------------------------------
 *  ensure the path (variable sequence) within each B is unique (not oversampled) [#98](https://github.com/ModelOriented/iBreakDown/issues/98)
