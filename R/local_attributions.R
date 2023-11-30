@@ -246,7 +246,7 @@ calculate_contributions_along_path <- function(x,
   variable       <- c("intercept",
                       paste0(colnames(current_data)[selected$ind1], " = ",  selected_values) ,
                       "prediction")
-  cumulative <- do.call(rbind, c(list(baseline_yhat), yhats_mean, list(target_yhat)))
+  cumulative <- as.matrix(do.call(rbind, c(list(baseline_yhat), yhats_mean, list(target_yhat))))
   contribution <- rbind(0,apply(cumulative, 2, diff))
   contribution[1,] <- cumulative[1,]
   contribution[nrow(contribution),] <- cumulative[nrow(contribution),]

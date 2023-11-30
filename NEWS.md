@@ -1,3 +1,8 @@
+iBreakDown 2.1.2
+---------------------------------------------------------------
+* force matrix class for cumulative contributions in the calculate_contributions_along_path to prevent iBreakDown breaking for multiclass classification
+  models that return data.frame of probabilities instead of a matrix.
+
 iBreakDown 2.1.1
 ---------------------------------------------------------------
 * consistent theme settings with [#541](https://github.com/ModelOriented/DALEX/issues/541)
